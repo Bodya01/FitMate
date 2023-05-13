@@ -1,4 +1,4 @@
-﻿using FitMate.Models;
+﻿using FitMate.DAL.Entities;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
