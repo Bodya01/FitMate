@@ -11,7 +11,7 @@ using System.Text;
 using System.Text.Encodings.Web;
 using System.Threading.Tasks;
 
-namespace FitnessTracker.Areas.Identity.Pages.Account
+namespace FitMate.Areas.Identity.Pages.Account
 {
     [AllowAnonymous]
     public class ExternalLoginModel : PageModel

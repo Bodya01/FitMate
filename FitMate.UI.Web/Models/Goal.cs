@@ -1,4 +1,4 @@
-﻿namespace FitnessTracker.Models
+﻿namespace FitMate.Models
 {
     public class Goal
     {

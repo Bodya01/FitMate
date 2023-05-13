@@ -7,7 +7,7 @@ using System;
 using System.ComponentModel.DataAnnotations;
 using System.Threading.Tasks;
 
-namespace FitnessTracker.Areas.Identity.Pages.Account
+namespace FitMate.Areas.Identity.Pages.Account
 {
     [AllowAnonymous]
     public class LoginWithRecoveryCodeModel : PageModel

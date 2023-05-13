@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore.Migrations;
 using System;
 
-namespace FitnessTracker.Migrations
+namespace FitMate.Migrations
 {
     public partial class InitialMigration : Migration
     {

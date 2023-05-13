@@ -1,5 +1,5 @@
-﻿using FitnessTracker.Data;
-using FitnessTracker.Models;
+﻿using FitMate.Data;
+using FitMate.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
@@ -9,7 +9,7 @@ using System;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace FitnessTracker.Controllers
+namespace FitMate.Controllers
 {
     public class NewFoodModel
     {

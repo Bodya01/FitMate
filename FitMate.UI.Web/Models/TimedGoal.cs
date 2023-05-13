@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace FitnessTracker.Models
+namespace FitMate.Models
 {
     public class TimedGoal : Goal
     {

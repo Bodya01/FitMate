@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc.RazorPages;
 
-namespace FitnessTracker.Areas.Identity.Pages.Account
+namespace FitMate.Areas.Identity.Pages.Account
 {
     public class AccessDeniedModel : PageModel
     {

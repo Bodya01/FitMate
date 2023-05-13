@@ -1,7 +1,7 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
 
-namespace FitnessTracker.Models
+namespace FitMate.Models
 {
     public class WorkoutActivity
     {

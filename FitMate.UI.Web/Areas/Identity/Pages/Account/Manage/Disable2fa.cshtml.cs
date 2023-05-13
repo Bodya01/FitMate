@@ -5,7 +5,7 @@ using Microsoft.Extensions.Logging;
 using System;
 using System.Threading.Tasks;
 
-namespace FitnessTracker.Areas.Identity.Pages.Account.Manage
+namespace FitMate.Areas.Identity.Pages.Account.Manage
 {
     public class Disable2faModel : PageModel
     {

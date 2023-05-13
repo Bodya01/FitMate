@@ -1,9 +1,9 @@
-﻿using FitnessTracker.Models;
+﻿using FitMate.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System.Diagnostics;
 
-namespace FitnessTracker.Controllers
+namespace FitMate.Controllers
 {
     public class HomeController : Controller
     {

@@ -1,6 +1,6 @@
-﻿using FitnessTracker.Models;
+﻿using FitMate.Models;
 
-namespace FitnessTracker.ViewModels
+namespace FitMate.ViewModels
 {
     public class GoalViewModel
     {

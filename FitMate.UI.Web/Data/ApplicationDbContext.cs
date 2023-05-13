@@ -1,8 +1,8 @@
-﻿using FitnessTracker.Models;
+﻿using FitMate.Models;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
-namespace FitnessTracker.Data
+namespace FitMate.Data
 {
     public class ApplicationDbContext : IdentityDbContext<FitnessUser>
     {

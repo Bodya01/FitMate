@@ -2,7 +2,7 @@
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Text.Json;
 
-namespace FitnessTracker.Models
+namespace FitMate.Models
 {
     public class WorkoutPlan
     {

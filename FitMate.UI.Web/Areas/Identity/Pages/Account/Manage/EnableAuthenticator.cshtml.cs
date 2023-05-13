@@ -8,7 +8,7 @@ using System.Text;
 using System.Text.Encodings.Web;
 using System.Threading.Tasks;
 
-namespace FitnessTracker.Areas.Identity.Pages.Account.Manage
+namespace FitMate.Areas.Identity.Pages.Account.Manage
 {
     public class EnableAuthenticatorModel : PageModel
     {
@@ -145,7 +145,7 @@ namespace FitnessTracker.Areas.Identity.Pages.Account.Manage
         {
             return string.Format(
                 AuthenticatorUriFormat,
-                _urlEncoder.Encode("FitnessTracker"),
+                _urlEncoder.Encode("FitMate"),
                 _urlEncoder.Encode(email),
                 unformattedKey);
         }

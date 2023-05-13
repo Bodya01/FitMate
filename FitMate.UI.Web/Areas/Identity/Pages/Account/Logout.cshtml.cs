@@ -1,4 +1,4 @@
-﻿using FitnessTracker.Models;
+﻿using FitMate.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
 using System.Threading.Tasks;
 
-namespace FitnessTracker.Areas.Identity.Pages.Account
+namespace FitMate.Areas.Identity.Pages.Account
 {
     [AllowAnonymous]
     public class LogoutModel : PageModel

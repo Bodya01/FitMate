@@ -8,7 +8,7 @@ using System.Text;
 using System.Text.Encodings.Web;
 using System.Threading.Tasks;
 
-namespace FitnessTracker.Areas.Identity.Pages.Account.Manage
+namespace FitMate.Areas.Identity.Pages.Account.Manage
 {
     public partial class EmailModel : PageModel
     {

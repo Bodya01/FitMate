@@ -1,5 +1,5 @@
-using FitnessTracker.Data;
-using FitnessTracker.Models;
+using FitMate.Data;
+using FitMate.Models;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
@@ -8,7 +8,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 
-namespace FitnessTracker
+namespace FitMate
 {
     public class Startup
     {

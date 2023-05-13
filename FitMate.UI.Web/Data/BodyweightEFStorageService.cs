@@ -1,10 +1,10 @@
-﻿using FitnessTracker.Models;
+﻿using FitMate.Models;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace FitnessTracker.Data
+namespace FitMate.Data
 {
     public class BodyweightEFStorageService : IBodyweightStorageService
     {

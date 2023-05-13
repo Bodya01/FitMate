@@ -1,7 +1,7 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace FitnessTracker.Models
+namespace FitMate.Models
 {
     public class TimedProgress : GoalProgress
     {

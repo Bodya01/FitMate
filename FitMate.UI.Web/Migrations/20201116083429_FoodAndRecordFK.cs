@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace FitnessTracker.Migrations
+namespace FitMate.Migrations
 {
     public partial class FoodAndRecordFK : Migration
     {

@@ -1,8 +1,8 @@
-﻿using FitnessTracker.Models;
+﻿using FitMate.Models;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace FitnessTracker.Data
+namespace FitMate.Data
 {
     public interface IBodyweightStorageService
     {

@@ -7,7 +7,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace FitnessTracker.Areas.Identity.Pages.Account
+namespace FitMate.Areas.Identity.Pages.Account
 {
     [AllowAnonymous]
     public class ResetPasswordModel : PageModel

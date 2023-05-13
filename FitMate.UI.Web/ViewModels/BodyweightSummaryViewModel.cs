@@ -1,9 +1,9 @@
-﻿using FitnessTracker.Models;
+﻿using FitMate.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace FitnessTracker.ViewModels
+namespace FitMate.ViewModels
 {
     public class BodyweightSummaryViewModel
     {

@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Hosting;
 
-[assembly: HostingStartup(typeof(FitnessTracker.Areas.Identity.IdentityHostingStartup))]
-namespace FitnessTracker.Areas.Identity
+[assembly: HostingStartup(typeof(FitMate.Areas.Identity.IdentityHostingStartup))]
+namespace FitMate.Areas.Identity
 {
     public class IdentityHostingStartup : IHostingStartup
     {

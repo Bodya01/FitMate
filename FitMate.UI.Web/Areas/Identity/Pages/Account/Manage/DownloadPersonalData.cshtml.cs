@@ -8,7 +8,7 @@ using System.Linq;
 using System.Text.Json;
 using System.Threading.Tasks;
 
-namespace FitnessTracker.Areas.Identity.Pages.Account.Manage
+namespace FitMate.Areas.Identity.Pages.Account.Manage
 {
     public class DownloadPersonalDataModel : PageModel
     {

@@ -1,6 +1,6 @@
-﻿using FitnessTracker.Data;
-using FitnessTracker.Models;
-using FitnessTracker.ViewModels;
+﻿using FitMate.Data;
+using FitMate.Models;
+using FitMate.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -9,7 +9,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace FitnessTracker.Controllers
+namespace FitMate.Controllers
 {
     [Authorize]
     public class BodyweightController : Controller
