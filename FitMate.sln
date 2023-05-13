@@ -1,9 +1,13 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.30621.155
+# Visual Studio Version 17
+VisualStudioVersion = 17.4.33205.214
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FitMate.UI.Web", "FitMate.UI.Web\FitMate.UI.Web.csproj", "{45D809F0-1872-4A00-8BB9-BEBC247A5D1A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FitMate.UI.Web", "FitMate.UI.Web\FitMate.UI.Web.csproj", "{45D809F0-1872-4A00-8BB9-BEBC247A5D1A}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "DataAccessLayer", "DataAccessLayer", "{0D658D73-12F3-420C-8729-5356AEC331DF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FitMate.DAL", "FitMate.DAL\FitMate.DAL.csproj", "{CADF3DA3-5E46-4598-B6BB-D442944920A2}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,9 +19,16 @@ Global
 		{45D809F0-1872-4A00-8BB9-BEBC247A5D1A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{45D809F0-1872-4A00-8BB9-BEBC247A5D1A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{45D809F0-1872-4A00-8BB9-BEBC247A5D1A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CADF3DA3-5E46-4598-B6BB-D442944920A2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CADF3DA3-5E46-4598-B6BB-D442944920A2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CADF3DA3-5E46-4598-B6BB-D442944920A2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CADF3DA3-5E46-4598-B6BB-D442944920A2}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{CADF3DA3-5E46-4598-B6BB-D442944920A2} = {0D658D73-12F3-420C-8729-5356AEC331DF}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {ACCFCAA5-716F-4352-A281-01F316B31659}

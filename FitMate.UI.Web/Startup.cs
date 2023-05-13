@@ -1,5 +1,5 @@
 using FitMate.Data;
-using FitMate.Models;
+using FitMate.DAL.Entities;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;

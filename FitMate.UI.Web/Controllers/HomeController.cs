@@ -1,4 +1,4 @@
-﻿using FitMate.Models;
+﻿using FitMate.DAL.Entities;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System.Diagnostics;

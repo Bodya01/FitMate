@@ -1,4 +1,4 @@
-﻿using FitMate.Models;
+﻿using FitMate.DAL.Entities;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Threading.Tasks;

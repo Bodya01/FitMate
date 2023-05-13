@@ -1,5 +1,5 @@
 ﻿using FitMate.Data;
-using FitMate.Models;
+using FitMate.DAL.Entities;
 using FitMate.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;

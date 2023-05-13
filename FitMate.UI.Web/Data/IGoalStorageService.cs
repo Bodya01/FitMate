@@ -1,4 +1,4 @@
-﻿using FitMate.Models;
+﻿using FitMate.DAL.Entities;
 using System.Threading.Tasks;
 
 namespace FitMate.Data
