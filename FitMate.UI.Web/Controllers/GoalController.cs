@@ -4,11 +4,8 @@ using FitnessTracker.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text.Json;
 using System.Threading.Tasks;
 
 namespace FitnessTracker.Controllers
@@ -92,7 +89,7 @@ namespace FitnessTracker.Controllers
                 goal = await storageService.GetGoalByID(currentUser, GoalInput.ID);
             else
             {
-                switch(GoalInput.Type.ToLower())
+                switch (GoalInput.Type.ToLower())
                 {
                     case "weightlifting":
                         goal = new WeightliftingGoal();
@@ -192,7 +189,7 @@ namespace FitnessTracker.Controllers
         {
             FitnessUser currentUser = await GetUser();
 
-            GoalProgress[] progress = await storageService.GetGoalProgress(currentUser, GoalID,true);
+            GoalProgress[] progress = await storageService.GetGoalProgress(currentUser, GoalID, true);
             var result = Array.ConvertAll(progress, item => (WeightliftingProgress)item)
                 .Select(record => new { Date = record.Date.ToString("d"), Weight = record.Weight, Reps = record.Reps })
                 .ToArray();
@@ -205,7 +202,7 @@ namespace FitnessTracker.Controllers
         {
             FitnessUser currentUser = await GetUser();
 
-            GoalProgress[] progress = await storageService.GetGoalProgress(currentUser, GoalID,true);
+            GoalProgress[] progress = await storageService.GetGoalProgress(currentUser, GoalID, true);
 
             var result = Array.ConvertAll(progress, item => (TimedProgress)item)
                 .Select(record => new { Date = record.Date.ToString("d"), Timespan = record.Time, Quantity = record.Quantity, QuantityUnit = record.QuantityUnit })

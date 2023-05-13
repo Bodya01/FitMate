@@ -1,13 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Runtime.InteropServices;
-using System.Runtime.Serialization;
-using System.Text;
-using System.Text.Encodings.Web;
-using System.Threading.Tasks;
-using FitnessTracker.Models;
+﻿using FitnessTracker.Models;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
@@ -16,6 +7,13 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.Logging;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.Linq;
+using System.Text;
+using System.Text.Encodings.Web;
+using System.Threading.Tasks;
 
 namespace FitnessTracker.Areas.Identity.Pages.Account
 {
@@ -73,11 +71,11 @@ namespace FitnessTracker.Areas.Identity.Pages.Account
             public string LastName { get; set; }
 
             [DataType(DataType.Date)]
-            [Display(Name ="Date of Birth")]
+            [Display(Name = "Date of Birth")]
             public DateTime DateOfBirth { get; set; }
 
             [StringLength(10)]
-            [Display(Name ="Gender")]
+            [Display(Name = "Gender")]
             public string Gender { get; set; }
         }
 
@@ -93,7 +91,7 @@ namespace FitnessTracker.Areas.Identity.Pages.Account
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
             if (ModelState.IsValid)
             {
-                var user = new FitnessUser { UserName = Input.Email, Email = Input.Email,FirstName = Input.FirstName,LastName = Input.LastName,DateOfBirth = Input.DateOfBirth,Gender = Input.Gender };
+                var user = new FitnessUser { UserName = Input.Email, Email = Input.Email, FirstName = Input.FirstName, LastName = Input.LastName, DateOfBirth = Input.DateOfBirth, Gender = Input.Gender };
                 var result = await _userManager.CreateAsync(user, Input.Password);
                 if (result.Succeeded)
                 {

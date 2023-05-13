@@ -1,17 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text.Encodings.Web;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authorization;
+﻿using FitnessTracker.Models;
 using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
-using FitnessTracker.Models;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace FitnessTracker.Areas.Identity.Pages.Account
 {
@@ -22,7 +19,7 @@ namespace FitnessTracker.Areas.Identity.Pages.Account
         private readonly SignInManager<FitnessUser> _signInManager;
         private readonly ILogger<LoginModel> _logger;
 
-        public LoginModel(SignInManager<FitnessUser> signInManager, 
+        public LoginModel(SignInManager<FitnessUser> signInManager,
             ILogger<LoginModel> logger,
             UserManager<FitnessUser> userManager)
         {

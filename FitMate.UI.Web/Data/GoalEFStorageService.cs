@@ -1,7 +1,5 @@
 ﻿using FitnessTracker.Models;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -41,7 +39,7 @@ namespace FitnessTracker.Data
 
         public async Task<GoalProgress[]> GetGoalProgress(FitnessUser User, long GoalID, bool AscendingOrder = false)
         {
-            var query= dbContext.GoalProgressRecords
+            var query = dbContext.GoalProgressRecords
                 .Where(record => record.Goal.ID == GoalID && record.User == User);
             if (AscendingOrder == true)
                 query = query.OrderBy(record => record.Date);

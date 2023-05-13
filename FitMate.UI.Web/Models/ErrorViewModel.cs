@@ -1,5 +1,3 @@
-using System;
-
 namespace FitnessTracker.Models
 {
     public class ErrorViewModel

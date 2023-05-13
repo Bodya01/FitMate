@@ -6,7 +6,6 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -145,18 +144,18 @@ namespace FitnessTracker.Controllers
                 .Include(record => record.Food)
                 .ToArrayAsync();
 
-                var result = records
-                .GroupBy(record => record.ConsumptionDate)
-                .Select(grouping =>
-                new
-                {
-                    Date = grouping.Key.ToString("d"),
-                    Calories = grouping.Sum(r => r.Food.Calories),
-                    Carbs = grouping.Sum(r => r.Food.Carbohydrates),
-                    Protein = grouping.Sum(r => r.Food.Protein),
-                    Fat = grouping.Sum(r => r.Food.Fat)
-                })
-                .ToArray();
+            var result = records
+            .GroupBy(record => record.ConsumptionDate)
+            .Select(grouping =>
+            new
+            {
+                Date = grouping.Key.ToString("d"),
+                Calories = grouping.Sum(r => r.Food.Calories),
+                Carbs = grouping.Sum(r => r.Food.Carbohydrates),
+                Protein = grouping.Sum(r => r.Food.Protein),
+                Fat = grouping.Sum(r => r.Food.Fat)
+            })
+            .ToArray();
 
             return Json(result);
         }

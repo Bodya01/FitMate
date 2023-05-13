@@ -2,7 +2,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 
 namespace FitnessTracker.ViewModels
 {
@@ -25,7 +24,7 @@ namespace FitnessTracker.ViewModels
         public float DailyProgressNeeded { get; private set; } = 0;
         public float WeeklyProgressNeeded { get; private set; } = 0;
 
-        public BodyweightSummaryViewModel(IEnumerable<BodyweightRecord> AllRecords,BodyweightTarget Target)
+        public BodyweightSummaryViewModel(IEnumerable<BodyweightRecord> AllRecords, BodyweightTarget Target)
         {
             if (AllRecords == null || AllRecords.Count() == 0)
                 return;
