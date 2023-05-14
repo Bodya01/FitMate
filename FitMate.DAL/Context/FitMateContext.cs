@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace FitMate.Data
 {
-    public class ApplicationDbContext : IdentityDbContext<FitnessUser>
+    public class FitMateContext : IdentityDbContext<FitnessUser>
     {
         public DbSet<BodyweightRecord> BodyweightRecords { get; set; }
         public DbSet<BodyweightTarget> BodyweightTargets { get; set; }
@@ -19,10 +19,7 @@ namespace FitMate.Data
         public DbSet<TimedProgress> TimedProgressRecords { get; set; }
         public DbSet<WorkoutPlan> WorkoutPlans { get; set; }
 
-        public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
-            : base(options)
-        {
-        }
+        public FitMateContext(DbContextOptions<FitMateContext> options) : base(options) { }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {

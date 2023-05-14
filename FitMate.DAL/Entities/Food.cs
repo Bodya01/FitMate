@@ -1,12 +1,11 @@
-﻿using System;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace FitMate.DAL.Entities
 {
-    public class Food
+    public class Food : IEntity
     {
-        public long ID { get; set; }
+        public long Id { get; set; }
         [Required]
         [ForeignKey("CreatedBy")]
         public string CreatedByID { get; set; }

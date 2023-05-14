@@ -3,7 +3,7 @@
 @{
     ViewData["Title"] = "Edit Goal";
 
-    long id = Model == null ? 0 : Model.ID;
+    long id = Model == null ? 0 : Model.Id;
     string activity = Model == null ? "" : Model.Activity;
     bool isWeightliftingGoal = (Model == null || Model.GetType() == typeof(WeightliftingGoal));
     bool isTimedGoal = Model?.GetType() == typeof(TimedGoal);

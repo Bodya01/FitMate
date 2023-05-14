@@ -7,16 +7,16 @@ namespace FitMate.Data
 {
     public class GoalEFStorageService : IGoalStorageService
     {
-        private ApplicationDbContext dbContext;
+        private FitMateContext dbContext;
 
-        public GoalEFStorageService(ApplicationDbContext DBContext)
+        public GoalEFStorageService(FitMateContext DBContext)
         {
             this.dbContext = DBContext;
         }
 
         public async Task DeleteGoalByID(FitnessUser User, long GoalID)
         {
-            Goal existingGoal = await dbContext.Goals.FirstOrDefaultAsync(goal => goal.ID == GoalID && goal.User == User);
+            Goal existingGoal = await dbContext.Goals.FirstOrDefaultAsync(goal => goal.Id == GoalID && goal.User == User);
             if (existingGoal == null)
                 return;
 
@@ -33,14 +33,14 @@ namespace FitMate.Data
 
         public async Task<Goal> GetGoalByID(FitnessUser User, long GoalID)
         {
-            Goal result = await dbContext.Goals.FirstOrDefaultAsync(goal => goal.ID == GoalID && goal.User == User);
+            Goal result = await dbContext.Goals.FirstOrDefaultAsync(goal => goal.Id == GoalID && goal.User == User);
             return result;
         }
 
         public async Task<GoalProgress[]> GetGoalProgress(FitnessUser User, long GoalID, bool AscendingOrder = false)
         {
             var query = dbContext.GoalProgressRecords
-                .Where(record => record.Goal.ID == GoalID && record.User == User);
+                .Where(record => record.Goal.Id == GoalID && record.User == User);
             if (AscendingOrder == true)
                 query = query.OrderBy(record => record.Date);
             else
@@ -53,7 +53,7 @@ namespace FitMate.Data
 
         public async Task StoreGoal(Goal Goal)
         {
-            if (Goal.ID == 0)
+            if (Goal.Id == 0)
                 dbContext.Goals.Add(Goal);
             else
                 dbContext.Goals.Update(Goal);

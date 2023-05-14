@@ -1,5 +1,5 @@
-﻿using FitMate.Data;
-using FitMate.DAL.Entities;
+﻿using FitMate.DAL.Entities;
+using FitMate.Data;
 using FitMate.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
@@ -43,7 +43,7 @@ namespace FitMate.Controllers
         {
             WeightliftingGoal model = new WeightliftingGoal()
             {
-                ID = 0
+                Id = 0
             };
 
             return View("editgoal", model);

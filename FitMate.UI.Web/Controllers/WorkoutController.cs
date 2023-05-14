@@ -1,5 +1,5 @@
-﻿using FitMate.Data;
-using FitMate.DAL.Entities;
+﻿using FitMate.DAL.Entities;
+using FitMate.Data;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -12,10 +12,10 @@ namespace FitMate.Controllers
     [Authorize]
     public class WorkoutController : Controller
     {
-        private ApplicationDbContext dbContext;
+        private FitMateContext dbContext;
         private UserManager<FitnessUser> userManager;
 
-        public WorkoutController(ApplicationDbContext DBContext, UserManager<FitnessUser> UserManager)
+        public WorkoutController(FitMateContext DBContext, UserManager<FitnessUser> UserManager)
         {
             dbContext = DBContext;
             userManager = UserManager;
@@ -48,7 +48,7 @@ namespace FitMate.Controllers
         [HttpGet]
         public async Task<IActionResult> Edit(long ID)
         {
-            WorkoutPlan plan = await dbContext.WorkoutPlans.FirstOrDefaultAsync(plan => plan.ID == ID);
+            WorkoutPlan plan = await dbContext.WorkoutPlans.FirstOrDefaultAsync(plan => plan.Id == ID);
 
             return View(plan);
         }
@@ -59,7 +59,7 @@ namespace FitMate.Controllers
             FitnessUser currentUser = await GetUser();
             WorkoutPlan.User = currentUser;
 
-            if (WorkoutPlan.ID == 0)
+            if (WorkoutPlan.Id == 0)
                 dbContext.WorkoutPlans.Add(WorkoutPlan);
             else
                 dbContext.WorkoutPlans.Update(WorkoutPlan);
@@ -73,7 +73,7 @@ namespace FitMate.Controllers
         public async Task<IActionResult> Session(long PlanID, int SessionIndex)
         {
             FitnessUser currentUser = await GetUser();
-            WorkoutPlan plan = await dbContext.WorkoutPlans.FirstOrDefaultAsync(plan => plan.ID == PlanID && plan.User == currentUser);
+            WorkoutPlan plan = await dbContext.WorkoutPlans.FirstOrDefaultAsync(plan => plan.Id == PlanID && plan.User == currentUser);
             if (plan == null || SessionIndex < 0 || SessionIndex >= plan.Sessions.Length)
                 return BadRequest();
 

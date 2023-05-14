@@ -13,10 +13,10 @@
 @switch (Model.Goal)
 {
     case WeightliftingGoal wg:
-        <div class="d-none" id="ProgressType" data-goaltype="weightlifting" data-goalid="@Model.Goal.ID"></div>
+        <div class="d-none" id="ProgressType" data-goaltype="weightlifting" data-goalid="@Model.Goal.Id"></div>
         break;
     case TimedGoal tg:
-        <div class="d-none" id="ProgressType" data-goaltype="timed" data-goalid="@Model.Goal.ID"></div>
+        <div class="d-none" id="ProgressType" data-goaltype="timed" data-goalid="@Model.Goal.Id"></div>
 
         break;
 }
@@ -28,7 +28,7 @@
                 <h4 class="d-inline">@Model.Goal.Activity</h4>
                 <button type="button" class="btn btn-danger dropdown-toggle float-right" data-toggle="dropdown">Options</button>
                 <div class="dropdown-menu">
-                    <a asp-action="EditGoal" asp-route-ID="@Model.Goal.ID" class="dropdown-item">Edit</a>
+                    <a asp-action="EditGoal" asp-route-ID="@Model.Goal.Id" class="dropdown-item">Edit</a>
                 </div>
             </div>
             <div class="card-body">
@@ -242,7 +242,7 @@
             </div>
             <form asp-action="AddProgress" method="post">
                 <div class="modal-body">
-                    <input type="hidden" name="GoalID" value="@Model.Goal.ID" required />
+                    <input type="hidden" name="GoalID" value="@Model.Goal.Id" required />
                     @{
                         string typeValue = "";
                         switch (Model.Goal)

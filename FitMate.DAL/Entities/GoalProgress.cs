@@ -1,10 +1,8 @@
-﻿using System;
-
-namespace FitMate.DAL.Entities
+﻿namespace FitMate.DAL.Entities
 {
-    public class GoalProgress
+    public class GoalProgress : IEntity
     {
-        public long ID { get; set; }
+        public long Id { get; set; }
         public FitnessUser User { get; set; }
         public Goal Goal { get; set; }
         public DateTime Date { get; set; }

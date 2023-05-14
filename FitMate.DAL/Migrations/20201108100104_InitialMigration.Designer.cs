@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace FitMate.Migrations
 {
-    [DbContext(typeof(ApplicationDbContext))]
+    [DbContext(typeof(FitMateContext))]
     [Migration("20201108100104_InitialMigration")]
     partial class InitialMigration
     {

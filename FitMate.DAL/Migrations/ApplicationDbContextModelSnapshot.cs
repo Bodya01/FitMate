@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace FitMate.Migrations
 {
-    [DbContext(typeof(ApplicationDbContext))]
+    [DbContext(typeof(FitMateContext))]
     partial class ApplicationDbContextModelSnapshot : ModelSnapshot
     {
         protected override void BuildModel(ModelBuilder modelBuilder)
@@ -24,11 +24,11 @@ namespace FitMate.Migrations
 
             modelBuilder.Entity("FitMate.DAL.Entities.BodyweightRecord", b =>
                 {
-                    b.Property<long>("ID")
+                    b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("bigint");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("ID"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
 
                     b.Property<DateTime>("Date")
                         .HasColumnType("datetime2");
@@ -39,7 +39,7 @@ namespace FitMate.Migrations
                     b.Property<float>("Weight")
                         .HasColumnType("real");
 
-                    b.HasKey("ID");
+                    b.HasKey("Id");
 
                     b.HasIndex("UserId");
 
@@ -48,11 +48,11 @@ namespace FitMate.Migrations
 
             modelBuilder.Entity("FitMate.DAL.Entities.BodyweightTarget", b =>
                 {
-                    b.Property<long>("ID")
+                    b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("bigint");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("ID"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
 
                     b.Property<DateTime>("TargetDate")
                         .HasColumnType("datetime2");
@@ -63,7 +63,7 @@ namespace FitMate.Migrations
                     b.Property<string>("UserId")
                         .HasColumnType("nvarchar(450)");
 
-                    b.HasKey("ID");
+                    b.HasKey("Id");
 
                     b.HasIndex("UserId");
 
@@ -149,11 +149,11 @@ namespace FitMate.Migrations
 
             modelBuilder.Entity("FitMate.DAL.Entities.Food", b =>
                 {
-                    b.Property<long>("ID")
+                    b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("bigint");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("ID"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
 
                     b.Property<int>("Calories")
                         .HasColumnType("int");
@@ -181,7 +181,7 @@ namespace FitMate.Migrations
                     b.Property<int>("ServingUnit")
                         .HasColumnType("int");
 
-                    b.HasKey("ID");
+                    b.HasKey("Id");
 
                     b.HasIndex("CreatedByID");
 
@@ -190,11 +190,11 @@ namespace FitMate.Migrations
 
             modelBuilder.Entity("FitMate.DAL.Entities.FoodRecord", b =>
                 {
-                    b.Property<long>("ID")
+                    b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("bigint");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("ID"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
 
                     b.Property<DateTime>("ConsumptionDate")
                         .HasColumnType("datetime2");
@@ -209,7 +209,7 @@ namespace FitMate.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
-                    b.HasKey("ID");
+                    b.HasKey("Id");
 
                     b.HasIndex("FoodID");
 
@@ -220,13 +220,14 @@ namespace FitMate.Migrations
 
             modelBuilder.Entity("FitMate.DAL.Entities.Goal", b =>
                 {
-                    b.Property<long>("ID")
+                    b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("bigint");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("ID"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
 
                     b.Property<string>("Activity")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Discriminator")
@@ -236,7 +237,7 @@ namespace FitMate.Migrations
                     b.Property<string>("UserId")
                         .HasColumnType("nvarchar(450)");
 
-                    b.HasKey("ID");
+                    b.HasKey("Id");
 
                     b.HasIndex("UserId");
 
@@ -249,11 +250,11 @@ namespace FitMate.Migrations
 
             modelBuilder.Entity("FitMate.DAL.Entities.GoalProgress", b =>
                 {
-                    b.Property<long>("ID")
+                    b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("bigint");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("ID"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
 
                     b.Property<DateTime>("Date")
                         .HasColumnType("datetime2");
@@ -262,15 +263,15 @@ namespace FitMate.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<long?>("GoalID")
+                    b.Property<long>("GoalId")
                         .HasColumnType("bigint");
 
                     b.Property<string>("UserId")
                         .HasColumnType("nvarchar(450)");
 
-                    b.HasKey("ID");
+                    b.HasKey("Id");
 
-                    b.HasIndex("GoalID");
+                    b.HasIndex("GoalId");
 
                     b.HasIndex("UserId");
 
@@ -283,11 +284,11 @@ namespace FitMate.Migrations
 
             modelBuilder.Entity("FitMate.DAL.Entities.NutritionTarget", b =>
                 {
-                    b.Property<long>("ID")
+                    b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("bigint");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("ID"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
 
                     b.Property<int>("DailyCalories")
                         .HasColumnType("int");
@@ -305,7 +306,7 @@ namespace FitMate.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
-                    b.HasKey("ID");
+                    b.HasKey("Id");
 
                     b.HasIndex("UserId");
 
@@ -314,11 +315,11 @@ namespace FitMate.Migrations
 
             modelBuilder.Entity("FitMate.DAL.Entities.WorkoutPlan", b =>
                 {
-                    b.Property<long>("ID")
+                    b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("bigint");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("ID"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -332,7 +333,7 @@ namespace FitMate.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
-                    b.HasKey("ID");
+                    b.HasKey("Id");
 
                     b.HasIndex("UserId");
 
@@ -480,6 +481,7 @@ namespace FitMate.Migrations
                         .HasColumnType("real");
 
                     b.Property<string>("QuantityUnit")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<TimeSpan>("Time")
@@ -588,7 +590,9 @@ namespace FitMate.Migrations
                 {
                     b.HasOne("FitMate.DAL.Entities.Goal", "Goal")
                         .WithMany()
-                        .HasForeignKey("GoalID");
+                        .HasForeignKey("GoalId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("FitMate.DAL.Entities.FitnessUser", "User")
                         .WithMany()

@@ -1,5 +1,5 @@
-﻿using FitMate.Data;
-using FitMate.DAL.Entities;
+﻿using FitMate.DAL.Entities;
+using FitMate.Data;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
@@ -25,10 +25,10 @@ namespace FitMate.Controllers
     [Authorize]
     public class NutritionController : Controller
     {
-        private ApplicationDbContext dbContext;
+        private FitMateContext dbContext;
         private UserManager<FitnessUser> userManager;
 
-        public NutritionController(ApplicationDbContext DBContext, UserManager<FitnessUser> UserManager)
+        public NutritionController(FitMateContext DBContext, UserManager<FitnessUser> UserManager)
         {
             dbContext = DBContext;
             userManager = UserManager;
@@ -60,7 +60,7 @@ namespace FitMate.Controllers
             FitnessUser currentUser = await userManager.GetUserAsync(HttpContext.User);
             Food.CreatedBy = currentUser;
 
-            if (Food.ID == 0)
+            if (Food.Id == 0)
                 dbContext.UserFoods.Add(Food);
             else
                 dbContext.UserFoods.Update(Food);
@@ -103,7 +103,7 @@ namespace FitMate.Controllers
         {
             FitnessUser currentUser = await userManager.GetUserAsync(HttpContext.User);
 
-            Food targetFood = await dbContext.UserFoods.FirstOrDefaultAsync(food => food.ID == ID);
+            Food targetFood = await dbContext.UserFoods.FirstOrDefaultAsync(food => food.Id == ID);
             if (targetFood == null || targetFood.CreatedBy != currentUser)
                 return BadRequest();
 

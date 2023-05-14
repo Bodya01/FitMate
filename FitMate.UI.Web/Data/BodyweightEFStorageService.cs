@@ -8,9 +8,9 @@ namespace FitMate.Data
 {
     public class BodyweightEFStorageService : IBodyweightStorageService
     {
-        private ApplicationDbContext dbContext;
+        private FitMateContext dbContext;
 
-        public BodyweightEFStorageService(ApplicationDbContext DBContext)
+        public BodyweightEFStorageService(FitMateContext DBContext)
         {
             this.dbContext = DBContext;
         }
@@ -64,7 +64,7 @@ namespace FitMate.Data
 
         public async Task StoreBodyweightTarget(BodyweightTarget Target)
         {
-            if (Target.ID == 0)
+            if (Target.Id == 0)
                 dbContext.BodyweightTargets.Add(Target);
             else
                 dbContext.BodyweightTargets.Update(Target);

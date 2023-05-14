@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace FitMate.Migrations
 {
-    [DbContext(typeof(ApplicationDbContext))]
+    [DbContext(typeof(FitMateContext))]
     [Migration("20201204212104_AddProgressEntities")]
     partial class AddProgressEntities
     {

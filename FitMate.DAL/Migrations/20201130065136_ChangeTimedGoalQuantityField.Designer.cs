@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace FitMate.Migrations
 {
-    [DbContext(typeof(ApplicationDbContext))]
+    [DbContext(typeof(FitMateContext))]
     [Migration("20201130065136_ChangeTimedGoalQuantityField")]
     partial class ChangeTimedGoalQuantityField
     {

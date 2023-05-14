@@ -1,12 +1,11 @@
-﻿using System;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace FitMate.DAL.Entities
 {
-    public class FoodRecord
+    public class FoodRecord : IEntity
     {
-        public long ID { get; set; }
+        public long Id { get; set; }
 
         [Required]
         public FitnessUser User { get; set; }
