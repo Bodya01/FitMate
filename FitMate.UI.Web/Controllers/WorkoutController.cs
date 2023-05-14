@@ -1,5 +1,5 @@
-﻿using FitMate.Data;
-using FitMate.DAL.Entities;
+﻿using FitMate.DAL.Entities;
+using FitMate.Data;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -12,10 +12,10 @@ namespace FitMate.Controllers
     [Authorize]
     public class WorkoutController : Controller
     {
-        private ApplicationDbContext dbContext;
+        private FitMateContext dbContext;
         private UserManager<FitnessUser> userManager;
 
-        public WorkoutController(ApplicationDbContext DBContext, UserManager<FitnessUser> UserManager)
+        public WorkoutController(FitMateContext DBContext, UserManager<FitnessUser> UserManager)
         {
             dbContext = DBContext;
             userManager = UserManager;

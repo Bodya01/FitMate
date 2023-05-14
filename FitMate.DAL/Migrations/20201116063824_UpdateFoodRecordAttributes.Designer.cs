@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace FitMate.Migrations
 {
-    [DbContext(typeof(ApplicationDbContext))]
+    [DbContext(typeof(FitMateContext))]
     [Migration("20201116063824_UpdateFoodRecordAttributes")]
     partial class UpdateFoodRecordAttributes
     {

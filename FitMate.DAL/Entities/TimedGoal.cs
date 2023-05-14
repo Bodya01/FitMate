@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace FitMate.DAL.Entities
+﻿namespace FitMate.DAL.Entities
 {
     public class TimedGoal : Goal
     {

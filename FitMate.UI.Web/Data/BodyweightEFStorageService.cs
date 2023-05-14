@@ -8,9 +8,9 @@ namespace FitMate.Data
 {
     public class BodyweightEFStorageService : IBodyweightStorageService
     {
-        private ApplicationDbContext dbContext;
+        private FitMateContext dbContext;
 
-        public BodyweightEFStorageService(ApplicationDbContext DBContext)
+        public BodyweightEFStorageService(FitMateContext DBContext)
         {
             this.dbContext = DBContext;
         }

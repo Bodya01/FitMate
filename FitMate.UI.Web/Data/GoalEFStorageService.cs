@@ -7,9 +7,9 @@ namespace FitMate.Data
 {
     public class GoalEFStorageService : IGoalStorageService
     {
-        private ApplicationDbContext dbContext;
+        private FitMateContext dbContext;
 
-        public GoalEFStorageService(ApplicationDbContext DBContext)
+        public GoalEFStorageService(FitMateContext DBContext)
         {
             this.dbContext = DBContext;
         }
