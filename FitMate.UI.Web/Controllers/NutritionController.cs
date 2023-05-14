@@ -60,7 +60,7 @@ namespace FitMate.Controllers
             FitnessUser currentUser = await userManager.GetUserAsync(HttpContext.User);
             Food.CreatedBy = currentUser;
 
-            if (Food.ID == 0)
+            if (Food.Id == 0)
                 dbContext.UserFoods.Add(Food);
             else
                 dbContext.UserFoods.Update(Food);
@@ -103,7 +103,7 @@ namespace FitMate.Controllers
         {
             FitnessUser currentUser = await userManager.GetUserAsync(HttpContext.User);
 
-            Food targetFood = await dbContext.UserFoods.FirstOrDefaultAsync(food => food.ID == ID);
+            Food targetFood = await dbContext.UserFoods.FirstOrDefaultAsync(food => food.Id == ID);
             if (targetFood == null || targetFood.CreatedBy != currentUser)
                 return BadRequest();
 

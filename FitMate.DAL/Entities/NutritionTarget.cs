@@ -2,9 +2,9 @@
 
 namespace FitMate.DAL.Entities
 {
-    public class NutritionTarget
+    public class NutritionTarget : IEntity
     {
-        public long ID { get; set; }
+        public long Id { get; set; }
         [Required]
         public FitnessUser User { get; set; }
         [Required]

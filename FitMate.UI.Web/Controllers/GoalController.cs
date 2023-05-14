@@ -43,7 +43,7 @@ namespace FitMate.Controllers
         {
             WeightliftingGoal model = new WeightliftingGoal()
             {
-                ID = 0
+                Id = 0
             };
 
             return View("editgoal", model);

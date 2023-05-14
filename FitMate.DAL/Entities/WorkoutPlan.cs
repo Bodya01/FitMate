@@ -4,9 +4,9 @@ using System.Text.Json;
 
 namespace FitMate.DAL.Entities
 {
-    public class WorkoutPlan
+    public class WorkoutPlan : IEntity
     {
-        public long ID { get; set; }
+        public long Id { get; set; }
 
         [Required]
         public FitnessUser User { get; set; }

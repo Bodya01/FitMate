@@ -64,7 +64,7 @@ namespace FitMate.Data
 
         public async Task StoreBodyweightTarget(BodyweightTarget Target)
         {
-            if (Target.ID == 0)
+            if (Target.Id == 0)
                 dbContext.BodyweightTargets.Add(Target);
             else
                 dbContext.BodyweightTargets.Update(Target);

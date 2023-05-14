@@ -2,7 +2,7 @@
 
 namespace FitMate.DAL.Entities
 {
-    public class FitnessUser : IdentityUser
+    public class FitnessUser : IdentityUser, IEntity
     {
         public string? FirstName { get; set; }
         public string? LastName { get; set; }

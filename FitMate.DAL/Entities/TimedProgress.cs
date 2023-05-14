@@ -2,7 +2,7 @@
 
 namespace FitMate.DAL.Entities
 {
-    public class TimedProgress : GoalProgress
+    public class TimedProgress : GoalProgress, IEntity
     {
         public float Quantity { get; set; }
         [NotMapped]
