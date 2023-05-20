@@ -1,6 +1,9 @@
 ﻿using FitMate.DAL.Entities;
 using FitMate.Data;
+using FitMate.Handlers.Handlers.Bodyweight.Models.Requests;
+using FitMate.UI.Web.Controllers.Base;
 using FitMate.ViewModels;
+using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -12,30 +15,32 @@ using System.Threading.Tasks;
 namespace FitMate.Controllers
 {
     [Authorize]
-    public class BodyweightController : Controller
+    public class BodyweightController : FitMateControllerBase
     {
-        private IBodyweightStorageService storageService;
-        private UserManager<FitnessUser> userManager;
+        private readonly IBodyweightRepository _bodyweightRepository;
 
-        public BodyweightController(IBodyweightStorageService StorageService, UserManager<FitnessUser> UserManager)
+        public BodyweightController(
+            IBodyweightRepository bodyweightRepository,
+            FitMateContext context,
+            UserManager<FitnessUser> userManager,
+            IMediator mediator
+            ) : base(
+                context,
+                userManager,
+                mediator
+                )
         {
-            this.storageService = StorageService;
-            this.userManager = UserManager;
-        }
-
-        private async Task<FitnessUser> GetUser()
-        {
-            return await userManager.GetUserAsync(HttpContext.User);
+            _bodyweightRepository = bodyweightRepository;
         }
 
         public async Task<IActionResult> Summary()
         {
-            FitnessUser currentUser = await GetUser();
+            var currentUser = await GetUserAsync();
 
-            IEnumerable<BodyweightRecord> records = await storageService.GetBodyweightRecords(currentUser);
-            BodyweightTarget target = await storageService.GetBodyweightTarget(currentUser);
+            var records = await _bodyweightRepository.GetBodyweightRecords(currentUser);
+            var target = await _bodyweightRepository.GetBodyweightTarget(currentUser);
 
-            BodyweightSummaryViewModel viewModel = new BodyweightSummaryViewModel(records, target);
+            var viewModel = new BodyweightSummaryViewModel(records, target);
 
             return View(viewModel);
         }
@@ -43,33 +48,29 @@ namespace FitMate.Controllers
         [HttpGet]
         public async Task<IActionResult> EditTarget()
         {
-            FitnessUser currentUser = await GetUser();
+            var currentUser = await GetUserAsync();
 
-            BodyweightTarget target = await storageService.GetBodyweightTarget(currentUser);
+            var target = await _bodyweightRepository.GetBodyweightTarget(currentUser);
 
             return View(target);
         }
 
         [HttpPost]
-        public async Task<IActionResult> EditTarget(float TargetWeight, DateTime TargetDate)
+        public async Task<IActionResult> EditTarget(float targetWeight, DateTime targetDate)
         {
-            if (TargetWeight <= 0 || TargetWeight >= 200 || TargetDate <= DateTime.Today)
-                return BadRequest();
-
-            FitnessUser currentUser = await GetUser();
-
-
-            BodyweightTarget newTarget = await storageService.GetBodyweightTarget(currentUser);
-            if (newTarget == null)
+            if (targetWeight <= 0 || targetWeight >= 200 || targetDate <= DateTime.Today)
             {
-                newTarget = new BodyweightTarget()
-                {
-                    User = currentUser
-                };
+                return BadRequest();
             }
-            newTarget.TargetWeight = TargetWeight;
-            newTarget.TargetDate = TargetDate;
-            await storageService.StoreBodyweightTarget(newTarget);
+
+            var currentUser = await GetUserAsync();
+
+            var newTarget = await _bodyweightRepository.GetBodyweightTarget(currentUser);
+            newTarget ??= new BodyweightTarget() { User = currentUser };
+
+            newTarget.TargetWeight = targetWeight;
+            newTarget.TargetDate = targetDate;
+            await _bodyweightRepository.StoreBodyweightTarget(newTarget);
 
             return RedirectToAction("Summary");
         }
@@ -77,72 +78,50 @@ namespace FitMate.Controllers
         [HttpGet]
         public async Task<IActionResult> EditRecords()
         {
-            FitnessUser currentUser = await GetUser();
+            var currentUser = await GetUserAsync();
 
-            BodyweightRecord[] records = await storageService.GetBodyweightRecords(currentUser);
+            var records = await _bodyweightRepository.GetBodyweightRecords(currentUser);
 
             return View(records);
         }
 
         [HttpPost]
-        public async Task<IActionResult> EditRecords(DateTime[] Dates, float[] Weights)
+        public async Task<IActionResult> EditRecords(EditBodyweightRecordsCommand command)
         {
-            if (Dates == null || Weights == null)
-                return BadRequest();
-            if (Dates.Length != Weights.Length)
-                return BadRequest();
-
-            for (int i = 0; i < Dates.Length; i++)
+            if (command.RecordDates == null
+                || command.RecordWeights == null
+                || command.RecordDates.Length != command.RecordWeights.Length
+                || command.RecordWeights.Any(x => x <= 0 || x >= 200))
             {
-                if (Weights[i] <= 0 || Weights[i] >= 200)
-                    return BadRequest();
+                return BadRequest();
             }
 
-            FitnessUser currentUser = await GetUser();
+            command.User = await GetUserAsync();
+            await _mediator.Send(command);
 
-            await storageService.DeleteExistingRecords(currentUser);
-
-            BodyweightRecord[] records = new BodyweightRecord[Dates.Length];
-            for (int i = 0; i < Dates.Length; i++)
-            {
-                BodyweightRecord newRecord = new BodyweightRecord()
-                {
-                    User = currentUser,
-                    Date = Dates[i],
-                    Weight = Weights[i]
-                };
-                records[i] = newRecord;
-            }
-
-            await storageService.StoreBodyweightRecords(records);
             return RedirectToAction("Summary");
         }
 
         [HttpPost]
-        public async Task<IActionResult> AddTodayWeight(float Weight)
+        public async Task<IActionResult> AddTodayWeight(AddTodayWeightCommand command)
         {
-            if (Weight <= 0 || Weight >= 200)
-                return BadRequest();
-
-            FitnessUser currentUser = await GetUser();
-
-            BodyweightRecord newRecord = new BodyweightRecord()
+            if (command.Weight <= 0 || command.Weight >= 200)
             {
-                User = currentUser,
-                Date = DateTime.Today,
-                Weight = Weight
-            };
+                return BadRequest();
+            }
 
-            await storageService.StoreBodyweightRecord(newRecord);
+            command.User = await GetUserAsync();
+            await _mediator.Send(command);
+            
             return RedirectToAction("Summary");
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetBodyweightData(int PreviousDays)
+        public async Task<IActionResult> GetBodyweightData(int previousDays)
         {
-            FitnessUser currentUser = await GetUser();
+            var currentUser = await GetUserAsync();
 
-            BodyweightRecord[] records = await storageService.GetBodyweightRecords(currentUser, true);
+            var records = await _bodyweightRepository.GetBodyweightRecords(currentUser, true);
 
             var result = records.Select(record => new { Date = record.Date.ToString("d"), Weight = record.Weight }).ToArray();
 

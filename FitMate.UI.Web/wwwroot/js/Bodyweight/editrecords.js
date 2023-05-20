@@ -10,8 +10,8 @@
 
 function updateInputNames() {
     $("table tbody tr").each(function (index, element) {
-        $(element).find("input[type=number]").attr("name", "Weights[" + String(index) + "]");
-        $(element).find("input[type=date]").attr("name", "Dates[" + String(index) + "]");
+        $(element).find("input[type=number]").attr("name", "recordWeights[" + String(index) + "]");
+        $(element).find("input[type=date]").attr("name", "recordDates[" + String(index) + "]");
     });
 }
 

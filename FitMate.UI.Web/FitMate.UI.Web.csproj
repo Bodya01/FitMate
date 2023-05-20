@@ -6,6 +6,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="MediatR" Version="12.0.1" />
     <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="7.0.5" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="7.0.5" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="7.0.5" />
@@ -22,11 +23,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Data\Migrations\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\FitMate.DAL\FitMate.DAL.csproj" />
+    <ProjectReference Include="..\FitMate.Handlers\FitMate.Handlers.csproj" />
   </ItemGroup>
 
 </Project>

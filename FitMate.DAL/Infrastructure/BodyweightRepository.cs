@@ -6,58 +6,54 @@ using System.Threading.Tasks;
 
 namespace FitMate.Data
 {
-    public class BodyweightEFStorageService : IBodyweightStorageService
+    public class BodyweightRepository : IBodyweightRepository
     {
         private FitMateContext dbContext;
 
-        public BodyweightEFStorageService(FitMateContext DBContext)
+        public BodyweightRepository(FitMateContext DBContext)
         {
             this.dbContext = DBContext;
         }
 
-        public async Task StoreBodyweightRecord(BodyweightRecord Record)
+        public async Task StoreBodyweightRecord(BodyweightRecord record)
         {
-            dbContext.BodyweightRecords.Add(Record);
+            dbContext.BodyweightRecords.Add(record);
             await dbContext.SaveChangesAsync();
         }
 
-        public async Task StoreBodyweightRecords(IEnumerable<BodyweightRecord> Records)
+        public async Task StoreBodyweightRecords(List<BodyweightRecord> records)
         {
-            dbContext.BodyweightRecords.AddRange(Records);
+            await dbContext.BodyweightRecords.AddRangeAsync(records);
             await dbContext.SaveChangesAsync();
         }
 
-        public async Task<BodyweightRecord[]> GetBodyweightRecords(FitnessUser User, bool AscendingOrder = false)
+        public async Task<BodyweightRecord[]> GetBodyweightRecords(FitnessUser User, bool ascendingOrder = false)
         {
-            BodyweightRecord[] records = null;
-
-            if (AscendingOrder == false)
+            if (!ascendingOrder)
             {
-                records = await dbContext.BodyweightRecords
+                return await dbContext.BodyweightRecords
                     .Where(record => record.User == User)
                     .OrderByDescending(record => record.Date)
                     .ToArrayAsync();
             }
             else
             {
-                records = await dbContext.BodyweightRecords
+                return await dbContext.BodyweightRecords
                     .Where(record => record.User == User)
                     .OrderBy(record => record.Date)
                     .ToArrayAsync();
             }
-
-            return records;
         }
 
         public async Task<BodyweightTarget> GetBodyweightTarget(FitnessUser User)
         {
-            BodyweightTarget result = await dbContext.BodyweightTargets.FirstOrDefaultAsync(target => target.User == User);
+            var result = await dbContext.BodyweightTargets.FirstOrDefaultAsync(target => target.User == User);
             return result;
         }
 
         public async Task DeleteExistingRecords(FitnessUser User)
         {
-            BodyweightRecord[] existingRecords = await dbContext.BodyweightRecords.Where(record => record.User == User).ToArrayAsync();
+            var existingRecords = await dbContext.BodyweightRecords.Where(record => record.User == User).ToArrayAsync();
             dbContext.BodyweightRecords.RemoveRange(existingRecords);
             await dbContext.SaveChangesAsync();
         }
@@ -65,13 +61,15 @@ namespace FitMate.Data
         public async Task StoreBodyweightTarget(BodyweightTarget Target)
         {
             if (Target.Id == 0)
-                dbContext.BodyweightTargets.Add(Target);
+            {
+                await dbContext.BodyweightTargets.AddAsync(Target);
+            }
             else
+            {
                 dbContext.BodyweightTargets.Update(Target);
+            }
 
             await dbContext.SaveChangesAsync();
-
-
         }
     }
 }

@@ -6,7 +6,5 @@ namespace FitMate.ViewModels
     {
         public Goal Goal { get; set; }
         public GoalProgress[] Progress { get; set; }
-
-
     }
 }

@@ -5,18 +5,18 @@ using System.Threading.Tasks;
 
 namespace FitMate.Data
 {
-    public class GoalEFStorageService : IGoalStorageService
+    public class GoalRepository : IGoalRepository
     {
         private FitMateContext dbContext;
 
-        public GoalEFStorageService(FitMateContext DBContext)
+        public GoalRepository(FitMateContext DBContext)
         {
-            this.dbContext = DBContext;
+            dbContext = DBContext;
         }
 
         public async Task DeleteGoalByID(FitnessUser User, long GoalID)
         {
-            Goal existingGoal = await dbContext.Goals.FirstOrDefaultAsync(goal => goal.Id == GoalID && goal.User == User);
+            var existingGoal = await dbContext.Goals.FirstOrDefaultAsync(goal => goal.Id == GoalID && goal.User == User);
             if (existingGoal == null)
                 return;
 
@@ -27,13 +27,13 @@ namespace FitMate.Data
 
         public async Task<Goal[]> GetAllGoals(FitnessUser User)
         {
-            Goal[] result = await dbContext.Goals.Where(goal => goal.User == User).ToArrayAsync();
+            var result = await dbContext.Goals.Where(goal => goal.User == User).ToArrayAsync();
             return result;
         }
 
         public async Task<Goal> GetGoalByID(FitnessUser User, long GoalID)
         {
-            Goal result = await dbContext.Goals.FirstOrDefaultAsync(goal => goal.Id == GoalID && goal.User == User);
+            var result = await dbContext.Goals.FirstOrDefaultAsync(goal => goal.Id == GoalID && goal.User == User);
             return result;
         }
 
@@ -46,7 +46,7 @@ namespace FitMate.Data
             else
                 query = query.OrderByDescending(record => record.Date);
 
-            GoalProgress[] result = await query.ToArrayAsync();
+            var result = await query.ToArrayAsync();
 
             return result;
         }
