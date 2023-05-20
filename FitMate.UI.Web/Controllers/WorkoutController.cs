@@ -1,5 +1,8 @@
 ﻿using FitMate.DAL.Entities;
 using FitMate.Data;
+using FitMate.Handlers.Handlers.WorkoutPlan.Models.WorkoutPlan.Requests;
+using FitMate.UI.Web.Controllers.Base;
+using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -10,27 +13,18 @@ using System.Threading.Tasks;
 namespace FitMate.Controllers
 {
     [Authorize]
-    public class WorkoutController : Controller
+    [Controller]
+    public class WorkoutController : FitMateControllerBase
     {
-        private FitMateContext dbContext;
-        private UserManager<FitnessUser> userManager;
-
-        public WorkoutController(FitMateContext DBContext, UserManager<FitnessUser> UserManager)
+        public WorkoutController(FitMateContext context, UserManager<FitnessUser> userManager, IMediator mediator) : base(context, userManager, mediator)
         {
-            dbContext = DBContext;
-            userManager = UserManager;
-        }
 
-        [NonAction]
-        public async Task<FitnessUser> GetUser()
-        {
-            return await userManager.GetUserAsync(User);
         }
 
         public async Task<IActionResult> Summary()
         {
-            FitnessUser currentUser = await GetUser();
-            WorkoutPlan[] plans = await dbContext.WorkoutPlans.Where(plan => plan.User == currentUser).ToArrayAsync();
+            var currentUser = await GetUserAsync();
+            var plans = await _context.WorkoutPlans.Where(plan => plan.User == currentUser).ToArrayAsync();
 
             return View(plans);
         }
@@ -38,7 +32,7 @@ namespace FitMate.Controllers
         [HttpGet]
         public async Task<IActionResult> Create()
         {
-            WorkoutPlan newPlan = new WorkoutPlan()
+            var newPlan = new WorkoutPlan()
             {
                 Name = "Workout Plan"
             };
@@ -46,25 +40,29 @@ namespace FitMate.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Edit(long ID)
+        public async Task<IActionResult> Edit(GetWorkoutPlanByIdQuery query)
         {
-            WorkoutPlan plan = await dbContext.WorkoutPlans.FirstOrDefaultAsync(plan => plan.Id == ID);
+            var result = await _mediator.Send(query);
 
-            return View(plan);
+            return View(result.WorkoutPlan);
         }
 
         [HttpPost]
-        public async Task<IActionResult> Edit(WorkoutPlan WorkoutPlan)
+        public async Task<IActionResult> Edit(WorkoutPlan workoutPlan)
         {
-            FitnessUser currentUser = await GetUser();
-            WorkoutPlan.User = currentUser;
+            var currentUser = await GetUserAsync();
+            workoutPlan.User = currentUser;
 
-            if (WorkoutPlan.Id == 0)
-                dbContext.WorkoutPlans.Add(WorkoutPlan);
+            if (workoutPlan.Id == 0)
+            {
+                _context.WorkoutPlans.Add(workoutPlan);
+            }
             else
-                dbContext.WorkoutPlans.Update(WorkoutPlan);
+            {
+                _context.WorkoutPlans.Update(workoutPlan);
+            }
 
-            await dbContext.SaveChangesAsync();
+            await _context.SaveChangesAsync();
 
             return RedirectToAction("Summary");
         }
@@ -72,12 +70,13 @@ namespace FitMate.Controllers
         [HttpGet]
         public async Task<IActionResult> Session(long PlanID, int SessionIndex)
         {
-            FitnessUser currentUser = await GetUser();
-            WorkoutPlan plan = await dbContext.WorkoutPlans.FirstOrDefaultAsync(plan => plan.Id == PlanID && plan.User == currentUser);
+            var currentUser = await GetUserAsync();
+            var plan = await _context.WorkoutPlans.FirstOrDefaultAsync(plan => plan.Id == PlanID && plan.User == currentUser);
+
             if (plan == null || SessionIndex < 0 || SessionIndex >= plan.Sessions.Length)
                 return BadRequest();
 
-            WorkoutSession session = plan.Sessions[SessionIndex];
+            var session = plan.Sessions[SessionIndex];
             return View(session);
         }
     }

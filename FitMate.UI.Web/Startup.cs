@@ -1,5 +1,6 @@
 using FitMate.DAL.Entities;
 using FitMate.Data;
+using FitMate.Handlers.ServiceCollectionExtensions;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
@@ -31,13 +32,13 @@ namespace FitMate
                 .AddDefaultUI()
                 .AddDefaultTokenProviders();
 
-            //services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
-            //    .AddEntityFrameworkStores<ApplicationDbContext>();
             services.AddControllersWithViews();
             services.AddRazorPages();
 
-            services.AddTransient<IBodyweightStorageService, BodyweightEFStorageService>();
-            services.AddTransient<IGoalStorageService, GoalEFStorageService>();
+            services.AddMediatRAndHandlers();
+
+            services.AddTransient<IBodyweightRepository, BodyweightRepository>();
+            services.AddTransient<IGoalRepository, GoalRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

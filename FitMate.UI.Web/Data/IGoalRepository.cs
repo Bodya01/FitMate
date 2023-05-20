@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 
 namespace FitMate.Data
 {
-    public interface IGoalStorageService
+    public interface IGoalRepository
     {
         public Task<Goal[]> GetAllGoals(FitnessUser User);
         public Task<Goal> GetGoalByID(FitnessUser User, long GoalID);

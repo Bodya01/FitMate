@@ -43,7 +43,7 @@ namespace FitMate.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("BodyweightRecords");
+                    b.ToTable("BodyweightRecords", (string)null);
                 });
 
             modelBuilder.Entity("FitMate.DAL.Entities.BodyweightTarget", b =>
@@ -67,7 +67,7 @@ namespace FitMate.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("BodyweightTargets");
+                    b.ToTable("BodyweightTargets", (string)null);
                 });
 
             modelBuilder.Entity("FitMate.DAL.Entities.FitnessUser", b =>
@@ -185,7 +185,7 @@ namespace FitMate.Migrations
 
                     b.HasIndex("CreatedByID");
 
-                    b.ToTable("UserFoods");
+                    b.ToTable("UserFoods", (string)null);
                 });
 
             modelBuilder.Entity("FitMate.DAL.Entities.FoodRecord", b =>
@@ -215,7 +215,7 @@ namespace FitMate.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("FoodRecords");
+                    b.ToTable("FoodRecords", (string)null);
                 });
 
             modelBuilder.Entity("FitMate.DAL.Entities.Goal", b =>
@@ -241,7 +241,7 @@ namespace FitMate.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Goals");
+                    b.ToTable("Goals", (string)null);
 
                     b.HasDiscriminator<string>("Discriminator").HasValue("Goal");
 
@@ -275,7 +275,7 @@ namespace FitMate.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("GoalProgressRecords");
+                    b.ToTable("GoalProgressRecords", (string)null);
 
                     b.HasDiscriminator<string>("Discriminator").HasValue("GoalProgress");
 
@@ -310,7 +310,7 @@ namespace FitMate.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("NutritionTargets");
+                    b.ToTable("NutritionTargets", (string)null);
                 });
 
             modelBuilder.Entity("FitMate.DAL.Entities.WorkoutPlan", b =>
@@ -337,7 +337,7 @@ namespace FitMate.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("WorkoutPlans");
+                    b.ToTable("WorkoutPlans", (string)null);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
