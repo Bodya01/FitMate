@@ -30,17 +30,20 @@
                     <a href="#" class="font-weight-bold" onclick="addNewSession();">+Add Session</a>
 
                     <ul id="SessionList" class="list-group">
-                        @for (int i = 0; i < Model.Sessions?.Length; i++)
+@*                        @for (int i = 0; i < Model.Sessions?.Length; i++)
                         {
                             <li class="list-group-item" style="cursor:pointer;" onclick="sessionListItem_Clicked(this);">@Model.Sessions[i].Name</li>
+                        }*@
+                        @foreach (var session in Model.Sessions)
+                        {
+                            <li class="list-group-item" style="cursor:pointer;" onclick="sessionListItem_Clicked(this);">@session.Name</li>
                         }
                     </ul>
                 </div>
                 <div class="col-3 border-right" id="SessionContainer">
                     <h3 class="border-bottom">Session</h3>
-                    @for (int i = 0; i < Model.Sessions?.Length; i++)
+                    @foreach (var session in Model.Sessions)
                     {
-                        WorkoutSession session = Model.Sessions[i];
                         <table class="sessionForm d-none table table-borderless">
                             <tbody>
                                 <tr>

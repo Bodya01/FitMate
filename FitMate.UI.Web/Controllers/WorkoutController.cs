@@ -30,7 +30,7 @@ namespace FitMate.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Create()
+        public IActionResult Create()
         {
             var newPlan = new WorkoutPlan()
             {
@@ -68,15 +68,15 @@ namespace FitMate.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Session(long PlanID, int SessionIndex)
+        public async Task<IActionResult> Session(long workoutPlanId, int sessionId)
         {
             var currentUser = await GetUserAsync();
-            var plan = await _context.WorkoutPlans.FirstOrDefaultAsync(plan => plan.Id == PlanID && plan.User == currentUser);
+            var plan = await _context.WorkoutPlans.FirstOrDefaultAsync(plan => plan.Id == workoutPlanId && plan.User == currentUser);
 
-            if (plan == null || SessionIndex < 0 || SessionIndex >= plan.Sessions.Length)
+            if (plan == null || sessionId < 0 || sessionId >= plan.Sessions.Length)
                 return BadRequest();
 
-            var session = plan.Sessions[SessionIndex];
+            var session = plan.Sessions[sessionId];
             return View(session);
         }
     }
