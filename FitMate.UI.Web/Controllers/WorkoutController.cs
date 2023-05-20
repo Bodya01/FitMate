@@ -36,7 +36,7 @@ namespace FitMate.Controllers
             {
                 Name = "Workout Plan"
             };
-            return View("/Views/Workout/edit.cshtml", newPlan);
+            return View("/Views/Workout/Edit.cshtml", newPlan);
         }
 
         [HttpGet]

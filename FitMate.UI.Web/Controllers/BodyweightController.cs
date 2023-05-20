@@ -1,5 +1,6 @@
 ﻿using FitMate.DAL.Entities;
 using FitMate.Data;
+using FitMate.Handlers.Handlers.Bodyweight.Models.Requests;
 using FitMate.UI.Web.Controllers.Base;
 using FitMate.ViewModels;
 using MediatR;
@@ -18,15 +19,16 @@ namespace FitMate.Controllers
     {
         private readonly IBodyweightRepository _bodyweightRepository;
 
-        public BodyweightController
-            (IBodyweightRepository bodyweightRepository,
+        public BodyweightController(
+            IBodyweightRepository bodyweightRepository,
             FitMateContext context,
             UserManager<FitnessUser> userManager,
-            IMediator mediator)
-            :
-            base(context,
+            IMediator mediator
+            ) : base(
+                context,
                 userManager,
-                mediator)
+                mediator
+                )
         {
             _bodyweightRepository = bodyweightRepository;
         }
@@ -64,7 +66,7 @@ namespace FitMate.Controllers
             var currentUser = await GetUserAsync();
 
             var newTarget = await _bodyweightRepository.GetBodyweightTarget(currentUser);
-            newTarget ??=  new BodyweightTarget() { User = currentUser };
+            newTarget ??= new BodyweightTarget() { User = currentUser };
 
             newTarget.TargetWeight = targetWeight;
             newTarget.TargetDate = targetDate;
@@ -84,55 +86,33 @@ namespace FitMate.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> EditRecords(DateTime[] recordDates, float[] recordWeights)
+        public async Task<IActionResult> EditRecords(EditBodyweightRecordsCommand command)
         {
-            if (recordDates == null || recordWeights == null)
-                return BadRequest();
-            if (recordDates.Length != recordWeights.Length)
-                return BadRequest();
-
-            for (int i = 0; i < recordDates.Length; i++)
+            if (command.RecordDates == null
+                || command.RecordWeights == null
+                || command.RecordDates.Length != command.RecordWeights.Length
+                || command.RecordWeights.Any(x => x <= 0 || x >= 200))
             {
-                if (recordWeights[i] <= 0 || recordWeights[i] >= 200)
-                    return BadRequest();
+                return BadRequest();
             }
 
-            var currentUser = await GetUserAsync();
+            command.User = await GetUserAsync();
+            await _mediator.Send(command);
 
-            await _bodyweightRepository.DeleteExistingRecords(currentUser);
-
-            var records = new List<BodyweightRecord>();
-            for (int i = 0; i < recordDates.Length; i++)
-            {
-                var newRecord = new BodyweightRecord()
-                {
-                    User = currentUser,
-                    Date = recordDates[i],
-                    Weight = recordWeights[i]
-                };
-                records.Add(newRecord);
-            }
-
-            await _bodyweightRepository.StoreBodyweightRecords(records);
             return RedirectToAction("Summary");
         }
 
         [HttpPost]
-        public async Task<IActionResult> AddTodayWeight(float weight)
+        public async Task<IActionResult> AddTodayWeight(AddTodayWeightCommand command)
         {
-            if (weight <= 0 || weight >= 200)
-                return BadRequest();
-
-            var currentUser = await GetUserAsync();
-
-            BodyweightRecord newRecord = new BodyweightRecord()
+            if (command.Weight <= 0 || command.Weight >= 200)
             {
-                User = currentUser,
-                Date = DateTime.Today,
-                Weight = weight
-            };
+                return BadRequest();
+            }
 
-            await _bodyweightRepository.StoreBodyweightRecord(newRecord);
+            command.User = await GetUserAsync();
+            await _mediator.Send(command);
+            
             return RedirectToAction("Summary");
         }
 

@@ -18,13 +18,15 @@ namespace FitMate.Controllers
     public class NutritionController : FitMateControllerBase
     {
 
-        public NutritionController
-            (FitMateContext context,
+        public NutritionController(
+            FitMateContext context,
             UserManager<FitnessUser> userManager,
-            IMediator mediator)
-            : base(context,
-                  userManager,
-                  mediator)
+            IMediator mediator
+            ) : base(
+                context,
+                userManager,
+                mediator
+                )
         {
 
         }
@@ -69,7 +71,7 @@ namespace FitMate.Controllers
             if (FoodIDs.Length != Quantities.Length || FoodIDs.Length == 0)
                 return BadRequest();
 
-            var currentUser = await _userManager.GetUserAsync(HttpContext.User);
+            var currentUser = await GetUserAsync();
 
             var existingRecords = await _context.FoodRecords.Where(record => record.User == currentUser && record.ConsumptionDate == Date).ToArrayAsync();
             _context.FoodRecords.RemoveRange(existingRecords);
@@ -116,8 +118,7 @@ namespace FitMate.Controllers
                 .Include(record => record.Food)
                 .ToArrayAsync();
             var userTarget = await _context.NutritionTargets.FirstOrDefaultAsync(record => record.User == currentUser);
-            if (userTarget == null)
-                userTarget = new NutritionTarget();
+            userTarget ??= new NutritionTarget();
 
             var summaryModel = new NutritionSummaryModel()
             {
@@ -129,11 +130,11 @@ namespace FitMate.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetNutritionData(uint PreviousDays = 7)
+        public async Task<IActionResult> GetNutritionData(uint previousDays = 7)
         {
             var currentUser = await _userManager.GetUserAsync(HttpContext.User);
             var records = await _context.FoodRecords
-                .Where(record => record.ConsumptionDate >= DateTime.Today.AddDays(-PreviousDays) && record.User == currentUser)
+                .Where(record => record.ConsumptionDate >= DateTime.Today.AddDays(-previousDays) && record.User == currentUser)
                 .Include(record => record.Food)
                 .ToArrayAsync();
 

@@ -23,10 +23,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Data\Migrations\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\FitMate.DAL\FitMate.DAL.csproj" />
     <ProjectReference Include="..\FitMate.Handlers\FitMate.Handlers.csproj" />
   </ItemGroup>
