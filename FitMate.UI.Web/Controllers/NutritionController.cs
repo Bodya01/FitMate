@@ -10,26 +10,21 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Collections.Generic;
+using FitMate.Core.UnitOfWork;
 
 namespace FitMate.Controllers
 {
-
-    [Authorize]
     public class NutritionController : FitMateControllerBase
     {
-
-        public NutritionController(
-            FitMateContext context,
+        public NutritionController(FitMateContext context,
             UserManager<FitnessUser> userManager,
-            IMediator mediator
-            ) : base(
-                context,
-                userManager,
-                mediator
-                )
-        {
-
-        }
+            IMediator mediator,
+            IUnitOfWork unitOfWork)
+            : base(context,
+                  userManager,
+                  mediator,
+                  unitOfWork) { }
 
         [HttpGet]
         public async Task<IActionResult> AddFood(DateTime date)
@@ -37,12 +32,12 @@ namespace FitMate.Controllers
             if (date.Ticks == 0) date = DateTime.Today;
             ViewData["selectedDate"] = date;
 
-            var currentUser = await _userManager.GetUserAsync(HttpContext.User);
+            var currentUserId = await GetUserIdAsync();
 
             var model = new NewFoodModel()
             {
-                FoodRecords = await _context.FoodRecords.Where(record => record.User == currentUser && record.ConsumptionDate == date).ToArrayAsync(),
-                UserFoods = await _context.Foods.ToArrayAsync()
+                FoodRecords = await _context.FoodRecords.Where(r => r.UserId == currentUserId && r.ConsumptionDate == date).ToListAsync(),
+                UserFoods = await _context.Foods.ToListAsync()
             };
 
             return View(model);
@@ -51,7 +46,7 @@ namespace FitMate.Controllers
         [HttpPost]
         public async Task<IActionResult> AddNewFood(Food food)
         {
-            if (food.Id == 0)  _context.Foods.Add(food);
+            if (food.Id == Guid.Empty)  _context.Foods.Add(food);
             else _context.Foods.Update(food);
 
             await _context.SaveChangesAsync();
@@ -60,13 +55,13 @@ namespace FitMate.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> EditRecords(DateTime date, long[] foodIDs, float[] quantities)
+        public async Task<IActionResult> EditRecords(DateTime date, Guid[] foodIDs, float[] quantities)
         {
             if (foodIDs.Length != quantities.Length || foodIDs.Length == 0) return BadRequest();
 
             var currentUser = await GetUserAsync();
 
-            var existingRecords = await _context.FoodRecords.Where(record => record.User == currentUser && record.ConsumptionDate == date).ToArrayAsync();
+            var existingRecords = await _context.FoodRecords.Where(record => record.User == currentUser && record.ConsumptionDate == date).ToListAsync();
             _context.FoodRecords.RemoveRange(existingRecords);
 
             var newRecords = new FoodRecord[foodIDs.Length];
@@ -87,7 +82,7 @@ namespace FitMate.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> DeleteFood(long Id)
+        public async Task<IActionResult> DeleteFood(Guid Id)
         {
             var currentUser = await _userManager.GetUserAsync(HttpContext.User);
 
@@ -108,7 +103,7 @@ namespace FitMate.Controllers
             var userRecords = await _context.FoodRecords
                 .Where(record => record.User == currentUser && record.ConsumptionDate >= DateTime.Today.AddDays(-28))
                 .Include(record => record.Food)
-                .ToArrayAsync();
+                .ToListAsync();
 
             var userTarget = await _context.NutritionTargets.FirstOrDefaultAsync(record => record.User == currentUser);
             userTarget ??= new NutritionTarget();
@@ -132,17 +127,17 @@ namespace FitMate.Controllers
                 .ToArrayAsync();
 
             var result = records
-            .GroupBy(record => record.ConsumptionDate)
-            .Select(grouping =>
-            new
-            {
-                Date = grouping.Key.ToString("d"),
-                Calories = grouping.Sum(r => r.Food.Calories),
-                Carbs = grouping.Sum(r => r.Food.Carbohydrates),
-                Protein = grouping.Sum(r => r.Food.Protein),
-                Fat = grouping.Sum(r => r.Food.Fat)
-            })
-            .ToArray();
+                .GroupBy(record => record.ConsumptionDate)
+                .Select(grouping =>
+                new
+                {
+                    Date = grouping.Key.ToString("d"),
+                    Calories = grouping.Sum(r => r.Food.Calories),
+                    Carbs = grouping.Sum(r => r.Food.Carbohydrates),
+                    Protein = grouping.Sum(r => r.Food.Protein),
+                    Fat = grouping.Sum(r => r.Food.Fat)
+                })
+                .ToList();
 
             return Json(result);
         }
@@ -151,12 +146,12 @@ namespace FitMate.Controllers
 
     public class NewFoodModel
     {
-        public Food[] UserFoods { get; set; }
-        public FoodRecord[] FoodRecords { get; set; }
+        public List<Food> UserFoods { get; set; }
+        public List<FoodRecord> FoodRecords { get; set; }
     }
     public class NutritionSummaryModel
     {
-        public FoodRecord[] Records { get; set; }
+        public List<FoodRecord> Records { get; set; }
         public NutritionTarget Target { get; set; }
     }
 }

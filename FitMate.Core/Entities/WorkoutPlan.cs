@@ -5,7 +5,7 @@ namespace FitMate.Infrastructure.Entities;
 
 public class WorkoutPlan : IEntity
 {
-    public long Id { get; set; }
+    public Guid Id { get; set; }
 
     public string Name { get; set; }
     public string SessionsJSON { get; set; }

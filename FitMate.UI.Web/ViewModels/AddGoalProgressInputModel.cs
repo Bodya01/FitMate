@@ -6,8 +6,7 @@ namespace FitMate.ViewModels
     public class AddGoalProgressInputModel
     {
         [Required]
-        [Range(0, long.MaxValue)]
-        public long GoalId { get; set; }
+        public Guid GoalId { get; set; }
         [Required]
         [MaxLength(20)]
         public string Type { get; set; }

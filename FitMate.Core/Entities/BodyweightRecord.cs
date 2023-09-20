@@ -2,7 +2,7 @@
 
 public class BodyweightRecord : IEntity
 {
-    public long Id { get; set; }
+    public Guid Id { get; set; }
 
     public DateTime Date { get; set; }
     public float Weight { get; set; }

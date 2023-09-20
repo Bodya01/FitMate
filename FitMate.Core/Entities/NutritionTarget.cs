@@ -2,7 +2,7 @@
 
 public class NutritionTarget : IEntity
 {
-    public long Id { get; set; }
+    public Guid Id { get; set; }
 
     public int DailyCalories { get; set; }
     public int DailyCarbohydrates { get; set; }

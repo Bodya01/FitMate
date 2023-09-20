@@ -1,4 +1,4 @@
-﻿using FitMate.Data;
+﻿using FitMate.Core.UnitOfWork;
 using MediatR;
 
 namespace FitMate.Applcation.Commands.WorkoutPlan
@@ -10,25 +10,23 @@ namespace FitMate.Applcation.Commands.WorkoutPlan
 
     public class EditWorkoutPlanCommandHandler : IRequestHandler<EditWorkoutPlanCommand, Unit>
     {
-        public FitMateContext _context { get; set; }
+        private readonly IUnitOfWork _unitOfWork;
 
-        public EditWorkoutPlanCommandHandler(FitMateContext context)
+        public EditWorkoutPlanCommandHandler(IUnitOfWork unitOfWork)
         {
-            _context = context;
+            _unitOfWork = unitOfWork;
         }
 
         public async Task<Unit> Handle(EditWorkoutPlanCommand request, CancellationToken cancellationToken)
         {
-            if (request.WorkoutPlan.Id == 0)
+            if (request.WorkoutPlan!.Id == Guid.Empty)
             {
-                _context.WorkoutPlans.Add(request.WorkoutPlan);
+                await _unitOfWork.WorkoutPlanRepository.Value.AddAsync(request.WorkoutPlan);
             }
             else
             {
-                _context.WorkoutPlans.Update(request.WorkoutPlan);
+                await _unitOfWork.WorkoutPlanRepository.Value.UpdateAsync(request.WorkoutPlan);
             }
-
-            await _context.SaveChangesAsync();
 
             return Unit.Value;
         }

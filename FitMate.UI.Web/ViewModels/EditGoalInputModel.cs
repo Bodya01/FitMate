@@ -5,8 +5,7 @@ namespace FitMate.ViewModels
 {
     public class EditGoalInputModel
     {
-        [Range(0, double.MaxValue)]
-        public int Id { get; set; }
+        public Guid Id { get; set; }
         [Required]
         [MaxLength(30)]
         public string Activity { get; set; }

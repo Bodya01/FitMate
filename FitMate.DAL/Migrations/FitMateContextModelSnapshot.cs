@@ -4,82 +4,52 @@ using FitMate.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
-using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
-namespace FitMate.Migrations
+#nullable disable
+
+namespace FitMate.Core.Migrations
 {
     [DbContext(typeof(FitMateContext))]
-    [Migration("20201211033005_UpdateWorkoutDeleteCascade")]
-    partial class UpdateWorkoutDeleteCascade
+    partial class FitMateContextModelSnapshot : ModelSnapshot
     {
-        protected override void BuildTargetModel(ModelBuilder modelBuilder)
+        protected override void BuildModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "3.1.9")
-                .HasAnnotation("Relational:MaxIdentifierLength", 128)
-                .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                .HasAnnotation("ProductVersion", "7.0.11")
+                .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
-            modelBuilder.Entity("FitMate.Data.NutritionTarget", b =>
-                {
-                    b.Property<long>("ID")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int>("DailyCalories")
-                        .HasColumnType("int");
-
-                    b.Property<int>("DailyCarbohydrates")
-                        .HasColumnType("int");
-
-                    b.Property<int>("DailyFat")
-                        .HasColumnType("int");
-
-                    b.Property<int>("DailyProtein")
-                        .HasColumnType("int");
-
-                    b.Property<string>("UserId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
-
-                    b.HasKey("ID");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("NutritionTargets");
-                });
+            SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
             modelBuilder.Entity("FitMate.Infrastructure.Entities.BodyweightRecord", b =>
                 {
-                    b.Property<long>("ID")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime>("Date")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("UserId")
+                        .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<float>("Weight")
                         .HasColumnType("real");
 
-                    b.HasKey("ID");
+                    b.HasKey("Id");
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("BodyweightRecords");
+                    b.ToTable("BodyweightRecords", (string)null);
                 });
 
             modelBuilder.Entity("FitMate.Infrastructure.Entities.BodyweightTarget", b =>
                 {
-                    b.Property<long>("ID")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime>("TargetDate")
                         .HasColumnType("datetime2");
@@ -88,13 +58,14 @@ namespace FitMate.Migrations
                         .HasColumnType("real");
 
                     b.Property<string>("UserId")
+                        .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
-                    b.HasKey("ID");
+                    b.HasKey("Id");
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("BodyweightTargets");
+                    b.ToTable("BodyweightTargets", (string)null);
                 });
 
             modelBuilder.Entity("FitMate.Infrastructure.Entities.FitnessUser", b =>
@@ -113,19 +84,22 @@ namespace FitMate.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Email")
-                        .HasColumnType("nvarchar(256)")
-                        .HasMaxLength(256);
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
 
                     b.Property<bool>("EmailConfirmed")
                         .HasColumnType("bit");
 
                     b.Property<string>("FirstName")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Gender")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("LastName")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("LockoutEnabled")
@@ -135,12 +109,12 @@ namespace FitMate.Migrations
                         .HasColumnType("datetimeoffset");
 
                     b.Property<string>("NormalizedEmail")
-                        .HasColumnType("nvarchar(256)")
-                        .HasMaxLength(256);
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
 
                     b.Property<string>("NormalizedUserName")
-                        .HasColumnType("nvarchar(256)")
-                        .HasMaxLength(256);
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
 
                     b.Property<string>("PasswordHash")
                         .HasColumnType("nvarchar(max)");
@@ -158,38 +132,33 @@ namespace FitMate.Migrations
                         .HasColumnType("bit");
 
                     b.Property<string>("UserName")
-                        .HasColumnType("nvarchar(256)")
-                        .HasMaxLength(256);
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
 
                     b.HasKey("Id");
 
                     b.HasIndex("NormalizedEmail")
-                        .HasName("EmailIndex");
+                        .HasDatabaseName("EmailIndex");
 
                     b.HasIndex("NormalizedUserName")
                         .IsUnique()
-                        .HasName("UserNameIndex")
+                        .HasDatabaseName("UserNameIndex")
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
-                    b.ToTable("AspNetUsers");
+                    b.ToTable("AspNetUsers", (string)null);
                 });
 
             modelBuilder.Entity("FitMate.Infrastructure.Entities.Food", b =>
                 {
-                    b.Property<long>("ID")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<int>("Calories")
                         .HasColumnType("int");
 
                     b.Property<int>("Carbohydrates")
                         .HasColumnType("int");
-
-                    b.Property<string>("CreatedByID")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
 
                     b.Property<int>("Fat")
                         .HasColumnType("int");
@@ -207,25 +176,22 @@ namespace FitMate.Migrations
                     b.Property<int>("ServingUnit")
                         .HasColumnType("int");
 
-                    b.HasKey("ID");
+                    b.HasKey("Id");
 
-                    b.HasIndex("CreatedByID");
-
-                    b.ToTable("UserFoods");
+                    b.ToTable("Foods", (string)null);
                 });
 
             modelBuilder.Entity("FitMate.Infrastructure.Entities.FoodRecord", b =>
                 {
-                    b.Property<long>("ID")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime>("ConsumptionDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<long>("FoodID")
-                        .HasColumnType("bigint");
+                    b.Property<Guid>("FoodId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<float>("Quantity")
                         .HasColumnType("real");
@@ -234,23 +200,23 @@ namespace FitMate.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
-                    b.HasKey("ID");
+                    b.HasKey("Id");
 
-                    b.HasIndex("FoodID");
+                    b.HasIndex("FoodId");
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("FoodRecords");
+                    b.ToTable("FoodRecords", (string)null);
                 });
 
             modelBuilder.Entity("FitMate.Infrastructure.Entities.Goal", b =>
                 {
-                    b.Property<long>("ID")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Activity")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Discriminator")
@@ -258,23 +224,25 @@ namespace FitMate.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("UserId")
+                        .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
-                    b.HasKey("ID");
+                    b.HasKey("Id");
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Goals");
+                    b.ToTable("Goals", (string)null);
 
                     b.HasDiscriminator<string>("Discriminator").HasValue("Goal");
+
+                    b.UseTphMappingStrategy();
                 });
 
             modelBuilder.Entity("FitMate.Infrastructure.Entities.GoalProgress", b =>
                 {
-                    b.Property<long>("ID")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime>("Date")
                         .HasColumnType("datetime2");
@@ -283,62 +251,66 @@ namespace FitMate.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<long?>("GoalID")
-                        .HasColumnType("bigint");
+                    b.Property<Guid>("GoalId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("UserId")
+                        .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
-                    b.HasKey("ID");
+                    b.HasKey("Id");
 
-                    b.HasIndex("GoalID");
+                    b.HasIndex("GoalId");
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("GoalProgressRecords");
+                    b.ToTable("GoalProgressRecords", (string)null);
 
                     b.HasDiscriminator<string>("Discriminator").HasValue("GoalProgress");
+
+                    b.UseTphMappingStrategy();
                 });
 
-            modelBuilder.Entity("FitMate.Infrastructure.Entities.WorkoutActivity", b =>
+            modelBuilder.Entity("FitMate.Infrastructure.Entities.NutritionTarget", b =>
                 {
-                    b.Property<long>("ID")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Quantity")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("RestPeriodSeconds")
+                    b.Property<int>("DailyCalories")
                         .HasColumnType("int");
 
-                    b.Property<long>("SessionID")
-                        .HasColumnType("bigint");
-
-                    b.Property<int>("Sets")
+                    b.Property<int>("DailyCarbohydrates")
                         .HasColumnType("int");
 
-                    b.HasKey("ID");
+                    b.Property<int>("DailyFat")
+                        .HasColumnType("int");
 
-                    b.HasIndex("SessionID");
+                    b.Property<int>("DailyProtein")
+                        .HasColumnType("int");
 
-                    b.ToTable("WorkoutActivities");
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("NutritionTargets", (string)null);
                 });
 
             modelBuilder.Entity("FitMate.Infrastructure.Entities.WorkoutPlan", b =>
                 {
-                    b.Property<long>("ID")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("SessionsJSON")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -346,35 +318,11 @@ namespace FitMate.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
-                    b.HasKey("ID");
+                    b.HasKey("Id");
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("WorkoutPlans");
-                });
-
-            modelBuilder.Entity("FitMate.Infrastructure.Entities.WorkoutSession", b =>
-                {
-                    b.Property<long>("ID")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int>("DayNumber")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<long>("PlanID")
-                        .HasColumnType("bigint");
-
-                    b.HasKey("ID");
-
-                    b.HasIndex("PlanID");
-
-                    b.ToTable("WorkoutSessions");
+                    b.ToTable("WorkoutPlans", (string)null);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -387,29 +335,30 @@ namespace FitMate.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Name")
-                        .HasColumnType("nvarchar(256)")
-                        .HasMaxLength(256);
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
 
                     b.Property<string>("NormalizedName")
-                        .HasColumnType("nvarchar(256)")
-                        .HasMaxLength(256);
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
 
                     b.HasKey("Id");
 
                     b.HasIndex("NormalizedName")
                         .IsUnique()
-                        .HasName("RoleNameIndex")
+                        .HasDatabaseName("RoleNameIndex")
                         .HasFilter("[NormalizedName] IS NOT NULL");
 
-                    b.ToTable("AspNetRoles");
+                    b.ToTable("AspNetRoles", (string)null);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("ClaimType")
                         .HasColumnType("nvarchar(max)");
@@ -425,15 +374,16 @@ namespace FitMate.Migrations
 
                     b.HasIndex("RoleId");
 
-                    b.ToTable("AspNetRoleClaims");
+                    b.ToTable("AspNetRoleClaims", (string)null);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("ClaimType")
                         .HasColumnType("nvarchar(max)");
@@ -449,7 +399,7 @@ namespace FitMate.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("AspNetUserClaims");
+                    b.ToTable("AspNetUserClaims", (string)null);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
@@ -471,7 +421,7 @@ namespace FitMate.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("AspNetUserLogins");
+                    b.ToTable("AspNetUserLogins", (string)null);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<string>", b =>
@@ -486,7 +436,7 @@ namespace FitMate.Migrations
 
                     b.HasIndex("RoleId");
 
-                    b.ToTable("AspNetUserRoles");
+                    b.ToTable("AspNetUserRoles", (string)null);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
@@ -505,7 +455,7 @@ namespace FitMate.Migrations
 
                     b.HasKey("UserId", "LoginProvider", "Name");
 
-                    b.ToTable("AspNetUserTokens");
+                    b.ToTable("AspNetUserTokens", (string)null);
                 });
 
             modelBuilder.Entity("FitMate.Infrastructure.Entities.TimedGoal", b =>
@@ -516,6 +466,7 @@ namespace FitMate.Migrations
                         .HasColumnType("real");
 
                     b.Property<string>("QuantityUnit")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<TimeSpan>("Time")
@@ -563,96 +514,97 @@ namespace FitMate.Migrations
                     b.HasDiscriminator().HasValue("WeightliftingProgress");
                 });
 
-            modelBuilder.Entity("FitMate.Data.NutritionTarget", b =>
-                {
-                    b.HasOne("FitMate.Infrastructure.Entities.FitnessUser", "User")
-                        .WithMany()
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
             modelBuilder.Entity("FitMate.Infrastructure.Entities.BodyweightRecord", b =>
                 {
                     b.HasOne("FitMate.Infrastructure.Entities.FitnessUser", "User")
-                        .WithMany()
-                        .HasForeignKey("UserId");
+                        .WithMany("BodyweightRecords")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("FitMate.Infrastructure.Entities.BodyweightTarget", b =>
                 {
                     b.HasOne("FitMate.Infrastructure.Entities.FitnessUser", "User")
-                        .WithMany()
-                        .HasForeignKey("UserId");
-                });
-
-            modelBuilder.Entity("FitMate.Infrastructure.Entities.Food", b =>
-                {
-                    b.HasOne("FitMate.Infrastructure.Entities.FitnessUser", "CreatedBy")
-                        .WithMany()
-                        .HasForeignKey("CreatedByID")
-                        .OnDelete(DeleteBehavior.ClientCascade)
+                        .WithMany("BodyweightTargets")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("FitMate.Infrastructure.Entities.FoodRecord", b =>
                 {
                     b.HasOne("FitMate.Infrastructure.Entities.Food", "Food")
-                        .WithMany()
-                        .HasForeignKey("FoodID")
+                        .WithMany("FoodRecords")
+                        .HasForeignKey("FoodId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("FitMate.Infrastructure.Entities.FitnessUser", "User")
-                        .WithMany()
+                        .WithMany("FoodRecords")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Food");
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("FitMate.Infrastructure.Entities.Goal", b =>
                 {
                     b.HasOne("FitMate.Infrastructure.Entities.FitnessUser", "User")
-                        .WithMany()
-                        .HasForeignKey("UserId");
+                        .WithMany("Goals")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("FitMate.Infrastructure.Entities.GoalProgress", b =>
                 {
                     b.HasOne("FitMate.Infrastructure.Entities.Goal", "Goal")
-                        .WithMany()
-                        .HasForeignKey("GoalID");
+                        .WithMany("GoalProgressRecords")
+                        .HasForeignKey("GoalId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
 
                     b.HasOne("FitMate.Infrastructure.Entities.FitnessUser", "User")
-                        .WithMany()
-                        .HasForeignKey("UserId");
-                });
-
-            modelBuilder.Entity("FitMate.Infrastructure.Entities.WorkoutActivity", b =>
-                {
-                    b.HasOne("FitMate.Infrastructure.Entities.WorkoutSession", "Session")
-                        .WithMany("Activities")
-                        .HasForeignKey("SessionID")
+                        .WithMany("GoalProgressRecords")
+                        .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Goal");
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("FitMate.Infrastructure.Entities.NutritionTarget", b =>
+                {
+                    b.HasOne("FitMate.Infrastructure.Entities.FitnessUser", "User")
+                        .WithMany("NutritionTargets")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("FitMate.Infrastructure.Entities.WorkoutPlan", b =>
                 {
                     b.HasOne("FitMate.Infrastructure.Entities.FitnessUser", "User")
-                        .WithMany()
+                        .WithMany("WorkoutPlans")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-                });
 
-            modelBuilder.Entity("FitMate.Infrastructure.Entities.WorkoutSession", b =>
-                {
-                    b.HasOne("FitMate.Infrastructure.Entities.WorkoutPlan", "Plan")
-                        .WithMany("Sessions")
-                        .HasForeignKey("PlanID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -704,6 +656,33 @@ namespace FitMate.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("FitMate.Infrastructure.Entities.FitnessUser", b =>
+                {
+                    b.Navigation("BodyweightRecords");
+
+                    b.Navigation("BodyweightTargets");
+
+                    b.Navigation("FoodRecords");
+
+                    b.Navigation("GoalProgressRecords");
+
+                    b.Navigation("Goals");
+
+                    b.Navigation("NutritionTargets");
+
+                    b.Navigation("WorkoutPlans");
+                });
+
+            modelBuilder.Entity("FitMate.Infrastructure.Entities.Food", b =>
+                {
+                    b.Navigation("FoodRecords");
+                });
+
+            modelBuilder.Entity("FitMate.Infrastructure.Entities.Goal", b =>
+                {
+                    b.Navigation("GoalProgressRecords");
                 });
 #pragma warning restore 612, 618
         }

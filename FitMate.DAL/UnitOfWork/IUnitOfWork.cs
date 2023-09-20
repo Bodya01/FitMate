@@ -4,7 +4,10 @@ namespace FitMate.Core.UnitOfWork
 {
     public interface IUnitOfWork
     {
-        Lazy<IBodyweightRepository> BodyweightRepository { get; }
-        Lazy<IGoalRepository> GoalRepository { get; }  
+        Lazy<IBodyweightRecordRepository> BodyweightRecordRepository { get; }
+        Lazy<IBodyweightTargetRepository> BodyweightTargetRepository { get; }
+        Lazy<IGoalRepository> GoalRepository { get; }
+        Lazy<IGoalProgressRepository> GoalProgressRepository { get; }
+        Lazy<IWorkoutPlanRepository> WorkoutPlanRepository { get; }
     }
 }

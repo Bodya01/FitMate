@@ -13,16 +13,16 @@ namespace FitMate.Applcation.Commands.Bodyweight
 
     public class EditBodyweightRecordsCommandHandler : IRequestHandler<EditBodyweightRecordsCommand>
     {
-        private readonly IBodyweightRepository _bodyweightRepository;
+        private readonly IBodyweightRecordRepository _bodyweightRepository;
 
-        public EditBodyweightRecordsCommandHandler(IBodyweightRepository bodyweightRepository)
+        public EditBodyweightRecordsCommandHandler(IBodyweightRecordRepository bodyweightRepository)
         {
             _bodyweightRepository = bodyweightRepository;
         }
 
         public async Task Handle(EditBodyweightRecordsCommand command, CancellationToken cancellationToken)
         {
-            await _bodyweightRepository.DeleteExistingRecords(command.User.Id);
+            await _bodyweightRepository.DeleteAllForUser(command.User.Id);
 
             var records = new List<BodyweightRecord>();
 
@@ -37,7 +37,7 @@ namespace FitMate.Applcation.Commands.Bodyweight
                 records.Add(newRecord);
             }
 
-            await _bodyweightRepository.StoreBodyweightRecords(records);
+            await _bodyweightRepository.AddRangeAsync(records);
         }
     }
 }

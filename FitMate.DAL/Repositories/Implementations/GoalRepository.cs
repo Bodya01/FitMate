@@ -14,7 +14,7 @@ namespace FitMate.Core.Repositories.Implementations
             _context = context;
         }
 
-        public async Task DeleteGoalById(string userId, long goalId)
+        public async Task DeleteAsync(string userId, Guid goalId)
         {
             var existingGoal = await _context.Goals.FirstOrDefaultAsync(g => g.Id == goalId && g.UserId == userId);
 
@@ -25,13 +25,13 @@ namespace FitMate.Core.Repositories.Implementations
             await _context.SaveChangesAsync();
         }
 
-        public async Task<Goal[]> GetAllGoals(string userId) =>
-            await _context.Goals.Where(g => g.UserId == userId).ToArrayAsync();
+        public async Task<List<Goal>> GetAllForUserAsync(string userId) =>
+            await _context.Goals.Where(g => g.UserId == userId).ToListAsync();
 
-        public async Task<Goal> GetGoalById(string userId, long goalId) =>
+        public async Task<Goal> GetByIdAsync(string userId, Guid goalId) =>
             await _context.Goals.FirstOrDefaultAsync(g => g.Id == goalId && g.UserId == userId);
 
-        public async Task<GoalProgress[]> GetGoalProgress(string userId, long goalId, bool ascendingOrder = false)
+        public async Task<GoalProgress[]> GetGoalProgressAsync(string userId, Guid goalId, bool ascendingOrder = false)
         {
             var query = _context.GoalProgressRecords.Where(r => r.GoalId == goalId && r.UserId == userId);
 
@@ -42,17 +42,15 @@ namespace FitMate.Core.Repositories.Implementations
             return result;
         }
 
-        public async Task StoreGoal(Goal goal)
+        public async Task AddAsync(Goal goal)
         {
-            if (goal.Id == 0) _context.Goals.Add(goal);
-            else _context.Goals.Update(goal);
-
+            await _context.Goals.AddAsync(goal);
             await _context.SaveChangesAsync();
         }
 
-        public async Task StoreGoalProgress(GoalProgress progress)
+        public async Task UpdateAsync(Goal goal)
         {
-            _context.GoalProgressRecords.Add(progress);
+            _context.Goals.Update(goal);
             await _context.SaveChangesAsync();
         }
     }

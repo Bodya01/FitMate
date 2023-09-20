@@ -1,4 +1,4 @@
-﻿@model Goal[]
+﻿@model List<Goal>
 
 @{
     ViewData["Title"] = "Goals";
@@ -10,7 +10,7 @@
 </div>
 
 <div class="row">
-    @foreach (Goal goal in Model)
+    @foreach (var goal in Model)
     {
         <div class="col-3 mt-3">
             <div class="card">

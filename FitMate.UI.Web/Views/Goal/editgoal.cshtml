@@ -3,10 +3,10 @@
 @{
     ViewData["Title"] = "Edit Goal";
 
-    long id = Model == null ? 0 : Model.Id;
-    string activity = Model == null ? "" : Model.Activity;
-    bool isWeightliftingGoal = (Model == null || Model.GetType() == typeof(WeightliftingGoal));
-    bool isTimedGoal = Model?.GetType() == typeof(TimedGoal);
+    var id = Model == null ? Guid.Empty : Model.Id;
+    var activity = Model == null ? "" : Model.Activity;
+    var isWeightliftingGoal = (Model == null || Model.GetType() == typeof(WeightliftingGoal));
+    var isTimedGoal = Model?.GetType() == typeof(TimedGoal);
 
     WeightliftingGoal weightliftingGoal = null;
     TimedGoal timedGoal = null;

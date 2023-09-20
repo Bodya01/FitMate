@@ -29,8 +29,7 @@ namespace FitMate
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContext<FitMateContext>(options =>
-                options.UseSqlServer(
-                    Configuration.GetConnectionString("DefaultConnection")));
+                options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
             services.AddIdentity<FitnessUser, IdentityRole>()
                 .AddEntityFrameworkStores<FitMateContext>()
@@ -43,8 +42,11 @@ namespace FitMate
 
             services.AddMediatRAndHandlers();
 
-            services.AddTransient<IBodyweightRepository, BodyweightRepository>();
+            services.AddTransient<IBodyweightRecordRepository, BodyweightRecordRepository>();
+            services.AddTransient<IBodyweightTargetRepository, BodyweightTargetRepository>();
             services.AddTransient<IGoalRepository, GoalRepository>();
+            services.AddTransient<IGoalProgressRepository, GoalProgressRepository>();
+            services.AddTransient<IWorkoutPlanRepository, WorkoutPlanRepository>();
             services.AddTransient<IUnitOfWork, UnitOfWork>();
         }
 

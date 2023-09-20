@@ -4,11 +4,10 @@ namespace FitMate.Core.Repositories.Interfaces
 {
     public interface IGoalRepository
     {
-        public Task<Goal[]> GetAllGoals(string userId);
-        public Task<Goal> GetGoalById(string userId, long GoalID);
-        public Task DeleteGoalById(string userId, long GoalID);
-        public Task StoreGoal(Goal Goal);
-        public Task StoreGoalProgress(GoalProgress Progress);
-        public Task<GoalProgress[]> GetGoalProgress(string userId, long GoalID, bool AscendingOrder = false);
+        public Task<List<Goal>> GetAllForUserAsync(string userId);
+        public Task<Goal> GetByIdAsync(string userId, Guid goalId);
+        public Task DeleteAsync(string userId, Guid goalId);
+        public Task AddAsync(Goal Goal);
+        public Task UpdateAsync(Goal Goal);
     }
 }

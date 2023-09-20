@@ -1,4 +1,5 @@
-﻿using FitMate.Data;
+﻿using FitMate.Core.UnitOfWork;
+using FitMate.Data;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
@@ -6,7 +7,7 @@ namespace FitMate.Applcation.Queries.WorkoutPlan
 {
     public class GetWorkoutPlanByIdQuery : IRequest<GetWorkoutPlanByIdResponse>
     {
-        public long Id { get; set; }
+        public Guid Id { get; set; }
     }
 
     public class GetWorkoutPlanByIdResponse
@@ -16,18 +17,18 @@ namespace FitMate.Applcation.Queries.WorkoutPlan
 
     public class GetWorkoutPlanByIdQueryHandler : IRequestHandler<GetWorkoutPlanByIdQuery, GetWorkoutPlanByIdResponse>
     {
-        private readonly FitMateContext _context;
+        private readonly IUnitOfWork _unitOfWork;
 
-        public GetWorkoutPlanByIdQueryHandler(FitMateContext context)
+        public GetWorkoutPlanByIdQueryHandler(IUnitOfWork unitOfWork)
         {
-            _context = context;
+            _unitOfWork = unitOfWork;
         }
 
         public async Task<GetWorkoutPlanByIdResponse> Handle(GetWorkoutPlanByIdQuery request, CancellationToken cancellationToken)
         {
             var result = new GetWorkoutPlanByIdResponse
             {
-                WorkoutPlan = await _context.WorkoutPlans.FirstOrDefaultAsync(p => p.Id == request.Id)
+                WorkoutPlan = await _unitOfWork.WorkoutPlanRepository.Value.GetByIdAsync(request.Id),
             };
 
             return await Task.FromResult(result);

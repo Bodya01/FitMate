@@ -18,7 +18,8 @@ namespace FitMate.DAL.Maps
             builder.HasOne(g => g.Goal)
                 .WithMany(g => g.GoalProgressRecords)
                 .HasForeignKey(g => g.GoalId)
-                .HasPrincipalKey(g => g.Id);
+                .HasPrincipalKey(g => g.Id)
+                .OnDelete(DeleteBehavior.NoAction);
 
             builder.HasOne(g => g.User)
                 .WithMany(u => u.GoalProgressRecords)

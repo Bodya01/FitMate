@@ -1,10 +1,9 @@
-﻿using FitMate.Core.Repositories.Interfaces;
+﻿using FitMate.Core.UnitOfWork;
 using FitMate.Data;
 using FitMate.Infrastructure.Entities;
 using FitMate.UI.Web.Controllers.Base;
 using FitMate.ViewModels;
 using MediatR;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -13,29 +12,24 @@ using System.Threading.Tasks;
 
 namespace FitMate.Controllers
 {
-    [Authorize]
     public class GoalController : FitMateControllerBase
     {
-        private IGoalRepository _storageRepository;
 
         public GoalController
-            (IGoalRepository StorageService,
-            FitMateContext context,
+            (FitMateContext context,
             UserManager<FitnessUser> UserManager,
-            IMediator mediator)
+            IMediator mediator, IUnitOfWork unitOfWork)
             : base(context,
                   UserManager,
-                  mediator)
-        {
-            _storageRepository = StorageService;
-        }
+                  mediator,
+                  unitOfWork) { }
 
         [HttpGet]
         public async Task<IActionResult> Summary()
         {
             var currentUserId = await GetUserIdAsync();
 
-            var goals = await _storageRepository.GetAllGoals(currentUserId);
+            var goals = await _unitOfWork.GoalRepository.Value.GetAllForUserAsync(currentUserId);
 
             return View(goals);
         }
@@ -43,17 +37,17 @@ namespace FitMate.Controllers
         [HttpGet]
         public IActionResult AddGoal()
         {
-            var model = new WeightliftingGoal() { Id = 0 };
+            var model = new WeightliftingGoal { Id = Guid.Empty };
 
             return View("editgoal", model);
         }
 
         [HttpGet]
-        public async Task<IActionResult> EditGoal(long Id)
+        public async Task<IActionResult> EditGoal(Guid Id)
         {
             var currentUserId = await GetUserIdAsync();
 
-            var goal = await _storageRepository.GetGoalById(currentUserId, Id);
+            var goal = await _unitOfWork.GoalRepository.Value.GetByIdAsync(currentUserId, Id);
 
             if (goal is null) return BadRequest();
 
@@ -61,15 +55,15 @@ namespace FitMate.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> DeleteGoal(int Id)
+        public async Task<IActionResult> DeleteGoal(Guid Id)
         {
             var currentUserId = await GetUserIdAsync();
 
-            var goal = await _storageRepository.GetGoalById(currentUserId, Id);
+            var goal = await _unitOfWork.GoalRepository.Value.GetByIdAsync(currentUserId, Id);
 
             if (goal is null) return BadRequest();
 
-            await _storageRepository.DeleteGoalById(currentUserId, Id);
+            await _unitOfWork.GoalRepository.Value.DeleteAsync(currentUserId, Id);
 
             return RedirectToAction("Summary");
 
@@ -84,9 +78,9 @@ namespace FitMate.Controllers
 
             Goal goal = null;
 
-            if (goalInput.Id != 0)
+            if (goalInput.Id != Guid.Empty)
             {
-                goal = await _storageRepository.GetGoalById(currentUserId, goalInput.Id);
+                goal = await _unitOfWork.GoalRepository.Value.GetByIdAsync(currentUserId, goalInput.Id);
             }
             else
             {
@@ -117,7 +111,14 @@ namespace FitMate.Controllers
             goal.Activity = goalInput.Activity;
             goal.User = await GetUserAsync();
 
-            await _storageRepository.StoreGoal(goal);
+            if (goal.Id == Guid.Empty)
+            {
+                await _unitOfWork.GoalRepository.Value.AddAsync(goal);
+            }
+            else
+            {
+                await _unitOfWork.GoalRepository.Value.UpdateAsync(goal);
+            }
 
             return RedirectToAction("Summary");
         }
@@ -128,7 +129,7 @@ namespace FitMate.Controllers
             var currentUserId = await GetUserIdAsync();
             var currentUser = await GetUserAsync();
 
-            var goal = await _storageRepository.GetGoalById(currentUserId, progress.GoalId);
+            var goal = await _unitOfWork.GoalRepository.Value.GetByIdAsync(currentUserId, progress.GoalId);
 
             if (goal is null) return BadRequest();
 
@@ -158,21 +159,21 @@ namespace FitMate.Controllers
             newProgress.Date = progress.Date;
             newProgress.User = currentUser;
 
-            await _storageRepository.StoreGoalProgress(newProgress);
+            await _unitOfWork.GoalProgressRepository.Value.AddAsync(newProgress);
 
             return RedirectToAction("ViewGoal", new { ID = progress.GoalId });
         }
 
         [HttpGet]
-        public async Task<IActionResult> ViewGoal(long Id)
+        public async Task<IActionResult> ViewGoal(Guid Id)
         {
             var currentUserId = await GetUserIdAsync();
 
-            var goal = await _storageRepository.GetGoalById(currentUserId, Id);
+            var goal = await _unitOfWork.GoalRepository.Value.GetByIdAsync(currentUserId, Id);
 
             if (goal is null) return BadRequest();
 
-            var progress = await _storageRepository.GetGoalProgress(currentUserId, Id);
+            var progress = await _unitOfWork.GoalProgressRepository.Value.GetForUserAsync(currentUserId, Id);
 
             if (progress == null) return BadRequest();
 
@@ -186,28 +187,28 @@ namespace FitMate.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetWeightliftingProgress(long GoalId)
+        public async Task<IActionResult> GetWeightliftingProgress(Guid goalId)
         {
             var currentUserId = await GetUserIdAsync();
 
-            var progress = await _storageRepository.GetGoalProgress(currentUserId, GoalId, true);
-            var result = Array.ConvertAll(progress, item => (WeightliftingProgress)item)
+            var progress = await _unitOfWork.GoalProgressRepository.Value.GetForUserAsync(currentUserId, goalId, true);
+            var result = Array.ConvertAll(progress.ToArray(), item => (WeightliftingProgress)item)
                 .Select(record => new { Date = record.Date.ToString("d"), Weight = record.Weight, Reps = record.Reps })
-                .ToArray();
+                .ToList();
 
             return Json(result);
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetTimedProgress(long GoalId)
+        public async Task<IActionResult> GetTimedProgress(Guid goalId)
         {
             var currentUserId = await GetUserIdAsync();
 
-            var progress = await _storageRepository.GetGoalProgress(currentUserId, GoalId, true);
+            var progress = await _unitOfWork.GoalProgressRepository.Value.GetForUserAsync(currentUserId, goalId, true);
 
-            var result = Array.ConvertAll(progress, item => (TimedProgress)item)
+            var result = Array.ConvertAll(progress.ToArray(), item => (TimedProgress)item)
                 .Select(record => new { Date = record.Date.ToString("d"), Timespan = record.Time, Quantity = record.Quantity, QuantityUnit = record.QuantityUnit })
-                .ToArray();
+                .ToList();
 
             return Json(result);
         }

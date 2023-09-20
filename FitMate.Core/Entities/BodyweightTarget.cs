@@ -2,7 +2,7 @@
 
 public class BodyweightTarget : IEntity
 {
-    public long Id { get; set; }
+    public Guid Id { get; set; }
 
     public float TargetWeight { get; set; }
     public DateTime TargetDate { get; set; }

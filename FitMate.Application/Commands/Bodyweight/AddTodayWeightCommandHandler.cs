@@ -12,9 +12,9 @@ namespace FitMate.Applcation.Commands.Bodyweight
 
     public class AddTodayWeightCommandHandler : IRequestHandler<AddTodayWeightCommand>
     {
-        private readonly IBodyweightRepository _bodyweightRepository;
+        private readonly IBodyweightRecordRepository _bodyweightRepository;
 
-        public AddTodayWeightCommandHandler(IBodyweightRepository bodyweightRepository)
+        public AddTodayWeightCommandHandler(IBodyweightRecordRepository bodyweightRepository)
         {
             _bodyweightRepository = bodyweightRepository;
         }
@@ -28,7 +28,7 @@ namespace FitMate.Applcation.Commands.Bodyweight
                 Weight = request.Weight
             };
 
-            await _bodyweightRepository.StoreBodyweightRecord(newRecord);
+            await _bodyweightRepository.AddAsync(newRecord);
         }
     }
 }

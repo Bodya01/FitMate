@@ -3,7 +3,6 @@ using FitMate.Data;
 using FitMate.UI.Web.Controllers.Base;
 using FitMate.ViewModels;
 using MediatR;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -11,27 +10,20 @@ using System.Linq;
 using System.Threading.Tasks;
 using FitMate.Applcation.Commands.Bodyweight;
 using FitMate.Core.Repositories.Interfaces;
+using FitMate.Core.UnitOfWork;
 
 namespace FitMate.Controllers
 {
-    [Authorize]
     public class BodyweightController : FitMateControllerBase
     {
-        private readonly IBodyweightRepository _bodyweightRepository;
-
-        public BodyweightController(
-            IBodyweightRepository bodyweightRepository,
-            FitMateContext context,
+        public BodyweightController(FitMateContext context,
             UserManager<FitnessUser> userManager,
-            IMediator mediator
-            ) : base(
+            IMediator mediator,
+            IUnitOfWork unitOfWork) : base(
                 context,
                 userManager,
-                mediator
-                )
-        {
-            _bodyweightRepository = bodyweightRepository;
-        }
+                mediator,
+                unitOfWork) { }
 
         public IActionResult Index()
         {
@@ -42,8 +34,8 @@ namespace FitMate.Controllers
         {
             var currentUserId = await GetUserIdAsync();
 
-            var records = await _bodyweightRepository.GetBodyweightRecords(currentUserId);
-            var target = await _bodyweightRepository.GetBodyweightTarget(currentUserId);
+            var records = await _unitOfWork.BodyweightRecordRepository.Value.GetAllForUserAsync(currentUserId);
+            var target = await _unitOfWork.BodyweightTargetRepository.Value.GetForUserAsync(currentUserId);
 
             var viewModel = new BodyweightSummaryViewModel(records, target);
 
@@ -55,7 +47,7 @@ namespace FitMate.Controllers
         {
             var currentUserId = await GetUserIdAsync();
 
-            var target = await _bodyweightRepository.GetBodyweightTarget(currentUserId);
+            var target = await _unitOfWork.BodyweightTargetRepository.Value.GetForUserAsync(currentUserId);
 
             return View(target);
         }
@@ -71,12 +63,17 @@ namespace FitMate.Controllers
             var currentUserId = await GetUserIdAsync();
             var currentUser = await GetUserAsync();
 
-            var newTarget = await _bodyweightRepository.GetBodyweightTarget(currentUserId);
+            var newTarget = await _unitOfWork.BodyweightTargetRepository.Value.GetForUserAsync(currentUserId);
+
             newTarget ??= new BodyweightTarget() { User = currentUser };
 
             newTarget.TargetWeight = targetWeight;
             newTarget.TargetDate = targetDate;
-            await _bodyweightRepository.StoreBodyweightTarget(newTarget);
+
+            if (newTarget.Id == Guid.Empty)     await _unitOfWork.BodyweightTargetRepository.Value.AddAsync(newTarget);
+            else                                await _unitOfWork.BodyweightTargetRepository.Value.UpdateAsync(newTarget);
+
+            await _unitOfWork.BodyweightTargetRepository.Value.UpdateAsync(newTarget);
 
             return RedirectToAction("Summary");
         }
@@ -86,7 +83,7 @@ namespace FitMate.Controllers
         {
             var currentUserId = await GetUserIdAsync();
 
-            var records = await _bodyweightRepository.GetBodyweightRecords(currentUserId);
+            var records = await _unitOfWork.BodyweightRecordRepository.Value.GetAllForUserAsync(currentUserId);
 
             return View(records);
         }
@@ -133,7 +130,7 @@ namespace FitMate.Controllers
         {
             var currentUserId = await GetUserIdAsync();
 
-            var records = await _bodyweightRepository.GetBodyweightRecords(currentUserId, true);
+            var records = await _unitOfWork.BodyweightRecordRepository.Value.GetAllForUserAsync(currentUserId, true);
 
             var result = records.Select(record => new { Date = record.Date.ToString("d"), Weight = record.Weight }).ToArray();
 
