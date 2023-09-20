@@ -1,9 +1,13 @@
 ﻿using FitMate.Data;
-using FitMate.Handlers.Handlers.WorkoutPlan.Models.Requests;
 using MediatR;
 
-namespace FitMate.Handlers.Handlers.WorkoutPlan.Commands
+namespace FitMate.Applcation.Commands.WorkoutPlan
 {
+    public class EditWorkoutPlanCommand : IRequest<Unit>
+    {
+        public Infrastructure.Entities.WorkoutPlan? WorkoutPlan { get; set; }
+    }
+
     public class EditWorkoutPlanCommandHandler : IRequestHandler<EditWorkoutPlanCommand, Unit>
     {
         public FitMateContext _context { get; set; }

@@ -1,10 +1,16 @@
 ﻿using FitMate.Infrastructure.Entities;
 using FitMate.Data;
-using FitMate.Handlers.Handlers.Bodyweight.Models.Requests;
 using MediatR;
 
-namespace FitMate.Handlers.Handlers.Bodyweight.Commands
+namespace FitMate.Applcation.Commands.Bodyweight
 {
+    public class EditBodyweightRecordsCommand : IRequest
+    {
+        public DateTime[] RecordDates { get; set; }
+        public float[] recordWeights { get; set; }
+        public FitnessUser User { get; set; }
+    }
+
     public class EditBodyweightRecordsCommandHandler : IRequestHandler<EditBodyweightRecordsCommand>
     {
         private readonly IBodyweightRepository _bodyweightRepository;

@@ -1,7 +1,5 @@
 ﻿using FitMate.Infrastructure.Entities;
 using FitMate.Data;
-using FitMate.Handlers.Handlers.WorkoutPlan.Models.Requests;
-using FitMate.Handlers.Handlers.WorkoutPlan.Models.WorkoutPlan.Requests;
 using FitMate.UI.Web.Controllers.Base;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
@@ -9,6 +7,8 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System.Linq;
 using System.Threading.Tasks;
+using FitMate.Applcation.Queries.WorkoutPlan;
+using FitMate.Applcation.Commands.WorkoutPlan;
 
 namespace FitMate.Controllers
 {

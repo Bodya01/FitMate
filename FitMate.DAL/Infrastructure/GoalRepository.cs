@@ -1,7 +1,5 @@
 ﻿using FitMate.Infrastructure.Entities;
 using Microsoft.EntityFrameworkCore;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace FitMate.Data
 {

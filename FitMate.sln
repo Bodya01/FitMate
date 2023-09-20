@@ -4,20 +4,14 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 VisualStudioVersion = 17.4.33205.214
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FitMate.Presentation", "FitMate.UI.Web\FitMate.Presentation.csproj", "{45D809F0-1872-4A00-8BB9-BEBC247A5D1A}"
-	ProjectSection(ProjectDependencies) = postProject
-		{2923A6FC-2F69-4A67-AB00-A41FE86AE477} = {2923A6FC-2F69-4A67-AB00-A41FE86AE477}
-	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FitMate.Core", "FitMate.DAL\FitMate.Core.csproj", "{CADF3DA3-5E46-4598-B6BB-D442944920A2}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FitMate.Handlers", "FitMate.Handlers\FitMate.Handlers.csproj", "{2923A6FC-2F69-4A67-AB00-A41FE86AE477}"
-	ProjectSection(ProjectDependencies) = postProject
-		{CADF3DA3-5E46-4598-B6BB-D442944920A2} = {CADF3DA3-5E46-4598-B6BB-D442944920A2}
-	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FitMate.Infrastucture", "FitMate.Core\FitMate.Infrastucture.csproj", "{93AF4C69-667A-4A47-8B58-B84B4253A82B}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FitMate.Business", "FitMate.Business\FitMate.Business.csproj", "{EFD785F3-9F55-41B8-892D-D3E6EE32385D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FitMate.Application", "FitMate.Application\FitMate.Application.csproj", "{0BCBFFC7-E587-4478-9E36-69F8CAF9C7F0}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,10 +27,6 @@ Global
 		{CADF3DA3-5E46-4598-B6BB-D442944920A2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CADF3DA3-5E46-4598-B6BB-D442944920A2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CADF3DA3-5E46-4598-B6BB-D442944920A2}.Release|Any CPU.Build.0 = Release|Any CPU
-		{2923A6FC-2F69-4A67-AB00-A41FE86AE477}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{2923A6FC-2F69-4A67-AB00-A41FE86AE477}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{2923A6FC-2F69-4A67-AB00-A41FE86AE477}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{2923A6FC-2F69-4A67-AB00-A41FE86AE477}.Release|Any CPU.Build.0 = Release|Any CPU
 		{93AF4C69-667A-4A47-8B58-B84B4253A82B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{93AF4C69-667A-4A47-8B58-B84B4253A82B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{93AF4C69-667A-4A47-8B58-B84B4253A82B}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -45,6 +35,10 @@ Global
 		{EFD785F3-9F55-41B8-892D-D3E6EE32385D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EFD785F3-9F55-41B8-892D-D3E6EE32385D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{EFD785F3-9F55-41B8-892D-D3E6EE32385D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0BCBFFC7-E587-4478-9E36-69F8CAF9C7F0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0BCBFFC7-E587-4478-9E36-69F8CAF9C7F0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0BCBFFC7-E587-4478-9E36-69F8CAF9C7F0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0BCBFFC7-E587-4478-9E36-69F8CAF9C7F0}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

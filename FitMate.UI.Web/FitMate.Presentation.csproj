@@ -23,8 +23,8 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\FitMate.Application\FitMate.Application.csproj" />
     <ProjectReference Include="..\FitMate.DAL\FitMate.Core.csproj" />
-    <ProjectReference Include="..\FitMate.Handlers\FitMate.Handlers.csproj" />
   </ItemGroup>
 
   <ItemGroup>

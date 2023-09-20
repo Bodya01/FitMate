@@ -1,6 +1,5 @@
 ﻿using FitMate.Infrastructure.Entities;
 using FitMate.Data;
-using FitMate.Handlers.Handlers.Bodyweight.Models.Requests;
 using FitMate.UI.Web.Controllers.Base;
 using FitMate.ViewModels;
 using MediatR;
@@ -8,9 +7,9 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using FitMate.Applcation.Commands.Bodyweight;
 
 namespace FitMate.Controllers
 {

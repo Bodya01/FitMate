@@ -1,10 +1,15 @@
-﻿using FitMate.Infrastructure.Entities;
-using FitMate.Data;
-using FitMate.Handlers.Handlers.Bodyweight.Models.Requests;
+﻿using FitMate.Data;
+using FitMate.Infrastructure.Entities;
 using MediatR;
 
-namespace FitMate.Handlers.Handlers.Bodyweight.Commands
-{
+namespace FitMate.Applcation.Commands.Bodyweight
+{    
+    public class AddTodayWeightCommand : IRequest
+    {
+        public float Weight { get; set; }
+        public FitnessUser User { get; set; }
+    }
+
     public class AddTodayWeightCommandHandler : IRequestHandler<AddTodayWeightCommand>
     {
         private readonly IBodyweightRepository _bodyweightRepository;
@@ -16,7 +21,7 @@ namespace FitMate.Handlers.Handlers.Bodyweight.Commands
 
         public async Task Handle(AddTodayWeightCommand request, CancellationToken cancellationToken)
         {
-            var newRecord = new BodyweightRecord()
+            var newRecord = new BodyweightRecord
             {
                 User = request.User,
                 Date = DateTime.Today,
