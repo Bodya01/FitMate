@@ -1,6 +1,6 @@
 ﻿using FitMate.Infrastructure.Entities;
-using FitMate.Data;
 using MediatR;
+using FitMate.Core.Repositories.Interfaces;
 
 namespace FitMate.Applcation.Commands.Bodyweight
 {
@@ -22,7 +22,7 @@ namespace FitMate.Applcation.Commands.Bodyweight
 
         public async Task Handle(EditBodyweightRecordsCommand command, CancellationToken cancellationToken)
         {
-            await _bodyweightRepository.DeleteExistingRecords(command.User);
+            await _bodyweightRepository.DeleteExistingRecords(command.User.Id);
 
             var records = new List<BodyweightRecord>();
 

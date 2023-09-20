@@ -60,24 +60,24 @@ namespace FitMate.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> EditRecords(DateTime Date, long[] FoodIDs, float[] Quantities)
+        public async Task<IActionResult> EditRecords(DateTime date, long[] foodIDs, float[] quantities)
         {
-            if (FoodIDs.Length != Quantities.Length || FoodIDs.Length == 0) return BadRequest();
+            if (foodIDs.Length != quantities.Length || foodIDs.Length == 0) return BadRequest();
 
             var currentUser = await GetUserAsync();
 
-            var existingRecords = await _context.FoodRecords.Where(record => record.User == currentUser && record.ConsumptionDate == Date).ToArrayAsync();
+            var existingRecords = await _context.FoodRecords.Where(record => record.User == currentUser && record.ConsumptionDate == date).ToArrayAsync();
             _context.FoodRecords.RemoveRange(existingRecords);
 
-            var newRecords = new FoodRecord[FoodIDs.Length];
-            for (int i = 0; i < FoodIDs.Length; i++)
+            var newRecords = new FoodRecord[foodIDs.Length];
+            for (int i = 0; i < foodIDs.Length; i++)
             {
                 newRecords[i] = new FoodRecord()
                 {
-                    ConsumptionDate = Date,
+                    ConsumptionDate = date,
                     User = currentUser,
-                    FoodId = FoodIDs[i],
-                    Quantity = Quantities[i]
+                    FoodId = foodIDs[i],
+                    Quantity = quantities[i]
                 };
             }
             _context.FoodRecords.AddRange(newRecords);
@@ -87,11 +87,11 @@ namespace FitMate.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> DeleteFood(long ID)
+        public async Task<IActionResult> DeleteFood(long Id)
         {
             var currentUser = await _userManager.GetUserAsync(HttpContext.User);
 
-            var targetFood = await _context.Foods.FirstOrDefaultAsync(food => food.Id == ID);
+            var targetFood = await _context.Foods.FirstOrDefaultAsync(food => food.Id == Id);
             if (targetFood is null) return BadRequest();
 
             _context.Foods.Remove(targetFood);
@@ -103,7 +103,7 @@ namespace FitMate.Controllers
         [HttpGet]
         public async Task<IActionResult> Summary()
         {
-            var currentUser = await _userManager.GetUserAsync(HttpContext.User);
+            var currentUser = await GetUserAsync();
 
             var userRecords = await _context.FoodRecords
                 .Where(record => record.User == currentUser && record.ConsumptionDate >= DateTime.Today.AddDays(-28))

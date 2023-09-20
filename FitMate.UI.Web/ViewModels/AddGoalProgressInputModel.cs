@@ -7,7 +7,7 @@ namespace FitMate.ViewModels
     {
         [Required]
         [Range(0, long.MaxValue)]
-        public long GoalID { get; set; }
+        public long GoalId { get; set; }
         [Required]
         [MaxLength(20)]
         public string Type { get; set; }

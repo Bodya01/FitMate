@@ -10,6 +10,9 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using System.Globalization;
 using FitMate.Applcation.ServiceCollectionExtensions;
+using FitMate.Core.Repositories.Interfaces;
+using FitMate.Core.Repositories.Implementations;
+using FitMate.Core.UnitOfWork;
 
 namespace FitMate
 {
@@ -42,6 +45,7 @@ namespace FitMate
 
             services.AddTransient<IBodyweightRepository, BodyweightRepository>();
             services.AddTransient<IGoalRepository, GoalRepository>();
+            services.AddTransient<IUnitOfWork, UnitOfWork>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -57,6 +61,7 @@ namespace FitMate
                 app.UseExceptionHandler("/Home/Error");
                 app.UseHsts();
             }
+
             app.UseHttpsRedirection();
             app.UseStaticFiles();
 

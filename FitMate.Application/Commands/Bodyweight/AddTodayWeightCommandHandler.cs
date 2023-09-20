@@ -1,9 +1,9 @@
-﻿using FitMate.Data;
+﻿using FitMate.Core.Repositories.Interfaces;
 using FitMate.Infrastructure.Entities;
 using MediatR;
 
 namespace FitMate.Applcation.Commands.Bodyweight
-{    
+{
     public class AddTodayWeightCommand : IRequest
     {
         public float Weight { get; set; }

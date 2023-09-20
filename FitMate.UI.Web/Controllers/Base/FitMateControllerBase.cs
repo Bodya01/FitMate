@@ -25,5 +25,10 @@ namespace FitMate.UI.Web.Controllers.Base
         {
             return await _userManager.GetUserAsync(HttpContext.User);
         }
+        [NonAction]
+        protected async Task<string> GetUserIdAsync()
+        {
+            return (await _userManager.GetUserAsync(HttpContext.User)).Id;
+        }
     }
 }

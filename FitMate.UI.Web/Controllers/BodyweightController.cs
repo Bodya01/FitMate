@@ -10,6 +10,7 @@ using System;
 using System.Linq;
 using System.Threading.Tasks;
 using FitMate.Applcation.Commands.Bodyweight;
+using FitMate.Core.Repositories.Interfaces;
 
 namespace FitMate.Controllers
 {
@@ -39,10 +40,10 @@ namespace FitMate.Controllers
 
         public async Task<IActionResult> Summary()
         {
-            var currentUser = await GetUserAsync();
+            var currentUserId = await GetUserIdAsync();
 
-            var records = await _bodyweightRepository.GetBodyweightRecords(currentUser);
-            var target = await _bodyweightRepository.GetBodyweightTarget(currentUser);
+            var records = await _bodyweightRepository.GetBodyweightRecords(currentUserId);
+            var target = await _bodyweightRepository.GetBodyweightTarget(currentUserId);
 
             var viewModel = new BodyweightSummaryViewModel(records, target);
 
@@ -52,9 +53,9 @@ namespace FitMate.Controllers
         [HttpGet]
         public async Task<IActionResult> EditTarget()
         {
-            var currentUser = await GetUserAsync();
+            var currentUserId = await GetUserIdAsync();
 
-            var target = await _bodyweightRepository.GetBodyweightTarget(currentUser);
+            var target = await _bodyweightRepository.GetBodyweightTarget(currentUserId);
 
             return View(target);
         }
@@ -67,9 +68,10 @@ namespace FitMate.Controllers
                 return BadRequest();
             }
 
+            var currentUserId = await GetUserIdAsync();
             var currentUser = await GetUserAsync();
 
-            var newTarget = await _bodyweightRepository.GetBodyweightTarget(currentUser);
+            var newTarget = await _bodyweightRepository.GetBodyweightTarget(currentUserId);
             newTarget ??= new BodyweightTarget() { User = currentUser };
 
             newTarget.TargetWeight = targetWeight;
@@ -82,9 +84,9 @@ namespace FitMate.Controllers
         [HttpGet]
         public async Task<IActionResult> EditRecords()
         {
-            var currentUser = await GetUserAsync();
+            var currentUserId = await GetUserIdAsync();
 
-            var records = await _bodyweightRepository.GetBodyweightRecords(currentUser);
+            var records = await _bodyweightRepository.GetBodyweightRecords(currentUserId);
 
             return View(records);
         }
@@ -129,9 +131,9 @@ namespace FitMate.Controllers
         [HttpGet]
         public async Task<IActionResult> GetBodyweightData(int previousDays)
         {
-            var currentUser = await GetUserAsync();
+            var currentUserId = await GetUserIdAsync();
 
-            var records = await _bodyweightRepository.GetBodyweightRecords(currentUser, true);
+            var records = await _bodyweightRepository.GetBodyweightRecords(currentUserId, true);
 
             var result = records.Select(record => new { Date = record.Date.ToString("d"), Weight = record.Weight }).ToArray();
 

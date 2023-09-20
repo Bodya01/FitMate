@@ -1,5 +1,6 @@
-﻿using FitMate.Infrastructure.Entities;
+﻿using FitMate.Core.Repositories.Interfaces;
 using FitMate.Data;
+using FitMate.Infrastructure.Entities;
 using FitMate.UI.Web.Controllers.Base;
 using FitMate.ViewModels;
 using MediatR;
@@ -32,9 +33,9 @@ namespace FitMate.Controllers
         [HttpGet]
         public async Task<IActionResult> Summary()
         {
-            var currentUser = await GetUserAsync();
+            var currentUserId = await GetUserIdAsync();
 
-            var goals = await _storageRepository.GetAllGoals(currentUser);
+            var goals = await _storageRepository.GetAllGoals(currentUserId);
 
             return View(goals);
         }
@@ -48,11 +49,11 @@ namespace FitMate.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> EditGoal(long ID)
+        public async Task<IActionResult> EditGoal(long Id)
         {
-            var currentUser = await GetUserAsync();
+            var currentUserId = await GetUserIdAsync();
 
-            var goal = await _storageRepository.GetGoalByID(currentUser, ID);
+            var goal = await _storageRepository.GetGoalById(currentUserId, Id);
 
             if (goal is null) return BadRequest();
 
@@ -60,36 +61,36 @@ namespace FitMate.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> DeleteGoal(int ID)
+        public async Task<IActionResult> DeleteGoal(int Id)
         {
-            var currentUser = await GetUserAsync();
+            var currentUserId = await GetUserIdAsync();
 
-            var goal = await _storageRepository.GetGoalByID(currentUser, ID);
+            var goal = await _storageRepository.GetGoalById(currentUserId, Id);
 
             if (goal is null) return BadRequest();
 
-            await _storageRepository.DeleteGoalByID(currentUser, ID);
+            await _storageRepository.DeleteGoalById(currentUserId, Id);
 
             return RedirectToAction("Summary");
 
         }
 
         [HttpPost]
-        public async Task<IActionResult> EditGoal(EditGoalInputModel GoalInput)
+        public async Task<IActionResult> EditGoal(EditGoalInputModel goalInput)
         {
-            if (!TryValidateModel(GoalInput)) return BadRequest();
+            if (!TryValidateModel(goalInput)) return BadRequest();
 
-            var currentUser = await GetUserAsync();
+            var currentUserId = await GetUserIdAsync();
 
             Goal goal = null;
 
-            if (GoalInput.Id != 0)
+            if (goalInput.Id != 0)
             {
-                goal = await _storageRepository.GetGoalByID(currentUser, GoalInput.Id);
+                goal = await _storageRepository.GetGoalById(currentUserId, goalInput.Id);
             }
             else
             {
-                switch (GoalInput.Type.ToLower())
+                switch (goalInput.Type.ToLower())
                 {
                     case "weightlifting":
                         goal = new WeightliftingGoal();
@@ -103,18 +104,18 @@ namespace FitMate.Controllers
             switch (goal)
             {
                 case WeightliftingGoal wGoal:
-                    wGoal.Reps = GoalInput.Reps;
-                    wGoal.Weight = GoalInput.Weight;
+                    wGoal.Reps = goalInput.Reps;
+                    wGoal.Weight = goalInput.Weight;
                     break;
                 case TimedGoal tGoal:
-                    tGoal.Quantity = (int)GoalInput.Quantity;
-                    tGoal.QuantityUnit = GoalInput.QuantityUnit;
-                    tGoal.Time = new TimeSpan(GoalInput.Hours, GoalInput.Minutes, GoalInput.Seconds);
+                    tGoal.Quantity = (int)goalInput.Quantity;
+                    tGoal.QuantityUnit = goalInput.QuantityUnit;
+                    tGoal.Time = new TimeSpan(goalInput.Hours, goalInput.Minutes, goalInput.Seconds);
                     break;
             }
 
-            goal.Activity = GoalInput.Activity;
-            goal.User = currentUser;
+            goal.Activity = goalInput.Activity;
+            goal.User = await GetUserAsync();
 
             await _storageRepository.StoreGoal(goal);
 
@@ -122,30 +123,31 @@ namespace FitMate.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> AddProgress(AddGoalProgressInputModel Progress)
+        public async Task<IActionResult> AddProgress(AddGoalProgressInputModel progress)
         {
+            var currentUserId = await GetUserIdAsync();
             var currentUser = await GetUserAsync();
 
-            var goal = await _storageRepository.GetGoalByID(currentUser, Progress.GoalID);
+            var goal = await _storageRepository.GetGoalById(currentUserId, progress.GoalId);
 
             if (goal is null) return BadRequest();
 
             GoalProgress newProgress = null;
 
-            switch (Progress.Type.ToLower())
+            switch (progress.Type.ToLower())
             {
                 case "weightlifting":
                     newProgress = new WeightliftingProgress()
                     {
-                        Weight = Progress.Weight,
-                        Reps = Progress.Reps
+                        Weight = progress.Weight,
+                        Reps = progress.Reps
                     };
                     break;
                 case "timed":
                     newProgress = new TimedProgress()
                     {
-                        Time = new TimeSpan(Progress.Hours, Progress.Minutes, Progress.Seconds),
-                        Quantity = Progress.Quantity
+                        Time = new TimeSpan(progress.Hours, progress.Minutes, progress.Seconds),
+                        Quantity = progress.Quantity
                     };
                     break;
                 default:
@@ -153,24 +155,24 @@ namespace FitMate.Controllers
             }
 
             newProgress.Goal = goal;
-            newProgress.Date = Progress.Date;
+            newProgress.Date = progress.Date;
             newProgress.User = currentUser;
 
             await _storageRepository.StoreGoalProgress(newProgress);
 
-            return RedirectToAction("ViewGoal", new { ID = Progress.GoalID });
+            return RedirectToAction("ViewGoal", new { ID = progress.GoalId });
         }
 
         [HttpGet]
-        public async Task<IActionResult> ViewGoal(long ID)
+        public async Task<IActionResult> ViewGoal(long Id)
         {
-            var currentUser = await GetUserAsync();
+            var currentUserId = await GetUserIdAsync();
 
-            var goal = await _storageRepository.GetGoalByID(currentUser, ID);
+            var goal = await _storageRepository.GetGoalById(currentUserId, Id);
 
             if (goal is null) return BadRequest();
 
-            var progress = await _storageRepository.GetGoalProgress(currentUser, ID);
+            var progress = await _storageRepository.GetGoalProgress(currentUserId, Id);
 
             if (progress == null) return BadRequest();
 
@@ -184,11 +186,11 @@ namespace FitMate.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetWeightliftingProgress(long GoalID)
+        public async Task<IActionResult> GetWeightliftingProgress(long GoalId)
         {
-            var currentUser = await GetUserAsync();
+            var currentUserId = await GetUserIdAsync();
 
-            var progress = await _storageRepository.GetGoalProgress(currentUser, GoalID, true);
+            var progress = await _storageRepository.GetGoalProgress(currentUserId, GoalId, true);
             var result = Array.ConvertAll(progress, item => (WeightliftingProgress)item)
                 .Select(record => new { Date = record.Date.ToString("d"), Weight = record.Weight, Reps = record.Reps })
                 .ToArray();
@@ -197,11 +199,11 @@ namespace FitMate.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetTimedProgress(long GoalID)
+        public async Task<IActionResult> GetTimedProgress(long GoalId)
         {
-            var currentUser = await GetUserAsync();
+            var currentUserId = await GetUserIdAsync();
 
-            var progress = await _storageRepository.GetGoalProgress(currentUser, GoalID, true);
+            var progress = await _storageRepository.GetGoalProgress(currentUserId, GoalId, true);
 
             var result = Array.ConvertAll(progress, item => (TimedProgress)item)
                 .Select(record => new { Date = record.Date.ToString("d"), Timespan = record.Time, Quantity = record.Quantity, QuantityUnit = record.QuantityUnit })
