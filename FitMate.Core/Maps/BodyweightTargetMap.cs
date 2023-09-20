@@ -10,7 +10,8 @@ namespace FitMate.DAL.Maps
         {
             builder.ToTable("BodyweightTargets");
 
-            builder.HasKey(x => x.Id);
+            builder.HasKey(b => b.Id);
+            builder.Property(b => b.Id).ValueGeneratedOnAdd();
 
             builder.Property(b => b.TargetWeight).IsRequired();
             builder.Property(b => b.TargetDate).IsRequired();

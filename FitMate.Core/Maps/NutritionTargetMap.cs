@@ -11,6 +11,7 @@ namespace FitMate.DAL.Maps
             builder.ToTable("NutritionTargets");
 
             builder.HasKey(n => n.Id);
+            builder.Property(n => n.Id).ValueGeneratedOnAdd();
 
             builder.Property(n => n.DailyCalories).IsRequired();
             builder.Property(n => n.DailyProtein).IsRequired();

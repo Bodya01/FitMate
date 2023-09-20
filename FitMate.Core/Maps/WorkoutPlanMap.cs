@@ -11,6 +11,7 @@ namespace FitMate.DAL.Maps
             builder.ToTable("WorkoutPlans");
 
             builder.HasKey(w => w.Id);
+            builder.Property(w => w.Id).ValueGeneratedOnAdd();
 
             builder.Property(w => w.Name).IsRequired();
             builder.Property(w => w.SessionsJSON).IsRequired();

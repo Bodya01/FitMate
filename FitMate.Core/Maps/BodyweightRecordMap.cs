@@ -11,6 +11,7 @@ namespace FitMate.DAL.Maps
             builder.ToTable("BodyweightRecords");
 
             builder.HasKey(b => b.Id);
+            builder.Property(b => b.Id).ValueGeneratedOnAdd();
 
             builder.Property(b => b.Date).IsRequired();
             builder.Property(b => b.Weight).IsRequired();

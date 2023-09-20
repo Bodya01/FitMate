@@ -11,6 +11,7 @@ namespace FitMate.DAL.Maps
             builder.ToTable("FoodRecords");
 
             builder.HasKey(f => f.Id);
+            builder.Property(f => f.Id).ValueGeneratedOnAdd();
 
             builder.Property(f => f.ConsumptionDate).IsRequired();
             builder.Property(f => f.Quantity).IsRequired();
