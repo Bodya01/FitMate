@@ -28,20 +28,12 @@ namespace FitMate.Core.Repositories.Implementations
 
         public async Task<BodyweightRecord[]> GetBodyweightRecords(string userId, bool ascendingOrder = false)
         {
-            if (!ascendingOrder)
-            {
-                return await _context.BodyweightRecords
-                    .Where(record => record.UserId == userId)
-                    .OrderByDescending(record => record.Date)
-                    .ToArrayAsync();
-            }
-            else
-            {
-                return await _context.BodyweightRecords
-                    .Where(record => record.UserId == userId)
-                    .OrderBy(record => record.Date)
-                    .ToArrayAsync();
-            }
+            var query = _context.BodyweightRecords
+                        .Where(record => record.UserId == userId);
+
+            query = ascendingOrder ? query.OrderBy(record => record.Date) : query.OrderByDescending(record => record.Date);
+
+            return await query.ToArrayAsync();
         }
 
         public async Task<BodyweightTarget> GetBodyweightTarget(string userId) =>

@@ -35,8 +35,7 @@ namespace FitMate.Core.Repositories.Implementations
         {
             var query = _context.GoalProgressRecords.Where(r => r.GoalId == goalId && r.UserId == userId);
 
-            if (ascendingOrder == true) query = query.OrderBy(r => r.Date);
-            else query = query.OrderByDescending(r => r.Date);
+            query = ascendingOrder ? query.OrderBy(r => r.Date) : query.OrderByDescending(r => r.Date);
 
             var result = await query.ToArrayAsync();
 
