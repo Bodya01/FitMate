@@ -1,4 +1,4 @@
-﻿using FitMate.DAL.Entities;
+﻿using FitMate.Infrastructure.Entities;
 
 namespace FitMate.ViewModels
 {

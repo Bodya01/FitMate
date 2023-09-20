@@ -1,4 +1,4 @@
-﻿using FitMate.DAL.Entities;
+﻿using FitMate.Infrastructure.Entities;
 using MediatR;
 
 namespace FitMate.Handlers.Handlers.Bodyweight.Models.Requests

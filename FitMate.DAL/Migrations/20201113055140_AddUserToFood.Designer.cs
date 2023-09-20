@@ -21,7 +21,7 @@ namespace FitMate.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-            modelBuilder.Entity("FitMate.DAL.Entities.BodyweightRecord", b =>
+            modelBuilder.Entity("FitMate.Infrastructure.Entities.BodyweightRecord", b =>
                 {
                     b.Property<long>("ID")
                         .ValueGeneratedOnAdd()
@@ -44,7 +44,7 @@ namespace FitMate.Migrations
                     b.ToTable("BodyweightRecords");
                 });
 
-            modelBuilder.Entity("FitMate.DAL.Entities.BodyweightTarget", b =>
+            modelBuilder.Entity("FitMate.Infrastructure.Entities.BodyweightTarget", b =>
                 {
                     b.Property<long>("ID")
                         .ValueGeneratedOnAdd()
@@ -67,7 +67,7 @@ namespace FitMate.Migrations
                     b.ToTable("BodyweightTargets");
                 });
 
-            modelBuilder.Entity("FitMate.DAL.Entities.FitnessUser", b =>
+            modelBuilder.Entity("FitMate.Infrastructure.Entities.FitnessUser", b =>
                 {
                     b.Property<string>("Id")
                         .HasColumnType("nvarchar(450)");
@@ -144,7 +144,7 @@ namespace FitMate.Migrations
                     b.ToTable("AspNetUsers");
                 });
 
-            modelBuilder.Entity("FitMate.DAL.Entities.Food", b =>
+            modelBuilder.Entity("FitMate.Infrastructure.Entities.Food", b =>
                 {
                     b.Property<long>("ID")
                         .ValueGeneratedOnAdd()
@@ -182,7 +182,7 @@ namespace FitMate.Migrations
                     b.ToTable("UserFoods");
                 });
 
-            modelBuilder.Entity("FitMate.DAL.Entities.FoodRecord", b =>
+            modelBuilder.Entity("FitMate.Infrastructure.Entities.FoodRecord", b =>
                 {
                     b.Property<long>("ID")
                         .ValueGeneratedOnAdd()
@@ -341,34 +341,34 @@ namespace FitMate.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
-            modelBuilder.Entity("FitMate.DAL.Entities.BodyweightRecord", b =>
+            modelBuilder.Entity("FitMate.Infrastructure.Entities.BodyweightRecord", b =>
                 {
-                    b.HasOne("FitMate.DAL.Entities.FitnessUser", "User")
+                    b.HasOne("FitMate.Infrastructure.Entities.FitnessUser", "User")
                         .WithMany()
                         .HasForeignKey("UserId");
                 });
 
-            modelBuilder.Entity("FitMate.DAL.Entities.BodyweightTarget", b =>
+            modelBuilder.Entity("FitMate.Infrastructure.Entities.BodyweightTarget", b =>
                 {
-                    b.HasOne("FitMate.DAL.Entities.FitnessUser", "User")
+                    b.HasOne("FitMate.Infrastructure.Entities.FitnessUser", "User")
                         .WithMany()
                         .HasForeignKey("UserId");
                 });
 
-            modelBuilder.Entity("FitMate.DAL.Entities.Food", b =>
+            modelBuilder.Entity("FitMate.Infrastructure.Entities.Food", b =>
                 {
-                    b.HasOne("FitMate.DAL.Entities.FitnessUser", "CreatedBy")
+                    b.HasOne("FitMate.Infrastructure.Entities.FitnessUser", "CreatedBy")
                         .WithMany()
                         .HasForeignKey("CreatedById");
                 });
 
-            modelBuilder.Entity("FitMate.DAL.Entities.FoodRecord", b =>
+            modelBuilder.Entity("FitMate.Infrastructure.Entities.FoodRecord", b =>
                 {
-                    b.HasOne("FitMate.DAL.Entities.Food", "Food")
+                    b.HasOne("FitMate.Infrastructure.Entities.Food", "Food")
                         .WithMany()
                         .HasForeignKey("FoodID");
 
-                    b.HasOne("FitMate.DAL.Entities.FitnessUser", "User")
+                    b.HasOne("FitMate.Infrastructure.Entities.FitnessUser", "User")
                         .WithMany()
                         .HasForeignKey("UserId");
                 });
@@ -384,7 +384,7 @@ namespace FitMate.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
                 {
-                    b.HasOne("FitMate.DAL.Entities.FitnessUser", null)
+                    b.HasOne("FitMate.Infrastructure.Entities.FitnessUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -393,7 +393,7 @@ namespace FitMate.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
                 {
-                    b.HasOne("FitMate.DAL.Entities.FitnessUser", null)
+                    b.HasOne("FitMate.Infrastructure.Entities.FitnessUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -408,7 +408,7 @@ namespace FitMate.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("FitMate.DAL.Entities.FitnessUser", null)
+                    b.HasOne("FitMate.Infrastructure.Entities.FitnessUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -417,7 +417,7 @@ namespace FitMate.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
                 {
-                    b.HasOne("FitMate.DAL.Entities.FitnessUser", null)
+                    b.HasOne("FitMate.Infrastructure.Entities.FitnessUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)

@@ -1,4 +1,4 @@
-﻿using FitMate.DAL.Entities;
+﻿using FitMate.Infrastructure.Entities;
 using FitMate.Handlers.Handlers.WorkoutPlan.Models.Responses;
 using MediatR;
 

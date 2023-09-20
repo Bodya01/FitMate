@@ -2,6 +2,6 @@
 {
     public class GetWorkoutByUserResponse
     {
-        public List<DAL.Entities.WorkoutPlan>? WorkoutPlans { get; set; }
+        public List<Infrastructure.Entities.WorkoutPlan>? WorkoutPlans { get; set; }
     }
 }

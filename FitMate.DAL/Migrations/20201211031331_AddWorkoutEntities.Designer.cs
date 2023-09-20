@@ -51,7 +51,7 @@ namespace FitMate.Migrations
                     b.ToTable("NutritionTargets");
                 });
 
-            modelBuilder.Entity("FitMate.DAL.Entities.BodyweightRecord", b =>
+            modelBuilder.Entity("FitMate.Infrastructure.Entities.BodyweightRecord", b =>
                 {
                     b.Property<long>("ID")
                         .ValueGeneratedOnAdd()
@@ -74,7 +74,7 @@ namespace FitMate.Migrations
                     b.ToTable("BodyweightRecords");
                 });
 
-            modelBuilder.Entity("FitMate.DAL.Entities.BodyweightTarget", b =>
+            modelBuilder.Entity("FitMate.Infrastructure.Entities.BodyweightTarget", b =>
                 {
                     b.Property<long>("ID")
                         .ValueGeneratedOnAdd()
@@ -97,7 +97,7 @@ namespace FitMate.Migrations
                     b.ToTable("BodyweightTargets");
                 });
 
-            modelBuilder.Entity("FitMate.DAL.Entities.FitnessUser", b =>
+            modelBuilder.Entity("FitMate.Infrastructure.Entities.FitnessUser", b =>
                 {
                     b.Property<string>("Id")
                         .HasColumnType("nvarchar(450)");
@@ -174,7 +174,7 @@ namespace FitMate.Migrations
                     b.ToTable("AspNetUsers");
                 });
 
-            modelBuilder.Entity("FitMate.DAL.Entities.Food", b =>
+            modelBuilder.Entity("FitMate.Infrastructure.Entities.Food", b =>
                 {
                     b.Property<long>("ID")
                         .ValueGeneratedOnAdd()
@@ -214,7 +214,7 @@ namespace FitMate.Migrations
                     b.ToTable("UserFoods");
                 });
 
-            modelBuilder.Entity("FitMate.DAL.Entities.FoodRecord", b =>
+            modelBuilder.Entity("FitMate.Infrastructure.Entities.FoodRecord", b =>
                 {
                     b.Property<long>("ID")
                         .ValueGeneratedOnAdd()
@@ -243,7 +243,7 @@ namespace FitMate.Migrations
                     b.ToTable("FoodRecords");
                 });
 
-            modelBuilder.Entity("FitMate.DAL.Entities.Goal", b =>
+            modelBuilder.Entity("FitMate.Infrastructure.Entities.Goal", b =>
                 {
                     b.Property<long>("ID")
                         .ValueGeneratedOnAdd()
@@ -269,7 +269,7 @@ namespace FitMate.Migrations
                     b.HasDiscriminator<string>("Discriminator").HasValue("Goal");
                 });
 
-            modelBuilder.Entity("FitMate.DAL.Entities.GoalProgress", b =>
+            modelBuilder.Entity("FitMate.Infrastructure.Entities.GoalProgress", b =>
                 {
                     b.Property<long>("ID")
                         .ValueGeneratedOnAdd()
@@ -300,7 +300,7 @@ namespace FitMate.Migrations
                     b.HasDiscriminator<string>("Discriminator").HasValue("GoalProgress");
                 });
 
-            modelBuilder.Entity("FitMate.DAL.Entities.WorkoutActivity", b =>
+            modelBuilder.Entity("FitMate.Infrastructure.Entities.WorkoutActivity", b =>
                 {
                     b.Property<long>("ID")
                         .ValueGeneratedOnAdd()
@@ -331,7 +331,7 @@ namespace FitMate.Migrations
                     b.ToTable("WorkoutActivities");
                 });
 
-            modelBuilder.Entity("FitMate.DAL.Entities.WorkoutPlan", b =>
+            modelBuilder.Entity("FitMate.Infrastructure.Entities.WorkoutPlan", b =>
                 {
                     b.Property<long>("ID")
                         .ValueGeneratedOnAdd()
@@ -353,7 +353,7 @@ namespace FitMate.Migrations
                     b.ToTable("WorkoutPlans");
                 });
 
-            modelBuilder.Entity("FitMate.DAL.Entities.WorkoutSession", b =>
+            modelBuilder.Entity("FitMate.Infrastructure.Entities.WorkoutSession", b =>
                 {
                     b.Property<long>("ID")
                         .ValueGeneratedOnAdd()
@@ -508,9 +508,9 @@ namespace FitMate.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
-            modelBuilder.Entity("FitMate.DAL.Entities.TimedGoal", b =>
+            modelBuilder.Entity("FitMate.Infrastructure.Entities.TimedGoal", b =>
                 {
-                    b.HasBaseType("FitMate.DAL.Entities.Goal");
+                    b.HasBaseType("FitMate.Infrastructure.Entities.Goal");
 
                     b.Property<float>("Quantity")
                         .HasColumnType("real");
@@ -524,9 +524,9 @@ namespace FitMate.Migrations
                     b.HasDiscriminator().HasValue("TimedGoal");
                 });
 
-            modelBuilder.Entity("FitMate.DAL.Entities.WeightliftingGoal", b =>
+            modelBuilder.Entity("FitMate.Infrastructure.Entities.WeightliftingGoal", b =>
                 {
-                    b.HasBaseType("FitMate.DAL.Entities.Goal");
+                    b.HasBaseType("FitMate.Infrastructure.Entities.Goal");
 
                     b.Property<int>("Reps")
                         .HasColumnType("int");
@@ -537,9 +537,9 @@ namespace FitMate.Migrations
                     b.HasDiscriminator().HasValue("WeightliftingGoal");
                 });
 
-            modelBuilder.Entity("FitMate.DAL.Entities.TimedProgress", b =>
+            modelBuilder.Entity("FitMate.Infrastructure.Entities.TimedProgress", b =>
                 {
-                    b.HasBaseType("FitMate.DAL.Entities.GoalProgress");
+                    b.HasBaseType("FitMate.Infrastructure.Entities.GoalProgress");
 
                     b.Property<float>("Quantity")
                         .HasColumnType("real");
@@ -550,9 +550,9 @@ namespace FitMate.Migrations
                     b.HasDiscriminator().HasValue("TimedProgress");
                 });
 
-            modelBuilder.Entity("FitMate.DAL.Entities.WeightliftingProgress", b =>
+            modelBuilder.Entity("FitMate.Infrastructure.Entities.WeightliftingProgress", b =>
                 {
-                    b.HasBaseType("FitMate.DAL.Entities.GoalProgress");
+                    b.HasBaseType("FitMate.Infrastructure.Entities.GoalProgress");
 
                     b.Property<int>("Reps")
                         .HasColumnType("int");
@@ -565,88 +565,88 @@ namespace FitMate.Migrations
 
             modelBuilder.Entity("FitMate.Data.NutritionTarget", b =>
                 {
-                    b.HasOne("FitMate.DAL.Entities.FitnessUser", "User")
+                    b.HasOne("FitMate.Infrastructure.Entities.FitnessUser", "User")
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("FitMate.DAL.Entities.BodyweightRecord", b =>
+            modelBuilder.Entity("FitMate.Infrastructure.Entities.BodyweightRecord", b =>
                 {
-                    b.HasOne("FitMate.DAL.Entities.FitnessUser", "User")
+                    b.HasOne("FitMate.Infrastructure.Entities.FitnessUser", "User")
                         .WithMany()
                         .HasForeignKey("UserId");
                 });
 
-            modelBuilder.Entity("FitMate.DAL.Entities.BodyweightTarget", b =>
+            modelBuilder.Entity("FitMate.Infrastructure.Entities.BodyweightTarget", b =>
                 {
-                    b.HasOne("FitMate.DAL.Entities.FitnessUser", "User")
+                    b.HasOne("FitMate.Infrastructure.Entities.FitnessUser", "User")
                         .WithMany()
                         .HasForeignKey("UserId");
                 });
 
-            modelBuilder.Entity("FitMate.DAL.Entities.Food", b =>
+            modelBuilder.Entity("FitMate.Infrastructure.Entities.Food", b =>
                 {
-                    b.HasOne("FitMate.DAL.Entities.FitnessUser", "CreatedBy")
+                    b.HasOne("FitMate.Infrastructure.Entities.FitnessUser", "CreatedBy")
                         .WithMany()
                         .HasForeignKey("CreatedByID")
                         .OnDelete(DeleteBehavior.ClientCascade)
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("FitMate.DAL.Entities.FoodRecord", b =>
+            modelBuilder.Entity("FitMate.Infrastructure.Entities.FoodRecord", b =>
                 {
-                    b.HasOne("FitMate.DAL.Entities.Food", "Food")
+                    b.HasOne("FitMate.Infrastructure.Entities.Food", "Food")
                         .WithMany()
                         .HasForeignKey("FoodID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("FitMate.DAL.Entities.FitnessUser", "User")
+                    b.HasOne("FitMate.Infrastructure.Entities.FitnessUser", "User")
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("FitMate.DAL.Entities.Goal", b =>
+            modelBuilder.Entity("FitMate.Infrastructure.Entities.Goal", b =>
                 {
-                    b.HasOne("FitMate.DAL.Entities.FitnessUser", "User")
+                    b.HasOne("FitMate.Infrastructure.Entities.FitnessUser", "User")
                         .WithMany()
                         .HasForeignKey("UserId");
                 });
 
-            modelBuilder.Entity("FitMate.DAL.Entities.GoalProgress", b =>
+            modelBuilder.Entity("FitMate.Infrastructure.Entities.GoalProgress", b =>
                 {
-                    b.HasOne("FitMate.DAL.Entities.Goal", "Goal")
+                    b.HasOne("FitMate.Infrastructure.Entities.Goal", "Goal")
                         .WithMany()
                         .HasForeignKey("GoalID");
 
-                    b.HasOne("FitMate.DAL.Entities.FitnessUser", "User")
+                    b.HasOne("FitMate.Infrastructure.Entities.FitnessUser", "User")
                         .WithMany()
                         .HasForeignKey("UserId");
                 });
 
-            modelBuilder.Entity("FitMate.DAL.Entities.WorkoutActivity", b =>
+            modelBuilder.Entity("FitMate.Infrastructure.Entities.WorkoutActivity", b =>
                 {
-                    b.HasOne("FitMate.DAL.Entities.WorkoutSession", null)
+                    b.HasOne("FitMate.Infrastructure.Entities.WorkoutSession", null)
                         .WithMany("Activities")
                         .HasForeignKey("WorkoutSessionID");
                 });
 
-            modelBuilder.Entity("FitMate.DAL.Entities.WorkoutPlan", b =>
+            modelBuilder.Entity("FitMate.Infrastructure.Entities.WorkoutPlan", b =>
                 {
-                    b.HasOne("FitMate.DAL.Entities.FitnessUser", "User")
+                    b.HasOne("FitMate.Infrastructure.Entities.FitnessUser", "User")
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("FitMate.DAL.Entities.WorkoutSession", b =>
+            modelBuilder.Entity("FitMate.Infrastructure.Entities.WorkoutSession", b =>
                 {
-                    b.HasOne("FitMate.DAL.Entities.WorkoutPlan", null)
+                    b.HasOne("FitMate.Infrastructure.Entities.WorkoutPlan", null)
                         .WithMany("Sessions")
                         .HasForeignKey("WorkoutPlanID");
                 });
@@ -662,7 +662,7 @@ namespace FitMate.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
                 {
-                    b.HasOne("FitMate.DAL.Entities.FitnessUser", null)
+                    b.HasOne("FitMate.Infrastructure.Entities.FitnessUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -671,7 +671,7 @@ namespace FitMate.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
                 {
-                    b.HasOne("FitMate.DAL.Entities.FitnessUser", null)
+                    b.HasOne("FitMate.Infrastructure.Entities.FitnessUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -686,7 +686,7 @@ namespace FitMate.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("FitMate.DAL.Entities.FitnessUser", null)
+                    b.HasOne("FitMate.Infrastructure.Entities.FitnessUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -695,7 +695,7 @@ namespace FitMate.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
                 {
-                    b.HasOne("FitMate.DAL.Entities.FitnessUser", null)
+                    b.HasOne("FitMate.Infrastructure.Entities.FitnessUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)

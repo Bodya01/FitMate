@@ -1,4 +1,4 @@
-using FitMate.DAL.Entities;
+using FitMate.Infrastructure.Entities;
 using FitMate.Data;
 using FitMate.Handlers.ServiceCollectionExtensions;
 using Microsoft.AspNetCore.Builder;
