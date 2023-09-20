@@ -1,4 +1,5 @@
 ﻿using FitMate.DAL.Entities;
+using FitMate.DAL.Maps;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
@@ -25,24 +26,14 @@ namespace FitMate.Data
         {
             base.OnModelCreating(builder);
 
-            builder.Entity<FoodRecord>(entity =>
-            {
-                entity.HasOne(record => record.Food)
-                .WithMany()
-                .OnDelete(DeleteBehavior.Cascade);
-
-                entity.HasOne(record => record.User)
-                .WithMany()
-                .OnDelete(DeleteBehavior.Cascade);
-            });
-
-            builder.Entity<NutritionTarget>(entity =>
-            {
-                entity.HasOne(record => record.User)
-                .WithMany()
-                .OnDelete(DeleteBehavior.Cascade);
-            });
-
+            builder.ApplyConfiguration(new BodyweightRecordMap());
+            builder.ApplyConfiguration(new BodyweightTargetMap());
+            builder.ApplyConfiguration(new FoodMap());
+            builder.ApplyConfiguration(new FoodRecordMap());
+            builder.ApplyConfiguration(new GoalMap());
+            builder.ApplyConfiguration(new GoalProgressMap());
+            builder.ApplyConfiguration(new NutritionTargetMap());
+            builder.ApplyConfiguration(new WorkoutPlanMap());
         }
     }
 }

@@ -8,11 +8,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FitMate.UI.Web", "FitMate.U
 		{2923A6FC-2F69-4A67-AB00-A41FE86AE477} = {2923A6FC-2F69-4A67-AB00-A41FE86AE477}
 	EndProjectSection
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "DataAccessLayer", "DataAccessLayer", "{0D658D73-12F3-420C-8729-5356AEC331DF}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FitMate.DAL", "FitMate.DAL\FitMate.DAL.csproj", "{CADF3DA3-5E46-4598-B6BB-D442944920A2}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "FitMate.CQRS", "FitMate.CQRS", "{4B8EF543-4859-4A12-A098-4AB581048801}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FitMate.Handlers", "FitMate.Handlers\FitMate.Handlers.csproj", "{2923A6FC-2F69-4A67-AB00-A41FE86AE477}"
 	ProjectSection(ProjectDependencies) = postProject
@@ -40,10 +36,6 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
-	EndGlobalSection
-	GlobalSection(NestedProjects) = preSolution
-		{CADF3DA3-5E46-4598-B6BB-D442944920A2} = {0D658D73-12F3-420C-8729-5356AEC331DF}
-		{2923A6FC-2F69-4A67-AB00-A41FE86AE477} = {4B8EF543-4859-4A12-A098-4AB581048801}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {ACCFCAA5-716F-4352-A281-01F316B31659}

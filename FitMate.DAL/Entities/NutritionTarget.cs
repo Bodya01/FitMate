@@ -1,20 +1,14 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿namespace FitMate.DAL.Entities;
 
-namespace FitMate.DAL.Entities
+public class NutritionTarget : IEntity
 {
-    public class NutritionTarget : IEntity
-    {
-        public long Id { get; set; }
-        [Required]
-        public FitnessUser User { get; set; }
-        [Required]
-        public int DailyCalories { get; set; }
-        [Required]
-        public int DailyCarbohydrates { get; set; }
-        [Required]
-        public int DailyProtein { get; set; }
-        [Required]
-        public int DailyFat { get; set; }
+    public long Id { get; set; }
 
-    }
+    public int DailyCalories { get; set; }
+    public int DailyCarbohydrates { get; set; }
+    public int DailyProtein { get; set; }
+    public int DailyFat { get; set; }
+
+    public string UserId { get; set; }
+    public FitnessUser User { get; set; }
 }

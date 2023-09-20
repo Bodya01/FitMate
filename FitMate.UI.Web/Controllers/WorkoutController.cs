@@ -7,6 +7,7 @@ using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace FitMate.Controllers
@@ -64,9 +65,9 @@ namespace FitMate.Controllers
             var request = new GetWorkoutPlanByIdQuery { Id = workoutPlanId };
             var plan = await _mediator.Send(request);
 
-            if (plan is null || sessionId < 0 || sessionId >= plan.WorkoutPlan.Sessions.Length) return BadRequest();
+            if (plan is null || sessionId < 0 || sessionId >= plan.WorkoutPlan.Sessions.Count) return BadRequest();
 
-            var session = plan.WorkoutPlan.Sessions[sessionId];
+            var session = plan.WorkoutPlan.Sessions.ToList()[sessionId];
             return View(session);
         }
     }

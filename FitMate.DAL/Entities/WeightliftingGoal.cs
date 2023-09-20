@@ -1,8 +1,7 @@
-﻿namespace FitMate.DAL.Entities
+﻿namespace FitMate.DAL.Entities;
+
+public class WeightliftingGoal : Goal, IEntity
 {
-    public class WeightliftingGoal : Goal, IEntity
-    {
-        public float Weight { get; set; }
-        public int Reps { get; set; }
-    }
+    public float Weight { get; set; }
+    public int Reps { get; set; }
 }

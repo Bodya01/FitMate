@@ -76,7 +76,7 @@ namespace FitMate.Controllers
                 {
                     ConsumptionDate = Date,
                     User = currentUser,
-                    FoodID = FoodIDs[i],
+                    FoodId = FoodIDs[i],
                     Quantity = Quantities[i]
                 };
             }

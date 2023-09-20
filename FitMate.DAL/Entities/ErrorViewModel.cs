@@ -1,9 +1,8 @@
-namespace FitMate.DAL.Entities
-{
-    public class ErrorViewModel
-    {
-        public string RequestId { get; set; }
+namespace FitMate.DAL.Entities;
 
-        public bool ShowRequestId => !string.IsNullOrEmpty(RequestId);
-    }
+public class ErrorViewModel
+{
+    public string RequestId { get; set; }
+
+    public bool ShowRequestId => !string.IsNullOrEmpty(RequestId);
 }

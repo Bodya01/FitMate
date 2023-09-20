@@ -1,13 +1,12 @@
-﻿namespace FitMate.DAL.Entities
+﻿namespace FitMate.DAL.Entities;
+
+public class BodyweightRecord : IEntity
 {
-    public class BodyweightRecord : IEntity
-    {
-        public long Id { get; set; }
+    public long Id { get; set; }
 
-        public DateTime Date { get; set; }
-        public float Weight { get; set; }
+    public DateTime Date { get; set; }
+    public float Weight { get; set; }
 
-        public FitnessUser? User { get; set; }
-
-    }
+    public string UserId { get; set; }
+    public FitnessUser User { get; set; }
 }

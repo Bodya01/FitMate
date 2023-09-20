@@ -4,7 +4,8 @@
     ViewData["Title"] = "Edit Workout";
 }
 
-@section Scripts{
+@section Scripts
+{
     <script src="~/js/Workout/edit.js"></script>
 }
 
@@ -18,8 +19,8 @@
                 <div class="col-3 border-right">
                     <h3 class="border-bottom">Plan</h3>
 
-                    <input type="hidden" name="ID" value="@Model.Id" required/>
-                    <input type="hidden" id="SessionJSONInput" name="SessionsJSON" value="@Model.SessionsJSON"/>
+                    <input type="hidden" name="ID" value="@Model.Id" required />
+                    <input type="hidden" id="SessionJSONInput" name="SessionsJSON" value="@Model.SessionsJSON" />
 
                     <div class="form-group form-inline">
                         <label class="mr-2">Name</label>
@@ -48,7 +49,7 @@
                                 </tr>
                                 <tr>
                                     <td><label class="mr-2">Day Number</label></td>
-                                    <td><input type="number" step="1" min="1" max="28" value="@session.DayNumber" class=" form-control" required/></td>
+                                    <td><input type="number" step="1" min="1" max="28" value="@session.DayNumber" class=" form-control" required /></td>
                                 </tr>
                                 <tr>
                                     <td></td>
@@ -60,7 +61,7 @@
                 </div>
                 <div class="col-6" id="ActivityContainer">
                     <h3 class="border-bottom">Activities</h3>
-                    @for (int sessionIndex = 0; sessionIndex < Model.Sessions?.Length; sessionIndex++)
+                    @for (int sessionIndex = 0; sessionIndex < Model.Sessions?.Count; sessionIndex++)
                     {
                         <table class="table d-none activityForm">
                             <thead>
@@ -74,16 +75,16 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @for (int activityIndex = 0; activityIndex < Model.Sessions?[sessionIndex].Activities?.Length; activityIndex++)
+                                @for (int activityIndex = 0; activityIndex < Model.Sessions?.ToList()[sessionIndex].Activities?.Count; activityIndex++)
                                 {
-                                    WorkoutActivity activity = Model.Sessions[sessionIndex].Activities[activityIndex];
-                                <tr>
-                                    <td><input type="text" class="form-control" value="@activity.Name" required/></td>
-                                    <td><input type="text" class="form-control" value="@activity.Quantity" required/></td>
-                                    <td><input type="number" min="1" step="1" class="form-control" value="@activity.Sets" required/></td>
-                                    <td><input type="number" min="0" max="120" step="1" class="form-control" value="@activity.RestPeriodSeconds"/></td>
-                                    <td><a href="#" class="text-danger font-weight-bold" onclick="deleteActivity_Clicked(this)">Remove</a></td>
-                                </tr>
+                                    var activity = Model.Sessions?.ToList()[sessionIndex].Activities?.ToList()[activityIndex];
+                                    <tr>
+                                        <td><input type="text" class="form-control" value="@activity.Name" required /></td>
+                                        <td><input type="text" class="form-control" value="@activity.Quantity" required /></td>
+                                        <td><input type="number" min="1" step="1" class="form-control" value="@activity.Sets" required /></td>
+                                        <td><input type="number" min="0" max="120" step="1" class="form-control" value="@activity.RestPeriodSeconds" /></td>
+                                        <td><a href="#" class="text-danger font-weight-bold" onclick="deleteActivity_Clicked(this)">Remove</a></td>
+                                    </tr>
                                 }
                             </tbody>
                         </table>
@@ -93,7 +94,7 @@
                 </div>
             </div>
         </div>
-        <div class="card-footer">   
+        <div class="card-footer">
             <div class="float-right">
                 <input type="submit" class="btn btn-primary" value="Save" />
                 <a asp-controller="Workout" asp-action="Summary" class="btn btn-danger">Cancel</a>
@@ -106,7 +107,7 @@
     <tbody>
         <tr>
             <td><label>Name</label></td>
-            <td><input type="text" value="New Session" class="sessionNameInput form-control" oninput="sessionName_Input(this)"/></td>
+            <td><input type="text" value="New Session" class="sessionNameInput form-control" oninput="sessionName_Input(this)" /></td>
         </tr>
         <tr>
             <td><label>Day Number</label></td>
@@ -136,10 +137,10 @@
 <table class="d-none">
     <tbody>
         <tr id="ActivityRowTemplate">
-            <td><input type="text" class="form-control" required/></td>
-            <td><input type="text" class="form-control" required/></td>
-            <td><input type="number" min="1" step="1" class="form-control" required/></td>
-            <td><input type="number" min="0" max="120" step="1" class="form-control"/></td>
+            <td><input type="text" class="form-control" required /></td>
+            <td><input type="text" class="form-control" required /></td>
+            <td><input type="number" min="1" step="1" class="form-control" required /></td>
+            <td><input type="number" min="0" max="120" step="1" class="form-control" /></td>
             <td><a href="#" class="text-danger font-weight-bold" onclick="deleteActivity_Clicked(this)">Remove</a></td>
         </tr>
     </tbody>

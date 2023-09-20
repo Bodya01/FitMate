@@ -9,7 +9,6 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using System.Collections.Generic;
 using System.Globalization;
 
 namespace FitMate
@@ -68,8 +67,8 @@ namespace FitMate
 
             var cultures = new[]
             {
-             new CultureInfo("en-US"),
-             new CultureInfo("de"),
+                new CultureInfo("en-US"),
+                new CultureInfo("de"),
             };
 
             app.UseRequestLocalization(new RequestLocalizationOptions
