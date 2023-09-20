@@ -26,7 +26,7 @@ namespace FitMate.Handlers.Handlers.Bodyweight.Commands
                 {
                     User = command.User,
                     Date = command.RecordDates[i],
-                    Weight = command.RecordWeights[i]
+                    Weight = command.recordWeights[i]
                 };
                 records.Add(newRecord);
             }

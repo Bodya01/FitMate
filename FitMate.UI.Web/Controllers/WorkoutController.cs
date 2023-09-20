@@ -1,13 +1,12 @@
 ﻿using FitMate.DAL.Entities;
 using FitMate.Data;
+using FitMate.Handlers.Handlers.WorkoutPlan.Models.Requests;
 using FitMate.Handlers.Handlers.WorkoutPlan.Models.WorkoutPlan.Requests;
 using FitMate.UI.Web.Controllers.Base;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace FitMate.Controllers
@@ -16,17 +15,16 @@ namespace FitMate.Controllers
     [Controller]
     public class WorkoutController : FitMateControllerBase
     {
-        public WorkoutController(FitMateContext context, UserManager<FitnessUser> userManager, IMediator mediator) : base(context, userManager, mediator)
-        {
-
-        }
+        public WorkoutController(FitMateContext context, UserManager<FitnessUser> userManager, IMediator mediator) : base(context, userManager, mediator) { }
 
         public async Task<IActionResult> Summary()
         {
             var currentUser = await GetUserAsync();
-            var plans = await _context.WorkoutPlans.Where(plan => plan.User == currentUser).ToArrayAsync();
 
-            return View(plans);
+            var request = new GetWorkoutByUserQuery { User = currentUser };
+            var response = await _mediator.Send(request);
+
+            return View(response.WorkoutPlans);
         }
 
         [HttpGet]
@@ -36,6 +34,7 @@ namespace FitMate.Controllers
             {
                 Name = "Workout Plan"
             };
+
             return View("/Views/Workout/Edit.cshtml", newPlan);
         }
 
@@ -53,16 +52,8 @@ namespace FitMate.Controllers
             var currentUser = await GetUserAsync();
             workoutPlan.User = currentUser;
 
-            if (workoutPlan.Id == 0)
-            {
-                _context.WorkoutPlans.Add(workoutPlan);
-            }
-            else
-            {
-                _context.WorkoutPlans.Update(workoutPlan);
-            }
-
-            await _context.SaveChangesAsync();
+            var command = new EditWorkoutPlanCommand { WorkoutPlan = workoutPlan };
+            await _mediator.Send(command);
 
             return RedirectToAction("Summary");
         }
@@ -70,13 +61,12 @@ namespace FitMate.Controllers
         [HttpGet]
         public async Task<IActionResult> Session(long workoutPlanId, int sessionId)
         {
-            var currentUser = await GetUserAsync();
-            var plan = await _context.WorkoutPlans.FirstOrDefaultAsync(plan => plan.Id == workoutPlanId && plan.User == currentUser);
+            var request = new GetWorkoutPlanByIdQuery { Id = workoutPlanId };
+            var plan = await _mediator.Send(request);
 
-            if (plan == null || sessionId < 0 || sessionId >= plan.Sessions.Length)
-                return BadRequest();
+            if (plan is null || sessionId < 0 || sessionId >= plan.WorkoutPlan.Sessions.Length) return BadRequest();
 
-            var session = plan.Sessions[sessionId];
+            var session = plan.WorkoutPlan.Sessions[sessionId];
             return View(session);
         }
     }

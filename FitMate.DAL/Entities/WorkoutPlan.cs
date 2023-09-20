@@ -9,11 +9,11 @@ namespace FitMate.DAL.Entities
         public long Id { get; set; }
 
         [Required]
-        public FitnessUser User { get; set; }
+        public FitnessUser? User { get; set; }
         [Required]
-        public string Name { get; set; }
+        public string? Name { get; set; }
         [Required]
-        public string SessionsJSON { get; set; }
+        public string? SessionsJSON { get; set; }
 
         [NotMapped]
         public WorkoutSession[] Sessions

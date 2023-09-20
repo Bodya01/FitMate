@@ -15,7 +15,7 @@ namespace FitMate.Controllers
     [Authorize]
     public class GoalController : FitMateControllerBase
     {
-        private IGoalRepository storageService;
+        private IGoalRepository _storageRepository;
 
         public GoalController
             (IGoalRepository StorageService,
@@ -26,7 +26,7 @@ namespace FitMate.Controllers
                   UserManager,
                   mediator)
         {
-            this.storageService = StorageService;
+            _storageRepository = StorageService;
         }
 
         [HttpGet]
@@ -34,18 +34,15 @@ namespace FitMate.Controllers
         {
             var currentUser = await GetUserAsync();
 
-            var goals = await storageService.GetAllGoals(currentUser);
+            var goals = await _storageRepository.GetAllGoals(currentUser);
 
             return View(goals);
         }
 
         [HttpGet]
-        public async Task<IActionResult> AddGoal()
+        public IActionResult AddGoal()
         {
-            WeightliftingGoal model = new WeightliftingGoal()
-            {
-                Id = 0
-            };
+            var model = new WeightliftingGoal() { Id = 0 };
 
             return View("editgoal", model);
         }
@@ -55,9 +52,9 @@ namespace FitMate.Controllers
         {
             var currentUser = await GetUserAsync();
 
-            var goal = await storageService.GetGoalByID(currentUser, ID);
-            if (goal == null)
-                return BadRequest();
+            var goal = await _storageRepository.GetGoalByID(currentUser, ID);
+
+            if (goal is null) return BadRequest();
 
             return View(goal);
         }
@@ -67,11 +64,11 @@ namespace FitMate.Controllers
         {
             var currentUser = await GetUserAsync();
 
-            var goal = await storageService.GetGoalByID(currentUser, ID);
-            if (goal == null)
-                return BadRequest();
+            var goal = await _storageRepository.GetGoalByID(currentUser, ID);
 
-            await storageService.DeleteGoalByID(currentUser, ID);
+            if (goal is null) return BadRequest();
+
+            await _storageRepository.DeleteGoalByID(currentUser, ID);
 
             return RedirectToAction("Summary");
 
@@ -80,16 +77,15 @@ namespace FitMate.Controllers
         [HttpPost]
         public async Task<IActionResult> EditGoal(EditGoalInputModel GoalInput)
         {
-            if (TryValidateModel(GoalInput) == false)
-                return BadRequest();
+            if (!TryValidateModel(GoalInput)) return BadRequest();
 
             var currentUser = await GetUserAsync();
 
             Goal goal = null;
 
-            if (GoalInput.ID != 0)
+            if (GoalInput.Id != 0)
             {
-                goal = await storageService.GetGoalByID(currentUser, GoalInput.ID);
+                goal = await _storageRepository.GetGoalByID(currentUser, GoalInput.Id);
             }
             else
             {
@@ -120,7 +116,7 @@ namespace FitMate.Controllers
             goal.Activity = GoalInput.Activity;
             goal.User = currentUser;
 
-            await storageService.StoreGoal(goal);
+            await _storageRepository.StoreGoal(goal);
 
             return RedirectToAction("Summary");
         }
@@ -130,10 +126,9 @@ namespace FitMate.Controllers
         {
             var currentUser = await GetUserAsync();
 
-            var goal = await storageService.GetGoalByID(currentUser, Progress.GoalID);
+            var goal = await _storageRepository.GetGoalByID(currentUser, Progress.GoalID);
 
-            if (goal == null)
-                return BadRequest();
+            if (goal is null) return BadRequest();
 
             GoalProgress newProgress = null;
 
@@ -161,7 +156,7 @@ namespace FitMate.Controllers
             newProgress.Date = Progress.Date;
             newProgress.User = currentUser;
 
-            await storageService.StoreGoalProgress(newProgress);
+            await _storageRepository.StoreGoalProgress(newProgress);
 
             return RedirectToAction("ViewGoal", new { ID = Progress.GoalID });
         }
@@ -171,14 +166,13 @@ namespace FitMate.Controllers
         {
             var currentUser = await GetUserAsync();
 
-            var goal = await storageService.GetGoalByID(currentUser, ID);
-            if (goal == null)
-                return BadRequest();
+            var goal = await _storageRepository.GetGoalByID(currentUser, ID);
 
-            var progress = await storageService.GetGoalProgress(currentUser, ID);
+            if (goal is null) return BadRequest();
 
-            if (progress == null)
-                return BadRequest();
+            var progress = await _storageRepository.GetGoalProgress(currentUser, ID);
+
+            if (progress == null) return BadRequest();
 
             var viewModel = new GoalViewModel()
             {
@@ -194,7 +188,7 @@ namespace FitMate.Controllers
         {
             var currentUser = await GetUserAsync();
 
-            var progress = await storageService.GetGoalProgress(currentUser, GoalID, true);
+            var progress = await _storageRepository.GetGoalProgress(currentUser, GoalID, true);
             var result = Array.ConvertAll(progress, item => (WeightliftingProgress)item)
                 .Select(record => new { Date = record.Date.ToString("d"), Weight = record.Weight, Reps = record.Reps })
                 .ToArray();
@@ -207,7 +201,7 @@ namespace FitMate.Controllers
         {
             var currentUser = await GetUserAsync();
 
-            var progress = await storageService.GetGoalProgress(currentUser, GoalID, true);
+            var progress = await _storageRepository.GetGoalProgress(currentUser, GoalID, true);
 
             var result = Array.ConvertAll(progress, item => (TimedProgress)item)
                 .Select(record => new { Date = record.Date.ToString("d"), Timespan = record.Time, Quantity = record.Quantity, QuantityUnit = record.QuantityUnit })

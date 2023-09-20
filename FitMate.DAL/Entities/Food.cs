@@ -7,11 +7,6 @@ namespace FitMate.DAL.Entities
     {
         public long Id { get; set; }
         [Required]
-        [ForeignKey("CreatedBy")]
-        public string CreatedByID { get; set; }
-        public FitnessUser CreatedBy { get; set; }
-
-        [Required]
         public string Name { get; set; }
         [Required]
         [Range(0, int.MaxValue)]

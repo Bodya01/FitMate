@@ -78,8 +78,12 @@
             <div class="form-group">
                 <label class="font-weight-bold">Quantity</label>
                 <div class="d-flex">
-                    <input type="number" min="0" step="1" Name="GoalInput.Quantity" placeholder="Quantity" class="form-control flex-grow-1" value="@quantity" required/>
-                    <input type="text" Name="GoalInput.QuantityUnit" placeholder="Unit" class="form-control flex-grow-1" value="@quantityUnit" required/>
+                    <div class="flex-grow-1">
+                        <input type="number" min="0" step="1" name="GoalInput.Quantity" placeholder="Quantity" class="form-control" value="@quantity" />
+                    </div>
+                    <div class="flex-grow-1">
+                        <input type="text" name="GoalInput.QuantityUnit" placeholder="Unit" class="form-control" value="@quantityUnit" />
+                    </div>
                 </div>
             </div>
         </div>

@@ -9,6 +9,7 @@ namespace FitMate.Handlers.Handlers.WorkoutPlan.Queries
     public class GetWorkoutPlanByIdQueryHandler : IRequestHandler<GetWorkoutPlanByIdQuery, GetWorkoutPlanByIdResponse>
     {
         private readonly FitMateContext _context;
+
         public GetWorkoutPlanByIdQueryHandler(FitMateContext context)
         {
             _context = context;

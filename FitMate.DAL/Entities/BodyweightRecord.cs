@@ -7,7 +7,7 @@
         public DateTime Date { get; set; }
         public float Weight { get; set; }
 
-        public FitnessUser User { get; set; }
+        public FitnessUser? User { get; set; }
 
     }
 }

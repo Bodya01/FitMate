@@ -8,7 +8,7 @@ namespace FitMate.Data
     {
         public DbSet<BodyweightRecord> BodyweightRecords { get; set; }
         public DbSet<BodyweightTarget> BodyweightTargets { get; set; }
-        public DbSet<Food> UserFoods { get; set; }
+        public DbSet<Food> Foods { get; set; }
         public DbSet<FoodRecord> FoodRecords { get; set; }
         public DbSet<NutritionTarget> NutritionTargets { get; set; }
         public DbSet<Goal> Goals { get; set; }
@@ -34,13 +34,6 @@ namespace FitMate.Data
                 entity.HasOne(record => record.User)
                 .WithMany()
                 .OnDelete(DeleteBehavior.Cascade);
-            });
-
-            builder.Entity<Food>(entity =>
-            {
-                entity.HasOne(food => food.CreatedBy)
-                .WithMany()
-                .OnDelete(DeleteBehavior.ClientCascade);
             });
 
             builder.Entity<NutritionTarget>(entity =>

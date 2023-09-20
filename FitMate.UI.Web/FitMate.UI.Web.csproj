@@ -27,4 +27,8 @@
     <ProjectReference Include="..\FitMate.Handlers\FitMate.Handlers.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Areas\Identity\" />
+  </ItemGroup>
+
 </Project>

@@ -4,6 +4,6 @@ namespace FitMate.Handlers.Handlers.WorkoutPlan.Models.WorkoutPlan.Responses
 {
     public class GetWorkoutPlanByIdResponse
     {
-        public DAL.Entities.WorkoutPlan WorkoutPlan { get; set; }
+        public DAL.Entities.WorkoutPlan? WorkoutPlan { get; set; }
     }
 }

@@ -26,38 +26,38 @@ namespace FitMate.ViewModels
 
         public BodyweightSummaryViewModel(IEnumerable<BodyweightRecord> AllRecords, BodyweightTarget Target)
         {
-            if (AllRecords == null || AllRecords.Count() == 0)
-                return;
+            //if (AllRecords == null || AllRecords.Count() == 0)
+            //    return;
 
             this.AllRecords = AllRecords;
             this.Target = Target;
-            this.MostRecentRecord = AllRecords.First();
+            var asd = AllRecords.OrderByDescending(x => x.Date).ToList();
+            this.MostRecentRecord = asd.FirstOrDefault();
 
             CurrentMonthRecords = AllRecords.Where(record => record.Date >= DateTime.Today.AddDays(-28));
             CurrentWeekRecords = CurrentMonthRecords.Where(record => record.Date >= DateTime.Today.AddDays(-7));
 
             if (CurrentWeekRecords.Count() != 0)
             {
-                CurrentWeekProgress = CurrentWeekRecords.First().Weight - CurrentWeekRecords.Last().Weight;
+                CurrentWeekProgress = CurrentWeekRecords.FirstOrDefault().Weight - CurrentWeekRecords.LastOrDefault().Weight;
                 CurrentWeekAverage = CurrentWeekProgress / 7;
             }
 
             if (CurrentMonthRecords.Count() != 0)
             {
-                CurrentMonthProgress = CurrentMonthRecords.First().Weight - CurrentMonthRecords.Last().Weight;
+                CurrentMonthProgress = CurrentMonthRecords.FirstOrDefault().Weight - CurrentMonthRecords.LastOrDefault().Weight;
                 CurrentMonthAverage = CurrentMonthProgress / 28;
             }
 
             if (AllRecords.Count() != 0)
             {
-                AllTimeProgress = AllRecords.First().Weight - AllRecords.Last().Weight;
-                AllTimeAverage = AllTimeProgress / ((float)(AllRecords.First().Date - AllRecords.Last().Date).TotalDays) * 7;
+                AllTimeProgress = AllRecords.FirstOrDefault().Weight - AllRecords.LastOrDefault().Weight;
+                AllTimeAverage = AllTimeProgress / ((float)(AllRecords.FirstOrDefault().Date - AllRecords.LastOrDefault().Date).TotalDays) * 7;
             }
 
-            if (Target == null)
-                return;
+            if (Target == null) return;
 
-            DistanceToTarget = Target.TargetWeight - MostRecentRecord.Weight;
+            DistanceToTarget = Target.TargetWeight - (MostRecentRecord is not null ? MostRecentRecord.Weight : 0);
             DailyProgressNeeded = (float)(DistanceToTarget / (Target.TargetDate - DateTime.Today).TotalDays);
             WeeklyProgressNeeded = DailyProgressNeeded * 7;
         }

@@ -10,8 +10,8 @@
 
 function updateInputNames() {
     $("table tbody tr").each(function (index, element) {
-        $(element).find("input[type=number]").attr("name", "recordWeights[" + String(index) + "]");
-        $(element).find("input[type=date]").attr("name", "recordDates[" + String(index) + "]");
+        $(element).find("input[type=number]").attr("name", "rw[" + String(index) + "]");
+        $(element).find("input[type=date]").attr("name", "rd[" + String(index) + "]");
     });
 }
 
@@ -81,6 +81,7 @@ function formSubmit_Clicked() {
 }
 
 function addRowButton_Clicked() {
+    
     var weightInput = $("#NewWeightInput");
     var dateInput = $("#NewDateInput");
 

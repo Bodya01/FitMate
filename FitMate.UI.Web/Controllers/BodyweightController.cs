@@ -33,6 +33,11 @@ namespace FitMate.Controllers
             _bodyweightRepository = bodyweightRepository;
         }
 
+        public IActionResult Index()
+        {
+            return RedirectToAction("Summary");
+        }
+
         public async Task<IActionResult> Summary()
         {
             var currentUser = await GetUserAsync();
@@ -86,12 +91,18 @@ namespace FitMate.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> EditRecords(EditBodyweightRecordsCommand command)
+        public async Task<IActionResult> EditRecords([FromForm]DateTime[] rd, [FromForm]float[] rw)
         {
-            if (command.RecordDates == null
-                || command.RecordWeights == null
-                || command.RecordDates.Length != command.RecordWeights.Length
-                || command.RecordWeights.Any(x => x <= 0 || x >= 200))
+            var command = new EditBodyweightRecordsCommand
+            {
+                recordWeights = rw,
+                RecordDates = rd
+            };
+
+            if (command.RecordDates is null
+                || command.recordWeights is null
+                || command.RecordDates.Length != command.recordWeights.Length
+                || command.recordWeights.Any(x => x <= 0 || x >= 200))
             {
                 return BadRequest();
             }
