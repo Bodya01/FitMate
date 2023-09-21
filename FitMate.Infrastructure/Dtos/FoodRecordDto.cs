@@ -2,4 +2,4 @@
 
 namespace FitMate.Infrastucture.Dtos;
 
-public record FoodRecordDto(Guid Id, DateTime ConsumptionDate, float Quantity, FoodDto Food, UserDto User) : DtoBase;
+public record FoodRecordDto(Guid Id, DateTime ConsumptionDate, float Quantity, FoodDto Food, string UserId) : DtoBase;

@@ -13,6 +13,7 @@ using FitMate.Applcation.ServiceCollectionExtensions;
 using FitMate.Core.Repositories.Interfaces;
 using FitMate.Core.Repositories.Implementations;
 using FitMate.Core.UnitOfWork;
+using FitMate.Infrastructure;
 
 namespace FitMate
 {
@@ -41,13 +42,16 @@ namespace FitMate
             services.AddRazorPages();
 
             services.AddMediatRAndHandlers();
+            Dependencies.RegisterInfrastructure(services);
 
-            services.AddTransient<IBodyweightRecordRepository, BodyweightRecordRepository>();
-            services.AddTransient<IBodyweightTargetRepository, BodyweightTargetRepository>();
-            services.AddTransient<IGoalRepository, GoalRepository>();
-            services.AddTransient<IGoalProgressRepository, GoalProgressRepository>();
-            services.AddTransient<IWorkoutPlanRepository, WorkoutPlanRepository>();
-            services.AddTransient<IUnitOfWork, UnitOfWork>();
+            services.AddScoped<IBodyweightRecordRepository, BodyweightRecordRepository>();
+            services.AddScoped<IBodyweightTargetRepository, BodyweightTargetRepository>();
+            services.AddScoped<IGoalRepository, GoalRepository>();
+            services.AddScoped<IGoalProgressRepository, GoalProgressRepository>();
+            services.AddScoped<IWorkoutPlanRepository, WorkoutPlanRepository>();
+            services.AddScoped<IFoodRepository, FoodRepository>();
+            services.AddScoped<IFoodRecordRepository, FoodRecordRepository>();
+            services.AddScoped<IUnitOfWork, UnitOfWork>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

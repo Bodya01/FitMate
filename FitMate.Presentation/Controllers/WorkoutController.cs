@@ -11,19 +11,19 @@ using FitMate.Applcation.Commands.WorkoutPlan;
 using FitMate.Core.UnitOfWork;
 using System;
 using System.Threading;
+using AutoMapper;
+using FitMate.Infrastucture.Dtos;
 
 namespace FitMate.Controllers
 {
     public class WorkoutController : FitMateControllerBase
     {
-        public WorkoutController(FitMateContext context,
-            UserManager<FitnessUser> userManager,
-            IMediator mediator,
-            IUnitOfWork unitOfWork)
-            : base(context,
-                  userManager,
-                  mediator,
-                  unitOfWork) { }
+        private readonly IMapper _mapper;
+
+        public WorkoutController(FitMateContext context, UserManager<FitnessUser> userManager, IMediator mediator, IUnitOfWork unitOfWork, IMapper mapper) : base(context, userManager, mediator, unitOfWork)
+        {
+            _mapper = mapper;
+        }
 
         public async Task<IActionResult> Summary(CancellationToken cancellationToken = default)
         {
@@ -56,8 +56,11 @@ namespace FitMate.Controllers
         public async Task<IActionResult> Edit(WorkoutPlan workoutPlan, CancellationToken cancellationToken = default)
         {
             workoutPlan.User = await GetUserAsync(cancellationToken);
+            var userDto = workoutPlan.User.Id;
 
-            var command = new EditWorkoutPlanCommand { WorkoutPlan = workoutPlan };
+            var workoutPlanDto = new WorkoutPlanDto(workoutPlan.Id, workoutPlan.Name, workoutPlan.SessionsJSON, userDto);
+
+            var command = new EditWorkoutPlanCommand { WorkoutPlan = workoutPlanDto };
             await _mediator.Send(command, cancellationToken);
 
             return RedirectToAction("Summary");
