@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace FitMate.DAL.Maps
+namespace FitMate.Infrastructure.Maps
 {
     public class BodyweightRecordMap : IEntityTypeConfiguration<BodyweightRecord>
     {

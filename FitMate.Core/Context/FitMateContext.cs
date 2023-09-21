@@ -1,5 +1,5 @@
 ﻿using FitMate.Infrastructure.Entities;
-using FitMate.DAL.Maps;
+using FitMate.Infrastructure.Maps;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
