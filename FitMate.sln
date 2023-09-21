@@ -3,11 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.4.33205.214
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FitMate.Presentation", "FitMate.UI.Web\FitMate.Presentation.csproj", "{45D809F0-1872-4A00-8BB9-BEBC247A5D1A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FitMate.Presentation", "FitMate.Presentation\FitMate.Presentation.csproj", "{45D809F0-1872-4A00-8BB9-BEBC247A5D1A}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FitMate.Core", "FitMate.DAL\FitMate.Core.csproj", "{CADF3DA3-5E46-4598-B6BB-D442944920A2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FitMate.Infrastructure", "FitMate.Infrastructure\FitMate.Infrastructure.csproj", "{CADF3DA3-5E46-4598-B6BB-D442944920A2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FitMate.Infrastucture", "FitMate.Core\FitMate.Infrastucture.csproj", "{93AF4C69-667A-4A47-8B58-B84B4253A82B}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FitMate.Core", "FitMate.Core\FitMate.Core.csproj", "{93AF4C69-667A-4A47-8B58-B84B4253A82B}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FitMate.Business", "FitMate.Business\FitMate.Business.csproj", "{EFD785F3-9F55-41B8-892D-D3E6EE32385D}"
 EndProject

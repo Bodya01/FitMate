@@ -1,4 +1,5 @@
 ﻿using FitMate.Infrastucture.Dtos.Base;
+using FitMate.Infrastucture.Dtos.Goals;
 
 namespace FitMate.Infrastucture.Dtos;
 
