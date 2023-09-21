@@ -12,6 +12,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Collections.Generic;
 using FitMate.Core.UnitOfWork;
+using System.Threading;
 
 namespace FitMate.Controllers
 {
@@ -27,7 +28,7 @@ namespace FitMate.Controllers
                   unitOfWork) { }
 
         [HttpGet]
-        public async Task<IActionResult> AddFood(DateTime date)
+        public async Task<IActionResult> AddFood(DateTime date, CancellationToken cancellationToken)
         {
             if (date.Ticks == 0) date = DateTime.Today;
             ViewData["selectedDate"] = date;
@@ -36,30 +37,30 @@ namespace FitMate.Controllers
 
             var model = new NewFoodModel()
             {
-                FoodRecords = await _context.FoodRecords.Where(r => r.UserId == currentUserId && r.ConsumptionDate == date).ToListAsync(),
-                UserFoods = await _context.Foods.ToListAsync()
+                FoodRecords = await _context.FoodRecords.Where(r => r.UserId == currentUserId && r.ConsumptionDate == date).ToListAsync(cancellationToken),
+                UserFoods = await _unitOfWork.FoodRepository.Value.Get(e => true, s => s).ToListAsync(cancellationToken),
             };
 
             return View(model);
         }
 
         [HttpPost]
-        public async Task<IActionResult> AddNewFood(Food food)
+        public async Task<IActionResult> AddNewFood(Food food, CancellationToken cancellationToken)
         {
-            if (food.Id == Guid.Empty)  _context.Foods.Add(food);
-            else _context.Foods.Update(food);
+            if (food.Id == Guid.Empty)  await _unitOfWork.FoodRepository.Value.CreateAsync(food, cancellationToken);
+            else await _unitOfWork.FoodRepository.Value.UpdateAsync(food, cancellationToken);
 
-            await _context.SaveChangesAsync();
+            await _unitOfWork.SaveChangesAsync(cancellationToken);
 
             return RedirectToAction("AddFood");
         }
 
         [HttpPost]
-        public async Task<IActionResult> EditRecords(DateTime date, Guid[] foodIDs, float[] quantities)
+        public async Task<IActionResult> EditRecords(DateTime date, Guid[] foodIDs, float[] quantities, CancellationToken cancellationToken)
         {
             if (foodIDs.Length != quantities.Length || foodIDs.Length == 0) return BadRequest();
 
-            var currentUser = await GetUserAsync();
+            var currentUser = await GetUserAsync(cancellationToken);
 
             var existingRecords = await _context.FoodRecords.Where(record => record.User == currentUser && record.ConsumptionDate == date).ToListAsync();
             _context.FoodRecords.RemoveRange(existingRecords);

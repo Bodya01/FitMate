@@ -28,7 +28,7 @@ namespace FitMate.Applcation.Commands.Bodyweight
                 Weight = request.Weight
             };
 
-            await _unitOfWork.BodyweightRecordRepository.Value.AddAsync(newRecord);
+            await _unitOfWork.BodyweightRecordRepository.Value.CreateAsync(newRecord, cancellationToken);
             await _unitOfWork.SaveChangesAsync(cancellationToken);
         }
     }

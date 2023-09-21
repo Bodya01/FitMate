@@ -2,6 +2,7 @@
 using FitMate.Data;
 using FitMate.Infrastructure.Entities;
 using Microsoft.EntityFrameworkCore;
+using System.Linq.Expressions;
 
 namespace FitMate.Core.Repositories.Implementations
 {
@@ -14,31 +15,35 @@ namespace FitMate.Core.Repositories.Implementations
             _context = context;
         }
 
-        public async Task<WorkoutPlan> GetByIdAsync(Guid id) =>
-            await _context.WorkoutPlans.FindAsync(id);
+        public async Task CreateAsync(WorkoutPlan entity, CancellationToken cancellationToken = default) =>
+            await _context.AddAsync(entity, cancellationToken);
 
-        public async Task<List<WorkoutPlan>> GetByUserIdAsync(string userId) =>
-            await _context.WorkoutPlans.Where(x => x.UserId == userId)
-                .ToListAsync();
+        public async Task UpdateAsync(WorkoutPlan entity, CancellationToken cancellationToken = default) =>
+            await Task.Run(() => _context.Update(entity), cancellationToken);
 
-        public async Task AddAsync(WorkoutPlan workoutPlan)
+        public async Task DeleteAsync(Guid id, CancellationToken cancellationToken = default)
         {
-            await _context.AddAsync(workoutPlan);
-            await _context.SaveChangesAsync();
+            var entity = await GetByIdAsync(id, cancellationToken);
+
+            if (entity is not null) await Task.Run(() => _context.Remove(entity), cancellationToken);
         }
 
-        public async Task UpdateAsync(WorkoutPlan workoutPlan)
-        {
-            _context.Update(workoutPlan);
-            await _context.SaveChangesAsync();
-        }
+        public async Task DeleteAsync(WorkoutPlan entity, CancellationToken cancellationToken = default) =>
+            await Task.Run(() => _context.Remove(entity), cancellationToken);
 
-        public async Task DeleteAsync(Guid id)
-        {
-            var record = await GetByIdAsync(id);
+        public async Task<WorkoutPlan> GetByIdAsync(Guid id, CancellationToken cancellationToken = default) =>
+            await _context.WorkoutPlans.FirstOrDefaultAsync(x => x.Id == id, cancellationToken);
 
-            _context.Remove(record);
-            await _context.SaveChangesAsync();
-        }
+        public IQueryable<WorkoutPlan> GetEntitiesAsync(IEnumerable<Guid> ids) =>
+            _context.WorkoutPlans.Where(x => ids.Contains(x.Id));
+
+        public IQueryable<WorkoutPlan> Get(Expression<Func<WorkoutPlan, bool>> expression, Expression<Func<WorkoutPlan, WorkoutPlan>> selector) =>
+            _context.WorkoutPlans.Select(selector).Where(expression);
+
+        public async Task LoadNavigationPropertyExplicitly<TProperty>(WorkoutPlan entity, Expression<Func<WorkoutPlan, TProperty>> relation, CancellationToken cancellationToken = default) where TProperty : class =>
+            await _context.WorkoutPlans.Entry(entity).Reference(relation).LoadAsync(cancellationToken);
+
+        public async Task LoadNavigationCollectionExplicitly<TProperty>(WorkoutPlan entity, Expression<Func<WorkoutPlan, IEnumerable<TProperty>>> relation, CancellationToken cancellationToken = default) where TProperty : class =>
+            await _context.WorkoutPlans.Entry(entity).Collection(relation).LoadAsync(cancellationToken);
     }
 }

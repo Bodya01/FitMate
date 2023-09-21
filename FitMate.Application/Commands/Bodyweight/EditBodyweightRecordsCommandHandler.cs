@@ -2,6 +2,7 @@
 using MediatR;
 using FitMate.Core.Repositories.Interfaces;
 using FitMate.Core.UnitOfWork;
+using Microsoft.EntityFrameworkCore;
 
 namespace FitMate.Applcation.Commands.Bodyweight
 {
@@ -23,7 +24,9 @@ namespace FitMate.Applcation.Commands.Bodyweight
 
         public async Task Handle(EditBodyweightRecordsCommand command, CancellationToken cancellationToken)
         {
-            await _unitOfWork.BodyweightRecordRepository.Value.DeleteAllForUser(command.User.Id);
+            var recordsToRemove = await _unitOfWork.BodyweightRecordRepository.Value.Get(e => e.UserId == command.User.Id, s => s)
+                .ToListAsync(cancellationToken);
+            await _unitOfWork.BodyweightRecordRepository.Value.DeleteRangeAsync(recordsToRemove);
 
             var records = new List<BodyweightRecord>();
 
@@ -38,7 +41,7 @@ namespace FitMate.Applcation.Commands.Bodyweight
                 records.Add(newRecord);
             }
 
-            await _unitOfWork.BodyweightRecordRepository.Value.AddRangeAsync(records);
+            await _unitOfWork.BodyweightRecordRepository.Value.CreateRangeAsync(records, cancellationToken);
             await _unitOfWork.SaveChangesAsync(cancellationToken);
         }
     }

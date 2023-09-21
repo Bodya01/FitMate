@@ -1,5 +1,6 @@
 ﻿using FitMate.Core.UnitOfWork;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
 
 namespace FitMate.Applcation.Queries.WorkoutPlan
 {
@@ -24,7 +25,7 @@ namespace FitMate.Applcation.Queries.WorkoutPlan
 
         public async Task<GetWorkoutByUserIdResponse> Handle(GetWorkoutByUserIdQuery request, CancellationToken cancellationToken)
         {
-            var plans = await _unitOfWork.WorkoutPlanRepository.Value.GetByUserIdAsync(request.UserId);
+            var plans = await _unitOfWork.WorkoutPlanRepository.Value.Get(x => x.UserId == request.UserId, s => s).ToListAsync();
 
             var response = new GetWorkoutByUserIdResponse()
             {

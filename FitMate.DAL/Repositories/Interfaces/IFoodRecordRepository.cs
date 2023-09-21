@@ -2,8 +2,7 @@
 
 namespace FitMate.Core.Repositories.Interfaces
 {
-    public interface IGoalRepository : IRepositoryBase<Goal>
+    public interface IFoodRecordRepository : IRepositoryBase<FoodRecord>
     {
-
     }
 }

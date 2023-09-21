@@ -1,4 +1,5 @@
-﻿using FitMate.Core.Repositories.Interfaces;
+﻿using FitMate.Core.Repositories.Implementations;
+using FitMate.Core.Repositories.Interfaces;
 using FitMate.Data;
 
 namespace FitMate.Core.UnitOfWork
@@ -11,20 +12,19 @@ namespace FitMate.Core.UnitOfWork
         public Lazy<IGoalRepository> GoalRepository { get; private set; }
         public Lazy<IGoalProgressRepository> GoalProgressRepository { get; private set; }
         public Lazy<IWorkoutPlanRepository> WorkoutPlanRepository { get; private set; }
+        public Lazy<IFoodRepository> FoodRepository { get; private set; }
+        public Lazy<IFoodRecordRepository> FoodRecordRepository { get; private set; }
 
-        public UnitOfWork(FitMateContext context,
-            IBodyweightRecordRepository bodyweightRecordRepository,
-            IBodyweightTargetRepository bodyweightTargetRepository,
-            IGoalRepository goalRepository,
-            IGoalProgressRepository goalProgressRepository,
-            IWorkoutPlanRepository workoutPlanRepository)
+        public UnitOfWork(FitMateContext context)
         {
             _context = context;
-            BodyweightRecordRepository = new Lazy<IBodyweightRecordRepository>(bodyweightRecordRepository);
-            BodyweightTargetRepository = new Lazy<IBodyweightTargetRepository>(bodyweightTargetRepository);
-            GoalRepository = new Lazy<IGoalRepository>(goalRepository);
-            GoalProgressRepository = new Lazy<IGoalProgressRepository>(goalProgressRepository);
-            WorkoutPlanRepository = new Lazy<IWorkoutPlanRepository>(workoutPlanRepository);
+            BodyweightRecordRepository = new Lazy<IBodyweightRecordRepository>(new BodyweightRecordRepository(context));
+            BodyweightTargetRepository = new Lazy<IBodyweightTargetRepository>(new BodyweightTargetRepository(context));
+            GoalRepository = new Lazy<IGoalRepository>(new GoalRepository(context));
+            GoalProgressRepository = new Lazy<IGoalProgressRepository>(new GoalProgressRepository(context));
+            WorkoutPlanRepository = new Lazy<IWorkoutPlanRepository>(new WorkoutPlanRepository(context));
+            FoodRepository = new Lazy<IFoodRepository>(new FoodRepository(context));
+            FoodRecordRepository = new Lazy<IFoodRecordRepository>(new FoodRecordRepository(context));
         }
 
         public async Task SaveChangesAsync(CancellationToken cancellationToken = default)

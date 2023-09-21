@@ -2,10 +2,8 @@
 
 namespace FitMate.Core.Repositories.Interfaces
 {
-    public interface IBodyweightTargetRepository
+    public interface IBodyweightTargetRepository : IRepositoryBase<BodyweightTarget>
     {
-        public Task<BodyweightTarget> GetForUserAsync(string userId);
-        public Task AddAsync(BodyweightTarget target);
-        public Task UpdateAsync(BodyweightTarget target);
+
     }
 }

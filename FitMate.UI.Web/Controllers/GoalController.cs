@@ -160,7 +160,7 @@ namespace FitMate.Controllers
             newProgress.Date = progress.Date;
             newProgress.User = currentUser;
 
-            await _unitOfWork.GoalProgressRepository.Value.AddAsync(newProgress);
+            await _unitOfWork.GoalProgressRepository.Value.CreateAsync(newProgress, cancellationToken);
             await _unitOfWork.SaveChangesAsync(cancellationToken);
 
             return RedirectToAction("ViewGoal", new { ID = progress.GoalId });
@@ -175,7 +175,7 @@ namespace FitMate.Controllers
 
             if (goal is null) return BadRequest();
 
-            var progress = await _unitOfWork.GoalProgressRepository.Value.GetForUserAsync(currentUserId, Id);
+            var progress = await _unitOfWork.GoalProgressRepository.Value.Get(e => e.GoalId == Id && e.UserId == currentUserId, s => s).ToListAsync(cancellationToken);
 
             if (progress == null) return BadRequest();
 
@@ -189,11 +189,15 @@ namespace FitMate.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetWeightliftingProgress(Guid goalId)
+        public async Task<IActionResult> GetWeightliftingProgress(Guid goalId, CancellationToken cancellationToken = default)
         {
             var currentUserId = await GetUserIdAsync();
 
-            var progress = await _unitOfWork.GoalProgressRepository.Value.GetForUserAsync(currentUserId, goalId, true);
+            // Ascending order
+            var progress = await _unitOfWork.GoalProgressRepository.Value.Get(e => e.GoalId == goalId && e.UserId == currentUserId, s => s)
+                .OrderBy(x => x.Date)
+                .ToListAsync(cancellationToken);
+            // ----
             var result = Array.ConvertAll(progress.ToArray(), item => (WeightliftingProgress)item)
                 .Select(record => new { Date = record.Date.ToString("d"), Weight = record.Weight, Reps = record.Reps })
                 .ToList();
@@ -202,12 +206,15 @@ namespace FitMate.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetTimedProgress(Guid goalId)
+        public async Task<IActionResult> GetTimedProgress(Guid goalId, CancellationToken cancellationToken = default)
         {
-            var currentUserId = await GetUserIdAsync();
+            var currentUserId = await GetUserIdAsync(cancellationToken);
 
-            var progress = await _unitOfWork.GoalProgressRepository.Value.GetForUserAsync(currentUserId, goalId, true);
-
+            // Ascending order
+            var progress = await _unitOfWork.GoalProgressRepository.Value.Get(e => e.GoalId == goalId && e.UserId == currentUserId, s => s)
+                .OrderBy(x => x.Date)
+                .ToListAsync(cancellationToken);
+            // ----
             var result = Array.ConvertAll(progress.ToArray(), item => (TimedProgress)item)
                 .Select(record => new { Date = record.Date.ToString("d"), Timespan = record.Time, Quantity = record.Quantity, QuantityUnit = record.QuantityUnit })
                 .ToList();

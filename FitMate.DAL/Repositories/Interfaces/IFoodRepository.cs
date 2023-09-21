@@ -2,13 +2,8 @@
 
 namespace FitMate.Core.Repositories.Interfaces
 {
-    public interface IFoodRepository
+    public interface IFoodRepository : IRepositoryBase<Food>
     {
-        Task<List<Food>> GetAllAsync();
-        Task<Food> GetForUserAndDate(string userId, DateTime date);
-        Task AddAsync(Food food);
-        Task UpdateAsync(Food food);
-        Task RemoveAsync(Food food);
-        Task RemoveRangeAsync(string userId);
+
     }
 }

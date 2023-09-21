@@ -2,9 +2,8 @@
 
 namespace FitMate.Core.Repositories.Interfaces
 {
-    public interface IGoalProgressRepository
+    public interface IGoalProgressRepository : IRepositoryBase<GoalProgress>
     {
-        public Task<List<GoalProgress>> GetForUserAsync(string userId, Guid goalId, bool AscendingOrder = false);
-        public Task AddAsync(GoalProgress Progress);
+
     }
 }
