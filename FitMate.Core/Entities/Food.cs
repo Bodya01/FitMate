@@ -1,4 +1,6 @@
-﻿namespace FitMate.Infrastructure.Entities;
+﻿using FitMate.Infrastucture.Enums;
+
+namespace FitMate.Infrastructure.Entities;
 
 public class Food : IEntity
 {

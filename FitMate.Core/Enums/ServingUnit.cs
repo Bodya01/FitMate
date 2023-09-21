@@ -1,4 +1,4 @@
-﻿namespace FitMate.Infrastructure.Entities;
+﻿namespace FitMate.Infrastucture.Enums;
 
 public enum ServingUnit
 {
