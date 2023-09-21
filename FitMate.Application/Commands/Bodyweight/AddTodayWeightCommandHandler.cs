@@ -1,4 +1,4 @@
-﻿using FitMate.Core.Repositories.Interfaces;
+﻿using FitMate.Core.UnitOfWork;
 using FitMate.Infrastructure.Entities;
 using MediatR;
 
@@ -12,11 +12,11 @@ namespace FitMate.Applcation.Commands.Bodyweight
 
     public class AddTodayWeightCommandHandler : IRequestHandler<AddTodayWeightCommand>
     {
-        private readonly IBodyweightRecordRepository _bodyweightRepository;
+        private readonly IUnitOfWork _unitOfWork;
 
-        public AddTodayWeightCommandHandler(IBodyweightRecordRepository bodyweightRepository)
+        public AddTodayWeightCommandHandler(IUnitOfWork unitOfWork)
         {
-            _bodyweightRepository = bodyweightRepository;
+            _unitOfWork = unitOfWork;
         }
 
         public async Task Handle(AddTodayWeightCommand request, CancellationToken cancellationToken)
@@ -28,7 +28,8 @@ namespace FitMate.Applcation.Commands.Bodyweight
                 Weight = request.Weight
             };
 
-            await _bodyweightRepository.AddAsync(newRecord);
+            await _unitOfWork.BodyweightRecordRepository.Value.AddAsync(newRecord);
+            await _unitOfWork.SaveChangesAsync(cancellationToken);
         }
     }
 }

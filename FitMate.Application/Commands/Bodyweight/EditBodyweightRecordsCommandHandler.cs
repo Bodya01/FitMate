@@ -1,6 +1,7 @@
 ﻿using FitMate.Infrastructure.Entities;
 using MediatR;
 using FitMate.Core.Repositories.Interfaces;
+using FitMate.Core.UnitOfWork;
 
 namespace FitMate.Applcation.Commands.Bodyweight
 {
@@ -13,16 +14,16 @@ namespace FitMate.Applcation.Commands.Bodyweight
 
     public class EditBodyweightRecordsCommandHandler : IRequestHandler<EditBodyweightRecordsCommand>
     {
-        private readonly IBodyweightRecordRepository _bodyweightRepository;
+        private readonly IUnitOfWork _unitOfWork;
 
-        public EditBodyweightRecordsCommandHandler(IBodyweightRecordRepository bodyweightRepository)
+        public EditBodyweightRecordsCommandHandler(IUnitOfWork unitOfWork)
         {
-            _bodyweightRepository = bodyweightRepository;
+            _unitOfWork = unitOfWork;
         }
 
         public async Task Handle(EditBodyweightRecordsCommand command, CancellationToken cancellationToken)
         {
-            await _bodyweightRepository.DeleteAllForUser(command.User.Id);
+            await _unitOfWork.BodyweightRecordRepository.Value.DeleteAllForUser(command.User.Id);
 
             var records = new List<BodyweightRecord>();
 
@@ -37,7 +38,8 @@ namespace FitMate.Applcation.Commands.Bodyweight
                 records.Add(newRecord);
             }
 
-            await _bodyweightRepository.AddRangeAsync(records);
+            await _unitOfWork.BodyweightRecordRepository.Value.AddRangeAsync(records);
+            await _unitOfWork.SaveChangesAsync(cancellationToken);
         }
     }
 }

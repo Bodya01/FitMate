@@ -21,12 +21,13 @@ namespace FitMate.Applcation.Commands.WorkoutPlan
         {
             if (request.WorkoutPlan!.Id == Guid.Empty)
             {
-                await _unitOfWork.WorkoutPlanRepository.Value.AddAsync(request.WorkoutPlan);
+                await _unitOfWork.WorkoutPlanRepository.Value.CreateAsync(request.WorkoutPlan);
             }
             else
             {
                 await _unitOfWork.WorkoutPlanRepository.Value.UpdateAsync(request.WorkoutPlan);
             }
+            await _unitOfWork.SaveChangesAsync(cancellationToken);
 
             return Unit.Value;
         }

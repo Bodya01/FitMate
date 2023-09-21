@@ -9,5 +9,7 @@ namespace FitMate.Core.UnitOfWork
         Lazy<IGoalRepository> GoalRepository { get; }
         Lazy<IGoalProgressRepository> GoalProgressRepository { get; }
         Lazy<IWorkoutPlanRepository> WorkoutPlanRepository { get; }
+
+        Task SaveChangesAsync(CancellationToken cancellationToken = default);
     }
 }

@@ -6,8 +6,10 @@ using FitMate.ViewModels;
 using MediatR;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace FitMate.Controllers
@@ -29,7 +31,7 @@ namespace FitMate.Controllers
         {
             var currentUserId = await GetUserIdAsync();
 
-            var goals = await _unitOfWork.GoalRepository.Value.GetAllForUserAsync(currentUserId);
+            var goals = await _unitOfWork.GoalRepository.Value.Get(e => e.UserId == currentUserId, s => s).ToListAsync();
 
             return View(goals);
         }
@@ -45,9 +47,7 @@ namespace FitMate.Controllers
         [HttpGet]
         public async Task<IActionResult> EditGoal(Guid Id)
         {
-            var currentUserId = await GetUserIdAsync();
-
-            var goal = await _unitOfWork.GoalRepository.Value.GetByIdAsync(currentUserId, Id);
+            var goal = await _unitOfWork.GoalRepository.Value.GetByIdAsync(Id);
 
             if (goal is null) return BadRequest();
 
@@ -55,32 +55,33 @@ namespace FitMate.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> DeleteGoal(Guid Id)
+        public async Task<IActionResult> DeleteGoal(Guid Id, CancellationToken cancellationToken = default)
         {
-            var currentUserId = await GetUserIdAsync();
-
-            var goal = await _unitOfWork.GoalRepository.Value.GetByIdAsync(currentUserId, Id);
+            var goal = await _unitOfWork.GoalRepository.Value.GetByIdAsync(Id, cancellationToken);
 
             if (goal is null) return BadRequest();
 
-            await _unitOfWork.GoalRepository.Value.DeleteAsync(currentUserId, Id);
+            await _unitOfWork.GoalRepository.Value.DeleteAsync(goal, cancellationToken);
+            await _unitOfWork.SaveChangesAsync(cancellationToken);
 
             return RedirectToAction("Summary");
 
         }
 
         [HttpPost]
-        public async Task<IActionResult> EditGoal(EditGoalInputModel goalInput)
+        public async Task<IActionResult> EditGoal(EditGoalInputModel goalInput, CancellationToken cancellationToken = default)
         {
-            if (!TryValidateModel(goalInput)) return BadRequest();
-
-            var currentUserId = await GetUserIdAsync();
+            if (!TryValidateModel(goalInput))
+            {
+                var errors = ModelState.Select(x => x.Value.Errors).Where(c => c.Any()).ToList();
+                return BadRequest(errors);
+            }
 
             Goal goal = null;
 
             if (goalInput.Id != Guid.Empty)
             {
-                goal = await _unitOfWork.GoalRepository.Value.GetByIdAsync(currentUserId, goalInput.Id);
+                goal = await _unitOfWork.GoalRepository.Value.GetByIdAsync(goalInput.Id, cancellationToken);
             }
             else
             {
@@ -113,27 +114,27 @@ namespace FitMate.Controllers
 
             if (goal.Id == Guid.Empty)
             {
-                await _unitOfWork.GoalRepository.Value.AddAsync(goal);
+                await _unitOfWork.GoalRepository.Value.CreateAsync(goal, cancellationToken);
             }
             else
             {
-                await _unitOfWork.GoalRepository.Value.UpdateAsync(goal);
+                await _unitOfWork.GoalRepository.Value.UpdateAsync(goal, cancellationToken);
             }
+            await _unitOfWork.SaveChangesAsync(cancellationToken);
 
             return RedirectToAction("Summary");
         }
 
         [HttpPost]
-        public async Task<IActionResult> AddProgress(AddGoalProgressInputModel progress)
+        public async Task<IActionResult> AddProgress(AddGoalProgressInputModel progress, CancellationToken cancellationToken = default)
         {
-            var currentUserId = await GetUserIdAsync();
-            var currentUser = await GetUserAsync();
+            var currentUser = await GetUserAsync(cancellationToken);
 
-            var goal = await _unitOfWork.GoalRepository.Value.GetByIdAsync(currentUserId, progress.GoalId);
+            var goal = await _unitOfWork.GoalRepository.Value.GetByIdAsync(progress.GoalId, cancellationToken);
 
             if (goal is null) return BadRequest();
 
-            GoalProgress newProgress = null;
+            GoalProgress newProgress;
 
             switch (progress.Type.ToLower())
             {
@@ -160,16 +161,17 @@ namespace FitMate.Controllers
             newProgress.User = currentUser;
 
             await _unitOfWork.GoalProgressRepository.Value.AddAsync(newProgress);
+            await _unitOfWork.SaveChangesAsync(cancellationToken);
 
             return RedirectToAction("ViewGoal", new { ID = progress.GoalId });
         }
 
         [HttpGet]
-        public async Task<IActionResult> ViewGoal(Guid Id)
+        public async Task<IActionResult> ViewGoal(Guid Id, CancellationToken cancellationToken = default)
         {
             var currentUserId = await GetUserIdAsync();
 
-            var goal = await _unitOfWork.GoalRepository.Value.GetByIdAsync(currentUserId, Id);
+            var goal = await _unitOfWork.GoalRepository.Value.GetByIdAsync(Id, cancellationToken);
 
             if (goal is null) return BadRequest();
 
