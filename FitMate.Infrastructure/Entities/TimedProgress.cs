@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
+using FitMate.Infrastructure.Entities.Interfaces;
 
 namespace FitMate.Infrastructure.Entities;
 

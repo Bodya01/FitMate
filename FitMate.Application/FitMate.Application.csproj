@@ -21,8 +21,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\FitMate.Infrastructure\FitMate.Infrastructure.csproj" />
-    <ProjectReference Include="..\FitMate.Core\FitMate.Core.csproj" />
+    <ProjectReference Include="..\FitMate.Business\FitMate.Business.csproj" />
   </ItemGroup>
 
 </Project>

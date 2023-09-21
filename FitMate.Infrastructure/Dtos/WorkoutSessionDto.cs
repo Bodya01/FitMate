@@ -2,4 +2,7 @@
 
 namespace FitMate.Infrastucture.Dtos;
 
-public record WorkoutSessionDto(string Name, int DayNumber, ICollection<WorkoutActivityDto> WorkoutActivities) : DtoBase;
+public record WorkoutSessionDto(string Name, int DayNumber) : DtoBase
+{
+    public ICollection<WorkoutActivityDto> WorkoutActivities;
+}

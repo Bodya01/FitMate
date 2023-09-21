@@ -1,4 +1,5 @@
-﻿using FitMate.Infrastucture.Enums;
+﻿using FitMate.Infrastructure.Entities.Interfaces;
+using FitMate.Infrastucture.Enums;
 
 namespace FitMate.Infrastructure.Entities;
 

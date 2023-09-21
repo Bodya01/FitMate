@@ -1,4 +1,6 @@
-﻿namespace FitMate.Infrastructure.Entities;
+﻿using FitMate.Infrastructure.Entities.Interfaces;
+
+namespace FitMate.Infrastructure.Entities;
 
 public class NutritionTarget : IEntity
 {

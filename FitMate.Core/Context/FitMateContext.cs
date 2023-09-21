@@ -1,4 +1,5 @@
 ﻿using FitMate.Infrastructure.Entities;
+using FitMate.Infrastructure.Entities.Interfaces;
 using FitMate.Infrastructure.Maps;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
@@ -34,6 +35,27 @@ namespace FitMate.Data
             builder.ApplyConfiguration(new GoalProgressMap());
             builder.ApplyConfiguration(new NutritionTargetMap());
             builder.ApplyConfiguration(new WorkoutPlanMap());
+        }
+
+        public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken)
+        {
+            SetCreatedAtForAuditedEntitiesAsync();
+            return await base.SaveChangesAsync(cancellationToken);
+        }
+
+        private void SetCreatedAtForAuditedEntitiesAsync()
+        {
+            var auditedEntities = ChangeTracker.Entries()
+                .Where(e => e.Entity is IAuditedEntity && e.State == EntityState.Added)
+                .Select(e => e.Entity as IAuditedEntity)
+                .ToList();
+
+            var currentTime = DateTime.UtcNow;
+
+            foreach (var auditedEntity in auditedEntities)
+            {
+                auditedEntity.CreatedAt = currentTime;
+            }
         }
     }
 }

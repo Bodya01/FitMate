@@ -1,11 +1,12 @@
-﻿@model WorkoutPlan
+﻿@using FitMate.Infrastucture.Dtos;
+@model WorkoutPlanDto
 
 @{
     ViewData["Title"] = "Edit Workout";
 }
 
 @section Scripts
-{
+    {
     <script src="~/js/Workout/edit.js"></script>
 }
 
@@ -19,7 +20,7 @@
                 <div class="col-3 border-right">
                     <h3 class="border-bottom">Plan</h3>
 
-                    <input type="hidden" name="ID" value="@Model.Id" required />
+                    <input type="hidden" name="Id" value="@Model.Id" required />
                     <input type="hidden" id="SessionJSONInput" name="SessionsJSON" value="@Model.SessionsJSON" />
 
                     <div class="form-group form-inline">
@@ -75,9 +76,9 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @for (int activityIndex = 0; activityIndex < Model.Sessions?.ToList()[sessionIndex].Activities?.Count; activityIndex++)
+                                @for (int activityIndex = 0; activityIndex < Model.Sessions?.ToList()[sessionIndex].WorkoutActivities?.Count; activityIndex++)
                                 {
-                                    var activity = Model.Sessions?.ToList()[sessionIndex].Activities?.ToList()[activityIndex];
+                                    var activity = Model.Sessions?.ToList()[sessionIndex].WorkoutActivities?.ToList()[activityIndex];
                                     <tr>
                                         <td><input type="text" class="form-control" value="@activity.Name" required /></td>
                                         <td><input type="text" class="form-control" value="@activity.Quantity" required /></td>

@@ -1,36 +1,26 @@
-﻿using FitMate.Core.UnitOfWork;
-using FitMate.Data;
+﻿using FitMate.Business.Interfaces;
+using FitMate.Infrastucture.Dtos;
 using MediatR;
-using Microsoft.EntityFrameworkCore;
 
 namespace FitMate.Applcation.Queries.WorkoutPlan
 {
-    public class GetWorkoutPlanByIdQuery : IRequest<GetWorkoutPlanByIdResponse>
+    public class GetWorkoutPlanByIdQuery : IRequest<WorkoutPlanDto>
     {
         public Guid Id { get; set; }
     }
 
-    public class GetWorkoutPlanByIdResponse
+    public class GetWorkoutPlanByIdQueryHandler : IRequestHandler<GetWorkoutPlanByIdQuery, WorkoutPlanDto>
     {
-        public Infrastructure.Entities.WorkoutPlan? WorkoutPlan { get; set; }
-    }
+        private readonly IWorkoutPlanService _workoutPlanService;
 
-    public class GetWorkoutPlanByIdQueryHandler : IRequestHandler<GetWorkoutPlanByIdQuery, GetWorkoutPlanByIdResponse>
-    {
-        private readonly IUnitOfWork _unitOfWork;
-
-        public GetWorkoutPlanByIdQueryHandler(IUnitOfWork unitOfWork)
+        public GetWorkoutPlanByIdQueryHandler(IWorkoutPlanService workoutPlanService)
         {
-            _unitOfWork = unitOfWork;
+            _workoutPlanService = workoutPlanService;
         }
 
-        public async Task<GetWorkoutPlanByIdResponse> Handle(GetWorkoutPlanByIdQuery request, CancellationToken cancellationToken)
+        public async Task<WorkoutPlanDto> Handle(GetWorkoutPlanByIdQuery request, CancellationToken cancellationToken)
         {
-            var result = new GetWorkoutPlanByIdResponse
-            {
-                WorkoutPlan = await _unitOfWork.WorkoutPlanRepository.Value.GetByIdAsync(request.Id),
-            };
-
+            var result = await _workoutPlanService.GetWorkoutAsync(request.Id, cancellationToken);
             return await Task.FromResult(result);
         }
     }

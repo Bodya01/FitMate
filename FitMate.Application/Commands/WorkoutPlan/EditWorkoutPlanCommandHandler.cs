@@ -25,14 +25,8 @@ namespace FitMate.Applcation.Commands.WorkoutPlan
         {
             var entity = _mapper.Map<Infrastructure.Entities.WorkoutPlan>(request.WorkoutPlan);
 
-            if (request.WorkoutPlan!.Id == Guid.Empty)
-            {
-                await _unitOfWork.WorkoutPlanRepository.Value.CreateAsync(entity);
-            }
-            else
-            {
-                await _unitOfWork.WorkoutPlanRepository.Value.UpdateAsync(entity);
-            }
+            if (request.WorkoutPlan!.Id == Guid.Empty) await _unitOfWork.WorkoutPlanRepository.Value.CreateAsync(entity);
+            else await _unitOfWork.WorkoutPlanRepository.Value.UpdateAsync(entity);
             await _unitOfWork.SaveChangesAsync(cancellationToken);
 
             return Unit.Value;

@@ -32,7 +32,7 @@ namespace FitMate.Controllers
             return RedirectToAction("Summary");
         }
 
-        public async Task<IActionResult> Summary(CancellationToken cancellationToken = default)
+        public async Task<IActionResult> Summary(CancellationToken cancellationToken)
         {
             var currentUserId = await GetUserIdAsync(cancellationToken);
 
@@ -47,7 +47,7 @@ namespace FitMate.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> EditTarget(CancellationToken cancellationToken = default)
+        public async Task<IActionResult> EditTarget(CancellationToken cancellationToken)
         {
             var currentUserId = await GetUserIdAsync(cancellationToken);
 
@@ -59,7 +59,7 @@ namespace FitMate.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> EditTarget(float targetWeight, DateTime targetDate, CancellationToken cancellationToken = default)
+        public async Task<IActionResult> EditTarget(float targetWeight, DateTime targetDate, CancellationToken cancellationToken)
         {
             if (targetWeight <= 0 || targetWeight >= 200 || targetDate <= DateTime.Today)
             {
@@ -87,7 +87,7 @@ namespace FitMate.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> EditRecords(CancellationToken cancellationToken = default)
+        public async Task<IActionResult> EditRecords(CancellationToken cancellationToken)
         {
             var currentUserId = await GetUserIdAsync(cancellationToken);
 
@@ -98,7 +98,7 @@ namespace FitMate.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> EditRecords([FromForm] DateTime[] rd, [FromForm] float[] rw, CancellationToken cancellationToken = default)
+        public async Task<IActionResult> EditRecords([FromForm] DateTime[] rd, [FromForm] float[] rw, CancellationToken cancellationToken)
         {
             var command = new EditBodyweightRecordsCommand
             {
@@ -121,7 +121,7 @@ namespace FitMate.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> AddTodayWeight(AddTodayWeightCommand command, CancellationToken cancellationToken = default)
+        public async Task<IActionResult> AddTodayWeight(AddTodayWeightCommand command, CancellationToken cancellationToken)
         {
             if (command.Weight <= 0 || command.Weight >= 200)
             {
@@ -135,7 +135,7 @@ namespace FitMate.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetBodyweightData(int previousDays, CancellationToken cancellationToken = default)
+        public async Task<IActionResult> GetBodyweightData(int previousDays, CancellationToken cancellationToken)
         {
             var currentUserId = await GetUserIdAsync(cancellationToken);
 

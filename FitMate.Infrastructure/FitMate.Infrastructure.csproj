@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>net7.0</TargetFramework>
@@ -19,7 +19,6 @@
     <Folder Include="Models\Goal\" />
     <Folder Include="Models\GoalProgress\" />
     <Folder Include="Models\Food\" />
-    <Folder Include="Models\WorkoutPlan\" />
   </ItemGroup>
 
 </Project>

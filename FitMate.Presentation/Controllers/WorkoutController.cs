@@ -13,19 +13,16 @@ using System;
 using System.Threading;
 using AutoMapper;
 using FitMate.Infrastucture.Dtos;
+using System.Collections.Generic;
 
 namespace FitMate.Controllers
 {
     public class WorkoutController : FitMateControllerBase
     {
-        private readonly IMapper _mapper;
+        public WorkoutController(FitMateContext context, UserManager<FitnessUser> userManager, IMediator mediator, IUnitOfWork unitOfWork, IMapper mapper)
+            : base(context, userManager, mediator, unitOfWork) { }
 
-        public WorkoutController(FitMateContext context, UserManager<FitnessUser> userManager, IMediator mediator, IUnitOfWork unitOfWork, IMapper mapper) : base(context, userManager, mediator, unitOfWork)
-        {
-            _mapper = mapper;
-        }
-
-        public async Task<IActionResult> Summary(CancellationToken cancellationToken = default)
+        public async Task<IActionResult> Summary(CancellationToken cancellationToken)
         {
             var request = new GetWorkoutByUserIdQuery { UserId = await GetUserIdAsync(cancellationToken) };
             var response = await _mediator.Send(request, cancellationToken);
@@ -36,29 +33,18 @@ namespace FitMate.Controllers
         [HttpGet]
         public IActionResult Create()
         {
-            var newPlan = new WorkoutPlan
-            {
-                Name = "Workout Plan"
-            };
-
+            var newPlan = new WorkoutPlanDto(Guid.Empty, "Workout Plan", null);
             return View("/Views/Workout/Edit.cshtml", newPlan);
         }
 
         [HttpGet]
-        public async Task<IActionResult> Edit(GetWorkoutPlanByIdQuery query, CancellationToken cancellationToken = default)
-        {
-            var result = await _mediator.Send(query, cancellationToken);
-
-            return View(result.WorkoutPlan);
-        }
+        public async Task<IActionResult> Edit(GetWorkoutPlanByIdQuery query, CancellationToken cancellationToken) =>
+            View(await _mediator.Send(query, cancellationToken));
 
         [HttpPost]
-        public async Task<IActionResult> Edit(WorkoutPlan workoutPlan, CancellationToken cancellationToken = default)
+        public async Task<IActionResult> Edit(WorkoutPlanDto workoutPlanDto, CancellationToken cancellationToken)
         {
-            workoutPlan.User = await GetUserAsync(cancellationToken);
-            var userDto = workoutPlan.User.Id;
-
-            var workoutPlanDto = new WorkoutPlanDto(workoutPlan.Id, workoutPlan.Name, workoutPlan.SessionsJSON, userDto);
+            workoutPlanDto.UserId = await GetUserIdAsync(cancellationToken);
 
             var command = new EditWorkoutPlanCommand { WorkoutPlan = workoutPlanDto };
             await _mediator.Send(command, cancellationToken);
@@ -67,14 +53,14 @@ namespace FitMate.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Session(Guid workoutPlanId, int sessionId, CancellationToken cancellationToken = default)
+        public async Task<IActionResult> Session(Guid workoutPlanId, int sessionId, CancellationToken cancellationToken)
         {
             var request = new GetWorkoutPlanByIdQuery { Id = workoutPlanId };
             var plan = await _mediator.Send(request, cancellationToken);
 
-            if (plan is null || sessionId < 0 || sessionId >= plan.WorkoutPlan.Sessions.Count) return BadRequest();
+            if (plan is null || sessionId < 0 || sessionId >= plan.Sessions.Count) return BadRequest();
 
-            var session = plan.WorkoutPlan.Sessions.ToList()[sessionId];
+            var session = plan.Sessions.ToList()[sessionId];
             return View(session);
         }
     }

@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using FitMate.Infrastructure.Entities.Interfaces;
+using Microsoft.AspNetCore.Identity;
 
 namespace FitMate.Infrastructure.Entities;
 

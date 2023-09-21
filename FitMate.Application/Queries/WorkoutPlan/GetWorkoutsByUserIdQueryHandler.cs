@@ -1,6 +1,7 @@
-﻿using FitMate.Core.UnitOfWork;
+﻿using AutoMapper;
+using FitMate.Business.Interfaces;
+using FitMate.Infrastucture.Dtos;
 using MediatR;
-using Microsoft.EntityFrameworkCore;
 
 namespace FitMate.Applcation.Queries.WorkoutPlan
 {
@@ -11,25 +12,27 @@ namespace FitMate.Applcation.Queries.WorkoutPlan
 
     public class GetWorkoutByUserIdResponse
     {
-        public List<Infrastructure.Entities.WorkoutPlan>? WorkoutPlans { get; set; }
+        public List<WorkoutPlanDto> WorkoutPlans { get; set; }
     }
 
     public class GetWorkoutsByUserIdQueryHandler : IRequestHandler<GetWorkoutByUserIdQuery, GetWorkoutByUserIdResponse>
     {
-        private readonly IUnitOfWork _unitOfWork;
+        private readonly IWorkoutPlanService _workoutPlanService;
+        private readonly IMapper _mapper;
 
-        public GetWorkoutsByUserIdQueryHandler(IUnitOfWork unitOfWork)
+        public GetWorkoutsByUserIdQueryHandler(IWorkoutPlanService workoutPlanService, IMapper mapper)
         {
-            _unitOfWork = unitOfWork;
+            _workoutPlanService = workoutPlanService;
+            _mapper = mapper;
         }
 
         public async Task<GetWorkoutByUserIdResponse> Handle(GetWorkoutByUserIdQuery request, CancellationToken cancellationToken)
         {
-            var plans = await _unitOfWork.WorkoutPlanRepository.Value.Get(x => x.UserId == request.UserId, s => s).ToListAsync();
+            var plans = await _workoutPlanService.GetWorkoutsAsync(request.UserId, 1, 100, cancellationToken);
 
-            var response = new GetWorkoutByUserIdResponse()
+            var response = new GetWorkoutByUserIdResponse
             {
-                WorkoutPlans = plans
+                WorkoutPlans = _mapper.Map<List<WorkoutPlanDto>>(plans)
             };
 
             return response;

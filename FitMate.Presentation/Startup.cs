@@ -14,6 +14,8 @@ using FitMate.Core.Repositories.Interfaces;
 using FitMate.Core.Repositories.Implementations;
 using FitMate.Core.UnitOfWork;
 using FitMate.Infrastructure;
+using FitMate.Business.Interfaces;
+using FitMate.Business.Services;
 
 namespace FitMate
 {
@@ -43,6 +45,8 @@ namespace FitMate
 
             services.AddMediatRAndHandlers();
             Dependencies.RegisterInfrastructure(services);
+
+            services.AddScoped<IWorkoutPlanService, WorkoutPlanService>();
 
             services.AddScoped<IBodyweightRecordRepository, BodyweightRecordRepository>();
             services.AddScoped<IBodyweightTargetRepository, BodyweightTargetRepository>();
