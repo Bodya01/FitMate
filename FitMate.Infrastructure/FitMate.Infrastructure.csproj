@@ -13,4 +13,13 @@
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="7.0.11" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Models\BodyweightRecord\" />
+    <Folder Include="Models\BodyweightTarget\" />
+    <Folder Include="Models\Goal\" />
+    <Folder Include="Models\GoalProgress\" />
+    <Folder Include="Models\Food\" />
+    <Folder Include="Models\WorkoutPlan\" />
+  </ItemGroup>
+
 </Project>

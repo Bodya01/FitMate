@@ -2,7 +2,6 @@
 using FitMate.Data;
 using FitMate.UI.Web.Controllers.Base;
 using MediatR;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -25,7 +24,8 @@ namespace FitMate.Controllers
             : base(context,
                   userManager,
                   mediator,
-                  unitOfWork) { }
+                  unitOfWork)
+        { }
 
         [HttpGet]
         public async Task<IActionResult> AddFood(DateTime date, CancellationToken cancellationToken)
@@ -47,7 +47,7 @@ namespace FitMate.Controllers
         [HttpPost]
         public async Task<IActionResult> AddNewFood(Food food, CancellationToken cancellationToken)
         {
-            if (food.Id == Guid.Empty)  await _unitOfWork.FoodRepository.Value.CreateAsync(food, cancellationToken);
+            if (food.Id == Guid.Empty) await _unitOfWork.FoodRepository.Value.CreateAsync(food, cancellationToken);
             else await _unitOfWork.FoodRepository.Value.UpdateAsync(food, cancellationToken);
 
             await _unitOfWork.SaveChangesAsync(cancellationToken);
@@ -56,57 +56,59 @@ namespace FitMate.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> EditRecords(DateTime date, Guid[] foodIDs, float[] quantities, CancellationToken cancellationToken)
+        public async Task<IActionResult> EditRecords(DateTime date, Guid[] foodIds, float[] quantities, CancellationToken cancellationToken)
         {
-            if (foodIDs.Length != quantities.Length || foodIDs.Length == 0) return BadRequest();
+            if (foodIds.Length != quantities.Length || foodIds.Length == 0) return BadRequest();
 
             var currentUser = await GetUserAsync(cancellationToken);
 
-            var existingRecords = await _context.FoodRecords.Where(record => record.User == currentUser && record.ConsumptionDate == date).ToListAsync();
-            _context.FoodRecords.RemoveRange(existingRecords);
+            var existingRecords = await _unitOfWork.FoodRecordRepository.Value.Get(e => e.UserId == currentUser.Id && e.ConsumptionDate == date, s => s)
+                .ToListAsync(cancellationToken);
+            await _unitOfWork.FoodRecordRepository.Value.DeleteRangeAsync(existingRecords);
 
-            var newRecords = new FoodRecord[foodIDs.Length];
-            for (int i = 0; i < foodIDs.Length; i++)
+            var newRecords = new FoodRecord[foodIds.Length];
+            for (int i = 0; i < foodIds.Length; i++)
             {
                 newRecords[i] = new FoodRecord()
                 {
                     ConsumptionDate = date,
                     User = currentUser,
-                    FoodId = foodIDs[i],
+                    FoodId = foodIds[i],
                     Quantity = quantities[i]
                 };
             }
-            _context.FoodRecords.AddRange(newRecords);
-            await _context.SaveChangesAsync();
+            await _unitOfWork.FoodRecordRepository.Value.CreateRangeAsync(newRecords, cancellationToken);
+            await _unitOfWork.SaveChangesAsync(cancellationToken);
 
             return RedirectToAction("AddFood");
         }
 
         [HttpPost]
-        public async Task<IActionResult> DeleteFood(Guid Id)
+        public async Task<IActionResult> DeleteFood(Guid id, CancellationToken cancellationToken)
         {
-            var currentUser = await _userManager.GetUserAsync(HttpContext.User);
-
-            var targetFood = await _context.Foods.FirstOrDefaultAsync(food => food.Id == Id);
+            var targetFood = await _unitOfWork.FoodRepository.Value.GetByIdAsync(id, cancellationToken);
             if (targetFood is null) return BadRequest();
 
-            _context.Foods.Remove(targetFood);
-            await _context.SaveChangesAsync();
+            await _unitOfWork.FoodRepository.Value.DeleteAsync(targetFood, cancellationToken);
+            await _unitOfWork.SaveChangesAsync(cancellationToken);
 
             return RedirectToAction("AddFood");
         }
 
         [HttpGet]
-        public async Task<IActionResult> Summary()
+        public async Task<IActionResult> Summary(CancellationToken cancellationToken)
         {
-            var currentUser = await GetUserAsync();
+            var currentUserId = await GetUserIdAsync(cancellationToken);
 
-            var userRecords = await _context.FoodRecords
-                .Where(record => record.User == currentUser && record.ConsumptionDate >= DateTime.Today.AddDays(-28))
-                .Include(record => record.Food)
-                .ToListAsync();
+            var userRecordsQuery = _unitOfWork.FoodRecordRepository.Value.Get(e => e.UserId == currentUserId && e.ConsumptionDate >= DateTime.Today.AddDays(-28), s => s);
 
-            var userTarget = await _context.NutritionTargets.FirstOrDefaultAsync(record => record.User == currentUser);
+            foreach (var record in userRecordsQuery)
+            {
+                await _unitOfWork.FoodRecordRepository.Value.LoadNavigationPropertyExplicitly(record, r => r.Food, cancellationToken);
+            }
+            var userRecords = await userRecordsQuery.ToListAsync(cancellationToken);
+
+            var userTarget = await _context.NutritionTargets.FirstOrDefaultAsync(record => record.UserId == currentUserId);
             userTarget ??= new NutritionTarget();
 
             var summaryModel = new NutritionSummaryModel()
@@ -143,7 +145,6 @@ namespace FitMate.Controllers
             return Json(result);
         }
     }
-
 
     public class NewFoodModel
     {

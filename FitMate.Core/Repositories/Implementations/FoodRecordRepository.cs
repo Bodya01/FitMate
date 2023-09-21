@@ -18,6 +18,9 @@ namespace FitMate.Core.Repositories.Implementations
         public async Task CreateAsync(FoodRecord entity, CancellationToken cancellationToken = default) =>
             await _context.AddAsync(entity, cancellationToken);
 
+        public async Task CreateRangeAsync(IEnumerable<FoodRecord> entities, CancellationToken cancellationToken = default) =>
+            await _context.AddRangeAsync(entities, cancellationToken);
+
         public async Task UpdateAsync(FoodRecord entity, CancellationToken cancellationToken = default) =>
             await Task.Run(() => _context.Update(entity), cancellationToken);
 
@@ -30,6 +33,9 @@ namespace FitMate.Core.Repositories.Implementations
 
         public async Task DeleteAsync(FoodRecord entity, CancellationToken cancellationToken = default) =>
             await Task.Run(() => _context.Remove(entity), cancellationToken);
+
+        public async Task DeleteRangeAsync(IEnumerable<FoodRecord> records, CancellationToken cancellationToken = default) =>
+            await Task.Run(() => _context.RemoveRange(records), cancellationToken);
 
         public async Task<FoodRecord> GetByIdAsync(Guid id, CancellationToken cancellationToken = default) =>
             await _context.FoodRecords.FirstOrDefaultAsync(x => x.Id == id, cancellationToken);
