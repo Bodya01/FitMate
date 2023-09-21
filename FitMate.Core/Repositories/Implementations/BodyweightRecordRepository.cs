@@ -6,7 +6,7 @@ using System.Linq.Expressions;
 
 namespace FitMate.Core.Repositories.Implementations
 {
-    public class BodyweightRecordRepository : IBodyweightRecordRepository
+    public sealed class BodyweightRecordRepository : IBodyweightRecordRepository
     {
         private FitMateContext _context;
 
