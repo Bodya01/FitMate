@@ -10,7 +10,7 @@ public class GoalProgress : IEntity
 
     public string UserId { get; set; }
     public Guid GoalId { get; set; }
-    
+
     public FitnessUser User { get; set; }
     public Goal Goal { get; set; }
 }

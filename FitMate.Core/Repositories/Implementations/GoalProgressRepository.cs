@@ -1,5 +1,5 @@
-﻿using FitMate.Core.Repositories.Interfaces;
-using FitMate.Data;
+﻿using FitMate.Core.Context;
+using FitMate.Core.Repositories.Interfaces;
 using FitMate.Infrastructure.Entities;
 using Microsoft.EntityFrameworkCore;
 using System.Linq.Expressions;

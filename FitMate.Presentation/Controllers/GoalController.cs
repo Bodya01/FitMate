@@ -1,5 +1,5 @@
-﻿using FitMate.Core.UnitOfWork;
-using FitMate.Data;
+﻿using FitMate.Core.Context;
+using FitMate.Core.UnitOfWork;
 using FitMate.Infrastructure.Entities;
 using FitMate.UI.Web.Controllers.Base;
 using FitMate.ViewModels;
@@ -24,7 +24,8 @@ namespace FitMate.Controllers
             : base(context,
                   UserManager,
                   mediator,
-                  unitOfWork) { }
+                  unitOfWork)
+        { }
 
         [HttpGet]
         public async Task<IActionResult> Summary()

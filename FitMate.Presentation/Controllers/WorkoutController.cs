@@ -1,19 +1,18 @@
-﻿using FitMate.Infrastructure.Entities;
-using FitMate.Data;
+﻿using AutoMapper;
+using FitMate.Applcation.Commands.WorkoutPlan;
+using FitMate.Applcation.Queries.WorkoutPlan;
+using FitMate.Core.Context;
+using FitMate.Core.UnitOfWork;
+using FitMate.Infrastructure.Entities;
+using FitMate.Infrastucture.Dtos;
 using FitMate.UI.Web.Controllers.Base;
 using MediatR;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using System.Linq;
-using System.Threading.Tasks;
-using FitMate.Applcation.Queries.WorkoutPlan;
-using FitMate.Applcation.Commands.WorkoutPlan;
-using FitMate.Core.UnitOfWork;
 using System;
+using System.Linq;
 using System.Threading;
-using AutoMapper;
-using FitMate.Infrastucture.Dtos;
-using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace FitMate.Controllers
 {

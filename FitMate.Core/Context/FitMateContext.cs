@@ -4,7 +4,7 @@ using FitMate.Infrastructure.Maps;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
-namespace FitMate.Data
+namespace FitMate.Core.Context
 {
     public class FitMateContext : IdentityDbContext<FitnessUser>
     {

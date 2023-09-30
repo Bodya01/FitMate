@@ -1,6 +1,6 @@
-﻿using FitMate.Core.Repositories.Implementations;
+﻿using FitMate.Core.Context;
+using FitMate.Core.Repositories.Implementations;
 using FitMate.Core.Repositories.Interfaces;
-using FitMate.Data;
 
 namespace FitMate.Core.UnitOfWork
 {

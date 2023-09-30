@@ -1,17 +1,17 @@
-﻿using FitMate.Infrastructure.Entities;
-using FitMate.Data;
+﻿using FitMate.Applcation.Commands.Bodyweight;
+using FitMate.Core.Context;
+using FitMate.Core.UnitOfWork;
+using FitMate.Infrastructure.Entities;
 using FitMate.UI.Web.Controllers.Base;
 using FitMate.ViewModels;
 using MediatR;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Linq;
-using System.Threading.Tasks;
-using FitMate.Applcation.Commands.Bodyweight;
-using FitMate.Core.UnitOfWork;
 using System.Threading;
-using Microsoft.EntityFrameworkCore;
+using System.Threading.Tasks;
 
 namespace FitMate.Controllers
 {

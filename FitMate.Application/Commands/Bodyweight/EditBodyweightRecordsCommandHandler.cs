@@ -1,7 +1,6 @@
-﻿using FitMate.Infrastructure.Entities;
+﻿using FitMate.Core.UnitOfWork;
+using FitMate.Infrastructure.Entities;
 using MediatR;
-using FitMate.Core.Repositories.Interfaces;
-using FitMate.Core.UnitOfWork;
 using Microsoft.EntityFrameworkCore;
 
 namespace FitMate.Applcation.Commands.Bodyweight

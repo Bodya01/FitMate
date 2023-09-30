@@ -1,5 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
-using FitMate.Infrastructure.Entities.Interfaces;
+﻿using FitMate.Infrastructure.Entities.Interfaces;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace FitMate.Infrastructure.Entities;
 

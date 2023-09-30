@@ -1,5 +1,6 @@
-﻿using FitMate.Infrastructure.Entities;
-using FitMate.Data;
+﻿using FitMate.Core.Context;
+using FitMate.Core.UnitOfWork;
+using FitMate.Infrastructure.Entities;
 using FitMate.UI.Web.Controllers.Base;
 using MediatR;
 using Microsoft.AspNetCore.Http;
@@ -7,11 +8,10 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System;
-using System.Linq;
-using System.Threading.Tasks;
 using System.Collections.Generic;
-using FitMate.Core.UnitOfWork;
+using System.Linq;
 using System.Threading;
+using System.Threading.Tasks;
 
 namespace FitMate.Controllers
 {

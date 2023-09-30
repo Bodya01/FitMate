@@ -1,6 +1,6 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
+﻿using FitMate.Infrastructure.Entities.Interfaces;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Text.Json;
-using FitMate.Infrastructure.Entities.Interfaces;
 
 namespace FitMate.Infrastructure.Entities;
 
