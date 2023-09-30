@@ -1,7 +1,6 @@
 ﻿using AutoMapper;
 using FitMate.Applcation.Commands.WorkoutPlan;
 using FitMate.Applcation.Queries.WorkoutPlan;
-using FitMate.Core.Context;
 using FitMate.Core.UnitOfWork;
 using FitMate.Infrastructure.Entities;
 using FitMate.Infrastucture.Dtos;
@@ -18,8 +17,8 @@ namespace FitMate.Controllers
 {
     public class WorkoutController : FitMateControllerBase
     {
-        public WorkoutController(FitMateContext context, UserManager<FitnessUser> userManager, IMediator mediator, IUnitOfWork unitOfWork, IMapper mapper)
-            : base(context, userManager, mediator, unitOfWork) { }
+        public WorkoutController(UserManager<FitnessUser> userManager, IMediator mediator, IUnitOfWork unitOfWork, IMapper mapper)
+            : base(userManager, mediator, unitOfWork) { }
 
         public async Task<IActionResult> Summary(CancellationToken cancellationToken)
         {

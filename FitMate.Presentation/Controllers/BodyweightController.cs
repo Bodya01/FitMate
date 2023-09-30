@@ -1,5 +1,4 @@
 ﻿using FitMate.Applcation.Commands.Bodyweight;
-using FitMate.Core.Context;
 using FitMate.Core.UnitOfWork;
 using FitMate.Infrastructure.Entities;
 using FitMate.UI.Web.Controllers.Base;
@@ -17,11 +16,9 @@ namespace FitMate.Controllers
 {
     public class BodyweightController : FitMateControllerBase
     {
-        public BodyweightController(FitMateContext context,
-            UserManager<FitnessUser> userManager,
+        public BodyweightController(UserManager<FitnessUser> userManager,
             IMediator mediator,
             IUnitOfWork unitOfWork) : base(
-                context,
                 userManager,
                 mediator,
                 unitOfWork)

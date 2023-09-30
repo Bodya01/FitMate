@@ -1,5 +1,4 @@
-﻿using FitMate.Core.Context;
-using FitMate.Core.UnitOfWork;
+﻿using FitMate.Core.UnitOfWork;
 using FitMate.Infrastructure.Entities;
 using FitMate.UI.Web.Controllers.Base;
 using FitMate.ViewModels;
@@ -18,11 +17,9 @@ namespace FitMate.Controllers
     {
 
         public GoalController
-            (FitMateContext context,
-            UserManager<FitnessUser> UserManager,
+            (UserManager<FitnessUser> userManager,
             IMediator mediator, IUnitOfWork unitOfWork)
-            : base(context,
-                  UserManager,
+            : base(userManager,
                   mediator,
                   unitOfWork)
         { }

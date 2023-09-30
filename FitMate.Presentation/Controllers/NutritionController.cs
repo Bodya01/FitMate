@@ -1,9 +1,9 @@
-﻿using FitMate.Core.Context;
+﻿using FitMate.Application.Commands.Food;
 using FitMate.Core.UnitOfWork;
 using FitMate.Infrastructure.Entities;
+using FitMate.Infrastucture.Dtos;
 using FitMate.UI.Web.Controllers.Base;
 using MediatR;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -17,7 +17,7 @@ namespace FitMate.Controllers
 {
     public class NutritionController : FitMateControllerBase
     {
-        public NutritionController(FitMateContext context, UserManager<FitnessUser> userManager, IMediator mediator, IUnitOfWork unitOfWork) : base(context, userManager, mediator, unitOfWork) { }
+        public NutritionController(UserManager<FitnessUser> userManager, IMediator mediator, IUnitOfWork unitOfWork) : base(userManager, mediator, unitOfWork) { }
 
         [HttpGet]
         public async Task<IActionResult> AddFood(DateTime date, CancellationToken cancellationToken)
@@ -29,7 +29,7 @@ namespace FitMate.Controllers
 
             var model = new NewFoodModel()
             {
-                FoodRecords = await _context.FoodRecords.Where(r => r.UserId == currentUserId && r.ConsumptionDate == date).ToListAsync(cancellationToken),
+                FoodRecords = await _unitOfWork.FoodRecordRepository.Value.Get(e => e.UserId == currentUserId && e.ConsumptionDate == date, s => s).ToListAsync(cancellationToken),
                 UserFoods = await _unitOfWork.FoodRepository.Value.Get(e => true, s => s).ToListAsync(cancellationToken),
             };
 
@@ -37,12 +37,14 @@ namespace FitMate.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> AddNewFood(Food food, CancellationToken cancellationToken)
+        public async Task<IActionResult> AddNewFood(FoodDto food, CancellationToken cancellationToken)
         {
-            if (food.Id == Guid.Empty) await _unitOfWork.FoodRepository.Value.CreateAsync(food, cancellationToken);
-            else await _unitOfWork.FoodRepository.Value.UpdateAsync(food, cancellationToken);
+            var command = new CreateFoodCommand
+            {
+                Food = food
+            };
 
-            await _unitOfWork.SaveChangesAsync(cancellationToken);
+            await _mediator.Send(command, cancellationToken);
 
             return RedirectToAction("AddFood");
         }
@@ -100,7 +102,7 @@ namespace FitMate.Controllers
             }
             var userRecords = await userRecordsQuery.ToListAsync(cancellationToken);
 
-            var userTarget = await _context.NutritionTargets.FirstOrDefaultAsync(record => record.UserId == currentUserId);
+            var userTarget = await _unitOfWork.NutritionTargetRepository.Value.GetTargetForUserAsync(currentUserId, cancellationToken);
             userTarget ??= new NutritionTarget();
 
             var summaryModel = new NutritionSummaryModel()
@@ -113,13 +115,18 @@ namespace FitMate.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetNutritionData(uint previousDays = 7)
+        public async Task<IActionResult> GetNutritionData(CancellationToken cancellationToken, uint previousDays = 7)
         {
-            var currentUser = await _userManager.GetUserAsync(HttpContext.User);
-            var records = await _context.FoodRecords
-                .Where(record => record.ConsumptionDate >= DateTime.Today.AddDays(-previousDays) && record.User == currentUser)
-                .Include(record => record.Food)
-                .ToArrayAsync();
+            var currentUserId = await GetUserIdAsync();
+
+            var records = await _unitOfWork.FoodRecordRepository.Value
+                .Get(e => e.ConsumptionDate >= DateTime.Today.AddDays(-previousDays) && e.UserId == currentUserId, s => s)
+                .ToListAsync(cancellationToken);
+
+            foreach (var record in records)
+            {
+                await _unitOfWork.FoodRecordRepository.Value.LoadNavigationPropertyExplicitly(record, s => s.Food, cancellationToken);
+            }
 
             var result = records
                 .GroupBy(record => record.ConsumptionDate)

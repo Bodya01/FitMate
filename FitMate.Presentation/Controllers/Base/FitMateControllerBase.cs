@@ -1,5 +1,4 @@
-﻿using FitMate.Core.Context;
-using FitMate.Core.UnitOfWork;
+﻿using FitMate.Core.UnitOfWork;
 using FitMate.Infrastructure.Entities;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
@@ -13,14 +12,12 @@ namespace FitMate.UI.Web.Controllers.Base
     [Authorize]
     public class FitMateControllerBase : Controller
     {
-        protected readonly FitMateContext _context;
         protected readonly UserManager<FitnessUser> _userManager;
         protected readonly IMediator _mediator;
         protected readonly IUnitOfWork _unitOfWork;
 
-        public FitMateControllerBase(FitMateContext context, UserManager<FitnessUser> userManager, IMediator mediator, IUnitOfWork unitOfWork)
+        public FitMateControllerBase(UserManager<FitnessUser> userManager, IMediator mediator, IUnitOfWork unitOfWork)
         {
-            _context = context;
             _userManager = userManager;
             _mediator = mediator;
             _unitOfWork = unitOfWork;
