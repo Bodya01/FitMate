@@ -13,7 +13,7 @@ namespace FitMate.Core.Repositories.Implementations
         {
             _context = context;
         }
-        public async Task<NutritionTarget> GetNutritionTargetForUser(string userId) =>
-            await _context.NutritionTargets.FirstOrDefaultAsync(n => n.UserId == userId);
+        public async Task<NutritionTarget> GetTargetForUserAsync(string userId, CancellationToken cancellationToken = default) =>
+            await _context.NutritionTargets.FirstOrDefaultAsync(n => n.UserId == userId, cancellationToken);
     }
 }
