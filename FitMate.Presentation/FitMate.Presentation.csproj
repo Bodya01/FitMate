@@ -26,7 +26,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\FitMate.Application\FitMate.Application.csproj" />
-    <ProjectReference Include="..\FitMate.Business\FitMate.Business.csproj" />
     <ProjectReference Include="..\FitMate.Core\FitMate.Core.csproj" />
   </ItemGroup>
 
