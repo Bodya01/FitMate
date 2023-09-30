@@ -17,15 +17,16 @@
     else if (Model.GetType() == typeof(TimedGoal))
         timedGoal = (TimedGoal)Model;
 
-    float weight = weightliftingGoal == null ? 0 : weightliftingGoal.Weight;
-    int reps = weightliftingGoal == null ? 0 : weightliftingGoal.Reps;
+    var weight = weightliftingGoal == null ? 0 : weightliftingGoal.Weight;
+    var reps = weightliftingGoal == null ? 0 : weightliftingGoal.Reps;
 
-    float quantity = timedGoal == null ? 0 : timedGoal.Quantity;
-    string quantityUnit = timedGoal == null ? "" : timedGoal.QuantityUnit;
-    TimeSpan timespan = timedGoal == null ? new TimeSpan() : timedGoal.Time;
+    var quantity = timedGoal == null ? 0 : timedGoal.Quantity;
+    var quantityUnit = timedGoal == null ? "" : timedGoal.QuantityUnit;
+    var timespan = timedGoal == null ? new TimeSpan() : timedGoal.Time;
 }
 
-@section Scripts{
+@section Scripts
+{
     <script src="~/js/Goal/editgoal.js"></script>
 }
 

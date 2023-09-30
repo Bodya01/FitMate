@@ -6,7 +6,7 @@
 }
 
 @section Scripts
-    {
+{
     <script src="~/js/Workout/edit.js"></script>
 }
 
@@ -62,7 +62,7 @@
                 </div>
                 <div class="col-6" id="ActivityContainer">
                     <h3 class="border-bottom">Activities</h3>
-                    @for (int sessionIndex = 0; sessionIndex < Model.Sessions?.Count; sessionIndex++)
+                    @for (var sessionIndex = 0; sessionIndex < Model.Sessions?.Count; sessionIndex++)
                     {
                         <table class="table d-none activityForm">
                             <thead>
@@ -76,7 +76,7 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @for (int activityIndex = 0; activityIndex < Model.Sessions?.ToList()[sessionIndex].WorkoutActivities?.Count; activityIndex++)
+                                @for (var activityIndex = 0; activityIndex < Model.Sessions?.ToList()[sessionIndex].WorkoutActivities?.Count; activityIndex++)
                                 {
                                     var activity = Model.Sessions?.ToList()[sessionIndex].WorkoutActivities?.ToList()[activityIndex];
                                     <tr>
@@ -91,7 +91,6 @@
                         </table>
                     }
                     <a id="AddActivityButton" href="#" class="font-weight-bold d-none float-right" onclick="addActivity_Clicked();">+Add Activity</a>
-
                 </div>
             </div>
         </div>
@@ -149,5 +148,4 @@
 
 <ul id="SessionListTemplate" class="d-none">
     <li class="list-group-item" style="cursor:pointer;" onclick="sessionListItem_Clicked(this);"></li>
-
 </ul>

@@ -4,34 +4,32 @@
     ViewData["Title"] = "Nutrition";
 
     var todayRecords = Model.Records.Where(record => record.ConsumptionDate == DateTime.Today);
-    int todayCalories = todayRecords.Sum(record => record.Food.Calories);
-    int todayCarbs = todayRecords.Sum(record => record.Food.Carbohydrates);
-    int todayProtein = todayRecords.Sum(record => record.Food.Protein);
-    int todayFat = todayRecords.Sum(record => record.Food.Fat);
+    var todayCalories = todayRecords.Sum(record => record.Food.Calories);
+    var todayCarbs = todayRecords.Sum(record => record.Food.Carbohydrates);
+    var todayProtein = todayRecords.Sum(record => record.Food.Protein);
+    var todayFat = todayRecords.Sum(record => record.Food.Fat);
 
     var yesterdayRecords = Model.Records.Where(record => record.ConsumptionDate == DateTime.Today.AddDays(-1));
-    int yesterdayCalories = yesterdayRecords.Sum(record => record.Food.Calories);
-    int yesterdayCarbs = yesterdayRecords.Sum(record => record.Food.Carbohydrates);
-    int yesterdayProtein = yesterdayRecords.Sum(record => record.Food.Protein);
-    int yesterdayFat = yesterdayRecords.Sum(record => record.Food.Protein);
+    var yesterdayCalories = yesterdayRecords.Sum(record => record.Food.Calories);
+    var yesterdayCarbs = yesterdayRecords.Sum(record => record.Food.Carbohydrates);
+    var yesterdayProtein = yesterdayRecords.Sum(record => record.Food.Protein);
+    var yesterdayFat = yesterdayRecords.Sum(record => record.Food.Protein);
 
     var weekRecordGroup = Model.Records.Where(record => record.ConsumptionDate >= DateTime.Today.AddDays(-7)).GroupBy(record => record.ConsumptionDate);
-    int weekCaloriesAverage =  weekRecordGroup.Count() == 0 ? 0 :(int)weekRecordGroup.Average(grouping => grouping.Sum(record => record.Food.Calories));
-    int weekCarbsAverage = weekRecordGroup.Count() == 0 ? 0 : (int)weekRecordGroup.Average(grouping => grouping.Sum(record => record.Food.Carbohydrates));
-    int weekProteinAverage = weekRecordGroup.Count() == 0 ? 0 : (int)weekRecordGroup.Average(grouping => grouping.Sum(record => record.Food.Protein));
-    int weekFatAverage = weekRecordGroup.Count() == 0 ? 0 : (int)weekRecordGroup.Average(grouping => grouping.Sum(record => record.Food.Fat));
+    var weekCaloriesAverage = weekRecordGroup.Count() == 0 ? 0 : (int)weekRecordGroup.Average(grouping => grouping.Sum(record => record.Food.Calories));
+    var weekCarbsAverage = weekRecordGroup.Count() == 0 ? 0 : (int)weekRecordGroup.Average(grouping => grouping.Sum(record => record.Food.Carbohydrates));
+    var weekProteinAverage = weekRecordGroup.Count() == 0 ? 0 : (int)weekRecordGroup.Average(grouping => grouping.Sum(record => record.Food.Protein));
+    var weekFatAverage = weekRecordGroup.Count() == 0 ? 0 : (int)weekRecordGroup.Average(grouping => grouping.Sum(record => record.Food.Fat));
 
     var monthRecordGroup = Model.Records.Where(record => record.ConsumptionDate >= DateTime.Today.AddDays(-28)).GroupBy(record => record.ConsumptionDate);
-    int monthCaloriesAverage = monthRecordGroup.Count() == 0 ? 0 : (int)monthRecordGroup.Average(grouping => grouping.Sum(record => record.Food.Calories));
-    int monthCarbsAverage = monthRecordGroup.Count() == 0 ? 0 : (int)monthRecordGroup.Average(grouping => grouping.Sum(record => record.Food.Carbohydrates));
-    int monthProteinAverage = monthRecordGroup.Count() == 0 ? 0 : (int)monthRecordGroup.Average(grouping => grouping.Sum(record => record.Food.Protein));
-    int monthFatAverage = monthRecordGroup.Count() == 0 ? 0 : (int)monthRecordGroup.Average(grouping => grouping.Sum(record => record.Food.Fat));
-
-
-
+    var monthCaloriesAverage = monthRecordGroup.Count() == 0 ? 0 : (int)monthRecordGroup.Average(grouping => grouping.Sum(record => record.Food.Calories));
+    var monthCarbsAverage = monthRecordGroup.Count() == 0 ? 0 : (int)monthRecordGroup.Average(grouping => grouping.Sum(record => record.Food.Carbohydrates));
+    var monthProteinAverage = monthRecordGroup.Count() == 0 ? 0 : (int)monthRecordGroup.Average(grouping => grouping.Sum(record => record.Food.Protein));
+    var monthFatAverage = monthRecordGroup.Count() == 0 ? 0 : (int)monthRecordGroup.Average(grouping => grouping.Sum(record => record.Food.Fat));
 }
 
-@section Scripts{
+@section Scripts
+{
     <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.4/dist/Chart.min.js"></script>
     <script src="~/js/Nutrition/summary.js"></script>
 }
@@ -42,16 +40,12 @@
 </div>
 
 
-<div id="MonthGraphData" class="d-none">
-
-</div>
+<div id="MonthGraphData" class="d-none"></div>
 
 <div class="row">
     <div class="col">
         <div class="card">
-            <div class="card-header">
-                <h3>Target</h3>
-            </div>
+            <div class="card-header"><h3>Target</h3></div>
             <div class="card-body">
                 <div class="text-center mb-2">
                     <h4>Calories</h4>
@@ -76,9 +70,7 @@
     </div>
     <div class="col">
         <div class="card">
-            <div class="card-header">
-                <h3>Today</h3>
-            </div>
+            <div class="card-header"><h3>Today</h3></div>
             <div class="card-body">
                 <div class="text-center mb-2">
                     <h4>Calories</h4>
@@ -103,9 +95,7 @@
     </div>
     <div class="col">
         <div class="card">
-            <div class="card-header">
-                <h3>Yesterday</h3>
-            </div>
+            <div class="card-header"><h3>Yesterday</h3></div>
             <div class="card-body">
                 <div class="text-center mb-2">
                     <h4>Calories</h4>
@@ -130,9 +120,7 @@
     </div>
     <div class="col">
         <div class="card">
-            <div class="card-header">
-                <h3>Last 7 days <span class="small" style="font-size:55%">Average</span></h3>
-            </div>
+            <div class="card-header"><h3>Last 7 days <span class="small" style="font-size:55%">Average</span></h3></div>
             <div class="card-body">
                 <div class="text-center mb-2">
                     <h4>Calories</h4>
@@ -157,9 +145,7 @@
     </div>
     <div class="col">
         <div class="card">
-            <div class="card-header">
-                <h3>Last 28 days <span class="small" style="font-size:55%">Average</span></h3>
-            </div>
+            <div class="card-header"><h3>Last 28 days <span class="small" style="font-size:55%">Average</span></h3></div>
             <div class="card-body">
                 <div class="text-center mb-2">
                     <h4>Calories</h4>

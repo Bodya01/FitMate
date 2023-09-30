@@ -2,6 +2,7 @@
 using FitMate.Infrastructure.Entities;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading;
@@ -24,14 +25,11 @@ namespace FitMate.UI.Web.Controllers.Base
         }
 
         [NonAction]
-        protected async Task<FitnessUser> GetUserAsync(CancellationToken cancellationToken = default)
-        {
-            return await Task.Run(() => _userManager.GetUserAsync(HttpContext.User), cancellationToken);
-        }
+        protected async Task<FitnessUser> GetUserAsync(CancellationToken cancellationToken = default) => 
+            await Task.Run(() => _userManager.GetUserAsync(HttpContext.User), cancellationToken);
+
         [NonAction]
-        protected async Task<string> GetUserIdAsync(CancellationToken cancellationToken = default)
-        {
-            return (await Task.Run(() => _userManager.GetUserAsync(HttpContext.User), cancellationToken)).Id;
-        }
+        protected async Task<string> GetUserIdAsync(CancellationToken cancellationToken = default) =>
+            (await Task.Run(() => _userManager.GetUserAsync(HttpContext.User), cancellationToken)).Id;
     }
 }

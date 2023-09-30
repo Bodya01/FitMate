@@ -1,6 +1,7 @@
 ﻿@model FitMate.ViewModels.BodyweightSummaryViewModel
 
-@section Scripts{
+@section Scripts
+{
     <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.4/dist/Chart.min.js"></script>
     <script src="~/js/Bodyweight/summary.js"></script>
 }
@@ -11,14 +12,11 @@
     string FormatWeight(double D)
     {
         //Added this because D = 0 results in "-+0.00kg". Most likely a floating point precision issue.
-        if (D == -0)
-            D = 0;
+        if (D == -0) D = 0;
 
         var x = $"{Math.Round(D, 2).ToString("+0.00;-0.00")}kg";
         return x;
     }
-
-
 }
 
 <div>
@@ -44,7 +42,6 @@
     </div>
 }
 
-
 <div class="row my-3">
     <div class="col">
         <div class="card mheight-100">
@@ -54,11 +51,10 @@
             <div class="card-body d-flex align-items-center">
                 <div class="w-100">
                     <h4 class="card-title text-center">
-                        @(Model.MostRecentRecord == null ? "0" : Model.MostRecentRecord.Weight.ToString("F2"))kg
+                        @(Model.MostRecentRecord is null ? "0" : Model.MostRecentRecord.Weight.ToString("F2"))kg
                     </h4>
                     <div class="card-text text-center">
-                        @if (Model.MostRecentRecord != null)
-                            @(Model.MostRecentRecord.Date.ToString("d"))
+                        @if (Model.MostRecentRecord is not null) @(Model.MostRecentRecord.Date.ToString("d"))
                     </div>
                 </div>
             </div>
@@ -153,13 +149,12 @@
     <div class="col">
         <div class="card mheight-100">
             <div class="card-header py-3">
-
                 <h5 class="card-subtitle">Target Bodyweight <span class="float-right"><i class="far fa-edit" style="cursor:pointer" data-toggle="modal" data-target="#TargetModal"></i> Edit</span></h5>
             </div>
             <div class="card-body d-flex align-items-center">
                 <div class="w-100">
                     <h4 class="card-title text-center" id="TargetWeight" data-target="@(Model.Target == null ? 0 : Model.Target.TargetWeight)">
-                        @(Model.Target == null ? "0" : Model.Target.TargetWeight.ToString("F2"))kg
+                        @(Model.Target is null ? "0" : Model.Target.TargetWeight.ToString("F2"))kg
                     </h4>
                     <div class="card-text text-center">@(Model.Target == null ? "0" : Model.Target.TargetDate.ToString("d"))</div>
                 </div>
@@ -223,8 +218,6 @@
     </div>
 </div>
 
-
-
 <div class="modal fade" id="TargetModal" tabindex="-1" aria-labelledby="TargetModal" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -235,10 +228,7 @@
                 </button>
             </div>
             <form asp-controller="Bodyweight" asp-action="EditTarget" method="post">
-
                 <div class="modal-body">
-
-
                     <div class="form-group">
                         <label>Weight</label>
                         <input class="form-control" name="TargetWeight" type="number" min="1" max="300" value="@(Model.Target == null ? "0" : Model.Target.TargetWeight)" required />
@@ -248,14 +238,12 @@
                         <label>Target Date</label>
                         <input class="form-control" name="TargetDate" type="date" value="@(Model.Target == null ? "0" : Model.Target.TargetDate.ToString("yyyy-MM-dd"))" />
                     </div>
-
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
                     <input type="submit" class="btn btn-primary" value="Save">
                 </div>
             </form>
-
         </div>
     </div>
 </div>
