@@ -43,9 +43,9 @@ namespace FitMate.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> EditGoal(Guid Id)
+        public async Task<IActionResult> EditGoal(Guid Id, CancellationToken cancellationToken = default)
         {
-            var goal = await _unitOfWork.GoalRepository.Value.GetByIdAsync(Id);
+            var goal = await _unitOfWork.GoalRepository.Value.GetByIdAsync(Id, cancellationToken);
 
             if (goal is null) return BadRequest();
 
