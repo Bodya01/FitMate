@@ -3,26 +3,23 @@
 @{
     ViewData["Title"] = "Edit Goal";
 
-    var id = Model == null ? Guid.Empty : Model.Id;
-    var activity = Model == null ? "" : Model.Activity;
-    var isWeightliftingGoal = (Model == null || Model.GetType() == typeof(WeightliftingGoal));
+    var id = Model is null ? Guid.Empty : Model.Id;
+    var activity = Model is null ? "" : Model.Activity;
+    var isWeightliftingGoal = (Model is null || Model.GetType() == typeof(WeightliftingGoal));
     var isTimedGoal = Model?.GetType() == typeof(TimedGoal);
 
     WeightliftingGoal weightliftingGoal = null;
     TimedGoal timedGoal = null;
 
+    if (Model.GetType() == typeof(WeightliftingGoal)) weightliftingGoal = (WeightliftingGoal)Model;
+    else if (Model.GetType() == typeof(TimedGoal)) timedGoal = (TimedGoal)Model;
 
-    if (Model.GetType() == typeof(WeightliftingGoal))
-        weightliftingGoal = (WeightliftingGoal)Model;
-    else if (Model.GetType() == typeof(TimedGoal))
-        timedGoal = (TimedGoal)Model;
+    var weight = weightliftingGoal is null ? 0 : weightliftingGoal.Weight;
+    var reps = weightliftingGoal is null ? 0 : weightliftingGoal.Reps;
 
-    var weight = weightliftingGoal == null ? 0 : weightliftingGoal.Weight;
-    var reps = weightliftingGoal == null ? 0 : weightliftingGoal.Reps;
-
-    var quantity = timedGoal == null ? 0 : timedGoal.Quantity;
-    var quantityUnit = timedGoal == null ? "" : timedGoal.QuantityUnit;
-    var timespan = timedGoal == null ? new TimeSpan() : timedGoal.Time;
+    var quantity = timedGoal is null ? 0 : timedGoal.Quantity;
+    var quantityUnit = timedGoal is null ? "" : timedGoal.QuantityUnit;
+    var timespan = timedGoal is null ? new TimeSpan() : timedGoal.Time;
 }
 
 @section Scripts
@@ -34,11 +31,11 @@
 
 <div class="container w-25 ml-2">
     <form asp-controller="Goal" asp-action="EditGoal" method="post">
-        <input type="hidden" Name="GoalInput.ID" value="@id" required />
+        <input type="hidden" name="GoalInput.Id" value="@id" required />
 
         <div class="form-group">
             <label class="font-weight-bold">Activity</label>
-            <input type="text" Name="GoalInput.Activity" class="form-control" value="@activity" required/>
+            <input type="text" name="GoalInput.Activity" class="form-control" value="@activity" required/>
         </div>
 
         <div class="form-group">
@@ -95,4 +92,3 @@
         </div>
     </form>
 </div>
-

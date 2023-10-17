@@ -5,10 +5,7 @@ using MediatR;
 
 namespace FitMate.Application.Commands.Food
 {
-    public class CreateFoodCommand : IRequest
-    {
-        public FoodDto Food { get; set; }
-    }
+    public record CreateFoodCommand(FoodDto Food) : IRequest;
 
     public class CreateFoodCommandHandler : IRequestHandler<CreateFoodCommand>
     {

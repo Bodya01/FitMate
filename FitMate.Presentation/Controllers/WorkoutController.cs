@@ -17,15 +17,15 @@ namespace FitMate.Controllers
 {
     public class WorkoutController : FitMateControllerBase
     {
-        public WorkoutController(UserManager<FitnessUser> userManager, IMediator mediator, IUnitOfWork unitOfWork, IMapper mapper)
+        public WorkoutController(UserManager<FitnessUser> userManager, IMediator mediator, IUnitOfWork unitOfWork)
             : base(userManager, mediator, unitOfWork) { }
 
         public async Task<IActionResult> Summary(CancellationToken cancellationToken)
         {
-            var request = new GetWorkoutByUserIdQuery { UserId = await GetUserIdAsync(cancellationToken) };
+            var request = new GetWorkoutForUserQuery(await GetUserIdAsync(cancellationToken));
             var response = await _mediator.Send(request, cancellationToken);
 
-            return View(response.WorkoutPlans);
+            return View(response);
         }
 
         [HttpGet]
@@ -36,7 +36,7 @@ namespace FitMate.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Edit(GetWorkoutPlanByIdQuery query, CancellationToken cancellationToken) =>
+        public async Task<IActionResult> Edit(GetWorkoutPlanQuery query, CancellationToken cancellationToken) =>
             View(await _mediator.Send(query, cancellationToken));
 
         [HttpPost]
@@ -44,16 +44,16 @@ namespace FitMate.Controllers
         {
             workoutPlanDto.UserId = await GetUserIdAsync(cancellationToken);
 
-            var command = new EditWorkoutPlanCommand { WorkoutPlan = workoutPlanDto };
+            var command = new EditWorkoutPlanCommand(workoutPlanDto);
             await _mediator.Send(command, cancellationToken);
 
-            return RedirectToAction("Summary");
+            return RedirectToAction(nameof(WorkoutController.Summary));
         }
 
         [HttpGet]
         public async Task<IActionResult> Session(Guid workoutPlanId, int sessionId, CancellationToken cancellationToken)
         {
-            var request = new GetWorkoutPlanByIdQuery { Id = workoutPlanId };
+            var request = new GetWorkoutPlanQuery(workoutPlanId);
             var plan = await _mediator.Send(request, cancellationToken);
 
             if (plan is null || sessionId < 0 || sessionId >= plan.Sessions.Count) return BadRequest();

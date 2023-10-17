@@ -56,6 +56,8 @@ namespace FitMate
             services.AddScoped<IFoodRepository, FoodRepository>();
             services.AddScoped<IFoodRecordRepository, FoodRecordRepository>();
             services.AddScoped<IUnitOfWork, UnitOfWork>();
+
+            services.AddHttpContextAccessor();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

@@ -5,12 +5,9 @@ using MediatR;
 
 namespace FitMate.Applcation.Commands.WorkoutPlan
 {
-    public class EditWorkoutPlanCommand : IRequest<Unit>
-    {
-        public WorkoutPlanDto WorkoutPlan { get; set; }
-    }
+    public record EditWorkoutPlanCommand(WorkoutPlanDto WorkoutPlan) : IRequest;
 
-    public class EditWorkoutPlanCommandHandler : IRequestHandler<EditWorkoutPlanCommand, Unit>
+    public class EditWorkoutPlanCommandHandler : IRequestHandler<EditWorkoutPlanCommand>
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
@@ -21,15 +18,13 @@ namespace FitMate.Applcation.Commands.WorkoutPlan
             _mapper = mapper;
         }
 
-        public async Task<Unit> Handle(EditWorkoutPlanCommand request, CancellationToken cancellationToken)
+        public async Task Handle(EditWorkoutPlanCommand request, CancellationToken cancellationToken)
         {
             var entity = _mapper.Map<Infrastructure.Entities.WorkoutPlan>(request.WorkoutPlan);
 
-            if (request.WorkoutPlan!.Id == Guid.Empty) await _unitOfWork.WorkoutPlanRepository.Value.CreateAsync(entity);
-            else await _unitOfWork.WorkoutPlanRepository.Value.UpdateAsync(entity);
+            if (request.WorkoutPlan!.Id == Guid.Empty) await _unitOfWork.WorkoutPlanRepository.Value.CreateAsync(entity, cancellationToken);
+            else await _unitOfWork.WorkoutPlanRepository.Value.UpdateAsync(entity, cancellationToken);
             await _unitOfWork.SaveChangesAsync(cancellationToken);
-
-            return Unit.Value;
         }
     }
 }

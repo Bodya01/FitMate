@@ -16,16 +16,16 @@
     var yesterdayFat = yesterdayRecords.Sum(record => record.Food.Protein);
 
     var weekRecordGroup = Model.Records.Where(record => record.ConsumptionDate >= DateTime.Today.AddDays(-7)).GroupBy(record => record.ConsumptionDate);
-    var weekCaloriesAverage = weekRecordGroup.Count() == 0 ? 0 : (int)weekRecordGroup.Average(grouping => grouping.Sum(record => record.Food.Calories));
-    var weekCarbsAverage = weekRecordGroup.Count() == 0 ? 0 : (int)weekRecordGroup.Average(grouping => grouping.Sum(record => record.Food.Carbohydrates));
-    var weekProteinAverage = weekRecordGroup.Count() == 0 ? 0 : (int)weekRecordGroup.Average(grouping => grouping.Sum(record => record.Food.Protein));
-    var weekFatAverage = weekRecordGroup.Count() == 0 ? 0 : (int)weekRecordGroup.Average(grouping => grouping.Sum(record => record.Food.Fat));
+    var weekCaloriesAverage = weekRecordGroup.Any() ? 0 : (int)weekRecordGroup.Average(grouping => grouping.Sum(record => record.Food.Calories));
+    var weekCarbsAverage = weekRecordGroup.Any() ? 0 : (int)weekRecordGroup.Average(grouping => grouping.Sum(record => record.Food.Carbohydrates));
+    var weekProteinAverage = weekRecordGroup.Any() ? 0 : (int)weekRecordGroup.Average(grouping => grouping.Sum(record => record.Food.Protein));
+    var weekFatAverage = weekRecordGroup.Any() ? 0 : (int)weekRecordGroup.Average(grouping => grouping.Sum(record => record.Food.Fat));
 
     var monthRecordGroup = Model.Records.Where(record => record.ConsumptionDate >= DateTime.Today.AddDays(-28)).GroupBy(record => record.ConsumptionDate);
-    var monthCaloriesAverage = monthRecordGroup.Count() == 0 ? 0 : (int)monthRecordGroup.Average(grouping => grouping.Sum(record => record.Food.Calories));
-    var monthCarbsAverage = monthRecordGroup.Count() == 0 ? 0 : (int)monthRecordGroup.Average(grouping => grouping.Sum(record => record.Food.Carbohydrates));
-    var monthProteinAverage = monthRecordGroup.Count() == 0 ? 0 : (int)monthRecordGroup.Average(grouping => grouping.Sum(record => record.Food.Protein));
-    var monthFatAverage = monthRecordGroup.Count() == 0 ? 0 : (int)monthRecordGroup.Average(grouping => grouping.Sum(record => record.Food.Fat));
+    var monthCaloriesAverage = monthRecordGroup.Any() ? 0 : (int)monthRecordGroup.Average(grouping => grouping.Sum(record => record.Food.Calories));
+    var monthCarbsAverage = monthRecordGroup.Any() ? 0 : (int)monthRecordGroup.Average(grouping => grouping.Sum(record => record.Food.Carbohydrates));
+    var monthProteinAverage = monthRecordGroup.Any() ? 0 : (int)monthRecordGroup.Average(grouping => grouping.Sum(record => record.Food.Protein));
+    var monthFatAverage = monthRecordGroup.Any() ? 0 : (int)monthRecordGroup.Average(grouping => grouping.Sum(record => record.Food.Fat));
 }
 
 @section Scripts

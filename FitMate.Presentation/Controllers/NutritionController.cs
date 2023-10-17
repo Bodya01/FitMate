@@ -1,4 +1,5 @@
 ﻿using FitMate.Application.Commands.Food;
+using FitMate.Application.Queries.Food;
 using FitMate.Core.UnitOfWork;
 using FitMate.Infrastructure.Entities;
 using FitMate.Infrastucture.Dtos;
@@ -17,12 +18,13 @@ namespace FitMate.Controllers
 {
     public class NutritionController : FitMateControllerBase
     {
-        public NutritionController(UserManager<FitnessUser> userManager, IMediator mediator, IUnitOfWork unitOfWork) : base(userManager, mediator, unitOfWork) { }
+        public NutritionController(UserManager<FitnessUser> userManager, IMediator mediator, IUnitOfWork unitOfWork)
+            : base(userManager, mediator, unitOfWork) { }
 
         [HttpGet]
         public async Task<IActionResult> AddFood(DateTime date, CancellationToken cancellationToken)
         {
-            if (date.Ticks == 0) date = DateTime.Today;
+            if (date.Ticks == default) date = DateTime.Today;
             ViewData["selectedDate"] = date;
 
             var currentUserId = await GetUserIdAsync();
@@ -39,29 +41,27 @@ namespace FitMate.Controllers
         [HttpPost]
         public async Task<IActionResult> AddNewFood(FoodDto food, CancellationToken cancellationToken)
         {
-            var command = new CreateFoodCommand
-            {
-                Food = food
-            };
+            var command = new CreateFoodCommand(food);
 
             await _mediator.Send(command, cancellationToken);
 
-            return RedirectToAction("AddFood");
+            return RedirectToAction(nameof(AddFood));
         }
 
         [HttpPost]
         public async Task<IActionResult> EditRecords(DateTime date, Guid[] foodIds, float[] quantities, CancellationToken cancellationToken)
         {
-            if (foodIds.Length != quantities.Length || foodIds.Length == 0) return BadRequest();
+            if (foodIds.Length != quantities.Length || !foodIds.Any()) return BadRequest();
 
             var currentUser = await GetUserAsync(cancellationToken);
 
-            var existingRecords = await _unitOfWork.FoodRecordRepository.Value.Get(e => e.UserId == currentUser.Id && e.ConsumptionDate == date, s => s)
+            var existingRecords = await _unitOfWork.FoodRecordRepository.Value
+                .Get(e => e.UserId == currentUser.Id && e.ConsumptionDate == date, s => s)
                 .ToListAsync(cancellationToken);
-            await _unitOfWork.FoodRecordRepository.Value.DeleteRangeAsync(existingRecords);
+            await _unitOfWork.FoodRecordRepository.Value.DeleteRangeAsync(existingRecords, cancellationToken);
 
             var newRecords = new FoodRecord[foodIds.Length];
-            for (int i = 0; i < foodIds.Length; i++)
+            for (var i = 0; i < foodIds.Length; i++)
             {
                 newRecords[i] = new FoodRecord()
                 {
@@ -74,19 +74,14 @@ namespace FitMate.Controllers
             await _unitOfWork.FoodRecordRepository.Value.CreateRangeAsync(newRecords, cancellationToken);
             await _unitOfWork.SaveChangesAsync(cancellationToken);
 
-            return RedirectToAction("AddFood");
+            return RedirectToAction(nameof(AddFood));
         }
 
         [HttpPost]
         public async Task<IActionResult> DeleteFood(Guid id, CancellationToken cancellationToken)
         {
-            var targetFood = await _unitOfWork.FoodRepository.Value.GetByIdAsync(id, cancellationToken);
-            if (targetFood is null) return BadRequest();
-
-            await _unitOfWork.FoodRepository.Value.DeleteAsync(targetFood, cancellationToken);
-            await _unitOfWork.SaveChangesAsync(cancellationToken);
-
-            return RedirectToAction("AddFood");
+            await _mediator.Send(new GetFoodQuery(id), cancellationToken);
+            return RedirectToAction(nameof(AddFood));
         }
 
         [HttpGet]
@@ -100,6 +95,7 @@ namespace FitMate.Controllers
             {
                 await _unitOfWork.FoodRecordRepository.Value.LoadNavigationPropertyExplicitly(record, r => r.Food, cancellationToken);
             }
+
             var userRecords = await userRecordsQuery.ToListAsync(cancellationToken);
 
             var userTarget = await _unitOfWork.NutritionTargetRepository.Value.GetTargetForUserAsync(currentUserId, cancellationToken);

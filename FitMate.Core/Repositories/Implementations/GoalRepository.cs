@@ -1,6 +1,7 @@
 ﻿using FitMate.Core.Context;
 using FitMate.Core.Repositories.Interfaces;
 using FitMate.Infrastructure.Entities;
+using FitMate.Infrastructure.Exceptions;
 using Microsoft.EntityFrameworkCore;
 using System.Linq.Expressions;
 
