@@ -1,5 +1,6 @@
 ﻿using FitMate.Application.Commands.Goal;
 using FitMate.Application.Queries.Goal;
+using FitMate.Business.Interfaces;
 using FitMate.Core.UnitOfWork;
 using FitMate.Infrastructure.Entities;
 using FitMate.UI.Web.Controllers.Base;
@@ -17,8 +18,8 @@ namespace FitMate.Controllers
 {
     public class GoalController : FitMateControllerBase
     {
-        public GoalController (UserManager<FitnessUser> userManager, IMediator mediator, IUnitOfWork unitOfWork)
-            : base(userManager, mediator, unitOfWork) { }
+        public GoalController (UserManager<FitnessUser> userManager, IMediator mediator, IUnitOfWork unitOfWork, IUserService userService)
+            : base(userManager, mediator, unitOfWork, userService) { }
 
         [HttpGet]
         public async Task<IActionResult> Summary(CancellationToken cancellationToken)

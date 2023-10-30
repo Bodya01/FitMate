@@ -1,6 +1,7 @@
 ﻿using FitMate.Applcation.Commands.Bodyweight;
 using FitMate.Application.Queries.BodyweightRecord;
 using FitMate.Application.Queries.BodyweightTarget;
+using FitMate.Business.Interfaces;
 using FitMate.Core.UnitOfWork;
 using FitMate.Infrastructure.Entities;
 using FitMate.UI.Web.Controllers.Base;
@@ -18,14 +19,14 @@ namespace FitMate.Controllers
 {
     public class BodyweightController : FitMateControllerBase
     {
-        public BodyweightController(UserManager<FitnessUser> userManager, IMediator mediator, IUnitOfWork unitOfWork)
-            : base(userManager, mediator, unitOfWork) { }
+        public BodyweightController(UserManager<FitnessUser> userManager, IMediator mediator, IUnitOfWork unitOfWork, IUserService userService)
+            : base(userManager, mediator, unitOfWork, userService) { }
 
         public IActionResult Index() => RedirectToAction(nameof(BodyweightController.Summary));
 
         public async Task<IActionResult> Summary(CancellationToken cancellationToken)
         {
-            var currentUserId = await GetUserIdAsync(cancellationToken);
+            var currentUserId = await _userService.GetUserIdAsync(cancellationToken);
 
             var target = await _mediator.Send(new GetCurrentBodyweightTargetQuery(currentUserId), cancellationToken);
             var records = await _mediator.Send(new GetBodyweightRecordsQuery(currentUserId), cancellationToken);

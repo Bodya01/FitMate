@@ -1,5 +1,6 @@
 ﻿using FitMate.Application.Commands.Food;
 using FitMate.Application.Queries.Food;
+using FitMate.Business.Interfaces;
 using FitMate.Core.UnitOfWork;
 using FitMate.Infrastructure.Entities;
 using FitMate.Infrastucture.Dtos;
@@ -18,8 +19,8 @@ namespace FitMate.Controllers
 {
     public class NutritionController : FitMateControllerBase
     {
-        public NutritionController(UserManager<FitnessUser> userManager, IMediator mediator, IUnitOfWork unitOfWork)
-            : base(userManager, mediator, unitOfWork) { }
+        public NutritionController(UserManager<FitnessUser> userManager, IMediator mediator, IUnitOfWork unitOfWork, IUserService userService)
+            : base(userManager, mediator, unitOfWork, userService) { }
 
         [HttpGet]
         public async Task<IActionResult> AddFood(DateTime date, CancellationToken cancellationToken)
@@ -27,7 +28,7 @@ namespace FitMate.Controllers
             if (date.Ticks == default) date = DateTime.Today;
             ViewData["selectedDate"] = date;
 
-            var currentUserId = await GetUserIdAsync();
+            var currentUserId = await GetUserIdAsync(cancellationToken);
 
             var model = new NewFoodModel()
             {

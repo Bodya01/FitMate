@@ -47,6 +47,7 @@ namespace FitMate
             Dependencies.RegisterInfrastructure(services);
 
             services.AddScoped<IWorkoutPlanService, WorkoutPlanService>();
+            services.AddScoped<IUserService, UserService>();
 
             services.AddScoped<IBodyweightRecordRepository, BodyweightRecordRepository>();
             services.AddScoped<IBodyweightTargetRepository, BodyweightTargetRepository>();
