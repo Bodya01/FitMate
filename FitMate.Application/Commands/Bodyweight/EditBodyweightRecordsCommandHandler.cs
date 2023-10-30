@@ -5,12 +5,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace FitMate.Applcation.Commands.Bodyweight
 {
-    public class EditBodyweightRecordsCommand : IRequest
-    {
-        public DateTime[] RecordDates { get; set; }
-        public float[] recordWeights { get; set; }
-        public FitnessUser User { get; set; }
-    }
+    public record EditBodyweightRecordsCommand(DateTime[] RecordDates, float[] RecordWeights, FitnessUser User) : IRequest;
 
     public class EditBodyweightRecordsCommandHandler : IRequestHandler<EditBodyweightRecordsCommand>
     {
@@ -29,13 +24,13 @@ namespace FitMate.Applcation.Commands.Bodyweight
 
             var records = new List<BodyweightRecord>();
 
-            for (int i = 0; i < command.RecordDates.Length; i++)
+            for (var i = 0; i < command.RecordDates.Length; i++)
             {
                 var newRecord = new BodyweightRecord()
                 {
                     User = command.User,
                     Date = command.RecordDates[i],
-                    Weight = command.recordWeights[i]
+                    Weight = command.RecordWeights[i]
                 };
                 records.Add(newRecord);
             }
