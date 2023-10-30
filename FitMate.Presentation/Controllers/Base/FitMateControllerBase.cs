@@ -14,7 +14,7 @@ namespace FitMate.UI.Web.Controllers.Base
         protected readonly UserManager<FitnessUser> _userManager;
         protected readonly IUserService _userService;
         protected readonly IMediator _mediator;
-        protected readonly IUnitOfWork _unitOfWork;
+        public IUnitOfWork _unitOfWork { get; set; }
 
         public FitMateControllerBase(UserManager<FitnessUser> userManager, IMediator mediator, IUnitOfWork unitOfWork, IUserService userService)
         {

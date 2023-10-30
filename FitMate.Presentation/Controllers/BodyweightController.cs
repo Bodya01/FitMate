@@ -1,4 +1,5 @@
 ﻿using FitMate.Applcation.Commands.Bodyweight;
+using FitMate.Application.Commands.BodyweightTarget;
 using FitMate.Application.Queries.BodyweightRecord;
 using FitMate.Application.Queries.BodyweightTarget;
 using FitMate.Business.Interfaces;
@@ -53,19 +54,8 @@ namespace FitMate.Controllers
 
             var currentUserId = await _userService.GetUserIdAsync(cancellationToken);
 
-            var newTarget = await _unitOfWork.BodyweightTargetRepository.Value.Get(e => e.UserId == currentUserId, s => s)
-                .OrderByDescending(t => t.TargetDate)
-                .FirstOrDefaultAsync(cancellationToken);
-
-            newTarget ??= new BodyweightTarget() { UserId = currentUserId };
-
-            newTarget.TargetWeight = targetWeight;
-            newTarget.TargetDate = targetDate;
-
-            if (newTarget.Id == Guid.Empty) await _unitOfWork.BodyweightTargetRepository.Value.CreateAsync(newTarget, cancellationToken);
-            else await _unitOfWork.BodyweightTargetRepository.Value.UpdateAsync(newTarget, cancellationToken);
-
-            await _unitOfWork.SaveChangesAsync(cancellationToken);
+            var command = new EditBodyweightTargetCommand(targetWeight, targetDate, currentUserId);
+            await _mediator.Send(command, cancellationToken);
 
             return RedirectToAction(nameof(BodyweightController.Summary));
         }
@@ -81,9 +71,9 @@ namespace FitMate.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> EditRecords([FromForm] DateTime[] rd, [FromForm] float[] rw, CancellationToken cancellationToken)
+        public async Task<IActionResult> EditRecords([FromForm] DateTime[] recordDates, [FromForm] float[] recordWeights, CancellationToken cancellationToken)
         {
-            var command = new EditBodyweightRecordsCommand(rd, rw, await _userService.GetUserIdAsync(cancellationToken));
+            var command = new EditBodyweightRecordsCommand(recordDates, recordWeights, await _userService.GetUserIdAsync(cancellationToken));
 
             if (command.RecordDates is null
                 || command.RecordWeights is null
