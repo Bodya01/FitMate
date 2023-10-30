@@ -1,5 +1,4 @@
-﻿using FitMate.Infrastructure.Entities;
-using FitMate.Infrastucture.Dtos;
+﻿using FitMate.Infrastucture.Dtos;
 using FitMate.Infrastucture.Dtos.Base;
 using System;
 using System.Collections.Generic;

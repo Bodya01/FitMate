@@ -27,7 +27,7 @@ namespace FitMate.Application.Queries.BodyweightRecord
             if (!request.IgnoreDates)
             {
                 recordsQuery.Where(x => x.Date >= request.From && x.Date <= request.To);
-            }           
+            }
 
             var records = await recordsQuery.ToListAsync(cancellationToken);
 

@@ -18,7 +18,7 @@ namespace FitMate.Controllers
 {
     public class GoalController : FitMateControllerBase
     {
-        public GoalController (UserManager<FitnessUser> userManager, IMediator mediator, IUnitOfWork unitOfWork, IUserService userService)
+        public GoalController(UserManager<FitnessUser> userManager, IMediator mediator, IUnitOfWork unitOfWork, IUserService userService)
             : base(userManager, mediator, unitOfWork, userService) { }
 
         [HttpGet]

@@ -1,7 +1,6 @@
 ﻿using FitMate.Core.UnitOfWork;
 using FitMate.Infrastructure.Exceptions;
 using MediatR;
-using Microsoft.Extensions.Logging;
 
 namespace FitMate.Application.Commands.Goal
 {
