@@ -26,11 +26,9 @@ namespace FitMate.Controllers
         {
             var currentUserId = await _userService.GetUserIdAsync(cancellationToken);
 
-            var goals = await _unitOfWork.GoalRepository.Value
-                .Get(e => e.UserId == currentUserId, s => s)
-                .ToListAsync(cancellationToken);
+            var query = new GetGoalsQuery(currentUserId);
 
-            return View(goals);
+            return View(await _mediator.Send(query, cancellationToken));
         }
 
         [HttpGet]
@@ -44,7 +42,7 @@ namespace FitMate.Controllers
         [HttpGet]
         public async Task<IActionResult> EditGoal(Guid id, CancellationToken cancellationToken)
         {
-            var goal = await _mediator.Send(new GetGoalQuery(id), cancellationToken);
+            var goal = await _mediator.Send((IRequest<Infrastucture.Dtos.Goals.GoalDto>)new GetGoalQuery(id), cancellationToken);
 
             if (goal is null) return BadRequest();
 
