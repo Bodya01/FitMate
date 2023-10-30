@@ -10,12 +10,12 @@ namespace FitMate.Application.Commands.Goal
     public class DeleteGoalCommandHandler : IRequestHandler<DeleteGoalCommand>
     {
         private readonly IUnitOfWork _unitOfWork;
-        private readonly ILogger _logger;
+        //private readonly ILogger _logger;
 
-        public DeleteGoalCommandHandler(IUnitOfWork unitOfWork, ILogger logger)
+        public DeleteGoalCommandHandler(IUnitOfWork unitOfWork/*, ILogger logger*/)
         {
             _unitOfWork = unitOfWork;
-            _logger = logger;
+            //_logger = logger;
         }
 
         public async Task Handle(DeleteGoalCommand request, CancellationToken cancellationToken)
@@ -24,7 +24,7 @@ namespace FitMate.Application.Commands.Goal
 
             if (entity is null) throw new EntityNotFoundException($"Goal with id {request.Id} was not found");
 
-            _logger.LogInformation($"The deletion of goal with {request.Id} id begun");
+            //_logger.LogInformation($"The deletion of goal with {request.Id} id begun");
             await _unitOfWork.GoalRepository.Value.DeleteAsync(request.Id, cancellationToken);
             await _unitOfWork.SaveChangesAsync(cancellationToken);
         }

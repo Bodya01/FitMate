@@ -10,12 +10,12 @@ namespace FitMate.Application.Commands.Food
     public class DeleteFoodCommandHandler : IRequestHandler<DeleteFoodCommand>
     {
         private readonly IUnitOfWork _unitOfWork;
-        private readonly ILogger _logger;
+        //private readonly ILogger _logger;
 
-        public DeleteFoodCommandHandler(IUnitOfWork unitOfWork, ILogger logger)
+        public DeleteFoodCommandHandler(IUnitOfWork unitOfWork/*, ILogger logger*/)
         {
             _unitOfWork = unitOfWork;
-            _logger = logger;
+            //_logger = logger;
         }
 
         public async Task Handle(DeleteFoodCommand request, CancellationToken cancellationToken)
@@ -24,7 +24,7 @@ namespace FitMate.Application.Commands.Food
 
             if (entity is null) throw new EntityNotFoundException($"Food with id {request.Id} was not found");
 
-            _logger.LogInformation($"A deletion of food with {request.Id} id begun.");
+            //_logger.LogInformation($"A deletion of food with {request.Id} id begun.");
             await _unitOfWork.FoodRepository.Value.DeleteAsync(request.Id, cancellationToken);
             await _unitOfWork.SaveChangesAsync(cancellationToken);
         }
