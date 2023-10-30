@@ -1,5 +1,4 @@
-﻿using AutoMapper;
-using FitMate.Applcation.Commands.WorkoutPlan;
+﻿using FitMate.Applcation.Commands.WorkoutPlan;
 using FitMate.Applcation.Queries.WorkoutPlan;
 using FitMate.Business.Interfaces;
 using FitMate.Core.UnitOfWork;

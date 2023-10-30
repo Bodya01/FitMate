@@ -52,13 +52,12 @@ namespace FitMate.Controllers
             if (targetWeight <= 0 || targetWeight >= 200 || targetDate <= DateTime.Today) return BadRequest();
 
             var currentUserId = await GetUserIdAsync(cancellationToken);
-            var currentUser = await GetUserAsync(cancellationToken);
 
             var newTarget = await _unitOfWork.BodyweightTargetRepository.Value.Get(e => e.UserId == currentUserId, s => s)
                 .OrderByDescending(t => t.TargetDate)
                 .FirstOrDefaultAsync(cancellationToken);
 
-            newTarget ??= new BodyweightTarget() { User = currentUser };
+            newTarget ??= new BodyweightTarget() { UserId = currentUserId };
 
             newTarget.TargetWeight = targetWeight;
             newTarget.TargetDate = targetDate;
@@ -84,7 +83,7 @@ namespace FitMate.Controllers
         [HttpPost]
         public async Task<IActionResult> EditRecords([FromForm] DateTime[] rd, [FromForm] float[] rw, CancellationToken cancellationToken)
         {
-            var command = new EditBodyweightRecordsCommand(rd, rw, await GetUserAsync(cancellationToken));
+            var command = new EditBodyweightRecordsCommand(rd, rw, await _userService.GetUserIdAsync(cancellationToken));
 
             if (command.RecordDates is null
                 || command.RecordWeights is null
@@ -104,7 +103,7 @@ namespace FitMate.Controllers
         {
             if (command.Weight <= 0 || command.Weight >= 200) return BadRequest();
 
-            command.User = await GetUserAsync(cancellationToken);
+            command.UserId = await _userService.GetUserIdAsync(cancellationToken);
             await _mediator.Send(command, cancellationToken);
 
             return RedirectToAction(nameof(BodyweightController.Summary));
@@ -118,7 +117,7 @@ namespace FitMate.Controllers
             var records = await _mediator.Send(new GetBodyweightRecordsQuery(currentUserId), cancellationToken);
 
             records = records.OrderBy(x => x.Date).ToList();
-            var result = records.Select(record => new { Date = record.Date.ToString("d"), Weight = record.Weight }).ToArray();
+            var result = records.Select(record => new { Date = record.Date.ToString("d"), Weight = record.Weight }).ToList();
 
             return Json(result);
         }

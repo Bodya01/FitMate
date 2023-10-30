@@ -6,7 +6,7 @@ namespace FitMate.Applcation.Commands.Bodyweight
 {
     public record CreateTodayWeightCommand(float Weight) : IRequest
     {
-        public FitnessUser User { get; set; }
+        public string UserId { get; set; }
     }
 
     public class CreateTodayWeightCommandHandler : IRequestHandler<CreateTodayWeightCommand>
@@ -22,7 +22,7 @@ namespace FitMate.Applcation.Commands.Bodyweight
         {
             var newRecord = new BodyweightRecord
             {
-                User = request.User,
+                UserId = request.UserId,
                 Date = DateTime.Today,
                 Weight = request.Weight
             };

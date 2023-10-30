@@ -100,7 +100,7 @@ namespace FitMate.Controllers
             }
 
             goal.Activity = goalInput.Activity;
-            goal.User = await GetUserAsync();
+            goal.UserId = await _userService.GetUserIdAsync(cancellationToken);
 
             if (goal.Id == Guid.Empty)
             {
@@ -118,7 +118,7 @@ namespace FitMate.Controllers
         [HttpPost]
         public async Task<IActionResult> AddProgress(AddGoalProgressInputModel progress, CancellationToken cancellationToken)
         {
-            var currentUser = await GetUserAsync(cancellationToken);
+            var currentUserId = await _userService.GetUserIdAsync(cancellationToken);
 
             var goal = await _unitOfWork.GoalRepository.Value.GetByIdAsync(progress.GoalId, cancellationToken);
 
@@ -148,7 +148,7 @@ namespace FitMate.Controllers
 
             newProgress.Goal = goal;
             newProgress.Date = progress.Date;
-            newProgress.User = currentUser;
+            newProgress.UserId = currentUserId;
 
             await _unitOfWork.GoalProgressRepository.Value.CreateAsync(newProgress, cancellationToken);
             await _unitOfWork.SaveChangesAsync(cancellationToken);

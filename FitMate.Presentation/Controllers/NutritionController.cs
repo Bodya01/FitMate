@@ -54,10 +54,10 @@ namespace FitMate.Controllers
         {
             if (foodIds.Length != quantities.Length || !foodIds.Any()) return BadRequest();
 
-            var currentUser = await GetUserAsync(cancellationToken);
+            var currentUserId = await _userService.GetUserIdAsync(cancellationToken);
 
             var existingRecords = await _unitOfWork.FoodRecordRepository.Value
-                .Get(e => e.UserId == currentUser.Id && e.ConsumptionDate == date, s => s)
+                .Get(e => e.UserId == currentUserId && e.ConsumptionDate == date, s => s)
                 .ToListAsync(cancellationToken);
             await _unitOfWork.FoodRecordRepository.Value.DeleteRangeAsync(existingRecords, cancellationToken);
 
@@ -67,7 +67,7 @@ namespace FitMate.Controllers
                 newRecords[i] = new FoodRecord()
                 {
                     ConsumptionDate = date,
-                    User = currentUser,
+                    UserId = currentUserId,
                     FoodId = foodIds[i],
                     Quantity = quantities[i]
                 };
