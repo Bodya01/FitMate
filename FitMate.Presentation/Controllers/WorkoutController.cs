@@ -22,7 +22,7 @@ namespace FitMate.Controllers
 
         public async Task<IActionResult> Summary(CancellationToken cancellationToken)
         {
-            var request = new GetWorkoutForUserQuery(await GetUserIdAsync(cancellationToken));
+            var request = new GetWorkoutForUserQuery(await _userService.GetUserIdAsync(cancellationToken));
             var response = await _mediator.Send(request, cancellationToken);
 
             return View(response);
@@ -42,7 +42,7 @@ namespace FitMate.Controllers
         [HttpPost]
         public async Task<IActionResult> Edit(WorkoutPlanDto workoutPlanDto, CancellationToken cancellationToken)
         {
-            workoutPlanDto.UserId = await GetUserIdAsync(cancellationToken);
+            workoutPlanDto.UserId = await _userService.GetUserIdAsync(cancellationToken);
 
             var command = new EditWorkoutPlanCommand(workoutPlanDto);
             await _mediator.Send(command, cancellationToken);

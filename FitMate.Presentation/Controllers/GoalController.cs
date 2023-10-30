@@ -24,7 +24,7 @@ namespace FitMate.Controllers
         [HttpGet]
         public async Task<IActionResult> Summary(CancellationToken cancellationToken)
         {
-            var currentUserId = await GetUserIdAsync(cancellationToken);
+            var currentUserId = await _userService.GetUserIdAsync(cancellationToken);
 
             var goals = await _unitOfWork.GoalRepository.Value
                 .Get(e => e.UserId == currentUserId, s => s)
@@ -159,7 +159,7 @@ namespace FitMate.Controllers
         [HttpGet]
         public async Task<IActionResult> ViewGoal(Guid Id, CancellationToken cancellationToken)
         {
-            var currentUserId = await GetUserIdAsync();
+            var currentUserId = await _userService.GetUserIdAsync();
 
             var goal = await _unitOfWork.GoalRepository.Value.GetByIdAsync(Id, cancellationToken);
 
@@ -181,7 +181,7 @@ namespace FitMate.Controllers
         [HttpGet]
         public async Task<IActionResult> GetWeightliftingProgress(Guid goalId, CancellationToken cancellationToken)
         {
-            var currentUserId = await GetUserIdAsync();
+            var currentUserId = await _userService.GetUserIdAsync();
 
             // Ascending order
             var progress = await _unitOfWork.GoalProgressRepository.Value
@@ -199,7 +199,7 @@ namespace FitMate.Controllers
         [HttpGet]
         public async Task<IActionResult> GetTimedProgress(Guid goalId, CancellationToken cancellationToken)
         {
-            var currentUserId = await GetUserIdAsync(cancellationToken);
+            var currentUserId = await _userService.GetUserIdAsync(cancellationToken);
 
             // Ascending order
             var progress = await _unitOfWork.GoalProgressRepository.Value

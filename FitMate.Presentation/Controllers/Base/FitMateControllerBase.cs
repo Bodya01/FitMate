@@ -26,13 +26,5 @@ namespace FitMate.UI.Web.Controllers.Base
             _unitOfWork = unitOfWork;
             _userService = userService;
         }
-
-        [NonAction]
-        protected async Task<FitnessUser> GetUserAsync(CancellationToken cancellationToken = default) => 
-            await Task.Run(() => _userManager.GetUserAsync(HttpContext.User), cancellationToken);
-
-        [NonAction]
-        protected async Task<string> GetUserIdAsync(CancellationToken cancellationToken = default) =>
-            (await Task.Run(() => _userManager.GetUserAsync(HttpContext.User), cancellationToken)).Id;
     }
 }

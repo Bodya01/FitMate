@@ -28,7 +28,7 @@ namespace FitMate.Controllers
             if (date.Ticks == default) date = DateTime.Today;
             ViewData["selectedDate"] = date;
 
-            var currentUserId = await GetUserIdAsync(cancellationToken);
+            var currentUserId = await _userService.GetUserIdAsync(cancellationToken);
 
             var model = new NewFoodModel()
             {
@@ -88,7 +88,7 @@ namespace FitMate.Controllers
         [HttpGet]
         public async Task<IActionResult> Summary(CancellationToken cancellationToken)
         {
-            var currentUserId = await GetUserIdAsync(cancellationToken);
+            var currentUserId = await _userService.GetUserIdAsync(cancellationToken);
 
             var userRecordsQuery = _unitOfWork.FoodRecordRepository.Value.Get(e => e.UserId == currentUserId && e.ConsumptionDate >= DateTime.Today.AddDays(-28), s => s);
 
@@ -114,7 +114,7 @@ namespace FitMate.Controllers
         [HttpGet]
         public async Task<IActionResult> GetNutritionData(CancellationToken cancellationToken, uint previousDays = 7)
         {
-            var currentUserId = await GetUserIdAsync();
+            var currentUserId = await _userService.GetUserIdAsync(cancellationToken);
 
             var records = await _unitOfWork.FoodRecordRepository.Value
                 .Get(e => e.ConsumptionDate >= DateTime.Today.AddDays(-previousDays) && e.UserId == currentUserId, s => s)
