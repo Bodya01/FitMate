@@ -6,7 +6,6 @@ using FitMate.Infrastructure.Entities;
 using FitMate.UI.Web.Controllers.Base;
 using FitMate.ViewModels;
 using MediatR;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -26,9 +25,9 @@ namespace FitMate.Controllers
         {
             var currentUserId = await _userService.GetUserIdAsync(cancellationToken);
 
-            var query = new GetGoalsQuery(currentUserId);
+            var result = await _mediator.Send(new GetGoalsQuery(currentUserId), cancellationToken);
 
-            return View(await _mediator.Send(query, cancellationToken));
+            return View(result);
         }
 
         [HttpGet]
@@ -42,7 +41,7 @@ namespace FitMate.Controllers
         [HttpGet]
         public async Task<IActionResult> EditGoal(Guid id, CancellationToken cancellationToken)
         {
-            var goal = await _mediator.Send((IRequest<Infrastucture.Dtos.Goals.GoalDto>)new GetGoalQuery(id), cancellationToken);
+            var goal = await _mediator.Send(new GetGoalQuery(id), cancellationToken);
 
             if (goal is null) return BadRequest();
 
@@ -53,7 +52,7 @@ namespace FitMate.Controllers
         public async Task<IActionResult> DeleteGoal(Guid id, CancellationToken cancellationToken)
         {
             await _mediator.Send(new DeleteGoalCommand(id), cancellationToken);
-            return RedirectToAction(nameof(GoalController.Summary));
+            return RedirectToAction(nameof(Summary));
         }
 
         [HttpPost]
@@ -110,7 +109,7 @@ namespace FitMate.Controllers
             }
             await _unitOfWork.SaveChangesAsync(cancellationToken);
 
-            return RedirectToAction(nameof(GoalController.Summary));
+            return RedirectToAction(nameof(Summary));
         }
 
         [HttpPost]
@@ -151,7 +150,7 @@ namespace FitMate.Controllers
             await _unitOfWork.GoalProgressRepository.Value.CreateAsync(newProgress, cancellationToken);
             await _unitOfWork.SaveChangesAsync(cancellationToken);
 
-            return RedirectToAction(nameof(GoalController.ViewGoal), new { ID = progress.GoalId });
+            return RedirectToAction(nameof(ViewGoal), new { ID = progress.GoalId });
         }
 
         [HttpGet]

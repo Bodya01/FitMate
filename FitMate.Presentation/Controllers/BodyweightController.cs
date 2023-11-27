@@ -20,7 +20,7 @@ namespace FitMate.Controllers
         public BodyweightController(IMediator mediator, IUnitOfWork unitOfWork, IUserService userService)
             : base(mediator, unitOfWork, userService) { }
 
-        public IActionResult Index() => RedirectToAction(nameof(BodyweightController.Summary));
+        public IActionResult Index() => RedirectToAction(nameof(Summary));
 
         public async Task<IActionResult> Summary(CancellationToken cancellationToken)
         {
@@ -54,7 +54,7 @@ namespace FitMate.Controllers
             var command = new EditBodyweightTargetCommand(targetWeight, targetDate, currentUserId);
             await _mediator.Send(command, cancellationToken);
 
-            return RedirectToAction(nameof(BodyweightController.Summary));
+            return RedirectToAction(nameof(Summary));
         }
 
         [HttpGet]
@@ -82,7 +82,7 @@ namespace FitMate.Controllers
 
             await _mediator.Send(command, cancellationToken);
 
-            return RedirectToAction(nameof(BodyweightController.Summary));
+            return RedirectToAction(nameof(Summary));
         }
 
         [HttpPost]
@@ -93,7 +93,7 @@ namespace FitMate.Controllers
             command.UserId = await _userService.GetUserIdAsync(cancellationToken);
             await _mediator.Send(command, cancellationToken);
 
-            return RedirectToAction(nameof(BodyweightController.Summary));
+            return RedirectToAction(nameof(Summary));
         }
 
         [HttpGet]

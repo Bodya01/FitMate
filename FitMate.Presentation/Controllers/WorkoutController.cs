@@ -2,11 +2,9 @@
 using FitMate.Applcation.Queries.WorkoutPlan;
 using FitMate.Business.Interfaces;
 using FitMate.Core.UnitOfWork;
-using FitMate.Infrastructure.Entities;
 using FitMate.Infrastucture.Dtos;
 using FitMate.UI.Web.Controllers.Base;
 using MediatR;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Linq;
