@@ -31,32 +31,17 @@ namespace FitMate
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContext<FitMateContext>(options =>
-                options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
-
-            services.AddIdentity<FitnessUser, IdentityRole>()
-                .AddEntityFrameworkStores<FitMateContext>()
-                .AddSignInManager<SignInManager<FitnessUser>>()
-                .AddDefaultUI()
-                .AddDefaultTokenProviders();
-
             services.AddControllersWithViews();
             services.AddRazorPages();
 
             services.AddMediatRAndHandlers();
-            Dependencies.RegisterInfrastructure(services);
 
-            services.AddScoped<IWorkoutPlanService, WorkoutPlanService>();
-            services.AddScoped<IUserService, UserService>();
-
-            services.AddScoped<IBodyweightRecordRepository, BodyweightRecordRepository>();
-            services.AddScoped<IBodyweightTargetRepository, BodyweightTargetRepository>();
-            services.AddScoped<IGoalRepository, GoalRepository>();
-            services.AddScoped<IGoalProgressRepository, GoalProgressRepository>();
-            services.AddScoped<IWorkoutPlanRepository, WorkoutPlanRepository>();
-            services.AddScoped<IFoodRepository, FoodRepository>();
-            services.AddScoped<IFoodRecordRepository, FoodRecordRepository>();
-            services.AddScoped<IUnitOfWork, UnitOfWork>();
+            services.RegisterIdentity()
+                .RegisterInfrastructure()
+                .RegisterContext(Configuration)
+                .MigrateDatabase()
+                .RegisterRepositories()
+                .RegisterServices();
 
             services.AddHttpContextAccessor();
         }
