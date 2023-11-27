@@ -68,9 +68,9 @@ namespace FitMate.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> EditRecords([FromForm] DateTime[] recordDates, [FromForm] float[] recordWeights, CancellationToken cancellationToken)
+        public async Task<IActionResult> EditRecords([FromForm] DateTime[] rd, [FromForm] float[] rw, CancellationToken cancellationToken)
         {
-            var command = new EditBodyweightRecordsCommand(recordDates, recordWeights, await _userService.GetUserIdAsync(cancellationToken));
+            var command = new EditBodyweightRecordsCommand(rd, rw, await _userService.GetUserIdAsync(cancellationToken));
 
             if (command.RecordDates is null
                 || command.RecordWeights is null
