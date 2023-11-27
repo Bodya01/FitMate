@@ -17,8 +17,8 @@ namespace FitMate.Controllers
 {
     public class WorkoutController : FitMateControllerBase
     {
-        public WorkoutController(UserManager<FitnessUser> userManager, IMediator mediator, IUnitOfWork unitOfWork, IUserService userService)
-            : base(userManager, mediator, unitOfWork, userService) { }
+        public WorkoutController(IMediator mediator, IUnitOfWork unitOfWork, IUserService userService)
+            : base(mediator, unitOfWork, userService) { }
 
         public async Task<IActionResult> Summary(CancellationToken cancellationToken)
         {

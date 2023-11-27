@@ -4,13 +4,10 @@ using FitMate.Application.Queries.BodyweightRecord;
 using FitMate.Application.Queries.BodyweightTarget;
 using FitMate.Business.Interfaces;
 using FitMate.Core.UnitOfWork;
-using FitMate.Infrastructure.Entities;
 using FitMate.UI.Web.Controllers.Base;
 using FitMate.ViewModels;
 using MediatR;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using System;
 using System.Linq;
 using System.Threading;
@@ -20,8 +17,8 @@ namespace FitMate.Controllers
 {
     public class BodyweightController : FitMateControllerBase
     {
-        public BodyweightController(UserManager<FitnessUser> userManager, IMediator mediator, IUnitOfWork unitOfWork, IUserService userService)
-            : base(userManager, mediator, unitOfWork, userService) { }
+        public BodyweightController(IMediator mediator, IUnitOfWork unitOfWork, IUserService userService)
+            : base(mediator, unitOfWork, userService) { }
 
         public IActionResult Index() => RedirectToAction(nameof(BodyweightController.Summary));
 

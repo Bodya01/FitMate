@@ -19,8 +19,8 @@ namespace FitMate.Controllers
 {
     public class NutritionController : FitMateControllerBase
     {
-        public NutritionController(UserManager<FitnessUser> userManager, IMediator mediator, IUnitOfWork unitOfWork, IUserService userService)
-            : base(userManager, mediator, unitOfWork, userService) { }
+        public NutritionController(IMediator mediator, IUnitOfWork unitOfWork, IUserService userService)
+            : base(mediator, unitOfWork, userService) { }
 
         [HttpGet]
         public async Task<IActionResult> AddFood(DateTime date, CancellationToken cancellationToken)

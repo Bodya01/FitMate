@@ -18,8 +18,8 @@ namespace FitMate.Controllers
 {
     public class GoalController : FitMateControllerBase
     {
-        public GoalController(UserManager<FitnessUser> userManager, IMediator mediator, IUnitOfWork unitOfWork, IUserService userService)
-            : base(userManager, mediator, unitOfWork, userService) { }
+        public GoalController(IMediator mediator, IUnitOfWork unitOfWork, IUserService userService)
+            : base(mediator, unitOfWork, userService) { }
 
         [HttpGet]
         public async Task<IActionResult> Summary(CancellationToken cancellationToken)
