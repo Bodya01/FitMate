@@ -27,7 +27,7 @@ namespace FitMate.ViewModels
 
         public BodyweightSummaryViewModel(IEnumerable<BodyweightRecordDto> allRecords, BodyweightTargetDto target)
         {
-            if (AllRecords is null || AllRecords.Any()) return;
+            //if (AllRecords is null || AllRecords.Any()) return;
 
             AllRecords = allRecords;
             Target = target;
@@ -36,19 +36,19 @@ namespace FitMate.ViewModels
             CurrentMonthRecords = allRecords.Where(record => record.Date >= DateTime.Today.AddDays(-28));
             CurrentWeekRecords = CurrentMonthRecords.Where(record => record.Date >= DateTime.Today.AddDays(-7));
 
-            if (!CurrentWeekRecords.Any())
+            if (CurrentWeekRecords.Any())
             {
                 CurrentWeekProgress = CurrentWeekRecords.FirstOrDefault().Weight - CurrentWeekRecords.LastOrDefault().Weight;
                 CurrentWeekAverage = CurrentWeekProgress / 7;
             }
 
-            if (!CurrentMonthRecords.Any())
+            if (CurrentMonthRecords.Any())
             {
                 CurrentMonthProgress = CurrentMonthRecords.FirstOrDefault().Weight - CurrentMonthRecords.LastOrDefault().Weight;
                 CurrentMonthAverage = CurrentMonthProgress / 28;
             }
 
-            if (!allRecords.Any())
+            if (allRecords.Any())
             {
                 AllTimeProgress = allRecords.FirstOrDefault().Weight - allRecords.LastOrDefault().Weight;
                 AllTimeAverage = AllTimeProgress / ((float)(allRecords.FirstOrDefault().Date - allRecords.LastOrDefault().Date).TotalDays) * 7;
