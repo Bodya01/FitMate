@@ -45,7 +45,7 @@ namespace FitMate.Controllers
             var command = new EditWorkoutPlanCommand(workoutPlanDto);
             await _mediator.Send(command, cancellationToken);
 
-            return RedirectToAction(nameof(WorkoutController.Summary));
+            return RedirectToAction(nameof(Summary));
         }
 
         [HttpGet]

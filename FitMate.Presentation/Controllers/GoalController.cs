@@ -34,7 +34,6 @@ namespace FitMate.Controllers
         public IActionResult AddGoal()
         {
             var model = new WeightliftingGoal { Id = Guid.Empty };
-
             return View("editgoal", model);
         }
 
@@ -42,10 +41,7 @@ namespace FitMate.Controllers
         public async Task<IActionResult> EditGoal(Guid id, CancellationToken cancellationToken)
         {
             var goal = await _mediator.Send(new GetGoalQuery(id), cancellationToken);
-
-            if (goal is null) return BadRequest();
-
-            return View(goal);
+            return goal is null ? BadRequest() : View(goal);
         }
 
         [HttpGet]
@@ -156,7 +152,7 @@ namespace FitMate.Controllers
         [HttpGet]
         public async Task<IActionResult> ViewGoal(Guid Id, CancellationToken cancellationToken)
         {
-            var currentUserId = await _userService.GetUserIdAsync();
+            var currentUserId = await _userService.GetUserIdAsync(cancellationToken);
 
             var goal = await _unitOfWork.GoalRepository.Value.GetByIdAsync(Id, cancellationToken);
 
