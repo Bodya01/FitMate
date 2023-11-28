@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace FitMate.Business.Services
 {
-    public class WorkoutPlanService : ServiceBase, IWorkoutPlanService
+    public sealed class WorkoutPlanService : ServiceBase, IWorkoutPlanService
     {
         public WorkoutPlanService(IUnitOfWork unitOfWork, IMapper mapper) : base(unitOfWork, mapper) { }
 

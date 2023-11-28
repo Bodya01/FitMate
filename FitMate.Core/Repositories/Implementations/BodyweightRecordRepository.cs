@@ -8,7 +8,7 @@ namespace FitMate.Core.Repositories.Implementations
 {
     public sealed class BodyweightRecordRepository : IBodyweightRecordRepository
     {
-        private FitMateContext _context;
+        private readonly FitMateContext _context;
 
         public BodyweightRecordRepository(FitMateContext context)
         {

@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Identity;
 
 namespace FitMate.Business.Services
 {
-    public class UserService : IUserService
+    public sealed class UserService : IUserService
     {
         private readonly UserManager<FitnessUser> _userManager;
         private readonly IHttpContextAccessor _httpContextAccessor;
