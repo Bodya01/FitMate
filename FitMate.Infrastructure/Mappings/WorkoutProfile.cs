@@ -13,7 +13,10 @@ namespace FitMate.Infrastructure.Mappings
             CreateMap<WorkoutSessionDto, WorkoutSession>();
             CreateMap<WorkoutSession, WorkoutSessionDto>()
                 .ForMember(x => x.WorkoutActivities, opt => opt.MapFrom(x => x.Activities));
-            CreateMap<WorkoutPlanDto, WorkoutPlan>().ReverseMap();
+            CreateMap<WorkoutPlanDto, WorkoutPlan>()
+                .IgnoreAllPropertiesWithAnInaccessibleSetter()
+                .IgnoreAllSourcePropertiesWithAnInaccessibleSetter()
+                .ReverseMap();
             CreateMap<CreateWorkoutPlanModel, WorkoutPlan>();
         }
     }
