@@ -2,28 +2,25 @@
     var type = $("#ProgressType").data("goaltype");
     if (type == "weightlifting")
         LoadWeightliftingGraph();
-    else
-        LoadTimedGraph();
-
 });
 
 function LoadWeightliftingGraph() {
-    var id = $("#ProgressType").data("goalid");
+    let id = $("#ProgressType").data("goalid");
 
-    var progressData = $.get("/Goal/GetWeightliftingProgress", { GoalID: id }, function (result) {
-        var dates = result.map(function (record) { return record.date; });
-        var weights = result.map(function (record) { return record.weight; });
-        var goalWeight = Array(dates.length).fill($("#WeightliftingGoal").data("goal"));
+    let progressData = $.get("/Goal/GetWeightliftingProgress", { GoalID: id }, function (result) {
+        let dates = result.map(function (record) { return record.date; });
+        let weights = result.map(function (record) { return record.weight; });
+        let goalWeight = Array(dates.length).fill($("#WeightliftingGoal").data("goal"));
 
-        var minWeight = Math.min(...weights);
-        var minValue = Math.min(minWeight, goalWeight[0]) - 5;
+        let minWeight = Math.min(...weights);
+        let minValue = Math.min(minWeight, goalWeight[0]) - 5;
 
-        var maxWeight = Math.max(...weights);
-        var maxValue = Math.max(maxWeight, goalWeight[0]) + 5;
+        let maxWeight = Math.max(...weights);
+        let maxValue = Math.max(maxWeight, goalWeight[0]) + 5;
 
-        var ctx = $("#ProgressChart")[0].getContext("2d");
+        let ctx = $("#ProgressChart")[0].getContext("2d");
 
-        var chart = new Chart(ctx,
+        let chart = new Chart(ctx,
             {
                 type: 'line',
                 data: {
@@ -55,10 +52,5 @@ function LoadWeightliftingGraph() {
                     }
                 }
             });
-
     });
-}
-
-function LoadTimedGraph() {
-
 }

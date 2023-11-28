@@ -1,8 +1,8 @@
 ﻿function getDateString(DateObject) {
-    var year = String(DateObject.getFullYear());
-    var month = String(DateObject.getMonth() + 1);
+    let year = String(DateObject.getFullYear());
+    let month = String(DateObject.getMonth() + 1);
     month = month.length === 1 ? "0".concat(month) : month;
-    var day = String(DateObject.getDate());
+    let day = String(DateObject.getDate());
     day = day.length === 1 ? "0".concat(day) : day;
 
     return year + "-" + month + "-" + day;
@@ -24,7 +24,7 @@ function removeRow(sender) {
 }
 
 function addNewRow(weight, date) {
-    var rowClone = $("#NewRowTemplate").clone();
+    let rowClone = $("#NewRowTemplate").clone();
     rowClone.attr("id", null).removeClass("d-none");
     rowClone.find("input").eq(0).val(weight);
     rowClone.find("input").eq(1).val(date);
@@ -33,8 +33,8 @@ function addNewRow(weight, date) {
 }
 
 function validateNewDate() {
-    var newDate = $("#NewDateInput").val();
-    var result = true;
+    let newDate = $("#NewDateInput").val();
+    let result = true;
 
     $("table tbody tr td input[type=date]").each(function (index, element) {
         if ($(element).val() == newDate) {
@@ -50,8 +50,8 @@ function validateNewDate() {
 }
 
 function validateAllDates() {
-    var result = true;
-    var elements = $("table tbody tr td input[type=date]")
+    let result = true;
+    let elements = $("table tbody tr td input[type=date]")
     elements.removeClass("border-danger");
     elements.each(function (outerIndex, outerElement) {
         elements.each(function (innerIndex, innerElement) {
@@ -82,8 +82,8 @@ function formSubmit_Clicked() {
 
 function addRowButton_Clicked() {
     
-    var weightInput = $("#NewWeightInput");
-    var dateInput = $("#NewDateInput");
+    let weightInput = $("#NewWeightInput");
+    let dateInput = $("#NewDateInput");
 
     weightInput.removeClass("border-danger");
     dateInput.removeClass("border-danger");
@@ -91,13 +91,13 @@ function addRowButton_Clicked() {
     if (validateNewDate() === false)
         return;
 
-    var weight = weightInput.val();
+    let weight = weightInput.val();
     if (weight == "") {
         weightInput.addClass("border-danger");
         return;
     }
 
-    var date = dateInput.val();
+    let date = dateInput.val();
     if (date == "") {
         dateInput.addClass("border-danger");
         return;

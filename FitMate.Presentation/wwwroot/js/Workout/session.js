@@ -1,9 +1,9 @@
-﻿var workoutStopwatch;
-var workoutTime = 0;
+﻿let workoutStopwatch;
+let workoutTime = 0;
 
-var currentRestPeriod = 0;
-var currentRestElement;
-var currentRestTimer;
+let currentRestPeriod = 0;
+let currentRestElement;
+let currentRestTimer;
 
 function startWorkout_Clicked() {
     $("#StartWorkoutButton").fadeOut(100, function () {
@@ -43,12 +43,12 @@ function pauseWorkout_Clicked() {
 }
 
 function updateWorkoutTime() {
-    var minutes = parseInt(workoutTime / 60);
-    var seconds = parseInt(workoutTime % 60);
+    let minutes = parseInt(workoutTime / 60);
+    let seconds = parseInt(workoutTime % 60);
 
-    var minuteString = minutes < 10 ? "0" + String(minutes) : String(minutes);
-    var secondString = seconds < 10 ? "0" + String(seconds) : String(seconds);
-    var resultString = minuteString + ":" + secondString;
+    let minuteString = minutes < 10 ? "0" + String(minutes) : String(minutes);
+    let secondString = seconds < 10 ? "0" + String(seconds) : String(seconds);
+    let resultString = minuteString + ":" + secondString;
 
     $("#WorkoutTime").text(resultString);
 }

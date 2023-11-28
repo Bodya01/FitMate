@@ -6,15 +6,15 @@
 
 function setupWeekGraph() {
     $.get("/Nutrition/GetNutritionData", { PreviousDays: 7 }, function (data) {
-        var dates = data.map(x => x.date);
-        var calories = data.map(x => x.calories);
-        var carbs = data.map(x => x.carbs);
-        var protein = data.map(x => x.protein);
-        var fat = data.map(x => x.fat);
+        let dates = data.map(x => x.date);
+        let calories = data.map(x => x.calories);
+        let carbs = data.map(x => x.carbs);
+        let protein = data.map(x => x.protein);
+        let fat = data.map(x => x.fat);
 
 
-        var weekCaloriesContext = $("#WeekCaloriesGraph")[0].getContext("2d");
-        var weekCaloriesChart = new Chart(weekCaloriesContext, {
+        let weekCaloriesContext = $("#WeekCaloriesGraph")[0].getContext("2d");
+        let weekCaloriesChart = new Chart(weekCaloriesContext, {
             type: "line",
             data: {
                 labels: $.makeArray(dates).reverse(),
@@ -29,8 +29,8 @@ function setupWeekGraph() {
             }
         });
 
-        var weekMacroContext = $("#WeekMacroGraph")[0].getContext("2d");
-        var weekMacroChart = new Chart(weekMacroContext, {
+        let weekMacroContext = $("#WeekMacroGraph")[0].getContext("2d");
+        let weekMacroChart = new Chart(weekMacroContext, {
             type: "line",
             data: {
                 labels: $.makeArray(dates).reverse(),
@@ -67,15 +67,15 @@ function setupWeekGraph() {
 
 function setupMonthGraph() {
     $.get("/Nutrition/GetNutritionData", { PreviousDays: 28 }, function (data) {
-        var dates = data.map(x => x.date);
-        var calories = data.map(x => x.calories);
-        var carbs = data.map(x => x.carbs);
-        var protein = data.map(x => x.protein);
-        var fat = data.map(x => x.fat);
+        let dates = data.map(x => x.date);
+        let calories = data.map(x => x.calories);
+        let carbs = data.map(x => x.carbs);
+        let protein = data.map(x => x.protein);
+        let fat = data.map(x => x.fat);
 
 
-        var MonthCaloriesContext = $("#MonthCaloriesGraph")[0].getContext("2d");
-        var MonthCaloriesChart = new Chart(MonthCaloriesContext, {
+        let MonthCaloriesContext = $("#MonthCaloriesGraph")[0].getContext("2d");
+        let MonthCaloriesChart = new Chart(MonthCaloriesContext, {
             type: "line",
             data: {
                 labels: $.makeArray(dates).reverse(),
@@ -90,8 +90,8 @@ function setupMonthGraph() {
             }
         });
 
-        var MonthMacroContext = $("#MonthMacroGraph")[0].getContext("2d");
-        var MonthMacroChart = new Chart(MonthMacroContext, {
+        let MonthMacroContext = $("#MonthMacroGraph")[0].getContext("2d");
+        let MonthMacroChart = new Chart(MonthMacroContext, {
             type: "line",
             data: {
                 labels: $.makeArray(dates).reverse(),
@@ -123,8 +123,6 @@ function setupMonthGraph() {
         });
 
     });
-
-
 }
 
 $(document).ready(function () {

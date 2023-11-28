@@ -1,14 +1,14 @@
 ﻿function addFoodRecord(addButton) {
-    var selectedCard = $(addButton).parents(".card");
+    let selectedCard = $(addButton).parents(".card");
 
-    var id = $(selectedCard).data("id");
-    var name = $(selectedCard).data("name");
-    var carbs = $(selectedCard).data("carbs");
-    var protein = $(selectedCard).data("protein");
-    var fat = $(selectedCard).data("fat");
-    var calories = $(selectedCard).data("calories");
+    let id = $(selectedCard).data("id");
+    let name = $(selectedCard).data("name");
+    let carbs = $(selectedCard).data("carbs");
+    let protein = $(selectedCard).data("protein");
+    let fat = $(selectedCard).data("fat");
+    let calories = $(selectedCard).data("calories");
 
-    var rowClone = $("#NewRowTemplate").clone();
+    let rowClone = $("#NewRowTemplate").clone();
     rowClone.removeAttr("id");
     rowClone.removeClass("d-none");
 
@@ -24,16 +24,16 @@
 }
 
 function setNewFoodFields(editButton) {
-    var selectedCard = $(editButton).parents(".card");
+    let selectedCard = $(editButton).parents(".card");
 
-    var id = $(selectedCard).data("id");
-    var name = $(selectedCard).data("name");
-    var carbs = $(selectedCard).data("carbs");
-    var protein = $(selectedCard).data("protein");
-    var fat = $(selectedCard).data("fat");
-    var calories = $(selectedCard).data("calories");
-    var size = $(selectedCard).data("servingsize");
-    var unit = $(selectedCard).data("servingunit");
+    let id = $(selectedCard).data("id");
+    let name = $(selectedCard).data("name");
+    let carbs = $(selectedCard).data("carbs");
+    let protein = $(selectedCard).data("protein");
+    let fat = $(selectedCard).data("fat");
+    let calories = $(selectedCard).data("calories");
+    let size = $(selectedCard).data("servingsize");
+    let unit = $(selectedCard).data("servingunit");
 
     $("#existingFoodID").val(id);
     $("#newFoodName").val(name);
@@ -77,9 +77,9 @@ function removeRow(row) {
 }
 
 function updateCalories() {
-    var carbs = $("#newFoodCarbs").val();
-    var protein = $("#newFoodProtein").val();
-    var fat = $("#newFoodFat").val();
-    var calories = (carbs * 4) + (protein * 4) + (fat * 9);
+    let carbs = $("#newFoodCarbs").val();
+    let protein = $("#newFoodProtein").val();
+    let fat = $("#newFoodFat").val();
+    let calories = (carbs * 4) + (protein * 4) + (fat * 9);
     $("#newFoodCalories").val(calories);
 }
