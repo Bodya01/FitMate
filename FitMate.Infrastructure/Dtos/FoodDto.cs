@@ -3,4 +3,16 @@ using FitMate.Infrastucture.Enums;
 
 namespace FitMate.Infrastucture.Dtos;
 
-public record FoodDto(Guid Id, string Name, int Calories, int Carbohydrates, int Protein, int Fat, int ServingSize, ServingUnit ServingUnit, string UserId) : DtoBase;
+public record FoodDto : DtoBase
+{
+    public Guid Id;
+    public string Name;
+    public int Calories;
+    public int Carbohydrates;
+    public int Protein;
+    public int Fat;
+    public int ServingSize;
+    public ServingUnit ServingUnit;
+    public string UserId;
+    public FoodDto() { }
+}

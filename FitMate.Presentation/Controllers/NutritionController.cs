@@ -1,5 +1,7 @@
 ﻿using FitMate.Application.Commands.Food;
 using FitMate.Application.Queries.Food;
+using FitMate.Application.Queries.FoodRecord;
+using FitMate.Application.Queries.NutritionTarget;
 using FitMate.Business.Interfaces;
 using FitMate.Core.UnitOfWork;
 using FitMate.Infrastructure.Entities;
@@ -89,17 +91,9 @@ namespace FitMate.Controllers
         {
             var currentUserId = await _userService.GetUserIdAsync(cancellationToken);
 
-            var userRecords = await _unitOfWork.FoodRecordRepository.Value
-                .Get(e => e.UserId == currentUserId && e.ConsumptionDate >= DateTime.Today.AddDays(-28), s => s)
-                .ToListAsync(cancellationToken);
+            var userRecords = await _mediator.Send(new GetFoodRecordsQuery(currentUserId, 28), cancellationToken);
 
-            foreach (var record in userRecords)
-            {
-                await _unitOfWork.FoodRecordRepository.Value.LoadNavigationPropertyExplicitly(record, r => r.Food, cancellationToken);
-            }
-
-            var userTarget = await _unitOfWork.NutritionTargetRepository.Value.GetTargetForUserAsync(currentUserId, cancellationToken);
-            userTarget ??= new NutritionTarget();
+            var userTarget = await _mediator.Send(new GetCurrentNutritionTargetQuery(currentUserId), cancellationToken);
 
             var summaryModel = new NutritionSummaryModel()
             {
@@ -115,14 +109,7 @@ namespace FitMate.Controllers
         {
             var currentUserId = await _userService.GetUserIdAsync(cancellationToken);
 
-            var records = await _unitOfWork.FoodRecordRepository.Value
-                .Get(e => e.ConsumptionDate >= DateTime.Today.AddDays(-previousDays) && e.UserId == currentUserId, s => s)
-                .ToListAsync(cancellationToken);
-
-            foreach (var record in records)
-            {
-                await _unitOfWork.FoodRecordRepository.Value.LoadNavigationPropertyExplicitly(record, s => s.Food, cancellationToken);
-            }
+            var records = await _mediator.Send(new GetFoodRecordsQuery(currentUserId, previousDays), cancellationToken);
 
             var result = records
                 .GroupBy(record => record.ConsumptionDate)
@@ -148,7 +135,7 @@ namespace FitMate.Controllers
     }
     public class NutritionSummaryModel
     {
-        public List<FoodRecord> Records { get; set; }
-        public NutritionTarget Target { get; set; }
+        public List<FoodRecordDto> Records { get; set; }
+        public NutritionTargetDto Target { get; set; }
     }
 }
