@@ -174,7 +174,7 @@ namespace FitMate.Controllers
         [HttpGet]
         public async Task<IActionResult> GetWeightliftingProgress(Guid goalId, CancellationToken cancellationToken)
         {
-            var currentUserId = await _userService.GetUserIdAsync();
+            var currentUserId = await _userService.GetUserIdAsync(cancellationToken);
 
             // Ascending order
             var progress = await _unitOfWork.GoalProgressRepository.Value
