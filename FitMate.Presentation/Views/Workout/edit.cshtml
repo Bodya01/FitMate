@@ -6,7 +6,7 @@
 }
 
 @section Scripts
-{
+    {
     <script src="~/js/Workout/edit.js"></script>
 }
 
@@ -76,9 +76,9 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @for (var activityIndex = 0; activityIndex < Model.Sessions?.ToList()[sessionIndex].WorkoutActivities?.Count; activityIndex++)
+                                @for (var activityIndex = 0; activityIndex < Model.Sessions?.ToList()[sessionIndex].Activities?.Count; activityIndex++)
                                 {
-                                    var activity = Model.Sessions?.ToList()[sessionIndex].WorkoutActivities?.ToList()[activityIndex];
+                                    var activity = Model.Sessions?.ToList()[sessionIndex].Activities?.ToList()[activityIndex];
                                     <tr>
                                         <td><input type="text" class="form-control" value="@activity.Name" required /></td>
                                         <td><input type="text" class="form-control" value="@activity.Quantity" required /></td>
