@@ -89,14 +89,14 @@ namespace FitMate.Controllers
         {
             var currentUserId = await _userService.GetUserIdAsync(cancellationToken);
 
-            var userRecordsQuery = _unitOfWork.FoodRecordRepository.Value.Get(e => e.UserId == currentUserId && e.ConsumptionDate >= DateTime.Today.AddDays(-28), s => s);
+            var userRecords = await _unitOfWork.FoodRecordRepository.Value
+                .Get(e => e.UserId == currentUserId && e.ConsumptionDate >= DateTime.Today.AddDays(-28), s => s)
+                .ToListAsync(cancellationToken);
 
-            foreach (var record in userRecordsQuery)
+            foreach (var record in userRecords)
             {
                 await _unitOfWork.FoodRecordRepository.Value.LoadNavigationPropertyExplicitly(record, r => r.Food, cancellationToken);
             }
-
-            var userRecords = await userRecordsQuery.ToListAsync(cancellationToken);
 
             var userTarget = await _unitOfWork.NutritionTargetRepository.Value.GetTargetForUserAsync(currentUserId, cancellationToken);
             userTarget ??= new NutritionTarget();
