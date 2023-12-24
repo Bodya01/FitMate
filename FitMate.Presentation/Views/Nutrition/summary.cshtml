@@ -1,31 +1,7 @@
-﻿@model FitMate.Controllers.NutritionSummaryModel
+﻿@model FitMate.Presentation.ViewModels.Nutrition.NutritionSummaryViewModel
 
 @{
     ViewData["Title"] = "Nutrition";
-
-    var todayRecords = Model.Records.Where(record => record.ConsumptionDate == DateTime.Today);
-    var todayCalories = todayRecords.Sum(record => record.Food.Calories);
-    var todayCarbs = todayRecords.Sum(record => record.Food.Carbohydrates);
-    var todayProtein = todayRecords.Sum(record => record.Food.Protein);
-    var todayFat = todayRecords.Sum(record => record.Food.Fat);
-
-    var yesterdayRecords = Model.Records.Where(record => record.ConsumptionDate == DateTime.Today.AddDays(-1));
-    var yesterdayCalories = yesterdayRecords.Sum(record => record.Food.Calories);
-    var yesterdayCarbs = yesterdayRecords.Sum(record => record.Food.Carbohydrates);
-    var yesterdayProtein = yesterdayRecords.Sum(record => record.Food.Protein);
-    var yesterdayFat = yesterdayRecords.Sum(record => record.Food.Protein);
-
-    var weekRecordGroup = Model.Records.Where(record => record.ConsumptionDate >= DateTime.Today.AddDays(-7)).GroupBy(record => record.ConsumptionDate);
-    var weekCaloriesAverage = !weekRecordGroup.Any() ? 0 : (int)weekRecordGroup.Average(grouping => grouping.Sum(record => record.Food.Calories));
-    var weekCarbsAverage = !weekRecordGroup.Any() ? 0 : (int)weekRecordGroup.Average(grouping => grouping.Sum(record => record.Food.Carbohydrates));
-    var weekProteinAverage = !weekRecordGroup.Any() ? 0 : (int)weekRecordGroup.Average(grouping => grouping.Sum(record => record.Food.Protein));
-    var weekFatAverage = !weekRecordGroup.Any() ? 0 : (int)weekRecordGroup.Average(grouping => grouping.Sum(record => record.Food.Fat));
-
-    var monthRecordGroup = Model.Records.Where(record => record.ConsumptionDate >= DateTime.Today.AddDays(-28)).GroupBy(record => record.ConsumptionDate);
-    var monthCaloriesAverage = !monthRecordGroup.Any() ? 0 : (int)monthRecordGroup.Average(grouping => grouping.Sum(record => record.Food.Calories));
-    var monthCarbsAverage = !monthRecordGroup.Any() ? 0 : (int)monthRecordGroup.Average(grouping => grouping.Sum(record => record.Food.Carbohydrates));
-    var monthProteinAverage = !monthRecordGroup.Any() ? 0 : (int)monthRecordGroup.Average(grouping => grouping.Sum(record => record.Food.Protein));
-    var monthFatAverage = !monthRecordGroup.Any() ? 0 : (int)monthRecordGroup.Average(grouping => grouping.Sum(record => record.Food.Fat));
 }
 
 @section Scripts
@@ -73,20 +49,20 @@
             <div class="card-body">
                 <div class="text-center mb-2">
                     <h4>Calories</h4>
-                    @todayCalories cal
+                    @Model.Today.Calories cal
                 </div>
                 <div class="d-flex text-center">
                     <div class="flex-grow-1">
                         <h6>Carbs</h6>
-                        <div>@(todayCarbs)g</div>
+                        <div>@(Model.Today.Carbs)g</div>
                     </div>
                     <div class="flex-grow-1">
                         <h6>Fat</h6>
-                        <div>@(todayFat)g</div>
+                        <div>@(Model.Today.Fat)g</div>
                     </div>
                     <div class="flex-grow-1">
                         <h6>Protein</h6>
-                        <div>@(todayProtein)g</div>
+                        <div>@(Model.Today.Protein)g</div>
                     </div>
                 </div>
             </div>
@@ -98,20 +74,20 @@
             <div class="card-body">
                 <div class="text-center mb-2">
                     <h4>Calories</h4>
-                    @yesterdayCalories cal
+                    @Model.Yesterday.Calories cal
                 </div>
                 <div class="d-flex text-center">
                     <div class="flex-grow-1">
                         <h6>Carbs</h6>
-                        <div>@(yesterdayCarbs)g</div>
+                        <div>@(Model.Yesterday.Carbs)g</div>
                     </div>
                     <div class="flex-grow-1">
                         <h6>Fat</h6>
-                        <div>@(yesterdayFat)g</div>
+                        <div>@(Model.Yesterday.Fat)g</div>
                     </div>
                     <div class="flex-grow-1">
                         <h6>Protein</h6>
-                        <div>@(yesterdayProtein)g</div>
+                        <div>@(Model.Yesterday.Protein)g</div>
                     </div>
                 </div>
             </div>
@@ -123,20 +99,20 @@
             <div class="card-body">
                 <div class="text-center mb-2">
                     <h4>Calories</h4>
-                    @weekCaloriesAverage cal
+                    @Model.WeekAverage.Calories cal
                 </div>
                 <div class="d-flex text-center">
                     <div class="flex-grow-1">
                         <h6>Carbs</h6>
-                        <div>@(weekCarbsAverage)g</div>
+                        <div>@(Model.WeekAverage.Carbs)g</div>
                     </div>
                     <div class="flex-grow-1">
                         <h6>Fat</h6>
-                        <div>@(weekFatAverage)g</div>
+                        <div>@(Model.WeekAverage.Fat)g</div>
                     </div>
                     <div class="flex-grow-1">
                         <h6>Protein</h6>
-                        <div>@(weekProteinAverage)g</div>
+                        <div>@(Model.WeekAverage.Protein)g</div>
                     </div>
                 </div>
             </div>
@@ -148,21 +124,21 @@
             <div class="card-body">
                 <div class="text-center mb-2">
                     <h4>Calories</h4>
-                    @monthCaloriesAverage cal
+                    @Model.MonthAverage.Calories cal
                 </div>
                 <div class="d-flex text-center">
                     <div class="flex-grow-1">
                         <h6>Carbs</h6>
-                        <div>@(monthCarbsAverage)g</div>
+                        <div>@(Model.MonthAverage.Carbs)g</div>
                     </div>
                     <div class="flex-grow-1">
                         <h6>Fat</h6>
-                        <div>@(monthFatAverage)g</div>
+                        <div>@(Model.MonthAverage.Fat)g</div>
 
                     </div>
                     <div class="flex-grow-1">
                         <h6>Protein</h6>
-                        <div>@(monthProteinAverage)g</div>
+                        <div>@(Model.MonthAverage.Protein)g</div>
                     </div>
                 </div>
             </div>

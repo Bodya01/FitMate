@@ -6,6 +6,7 @@ using FitMate.Business.Interfaces;
 using FitMate.Core.UnitOfWork;
 using FitMate.Infrastructure.Entities;
 using FitMate.Infrastucture.Dtos;
+using FitMate.Presentation.ViewModels.Nutrition;
 using FitMate.UI.Web.Controllers.Base;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
@@ -31,15 +32,11 @@ namespace FitMate.Controllers
         {
             var currentUserId = await _userService.GetUserIdAsync(cancellationToken);
 
-            var userRecords = await _mediator.Send(new GetFoodRecordsQuery(currentUserId, 28), cancellationToken);
+            var recrods = await _mediator.Send(new GetFoodRecordsQuery(currentUserId, 28), cancellationToken);
 
-            var userTarget = await _mediator.Send(new GetCurrentNutritionTargetQuery(currentUserId), cancellationToken);
+            var target = await _mediator.Send(new GetCurrentNutritionTargetQuery(currentUserId), cancellationToken);
 
-            var summaryModel = new NutritionSummaryModel()
-            {
-                Records = userRecords,
-                Target = userTarget
-            };
+            var summaryModel = NutritionSummaryViewModel.Create(recrods, target);
 
             return View(summaryModel);
         }
@@ -75,7 +72,7 @@ namespace FitMate.Controllers
 
             var currentUserId = await _userService.GetUserIdAsync(cancellationToken);
 
-            var model = new NewFoodModel()
+            var model = new NewFoodViewModel()
             {
                 FoodRecords = await _unitOfWork.FoodRecordRepository.Value.Get(e => e.UserId == currentUserId && e.ConsumptionDate == date, s => s).ToListAsync(cancellationToken),
                 UserFoods = await _unitOfWork.FoodRepository.Value.Get(e => true, s => s).ToListAsync(cancellationToken),
@@ -131,14 +128,10 @@ namespace FitMate.Controllers
         }
     }
 
-    public class NewFoodModel
+    public class NewFoodViewModel
     {
         public List<Food> UserFoods { get; set; }
         public List<FoodRecord> FoodRecords { get; set; }
     }
-    public class NutritionSummaryModel
-    {
-        public List<FoodRecordDto> Records { get; set; }
-        public NutritionTargetDto Target { get; set; }
-    }
+
 }

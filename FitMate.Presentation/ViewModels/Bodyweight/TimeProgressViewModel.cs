@@ -1,6 +1,6 @@
 ﻿namespace FitMate.Presentation.ViewModels.Bodyweight
 {
-    public class TimeProgressViewModel
+    internal class TimeProgressViewModel
     {
         public float Progress { get; set; }
         public float Average { get; set; }
