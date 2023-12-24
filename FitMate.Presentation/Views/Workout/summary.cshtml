@@ -5,29 +5,11 @@
     ViewData["Title"] = "Workout Plans";
 }
 
-<style>
-    .sessionList li:hover {
-        background-color: var(--primary);
-        color: white;
-        font-weight: bold;
-        transition: background-color linear 0.5s;
-    }
-
-    .sessionList li:hover a{
-        color:white;
-    }
-
-    .sessionList li a{
-        text-decoration:none;
-    }
-</style>
-
 <div>
     <div class="mb-3">
         <h2 class="d-inline">Workout Plans</h2>
         <a asp-controller="Workout" asp-action="Create" class="font-weight-bold ml-1" style="vertical-align:text-bottom">+New Workout</a>
     </div>
-
 
     <div class="row">
         @foreach (var plan in Model)
@@ -37,7 +19,7 @@
                     <div class="card-header"><h4 class="my-0">@plan.Name</h4></div>
                     <div class="card-body">
                         <ul class="list-group sessionList">
-                            @for(int i = 0;i< plan.Sessions.Count;i++)
+                            @for (int i = 0; i < plan.Sessions.Count; i++)
                             {
                                 var session = plan.Sessions.ToList()[i];
                                 <li class="list-group-item" style="cursor:pointer;" onclick="$(this).find('a')[0].click()">
@@ -53,6 +35,19 @@
             </div>
         }
     </div>
-
-
 </div>
+
+<style>
+    .sessionList li:hover {
+        background-color: var(--primary);
+        color: white;
+        font-weight: bold;
+        transition: background-color linear 0.5s;
+    }
+    .sessionList li:hover a {
+        color: white;
+    }
+    .sessionList li a {
+        text-decoration: none;
+    }
+</style>
