@@ -1,7 +1,7 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
 
-namespace FitMate.ViewModels
+namespace FitMate.Presentation.ViewModels.Goal
 {
     public class EditGoalInputModel
     {

@@ -1,11 +1,11 @@
 ﻿using FitMate.Infrastructure.Entities;
 using System.Collections.Generic;
 
-namespace FitMate.ViewModels
+namespace FitMate.Presentation.ViewModels.Goal
 {
     public class GoalViewModel
     {
-        public Goal Goal { get; set; }
+        public Infrastructure.Entities.Goal Goal { get; set; }
         public List<GoalProgress> Progress { get; set; }
     }
 }
