@@ -1,25 +1,24 @@
-﻿@model Goal
+﻿@using FitMate.Infrastucture.Dtos.Goals;
+@model GoalDto
 
 @{
     ViewData["Title"] = "Edit Goal";
 
-    var id = Model is null ? Guid.Empty : Model.Id;
-    var activity = Model is null ? "" : Model.Activity;
-    var isWeightliftingGoal = (Model is null || Model.GetType() == typeof(WeightliftingGoal));
-    var isTimedGoal = Model?.GetType() == typeof(TimedGoal);
+    var id = Model?.Id ?? Guid.Empty;
+    var activity = Model?.Activity ?? "";
 
-    WeightliftingGoal weightliftingGoal = null;
-    TimedGoal timedGoal = null;
+    var isWeightliftingGoal = Model is WeightliftingGoalDto;
+    var isTimedGoal = Model is TimedGoalDto;
 
-    if (Model.GetType() == typeof(WeightliftingGoal)) weightliftingGoal = (WeightliftingGoal)Model;
-    else if (Model.GetType() == typeof(TimedGoal)) timedGoal = (TimedGoal)Model;
+    var weightliftingGoal = Model as WeightliftingGoalDto;
+    var timedGoal = Model as TimedGoalDto;
 
-    var weight = weightliftingGoal is null ? 0 : weightliftingGoal.Weight;
-    var reps = weightliftingGoal is null ? 0 : weightliftingGoal.Reps;
+    var weight = weightliftingGoal?.Weight ?? 0;
+    var reps = weightliftingGoal?.Reps ?? 0;
 
-    var quantity = timedGoal is null ? 0 : timedGoal.Quantity;
-    var quantityUnit = timedGoal is null ? "" : timedGoal.QuantityUnit;
-    var timespan = timedGoal is null ? new TimeSpan() : timedGoal.Time;
+    var quantity = timedGoal?.Quantity ?? 0;
+    var quantityUnit = timedGoal?.QuantityUnit ?? string.Empty;
+    var timespan = timedGoal?.Time ?? new TimeSpan();
 }
 
 @section Scripts
