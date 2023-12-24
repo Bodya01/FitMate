@@ -7,7 +7,7 @@
         public List<float> Quantities { get; set; }
     }
 
-    public class EditFoodRecordsCommandHandler
+    internal sealed class EditFoodRecordsCommandHandler
     {
     }
 }

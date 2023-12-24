@@ -7,7 +7,7 @@ namespace FitMate.Application.Commands.Food
 {
     public record CreateFoodCommand(FoodDto Food) : IRequest;
 
-    public class CreateFoodCommandHandler : IRequestHandler<CreateFoodCommand>
+    internal sealed class CreateFoodCommandHandler : IRequestHandler<CreateFoodCommand>
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;

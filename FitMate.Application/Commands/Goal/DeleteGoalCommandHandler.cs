@@ -6,7 +6,7 @@ namespace FitMate.Application.Commands.Goal
 {
     public record DeleteGoalCommand(Guid Id) : IRequest;
 
-    public class DeleteGoalCommandHandler : IRequestHandler<DeleteGoalCommand>
+    internal sealed class DeleteGoalCommandHandler : IRequestHandler<DeleteGoalCommand>
     {
         private readonly IUnitOfWork _unitOfWork;
         //private readonly ILogger _logger;

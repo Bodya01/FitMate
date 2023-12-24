@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace FitMate.Core.Repositories.Implementations
 {
-    public class NutritionTargetRepository : INutritionTargetRepository
+    internal class NutritionTargetRepository : INutritionTargetRepository
     {
         private readonly FitMateContext _context;
 
@@ -13,6 +13,7 @@ namespace FitMate.Core.Repositories.Implementations
         {
             _context = context;
         }
+
         public async Task<NutritionTarget> GetTargetForUserAsync(string userId, CancellationToken cancellationToken = default) =>
             await _context.NutritionTargets.FirstOrDefaultAsync(n => n.UserId == userId, cancellationToken);
     }

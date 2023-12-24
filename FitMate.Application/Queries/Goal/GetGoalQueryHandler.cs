@@ -8,7 +8,7 @@ namespace FitMate.Application.Queries.Goal
     public record GetGoalQuery(Guid Id) : IRequest<GoalDto>;
     public record GetGoalQueryResult(GoalDto Goal, bool IsWeightliftingGoal, bool IsTimedGoal);
 
-    public class GetGoalQueryHandler : IRequestHandler<GetGoalQuery, GoalDto>
+    internal sealed class GetGoalQueryHandler : IRequestHandler<GetGoalQuery, GoalDto>
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;

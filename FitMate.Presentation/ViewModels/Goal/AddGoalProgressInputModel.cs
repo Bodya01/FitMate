@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace FitMate.Presentation.ViewModels.Goal
 {
-    public class AddGoalProgressInputModel
+    internal sealed class AddGoalProgressInputModel
     {
         [Required]
         public Guid GoalId { get; set; }

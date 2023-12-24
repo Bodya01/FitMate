@@ -13,7 +13,7 @@ using System.Threading.Tasks;
 
 namespace FitMate.Controllers
 {
-    public class WorkoutController : FitMateControllerBase
+    internal sealed class WorkoutController : FitMateControllerBase
     {
         public WorkoutController(IMediator mediator, IUnitOfWork unitOfWork, IUserService userService)
             : base(mediator, unitOfWork, userService) { }

@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace FitMate.Core.Context
 {
-    public class FitMateContext : IdentityDbContext<FitnessUser>
+    public sealed class FitMateContext : IdentityDbContext<FitnessUser>
     {
         public DbSet<BodyweightRecord> BodyweightRecords { get; set; }
         public DbSet<BodyweightTarget> BodyweightTargets { get; set; }

@@ -7,7 +7,7 @@ namespace FitMate.Applcation.Commands.Bodyweight
 {
     public record EditBodyweightRecordsCommand(DateTime[] RecordDates, float[] RecordWeights, string UserId) : IRequest;
 
-    public class EditBodyweightRecordsCommandHandler : IRequestHandler<EditBodyweightRecordsCommand>
+    internal sealed class EditBodyweightRecordsCommandHandler : IRequestHandler<EditBodyweightRecordsCommand>
     {
         private readonly IUnitOfWork _unitOfWork;
 

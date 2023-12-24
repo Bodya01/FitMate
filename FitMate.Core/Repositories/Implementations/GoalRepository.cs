@@ -6,7 +6,7 @@ using System.Linq.Expressions;
 
 namespace FitMate.Core.Repositories.Implementations
 {
-    public sealed class GoalRepository : IGoalRepository
+    internal sealed class GoalRepository : IGoalRepository
     {
         private readonly FitMateContext _context;
 

@@ -7,7 +7,7 @@ namespace FitMate.Applcation.Commands.WorkoutPlan
 {
     public record EditWorkoutPlanCommand(WorkoutPlanDto WorkoutPlan) : IRequest;
 
-    public class EditWorkoutPlanCommandHandler : IRequestHandler<EditWorkoutPlanCommand>
+    internal sealed class EditWorkoutPlanCommandHandler : IRequestHandler<EditWorkoutPlanCommand>
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;

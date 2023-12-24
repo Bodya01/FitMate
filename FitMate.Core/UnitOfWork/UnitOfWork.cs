@@ -4,7 +4,7 @@ using FitMate.Core.Repositories.Interfaces;
 
 namespace FitMate.Core.UnitOfWork
 {
-    public sealed class UnitOfWork : IUnitOfWork
+    internal sealed class UnitOfWork : IUnitOfWork
     {
         private readonly FitMateContext _context;
         public Lazy<IBodyweightRecordRepository> BodyweightRecordRepository { get; private set; }

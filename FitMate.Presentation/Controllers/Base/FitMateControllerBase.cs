@@ -8,7 +8,7 @@ namespace FitMate.UI.Web.Controllers.Base
 {
     // TODO: Remove injection of temporary objects
     [Authorize]
-    public class FitMateControllerBase : Controller
+    internal abstract class FitMateControllerBase : Controller
     {
         protected readonly IUserService _userService;
         protected readonly IMediator _mediator;

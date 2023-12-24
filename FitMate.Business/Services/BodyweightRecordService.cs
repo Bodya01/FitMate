@@ -7,7 +7,7 @@ using FitMate.Infrastucture.Dtos;
 
 namespace FitMate.Business.Services
 {
-    public sealed class BodyweightRecordService : ServiceBase//, IBodyweightRecordService
+    internal sealed class BodyweightRecordService : ServiceBase//, IBodyweightRecordService
     {
         public BodyweightRecordService(IUnitOfWork unitOfWork, IMapper mapper) : base(unitOfWork, mapper)
         {

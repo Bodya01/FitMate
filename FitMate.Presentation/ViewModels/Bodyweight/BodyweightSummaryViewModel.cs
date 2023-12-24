@@ -6,7 +6,7 @@ using System.Linq;
 
 namespace FitMate.Presentation.ViewModels.Bodyweight
 {
-    internal class BodyweightSummaryViewModel
+    internal sealed class BodyweightSummaryViewModel
     {
         private readonly IEnumerable<BodyweightRecordDto> _allRecords;
         private readonly IEnumerable<BodyweightRecordDto> _currentWeekRecords;

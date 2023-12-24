@@ -12,14 +12,13 @@ using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
 namespace FitMate.Controllers
 {
-    public class NutritionController : FitMateControllerBase
+    internal sealed class NutritionController : FitMateControllerBase
     {
         public NutritionController(IMediator mediator, IUnitOfWork unitOfWork, IUserService userService)
             : base(mediator, unitOfWork, userService) { }

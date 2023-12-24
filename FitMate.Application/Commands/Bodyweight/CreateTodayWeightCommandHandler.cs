@@ -9,7 +9,7 @@ namespace FitMate.Applcation.Commands.Bodyweight
         public string UserId { get; set; }
     }
 
-    public class CreateTodayWeightCommandHandler : IRequestHandler<CreateTodayWeightCommand>
+    internal sealed class CreateTodayWeightCommandHandler : IRequestHandler<CreateTodayWeightCommand>
     {
         private readonly IUnitOfWork _unitOfWork;
 

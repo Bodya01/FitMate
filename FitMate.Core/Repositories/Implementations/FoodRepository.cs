@@ -6,7 +6,7 @@ using System.Linq.Expressions;
 
 namespace FitMate.Core.Repositories.Implementations
 {
-    public sealed class FoodRepository : IFoodRepository
+    internal sealed class FoodRepository : IFoodRepository
     {
         private readonly FitMateContext _context;
 

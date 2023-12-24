@@ -8,7 +8,7 @@ namespace FitMate.Application.Queries.BodyweightRecord
 {
     public record GetBodyweightRecordsQuery(string UserId, DateTime From = default, DateTime To = default, bool IgnoreDates = true) : IRequest<List<BodyweightRecordDto>>;
 
-    public class GetBodyweightRecordsQueryHandler : IRequestHandler<GetBodyweightRecordsQuery, List<BodyweightRecordDto>>
+    internal sealed class GetBodyweightRecordsQueryHandler : IRequestHandler<GetBodyweightRecordsQuery, List<BodyweightRecordDto>>
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;

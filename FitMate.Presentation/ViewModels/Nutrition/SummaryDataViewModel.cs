@@ -1,6 +1,6 @@
 ﻿namespace FitMate.Presentation.ViewModels.Nutrition
 {
-    internal class SummaryDataViewModel
+    internal sealed class SummaryDataViewModel
     {
         public string Period { get; set; }
         public int Calories { get; set; }

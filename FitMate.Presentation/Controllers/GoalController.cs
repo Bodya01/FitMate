@@ -18,7 +18,7 @@ using System.Threading.Tasks;
 
 namespace FitMate.Controllers
 {
-    public class GoalController : FitMateControllerBase
+    internal sealed class GoalController : FitMateControllerBase
     {
         public GoalController(IMediator mediator, IUnitOfWork unitOfWork, IUserService userService)
             : base(mediator, unitOfWork, userService) { }

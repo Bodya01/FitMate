@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore;
 namespace FitMate.Application.Queries.Goal
 {
     public record GetGoalsQuery(string UserId) : IRequest<List<Infrastructure.Entities.Goal>>;
-    public class GetGoalsQueryHandler : IRequestHandler<GetGoalsQuery, List<Infrastructure.Entities.Goal>>
+    internal sealed class GetGoalsQueryHandler : IRequestHandler<GetGoalsQuery, List<Infrastructure.Entities.Goal>>
     {
         private readonly IUnitOfWork _unitOfWork;
 

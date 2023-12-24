@@ -7,7 +7,7 @@ using Microsoft.EntityFrameworkCore;
 namespace FitMate.Application.Queries.FoodRecord
 {
     public record GetFoodRecordsQuery(string UserId, uint PreviousDays) : IRequest<List<FoodRecordDto>>;
-    public class GetFoodRecordsQueryHanlder : IRequestHandler<GetFoodRecordsQuery, List<FoodRecordDto>>
+    internal sealed class GetFoodRecordsQueryHanlder : IRequestHandler<GetFoodRecordsQuery, List<FoodRecordDto>>
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;

@@ -6,7 +6,7 @@ namespace FitMate.Application.Commands.Food
 {
     public record DeleteFoodCommand(Guid Id) : IRequest;
 
-    public class DeleteFoodCommandHandler : IRequestHandler<DeleteFoodCommand>
+    internal sealed class DeleteFoodCommandHandler : IRequestHandler<DeleteFoodCommand>
     {
         private readonly IUnitOfWork _unitOfWork;
         //private readonly ILogger _logger;

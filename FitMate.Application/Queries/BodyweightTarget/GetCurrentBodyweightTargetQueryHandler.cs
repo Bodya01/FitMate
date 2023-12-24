@@ -8,7 +8,7 @@ namespace FitMate.Application.Queries.BodyweightTarget
 {
     public record GetCurrentBodyweightTargetQuery(string UserId) : IRequest<BodyweightTargetDto>;
 
-    public class GetCurrentBodyweightTargetQueryHandler : IRequestHandler<GetCurrentBodyweightTargetQuery, BodyweightTargetDto>
+    internal sealed class GetCurrentBodyweightTargetQueryHandler : IRequestHandler<GetCurrentBodyweightTargetQuery, BodyweightTargetDto>
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;

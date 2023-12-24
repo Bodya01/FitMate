@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace FitMate.Presentation.ViewModels.Goal
 {
-    public class EditGoalInputModel
+    internal sealed class EditGoalInputModel
     {
         public Guid Id { get; set; }
         [Required]

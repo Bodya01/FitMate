@@ -6,7 +6,7 @@ using MediatR;
 namespace FitMate.Application.Queries.NutritionTarget
 {
     public record GetCurrentNutritionTargetQuery(string UserId) : IRequest<NutritionTargetDto>;
-    public class GetCurrentNutritionTargetQueryHandler : IRequestHandler<GetCurrentNutritionTargetQuery, NutritionTargetDto>
+    internal sealed class GetCurrentNutritionTargetQueryHandler : IRequestHandler<GetCurrentNutritionTargetQuery, NutritionTargetDto>
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;

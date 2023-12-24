@@ -6,7 +6,7 @@ namespace FitMate.Applcation.Queries.WorkoutPlan
 {
     public record GetWorkoutPlanQuery(Guid Id) : IRequest<WorkoutPlanDto>;
 
-    public class GetWorkoutPlanQueryHandler : IRequestHandler<GetWorkoutPlanQuery, WorkoutPlanDto>
+    internal sealed class GetWorkoutPlanQueryHandler : IRequestHandler<GetWorkoutPlanQuery, WorkoutPlanDto>
     {
         private readonly IWorkoutPlanService _workoutPlanService;
 

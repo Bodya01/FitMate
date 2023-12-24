@@ -7,7 +7,7 @@ namespace FitMate.Application.Queries.Food
 {
     public record GetFoodQuery(Guid FoodId) : IRequest<FoodDto>;
 
-    public class GetFoodQueryHandler : IRequestHandler<GetFoodQuery, FoodDto>
+    internal sealed class GetFoodQueryHandler : IRequestHandler<GetFoodQuery, FoodDto>
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
