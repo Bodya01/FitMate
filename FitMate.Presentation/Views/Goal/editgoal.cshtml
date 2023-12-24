@@ -1,4 +1,6 @@
-﻿@using FitMate.Infrastucture.Dtos.Goals;
+﻿@using FitMate.Controllers;
+@using FitMate.Infrastucture.Dtos.Goals;
+@using FitMate.Presentation.Helpers;
 @model GoalDto
 
 @{
@@ -29,7 +31,7 @@
 <h1 class="ml-1">Edit Goal</h1>
 
 <div class="container w-25 ml-2">
-    <form asp-controller="Goal" asp-action="EditGoal" method="post">
+    <form asp-controller="@(UiNamingHelper.GetControllerName<GoalController>())" asp-action="@nameof(GoalController.EditGoal)" method="post">
         <input type="hidden" name="GoalInput.Id" value="@id" required />
 
         <div class="form-group">
@@ -86,7 +88,7 @@
         </div>
 
         <div class="form-group float-right">
-            <a asp-controller="Goal" asp-action="Summary" class="btn btn-danger">Cancel</a>
+            <a asp-controller="@(UiNamingHelper.GetControllerName<GoalController>())" asp-action="@nameof(GoalController.Summary)" class="btn btn-danger">Cancel</a>
             <input type="submit" class="btn btn-primary" value="Save" />
         </div>
     </form>

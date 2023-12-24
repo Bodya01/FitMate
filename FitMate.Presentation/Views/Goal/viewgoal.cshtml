@@ -1,4 +1,6 @@
-﻿@model FitMate.Presentation.ViewModels.Goal.GoalViewModel
+﻿@using FitMate.Controllers;
+@using FitMate.Presentation.Helpers;
+@model FitMate.Presentation.ViewModels.Goal.GoalViewModel
 
 @{
     ViewData["Title"] = Model.Goal.Activity;
@@ -28,7 +30,7 @@
                 <h4 class="d-inline">@Model.Goal.Activity</h4>
                 <button type="button" class="btn btn-danger dropdown-toggle float-right" data-toggle="dropdown">Options</button>
                 <div class="dropdown-menu">
-                    <a asp-action="EditGoal" asp-route-ID="@Model.Goal.Id" class="dropdown-item">Edit</a>
+                    <a asp-controller="@(UiNamingHelper.GetControllerName<GoalController>())" asp-action="@nameof(GoalController.EditGoal)" asp-route-ID="@Model.Goal.Id" class="dropdown-item">Edit</a>
                 </div>
             </div>
             <div class="card-body">
@@ -240,7 +242,7 @@
                     <span class="text-white" aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <form asp-action="AddProgress" method="post">
+            <form asp-controller="@(UiNamingHelper.GetControllerName<GoalController>())" asp-action="@nameof(GoalController.AddProgress)" method="post">
                 <div class="modal-body">
                     <input type="hidden" name="GoalID" value="@Model.Goal.Id" required />
                     @{

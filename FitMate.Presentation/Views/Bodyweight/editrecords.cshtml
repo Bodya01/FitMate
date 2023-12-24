@@ -1,4 +1,6 @@
-﻿@using FitMate.Infrastucture.Dtos;
+﻿@using FitMate.Controllers;
+@using FitMate.Infrastucture.Dtos;
+@using FitMate.Presentation.Helpers;
 @model List<BodyweightRecordDto>
 
 @{
@@ -11,7 +13,12 @@
 }
 
 <div class="card">
-    <form asp-controller="Bodyweight" asp-action="EditRecords" method="post" onsubmit="return formPreSubmit();">
+    <form
+        asp-controller="@(UiNamingHelper.GetControllerName<BodyweightController>())"
+        asp-action="@nameof(BodyweightController.EditRecords)"
+        method="post"
+        onsubmit="return formPreSubmit();"
+    >
         <div class="card-header"><h4>Edit Bodyweight Records</h4></div>
 
         <div class="card-body">
@@ -61,7 +68,9 @@
         <div class="card-footer">
             <div class="text-right">
                 <input type="submit" class="btn btn-primary" value="Save" onclick="formSubmit_Clicked();" />
-                <a asp-action="Summary" class="btn btn-danger">Cancel</a>
+                <a asp-controller="@(UiNamingHelper.GetControllerName<BodyweightController>())" asp-action="@nameof(BodyweightController.Summary)" class="btn btn-danger">
+                    Cancel
+                </a>
             </div>
         </div>
     </form>

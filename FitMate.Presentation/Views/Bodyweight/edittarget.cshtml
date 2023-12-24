@@ -1,11 +1,13 @@
-﻿@model BodyweightTarget
+﻿@using FitMate.Controllers;
+@using FitMate.Presentation.Helpers;
+@model BodyweightTarget
 
 @{
     ViewData["Title"] = "Edit Target";
 }
 
 <div class="container w-50">
-    <form asp-controller="Bodyweight" asp-action="EditTarget" method="post">
+    <form asp-controller="@(UiNamingHelper.GetControllerName<BodyweightController>())" asp-action="@nameof(BodyweightController.EditTarget)" method="post">
         <div class="row">
             <div class="col-6">
                 <div class="form-group">
@@ -21,7 +23,7 @@
             </div>
         </div>
         <div class="float-right">
-            <a asp-controller="Bodyweight" asp-action="Summary" class="btn btn-secondary">Cancel</a>
+            <a asp-controller="@(UiNamingHelper.GetControllerName<BodyweightController>())" asp-action="@nameof(BodyweightController.Summary)" class="btn btn-secondary">Cancel</a>
             <input type="submit" class=" btn btn-primary" value="Save"/>
         </div>
     </form>

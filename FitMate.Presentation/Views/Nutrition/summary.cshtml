@@ -1,4 +1,6 @@
-﻿@model FitMate.Presentation.ViewModels.Nutrition.NutritionSummaryViewModel
+﻿@using FitMate.Controllers;
+@using FitMate.Presentation.Helpers;
+@model FitMate.Presentation.ViewModels.Nutrition.NutritionSummaryViewModel
 
 @{
     ViewData["Title"] = "Nutrition";
@@ -6,7 +8,7 @@
 
 <div class="mb-3">
     <h2 class="d-inline">Nutrition Summary</h2>
-    <a asp-controller="Nutrition" asp-action="AddFood" class="font-weight-bold mb-3">+Add Food</a>
+    <a asp-controller="@(UiNamingHelper.GetControllerName<NutritionController>())" asp-action="@nameof(NutritionController.AddFood)" class="font-weight-bold mb-3">+Add Food</a>
 </div>
 
 <div id="MonthGraphData" class="d-none"></div>

@@ -1,4 +1,6 @@
-﻿@model FitMate.Presentation.ViewModels.Bodyweight.BodyweightSummaryViewModel
+﻿@using FitMate.Controllers;
+@using FitMate.Presentation.Helpers;
+@model FitMate.Presentation.ViewModels.Bodyweight.BodyweightSummaryViewModel
 
 @section Scripts
     {
@@ -22,7 +24,9 @@
 
 <div>
     <h2 class="d-inline">My Bodyweight</h2>
-    <a asp-controller="Bodyweight" asp-action="EditRecords" class="font-weight-bold d-inline">+Add Bodyweights</a>
+    <a asp-controller="@(UiNamingHelper.GetControllerName<BodyweightController>())" asp-action="@nameof(BodyweightController.EditRecords)" class="font-weight-bold d-inline">
+        +Add Bodyweights
+    </a>
 </div>
 
 @if (Model.MostRecentRecord is null || Model.MostRecentRecord.Date != DateTime.Today)
@@ -32,7 +36,12 @@
             <div class="alert alert-info mt-3 mb-2">
                 <h5 class="ml-3">Add Today's Weight</h5>
 
-                <form asp-action="AddTodayWeight" method="post" class="ml-3 mr-3">
+                <form 
+                    asp-controller="@(UiNamingHelper.GetControllerName<BodyweightController>())"
+                    asp-action="@nameof(BodyweightController.AddTodayWeight)"
+                    method="post"
+                    class="ml-3 mr-3"
+                >
                     <div class="input-group form-inline ">
                         <input type="number" min="0" max="200" name="Weight" step="0.1" class="form-control mr-1" required />
                         <input type="submit" value="Save" class="btn btn-primary" />
