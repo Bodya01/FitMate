@@ -9,6 +9,8 @@ public class WorkoutPlan : IEntity, IAuditedEntity
     public Guid Id { get; set; }
 
     public string Name { get; set; }
+
+    // TODO: Replace with actual entities
     public string SessionsJSON { get; set; }
     public DateTime CreatedAt { get; set; }
 

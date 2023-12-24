@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Identity;
 
 namespace FitMate.Business.Services
 {
+    // TODO: Review Task.Run usage
     public sealed class UserService : IUserService
     {
         private readonly UserManager<FitnessUser> _userManager;

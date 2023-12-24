@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace FitMate.UI.Web.Controllers.Base
 {
+    // TODO: Remove injection of temporary objects
     [Authorize]
     public class FitMateControllerBase : Controller
     {

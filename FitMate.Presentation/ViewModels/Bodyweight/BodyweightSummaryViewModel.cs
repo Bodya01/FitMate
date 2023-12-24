@@ -19,6 +19,8 @@ namespace FitMate.Presentation.ViewModels.Bodyweight
         public TimeProgressViewModel AllTime { get; private set; }
         public TargetProgressViewModel TargetProgress { get; private set; }
 
+        public static BodyweightSummaryViewModel Create(IEnumerable<BodyweightRecordDto> allRecords, BodyweightTargetDto target) =>
+            new BodyweightSummaryViewModel(allRecords, target);
 
         private BodyweightSummaryViewModel(IEnumerable<BodyweightRecordDto> allRecords, BodyweightTargetDto target)
         {
@@ -79,8 +81,5 @@ namespace FitMate.Presentation.ViewModels.Bodyweight
             TargetProgress.RequiredDailyProgress = (float)(TargetProgress.Distance / (Target.TargetDate - DateTime.Today).TotalDays);
             TargetProgress.RequiredWeeklyProgress = TargetProgress.RequiredDailyProgress * 7;
         }
-
-        public static BodyweightSummaryViewModel Create(IEnumerable<BodyweightRecordDto> allRecords, BodyweightTargetDto target) =>
-            new BodyweightSummaryViewModel(allRecords, target);
     }
 }
