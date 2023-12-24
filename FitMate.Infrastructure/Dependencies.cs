@@ -1,6 +1,4 @@
-﻿using FitMate.Infrastructure.Entities;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.Extensions.Configuration;
+﻿using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using System.Reflection;
 

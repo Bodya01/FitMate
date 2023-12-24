@@ -1,17 +1,8 @@
 using FitMate.Applcation.ServiceCollectionExtensions;
-using FitMate.Business.Interfaces;
-using FitMate.Business.Services;
-using FitMate.Core.Context;
-using FitMate.Core.Repositories.Implementations;
-using FitMate.Core.Repositories.Interfaces;
-using FitMate.Core.UnitOfWork;
 using FitMate.Infrastructure;
-using FitMate.Infrastructure.Entities;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Localization;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
