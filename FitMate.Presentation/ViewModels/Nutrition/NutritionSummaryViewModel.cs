@@ -37,6 +37,7 @@ namespace FitMate.Presentation.ViewModels.Nutrition
         private void InitializeToday()
         {
             Today = new();
+            Today.Period = "Today";
 
             var todayRecords = _records.Where(record => record.ConsumptionDate == DateTime.Today);
             Today.Calories = CalculateSum(todayRecords, record => record.Food.Calories);
@@ -48,6 +49,7 @@ namespace FitMate.Presentation.ViewModels.Nutrition
         private void InitializeYesterday()
         {
             Yesterday = new();
+            Yesterday.Period = "Yesterday";
 
             var yesterdayRecords = _records.Where(record => record.ConsumptionDate == DateTime.Today.AddDays(-1));
             Yesterday.Calories = CalculateSum(yesterdayRecords, record => record.Food.Calories);
@@ -59,6 +61,7 @@ namespace FitMate.Presentation.ViewModels.Nutrition
         private void InitializeWeekAverage()
         {
             WeekAverage = new();
+            WeekAverage.Period = "Last 7 days";
 
             var weekRecordGroup = _records.Where(record => record.ConsumptionDate >= DateTime.Today.AddDays(-7)).GroupBy(record => record.ConsumptionDate);
             WeekAverage.Calories = CalculateAverage(weekRecordGroup, grouping => grouping.Sum(record => record.Food.Calories));
@@ -70,6 +73,7 @@ namespace FitMate.Presentation.ViewModels.Nutrition
         private void InitializeMonthAverage()
         {
             MonthAverage = new();
+            MonthAverage.Period = "Last 28 days";
 
             var monthRecordGroup = _records.Where(record => record.ConsumptionDate >= DateTime.Today.AddDays(-28)).GroupBy(record => record.ConsumptionDate);
             MonthAverage.Calories = CalculateAverage(monthRecordGroup, grouping => grouping.Sum(record => record.Food.Calories));

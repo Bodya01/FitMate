@@ -4,12 +4,6 @@
     ViewData["Title"] = "Nutrition";
 }
 
-@section Scripts
-{
-    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.4/dist/Chart.min.js"></script>
-    <script src="~/js/Nutrition/summary.js"></script>
-}
-
 <div class="mb-3">
     <h2 class="d-inline">Nutrition Summary</h2>
     <a asp-controller="Nutrition" asp-action="AddFood" class="font-weight-bold mb-3">+Add Food</a>
@@ -43,107 +37,12 @@
             </div>
         </div>
     </div>
-    <div class="col">
-        <div class="card">
-            <div class="card-header"><h3>Today</h3></div>
-            <div class="card-body">
-                <div class="text-center mb-2">
-                    <h4>Calories</h4>
-                    @Model.Today.Calories cal
-                </div>
-                <div class="d-flex text-center">
-                    <div class="flex-grow-1">
-                        <h6>Carbs</h6>
-                        <div>@(Model.Today.Carbs)g</div>
-                    </div>
-                    <div class="flex-grow-1">
-                        <h6>Fat</h6>
-                        <div>@(Model.Today.Fat)g</div>
-                    </div>
-                    <div class="flex-grow-1">
-                        <h6>Protein</h6>
-                        <div>@(Model.Today.Protein)g</div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="col">
-        <div class="card">
-            <div class="card-header"><h3>Yesterday</h3></div>
-            <div class="card-body">
-                <div class="text-center mb-2">
-                    <h4>Calories</h4>
-                    @Model.Yesterday.Calories cal
-                </div>
-                <div class="d-flex text-center">
-                    <div class="flex-grow-1">
-                        <h6>Carbs</h6>
-                        <div>@(Model.Yesterday.Carbs)g</div>
-                    </div>
-                    <div class="flex-grow-1">
-                        <h6>Fat</h6>
-                        <div>@(Model.Yesterday.Fat)g</div>
-                    </div>
-                    <div class="flex-grow-1">
-                        <h6>Protein</h6>
-                        <div>@(Model.Yesterday.Protein)g</div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="col">
-        <div class="card">
-            <div class="card-header"><h3>Last 7 days <span class="small" style="font-size:55%">Average</span></h3></div>
-            <div class="card-body">
-                <div class="text-center mb-2">
-                    <h4>Calories</h4>
-                    @Model.WeekAverage.Calories cal
-                </div>
-                <div class="d-flex text-center">
-                    <div class="flex-grow-1">
-                        <h6>Carbs</h6>
-                        <div>@(Model.WeekAverage.Carbs)g</div>
-                    </div>
-                    <div class="flex-grow-1">
-                        <h6>Fat</h6>
-                        <div>@(Model.WeekAverage.Fat)g</div>
-                    </div>
-                    <div class="flex-grow-1">
-                        <h6>Protein</h6>
-                        <div>@(Model.WeekAverage.Protein)g</div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="col">
-        <div class="card">
-            <div class="card-header"><h3>Last 28 days <span class="small" style="font-size:55%">Average</span></h3></div>
-            <div class="card-body">
-                <div class="text-center mb-2">
-                    <h4>Calories</h4>
-                    @Model.MonthAverage.Calories cal
-                </div>
-                <div class="d-flex text-center">
-                    <div class="flex-grow-1">
-                        <h6>Carbs</h6>
-                        <div>@(Model.MonthAverage.Carbs)g</div>
-                    </div>
-                    <div class="flex-grow-1">
-                        <h6>Fat</h6>
-                        <div>@(Model.MonthAverage.Fat)g</div>
-
-                    </div>
-                    <div class="flex-grow-1">
-                        <h6>Protein</h6>
-                        <div>@(Model.MonthAverage.Protein)g</div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+    @{
+        await Html.RenderPartialAsync("_StatsCard", Model.Today);
+        await Html.RenderPartialAsync("_StatsCard", Model.Yesterday);
+        await Html.RenderPartialAsync("_StatsCard", Model.WeekAverage);
+        await Html.RenderPartialAsync("_StatsCard", Model.MonthAverage);
+    }
 </div>
 
 <h3 class="text-center mt-3">Last 7 Days</h3>
@@ -169,3 +68,9 @@
         </canvas>
     </div>
 </div>
+
+@section Scripts
+{
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.4/dist/Chart.min.js"></script>
+    <script src="~/js/Nutrition/summary.js"></script>
+}
