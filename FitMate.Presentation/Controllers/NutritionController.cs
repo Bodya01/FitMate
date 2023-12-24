@@ -67,7 +67,6 @@ namespace FitMate.Controllers
             return Json(result);
         }
 
-
         [HttpGet]
         public async Task<IActionResult> AddFood(DateTime date, CancellationToken cancellationToken)
         {
@@ -130,8 +129,6 @@ namespace FitMate.Controllers
             await _mediator.Send(new GetFoodQuery(id), cancellationToken);
             return RedirectToAction(nameof(AddFood));
         }
-
-
     }
 
     public class NewFoodModel

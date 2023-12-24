@@ -20,8 +20,10 @@ namespace FitMate.Controllers
         public BodyweightController(IMediator mediator, IUnitOfWork unitOfWork, IUserService userService)
             : base(mediator, unitOfWork, userService) { }
 
+        [HttpGet]
         public IActionResult Index() => RedirectToAction(nameof(Summary));
 
+        [HttpGet]
         public async Task<IActionResult> Summary(CancellationToken cancellationToken)
         {
             var currentUserId = await _userService.GetUserIdAsync(cancellationToken);
@@ -44,6 +46,29 @@ namespace FitMate.Controllers
             return View(target);
         }
 
+        [HttpGet]
+        public async Task<IActionResult> EditRecords(CancellationToken cancellationToken)
+        {
+            var currentUserId = await _userService.GetUserIdAsync(cancellationToken);
+
+            var records = await _mediator.Send(new GetBodyweightRecordsQuery(currentUserId), cancellationToken);
+
+            return View(records);
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> GetBodyweightData(int previousDays, CancellationToken cancellationToken)
+        {
+            var currentUserId = await _userService.GetUserIdAsync(cancellationToken);
+
+            var records = await _mediator.Send(new GetBodyweightRecordsQuery(currentUserId), cancellationToken);
+
+            records = records.OrderBy(x => x.Date).ToList();
+            var result = records.Select(record => new { Date = record.Date.ToString("d"), Weight = record.Weight }).ToList();
+
+            return Json(result);
+        }
+
         [HttpPost]
         public async Task<IActionResult> EditTarget(float targetWeight, DateTime targetDate, CancellationToken cancellationToken)
         {
@@ -55,16 +80,6 @@ namespace FitMate.Controllers
             await _mediator.Send(command, cancellationToken);
 
             return RedirectToAction(nameof(Summary));
-        }
-
-        [HttpGet]
-        public async Task<IActionResult> EditRecords(CancellationToken cancellationToken)
-        {
-            var currentUserId = await _userService.GetUserIdAsync(cancellationToken);
-
-            var records = await _mediator.Send(new GetBodyweightRecordsQuery(currentUserId), cancellationToken);
-
-            return View(records);
         }
 
         [HttpPost]
@@ -94,19 +109,6 @@ namespace FitMate.Controllers
             await _mediator.Send(command, cancellationToken);
 
             return RedirectToAction(nameof(Summary));
-        }
-
-        [HttpGet]
-        public async Task<IActionResult> GetBodyweightData(int previousDays, CancellationToken cancellationToken)
-        {
-            var currentUserId = await _userService.GetUserIdAsync(cancellationToken);
-
-            var records = await _mediator.Send(new GetBodyweightRecordsQuery(currentUserId), cancellationToken);
-
-            records = records.OrderBy(x => x.Date).ToList();
-            var result = records.Select(record => new { Date = record.Date.ToString("d"), Weight = record.Weight }).ToList();
-
-            return Json(result);
         }
     }
 }
