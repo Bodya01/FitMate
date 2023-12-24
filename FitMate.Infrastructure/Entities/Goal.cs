@@ -2,11 +2,13 @@
 
 namespace FitMate.Infrastructure.Entities;
 
+// TODO: Review use of TPH and Discriminator
 public class Goal : IEntity
 {
     public Guid Id { get; set; }
 
     public string Activity { get; set; }
+    public string Discriminator { get; set; }
 
     public string UserId { get; set; }
 
