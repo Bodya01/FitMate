@@ -24,6 +24,9 @@ namespace FitMate.Controllers
             : base(mediator, unitOfWork, userService) { }
 
         [HttpGet]
+        public IActionResult Index() => RedirectToAction(nameof(Summary));
+
+        [HttpGet]
         public async Task<IActionResult> Summary(CancellationToken cancellationToken)
         {
             var currentUserId = await _userService.GetUserIdAsync(cancellationToken);

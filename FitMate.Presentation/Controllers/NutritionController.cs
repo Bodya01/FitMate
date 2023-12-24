@@ -24,6 +24,51 @@ namespace FitMate.Controllers
             : base(mediator, unitOfWork, userService) { }
 
         [HttpGet]
+        public IActionResult Index() => RedirectToAction(nameof(Summary));
+
+        [HttpGet]
+        public async Task<IActionResult> Summary(CancellationToken cancellationToken)
+        {
+            var currentUserId = await _userService.GetUserIdAsync(cancellationToken);
+
+            var userRecords = await _mediator.Send(new GetFoodRecordsQuery(currentUserId, 28), cancellationToken);
+
+            var userTarget = await _mediator.Send(new GetCurrentNutritionTargetQuery(currentUserId), cancellationToken);
+
+            var summaryModel = new NutritionSummaryModel()
+            {
+                Records = userRecords,
+                Target = userTarget
+            };
+
+            return View(summaryModel);
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> GetNutritionData(CancellationToken cancellationToken, uint previousDays = 7)
+        {
+            var currentUserId = await _userService.GetUserIdAsync(cancellationToken);
+
+            var records = await _mediator.Send(new GetFoodRecordsQuery(currentUserId, previousDays), cancellationToken);
+
+            var result = records
+                .GroupBy(record => record.ConsumptionDate)
+                .Select(grouping =>
+                new
+                {
+                    Date = grouping.Key.ToString("d"),
+                    Calories = grouping.Sum(r => r.Food.Calories),
+                    Carbs = grouping.Sum(r => r.Food.Carbohydrates),
+                    Protein = grouping.Sum(r => r.Food.Protein),
+                    Fat = grouping.Sum(r => r.Food.Fat)
+                })
+                .ToList();
+
+            return Json(result);
+        }
+
+
+        [HttpGet]
         public async Task<IActionResult> AddFood(DateTime date, CancellationToken cancellationToken)
         {
             if (date.Ticks == default) date = DateTime.Today;
@@ -86,46 +131,7 @@ namespace FitMate.Controllers
             return RedirectToAction(nameof(AddFood));
         }
 
-        [HttpGet]
-        public async Task<IActionResult> Summary(CancellationToken cancellationToken)
-        {
-            var currentUserId = await _userService.GetUserIdAsync(cancellationToken);
 
-            var userRecords = await _mediator.Send(new GetFoodRecordsQuery(currentUserId, 28), cancellationToken);
-
-            var userTarget = await _mediator.Send(new GetCurrentNutritionTargetQuery(currentUserId), cancellationToken);
-
-            var summaryModel = new NutritionSummaryModel()
-            {
-                Records = userRecords,
-                Target = userTarget
-            };
-
-            return View(summaryModel);
-        }
-
-        [HttpGet]
-        public async Task<IActionResult> GetNutritionData(CancellationToken cancellationToken, uint previousDays = 7)
-        {
-            var currentUserId = await _userService.GetUserIdAsync(cancellationToken);
-
-            var records = await _mediator.Send(new GetFoodRecordsQuery(currentUserId, previousDays), cancellationToken);
-
-            var result = records
-                .GroupBy(record => record.ConsumptionDate)
-                .Select(grouping =>
-                new
-                {
-                    Date = grouping.Key.ToString("d"),
-                    Calories = grouping.Sum(r => r.Food.Calories),
-                    Carbs = grouping.Sum(r => r.Food.Carbohydrates),
-                    Protein = grouping.Sum(r => r.Food.Protein),
-                    Fat = grouping.Sum(r => r.Food.Fat)
-                })
-                .ToList();
-
-            return Json(result);
-        }
     }
 
     public class NewFoodModel

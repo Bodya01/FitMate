@@ -18,6 +18,10 @@ namespace FitMate.Controllers
         public WorkoutController(IMediator mediator, IUnitOfWork unitOfWork, IUserService userService)
             : base(mediator, unitOfWork, userService) { }
 
+        [HttpGet]
+        public IActionResult Index() => RedirectToAction(nameof(Summary));
+
+        [HttpGet]
         public async Task<IActionResult> Summary(CancellationToken cancellationToken)
         {
             var request = new GetWorkoutForUserQuery(await _userService.GetUserIdAsync(cancellationToken));
@@ -37,17 +41,6 @@ namespace FitMate.Controllers
         public async Task<IActionResult> Edit(GetWorkoutPlanQuery query, CancellationToken cancellationToken) =>
             View(await _mediator.Send(query, cancellationToken));
 
-        [HttpPost]
-        public async Task<IActionResult> Edit(WorkoutPlanDto workoutPlanDto, CancellationToken cancellationToken)
-        {
-            workoutPlanDto.UserId = await _userService.GetUserIdAsync(cancellationToken);
-
-            var command = new EditWorkoutPlanCommand(workoutPlanDto);
-            await _mediator.Send(command, cancellationToken);
-
-            return RedirectToAction(nameof(Summary));
-        }
-
         [HttpGet]
         public async Task<IActionResult> Session(Guid workoutPlanId, int sessionId, CancellationToken cancellationToken)
         {
@@ -58,6 +51,17 @@ namespace FitMate.Controllers
 
             var session = plan.Sessions.ToList()[sessionId];
             return View(session);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Edit(WorkoutPlanDto workoutPlanDto, CancellationToken cancellationToken)
+        {
+            workoutPlanDto.UserId = await _userService.GetUserIdAsync(cancellationToken);
+
+            var command = new EditWorkoutPlanCommand(workoutPlanDto);
+            await _mediator.Send(command, cancellationToken);
+
+            return RedirectToAction(nameof(Summary));
         }
     }
 }
