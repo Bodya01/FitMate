@@ -3,12 +3,15 @@ using FitMate.Application.Queries.Goal;
 using FitMate.Business.Interfaces;
 using FitMate.Core.UnitOfWork;
 using FitMate.Infrastructure.Entities;
+using FitMate.Infrastucture.Dtos.GoalProgress;
+using FitMate.Infrastucture.Dtos.Goals;
+using FitMate.Presentation.ViewModels.Goal;
 using FitMate.UI.Web.Controllers.Base;
-using FitMate.ViewModels;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -33,8 +36,8 @@ namespace FitMate.Controllers
         [HttpGet]
         public IActionResult AddGoal()
         {
-            var model = new WeightliftingGoal { Id = Guid.Empty };
-            return View("editgoal", model);
+            var model = new WeightliftingGoalDto(Guid.Empty, string.Empty, string.Empty, new List<GoalProgressDto>(), default, default);
+            return View("EditGoal", model);
         }
 
         [HttpGet]
