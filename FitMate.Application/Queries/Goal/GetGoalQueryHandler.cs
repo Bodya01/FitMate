@@ -6,6 +6,7 @@ using MediatR;
 namespace FitMate.Application.Queries.Goal
 {
     public record GetGoalQuery(Guid Id) : IRequest<GoalDto>;
+    public record GetGoalQueryResult(GoalDto Goal, bool IsWeightliftingGoal, bool IsTimedGoal);
 
     public class GetGoalQueryHandler : IRequestHandler<GetGoalQuery, GoalDto>
     {

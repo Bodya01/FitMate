@@ -4,8 +4,8 @@ using FitMate.Application.Queries.BodyweightRecord;
 using FitMate.Application.Queries.BodyweightTarget;
 using FitMate.Business.Interfaces;
 using FitMate.Core.UnitOfWork;
+using FitMate.Presentation.ViewModels.Bodyweight;
 using FitMate.UI.Web.Controllers.Base;
-using FitMate.ViewModels;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -29,7 +29,7 @@ namespace FitMate.Controllers
             var target = await _mediator.Send(new GetCurrentBodyweightTargetQuery(currentUserId), cancellationToken);
             var records = await _mediator.Send(new GetBodyweightRecordsQuery(currentUserId), cancellationToken);
 
-            var viewModel = new BodyweightSummaryViewModel(records, target);
+            var viewModel = BodyweightSummaryViewModel.Create(records, target);
 
             return View(viewModel);
         }
