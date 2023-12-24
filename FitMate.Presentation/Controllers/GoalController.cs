@@ -51,13 +51,6 @@ namespace FitMate.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> DeleteGoal(Guid id, CancellationToken cancellationToken)
-        {
-            await _mediator.Send(new DeleteGoalCommand(id), cancellationToken);
-            return RedirectToAction(nameof(Summary));
-        }
-
-        [HttpGet]
         public async Task<IActionResult> ViewGoal(Guid Id, CancellationToken cancellationToken)
         {
             var currentUserId = await _userService.GetUserIdAsync(cancellationToken);
@@ -210,6 +203,13 @@ namespace FitMate.Controllers
             }
             await _unitOfWork.SaveChangesAsync(cancellationToken);
 
+            return RedirectToAction(nameof(Summary));
+        }
+
+        [HttpDelete]
+        public async Task<IActionResult> DeleteGoal(Guid id, CancellationToken cancellationToken)
+        {
+            await _mediator.Send(new DeleteGoalCommand(id), cancellationToken);
             return RedirectToAction(nameof(Summary));
         }
     }

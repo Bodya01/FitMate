@@ -120,18 +120,11 @@ namespace FitMate.Controllers
             return RedirectToAction(nameof(AddFood));
         }
 
-        [HttpPost]
+        [HttpDelete]
         public async Task<IActionResult> DeleteFood(Guid id, CancellationToken cancellationToken)
         {
             await _mediator.Send(new GetFoodQuery(id), cancellationToken);
             return RedirectToAction(nameof(AddFood));
         }
     }
-
-    public class NewFoodViewModel
-    {
-        public List<Food> UserFoods { get; set; }
-        public List<FoodRecord> FoodRecords { get; set; }
-    }
-
 }
