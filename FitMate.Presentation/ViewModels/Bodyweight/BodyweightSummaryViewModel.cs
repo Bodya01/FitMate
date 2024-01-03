@@ -28,8 +28,7 @@ namespace FitMate.Presentation.ViewModels.Bodyweight
             _currentMonthRecords = _allRecords.Where(record => record.Date >= DateTime.Today.AddDays(-28));
             _currentWeekRecords = _currentMonthRecords.Where(record => record.Date >= DateTime.Today.AddDays(-7));
 
-
-            MostRecentRecord = _allRecords.OrderByDescending(x => x.Date).ToList().FirstOrDefault();
+            MostRecentRecord = _allRecords.OrderByDescending(x => x.Date).FirstOrDefault();
             Target = target;
 
             InitializeAllTime();
