@@ -25,14 +25,13 @@ namespace FitMate
             services.AddControllersWithViews();
             services.AddRazorPages();
 
-            services.AddMediatRAndHandlers();
-
             services.RegisterIdentity()
                 .RegisterInfrastructure()
                 .RegisterContext(Configuration)
                 .MigrateDatabase()
                 .RegisterRepositories()
-                .RegisterServices();
+                .RegisterServices()
+                .RegisterMediatRAndHandlers();
 
             services.AddHttpContextAccessor();
         }

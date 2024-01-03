@@ -36,6 +36,7 @@ public static class Dependencies
 
         return services;
     }
+
     public static IServiceCollection RegisterIdentity(this IServiceCollection services)
     {
         var assembly = Assembly.LoadFrom(CoreLayerPath);
