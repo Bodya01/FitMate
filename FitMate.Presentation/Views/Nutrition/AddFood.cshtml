@@ -15,7 +15,7 @@
 
 <h2>Add Existing Food</h2>
 <div class="horizontalScrollBox" style="overflow-x:auto;overflow-y:hidden;white-space:nowrap;">
-    @foreach (var food in Model.UserFoods)
+    @foreach (var food in Model.Foods)
     {
         <div class="col-2 d-inline-block float-none" style="margin-right:-0.5rem;margin-left:-0.5rem">
             <div class="card" data-ID="@food.Id" data-Name="@food.Name" data-Carbs="@food.Carbohydrates" data-Protein="@food.Protein" data-Fat="@food.Fat" data-Calories="@food.Calories" data-ServingSize="@food.ServingSize" data-ServingUnit="@food.ServingUnit">

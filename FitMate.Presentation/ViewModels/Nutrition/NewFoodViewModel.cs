@@ -1,11 +1,12 @@
 ﻿using FitMate.Infrastructure.Entities;
+using FitMate.Infrastucture.Dtos;
 using System.Collections.Generic;
 
 namespace FitMate.Presentation.ViewModels.Nutrition
 {
     internal sealed class NewFoodViewModel
     {
-        public List<Food> UserFoods { get; set; }
-        public List<FoodRecord> FoodRecords { get; set; }
+        public IEnumerable<FoodDto> Foods { get; set; }
+        public IEnumerable<FoodRecordDto> FoodRecords { get; set; }
     }
 }

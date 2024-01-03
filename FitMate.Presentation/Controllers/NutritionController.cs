@@ -73,8 +73,8 @@ namespace FitMate.Controllers
 
             var model = new NewFoodViewModel()
             {
-                FoodRecords = await _unitOfWork.FoodRecordRepository.Value.Get(e => e.UserId == currentUserId && e.ConsumptionDate == date, s => s).ToListAsync(cancellationToken),
-                UserFoods = await _unitOfWork.FoodRepository.Value.Get(e => true, s => s).ToListAsync(cancellationToken),
+                Foods = await _mediator.Send(new GetAllFoodsQuery(), cancellationToken),
+                FoodRecords = await _mediator.Send(new GetFoodRecordsByDateQuery(currentUserId, date), cancellationToken)
             };
 
             return View(model);
