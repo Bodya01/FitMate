@@ -3,6 +3,7 @@ using FitMate.Application.Queries.Goal;
 using FitMate.Business.Interfaces;
 using FitMate.Core.UnitOfWork;
 using FitMate.Infrastructure.Entities;
+using FitMate.Infrastructure.Models.GoalProgress;
 using FitMate.Infrastucture.Dtos.GoalProgress;
 using FitMate.Infrastucture.Dtos.Goals;
 using FitMate.Presentation.ViewModels.Goal;
@@ -77,14 +78,16 @@ namespace FitMate.Controllers
         {
             var currentUserId = await _userService.GetUserIdAsync(cancellationToken);
 
-            // Ascending order
             var progress = await _unitOfWork.GoalProgressRepository.Value
                 .Get(e => e.GoalId == goalId && e.UserId == currentUserId, s => s)
                 .OrderBy(x => x.Date)
                 .ToListAsync(cancellationToken);
-            // ----
-            var result = Array.ConvertAll(progress.ToArray(), item => (WeightliftingProgress)item)
-                .Select(record => new { Date = record.Date.ToString("d"), Weight = record.Weight, Reps = record.Reps })
+
+            var result = progress
+                .Select(record => new WeightliftingProgressViewModel(
+                    Date: record.Date.ToString("d"),
+                    Weight: ((WeightliftingProgress)record).Weight,
+                    Reps: ((WeightliftingProgress)record).Reps))
                 .ToList();
 
             return Json(result);
@@ -95,14 +98,17 @@ namespace FitMate.Controllers
         {
             var currentUserId = await _userService.GetUserIdAsync(cancellationToken);
 
-            // Ascending order
             var progress = await _unitOfWork.GoalProgressRepository.Value
                 .Get(e => e.GoalId == goalId && e.UserId == currentUserId, s => s)
                 .OrderBy(x => x.Date)
                 .ToListAsync(cancellationToken);
-            // ----
-            var result = Array.ConvertAll(progress.ToArray(), item => (TimedProgress)item)
-                .Select(record => new { Date = record.Date.ToString("d"), Timespan = record.Time, Quantity = record.Quantity, QuantityUnit = record.QuantityUnit })
+
+            var result = progress
+                .Select(record => new TimedProgressViewModel(
+                    Date: record.Date.ToString("d"),
+                    Timespan: ((TimedProgress)record).Time,
+                    Quantity: ((TimedProgress)record).Quantity,
+                    QuantityUnit: ((TimedProgress)record).QuantityUnit))
                 .ToList();
 
             return Json(result);
