@@ -32,7 +32,6 @@ namespace FitMate.Controllers
             var currentUserId = await _userService.GetUserIdAsync(cancellationToken);
 
             var recrods = await _mediator.Send(new GetFoodRecordsQuery(currentUserId, 28), cancellationToken);
-
             var target = await _mediator.Send(new GetCurrentNutritionTargetQuery(currentUserId), cancellationToken);
 
             var summaryModel = NutritionSummaryViewModel.Create(recrods, target);
