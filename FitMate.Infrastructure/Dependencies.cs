@@ -6,6 +6,31 @@ namespace FitMate.Infrastructure;
 
 public static class Dependencies
 {
+    private static class Core
+    {
+        public const string Path = "FitMate.Core";
+        public const string Dependencies = "FitMate.Core.Dependencies";
+
+        public static class Methods
+        {
+            public const string RegisterContext = "RegisterContext";
+            public const string MigrateDatabase = "MigrateDatabase";
+            public const string RegisterIdentity = "RegisterIdentity";
+            public const string RegisterRepositories = "RegisterRepositories";
+        }
+    }
+
+    private static class Business
+    {
+        public const string Path = "FitMate.Business";
+        public const string Dependencies = "FitMate.Business.Dependencies";
+
+        public static class Methods
+        {
+            public const string RegisterServices = "RegisterServices";
+        }
+    }
+
     private static string GetAssemblyPath(string assemblyName)
     {
         var executingAssemblyPath = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
@@ -34,31 +59,31 @@ public static class Dependencies
 
     public static IServiceCollection RegisterContext(this IServiceCollection services, IConfiguration configuration)
     {
-        InvokeDependencyMethod("FitMate.Core", "FitMate.Core.Dependencies", "RegisterContext", services, configuration);
+        InvokeDependencyMethod(Core.Path, Core.Dependencies, Core.Methods.RegisterContext, services, configuration);
         return services;
     }
 
     public static IServiceCollection MigrateDatabase(this IServiceCollection services)
     {
-        InvokeDependencyMethod("FitMate.Core", "FitMate.Core.Dependencies", "MigrateDatabase", services);
+        InvokeDependencyMethod(Core.Path, Core.Dependencies, Core.Methods.MigrateDatabase, services);
         return services;
     }
 
     public static IServiceCollection RegisterIdentity(this IServiceCollection services)
     {
-        InvokeDependencyMethod("FitMate.Core", "FitMate.Core.Dependencies", "RegisterIdentity", services);
+        InvokeDependencyMethod(Core.Path, Core.Dependencies, Core.Methods.RegisterIdentity, services);
         return services;
     }
 
     public static IServiceCollection RegisterRepositories(this IServiceCollection services)
     {
-        InvokeDependencyMethod("FitMate.Core", "FitMate.Core.Dependencies", "RegisterRepositories", services);
+        InvokeDependencyMethod(Core.Path, Core.Dependencies, Core.Methods.RegisterRepositories, services);
         return services;
     }
 
     public static IServiceCollection RegisterServices(this IServiceCollection services)
     {
-        InvokeDependencyMethod("FitMate.Business", "FitMate.Business.Dependencies", "RegisterServices", services);
+        InvokeDependencyMethod(Business.Path, Business.Dependencies, Business.Methods.RegisterServices, services);
         return services;
     }
 }
