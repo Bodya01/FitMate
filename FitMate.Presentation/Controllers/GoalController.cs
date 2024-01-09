@@ -19,7 +19,7 @@ using System.Threading.Tasks;
 
 namespace FitMate.Controllers
 {
-    internal sealed class GoalController : FitMateControllerBase
+    public sealed class GoalController : FitMateControllerBase
     {
         public GoalController(IMediator mediator, IUnitOfWork unitOfWork, IUserService userService)
             : base(mediator, unitOfWork, userService) { }

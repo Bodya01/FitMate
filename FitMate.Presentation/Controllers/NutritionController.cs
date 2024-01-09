@@ -18,7 +18,7 @@ using System.Threading.Tasks;
 
 namespace FitMate.Controllers
 {
-    internal sealed class NutritionController : FitMateControllerBase
+    public sealed class NutritionController : FitMateControllerBase
     {
         public NutritionController(IMediator mediator, IUnitOfWork unitOfWork, IUserService userService)
             : base(mediator, unitOfWork, userService) { }

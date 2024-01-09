@@ -15,7 +15,7 @@ using System.Threading.Tasks;
 
 namespace FitMate.Controllers
 {
-    internal sealed class BodyweightController : FitMateControllerBase
+    public sealed class BodyweightController : FitMateControllerBase
     {
         public BodyweightController(IMediator mediator, IUnitOfWork unitOfWork, IUserService userService)
             : base(mediator, unitOfWork, userService) { }
