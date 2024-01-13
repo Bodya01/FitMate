@@ -1,9 +1,9 @@
-﻿using FitMate.Infrastucture.Dtos.Base;
-using FitMate.Infrastucture.Dtos;
+﻿using FitMate.Infrastucture.Dtos;
+using FitMate.Infrastucture.Dtos.Base;
+using FitMate.Presentation.Helpers;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using System;
-using FitMate.Presentation.Helpers;
 
 namespace FitMate.Presentation.ViewModels.Bodyweight
 {

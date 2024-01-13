@@ -1,5 +1,4 @@
-﻿using FitMate.Infrastructure.Models.WorkoutPlan;
-using FitMate.Infrastucture.Dtos;
+﻿using FitMate.Infrastucture.Dtos;
 
 namespace FitMate.Business.Interfaces
 {

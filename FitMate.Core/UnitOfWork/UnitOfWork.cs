@@ -29,9 +29,7 @@ namespace FitMate.Core.UnitOfWork
             NutritionTargetRepository = new Lazy<INutritionTargetRepository>(new NutritionTargetRepository(context));
         }
 
-        public async Task SaveChangesAsync(CancellationToken cancellationToken = default)
-        {
+        public async Task SaveChangesAsync(CancellationToken cancellationToken = default) =>
             await _context.SaveChangesAsync(cancellationToken);
-        }
     }
 }

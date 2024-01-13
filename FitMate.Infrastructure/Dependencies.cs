@@ -6,6 +6,7 @@ namespace FitMate.Infrastructure;
 
 public static class Dependencies
 {
+    // Might be a bit over complicated
     private static class Core
     {
         public const string Path = "FitMate.Core";

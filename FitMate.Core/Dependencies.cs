@@ -45,7 +45,6 @@ namespace FitMate.Core
             return services;
         }
 
-
         public static IServiceCollection RegisterIdentity(this IServiceCollection services)
         {
             services.AddIdentity<FitnessUser, IdentityRole>()

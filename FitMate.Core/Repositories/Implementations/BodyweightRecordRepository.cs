@@ -14,6 +14,7 @@ namespace FitMate.Core.Repositories.Implementations
         {
             _context = context;
         }
+
         public async Task CreateAsync(BodyweightRecord entity, CancellationToken cancellationToken = default) =>
             await _context.AddAsync(entity, cancellationToken);
 

@@ -1,9 +1,6 @@
 ﻿using AutoMapper;
-using FitMate.Business.Interfaces;
 using FitMate.Business.Services.Base;
 using FitMate.Core.UnitOfWork;
-using FitMate.Infrastructure.Models.WorkoutPlan;
-using FitMate.Infrastucture.Dtos;
 
 namespace FitMate.Business.Services
 {
