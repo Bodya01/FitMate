@@ -121,7 +121,7 @@ namespace FitMate.Controllers
         [HttpDelete]
         public async Task<IActionResult> DeleteFood(Guid id, CancellationToken cancellationToken)
         {
-            await _mediator.Send(new GetFoodQuery(id), cancellationToken);
+            await _mediator.Send(new DeleteFoodCommand(id), cancellationToken);
             return RedirectToAction(nameof(AddFood));
         }
     }
