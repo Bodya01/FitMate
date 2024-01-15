@@ -38,14 +38,13 @@ namespace FitMate.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Edit(GetWorkoutPlanQuery query, CancellationToken cancellationToken) =>
+        public async Task<IActionResult> Edit([FromRoute] GetWorkoutPlanQuery query, CancellationToken cancellationToken) =>
             View(await _mediator.Send(query, cancellationToken));
 
         [HttpGet]
-        public async Task<IActionResult> Session(Guid workoutPlanId, int sessionId, CancellationToken cancellationToken)
+        public async Task<IActionResult> Session([FromRoute] GetWorkoutPlanQuery query, [FromRoute] int sessionId, CancellationToken cancellationToken)
         {
-            var request = new GetWorkoutPlanQuery(workoutPlanId);
-            var plan = await _mediator.Send(request, cancellationToken);
+            var plan = await _mediator.Send(query, cancellationToken);
 
             if (plan is null || sessionId < 0 || sessionId >= plan.Sessions.Count) return BadRequest();
 
@@ -54,11 +53,10 @@ namespace FitMate.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Edit(WorkoutPlanDto workoutPlanDto, CancellationToken cancellationToken)
+        public async Task<IActionResult> Edit([FromForm] EditWorkoutPlanCommand command, CancellationToken cancellationToken)
         {
-            workoutPlanDto.UserId = await _userService.GetUserIdAsync(cancellationToken);
+            command.UserId = await _userService.GetUserIdAsync(cancellationToken);
 
-            var command = new EditWorkoutPlanCommand(workoutPlanDto);
             await _mediator.Send(command, cancellationToken);
 
             return RedirectToAction(nameof(Summary));

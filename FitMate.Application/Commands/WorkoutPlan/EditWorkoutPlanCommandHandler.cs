@@ -1,11 +1,13 @@
 ﻿using AutoMapper;
 using FitMate.Core.UnitOfWork;
-using FitMate.Infrastucture.Dtos;
 using MediatR;
 
 namespace FitMate.Applcation.Commands.WorkoutPlan
 {
-    public record EditWorkoutPlanCommand(WorkoutPlanDto WorkoutPlan) : IRequest;
+    public record EditWorkoutPlanCommand(Guid Id, string Name, string SessionsJSON) : IRequest
+    {
+        public string UserId { get; set; }
+    }
 
     internal sealed class EditWorkoutPlanCommandHandler : IRequestHandler<EditWorkoutPlanCommand>
     {
@@ -20,9 +22,15 @@ namespace FitMate.Applcation.Commands.WorkoutPlan
 
         public async Task Handle(EditWorkoutPlanCommand request, CancellationToken cancellationToken)
         {
-            var entity = _mapper.Map<Infrastructure.Entities.WorkoutPlan>(request.WorkoutPlan);
+            var entity = new Infrastructure.Entities.WorkoutPlan
+            {
+                Id = request.Id,
+                Name = request.Name,
+                SessionsJSON = request.SessionsJSON,
+                UserId = request.UserId
+            };
 
-            if (request.WorkoutPlan!.Id == Guid.Empty) await _unitOfWork.WorkoutPlanRepository.Value.CreateAsync(entity, cancellationToken);
+            if (request.Id == Guid.Empty) await _unitOfWork.WorkoutPlanRepository.Value.CreateAsync(entity, cancellationToken);
             else await _unitOfWork.WorkoutPlanRepository.Value.UpdateAsync(entity, cancellationToken);
             await _unitOfWork.SaveChangesAsync(cancellationToken);
         }
