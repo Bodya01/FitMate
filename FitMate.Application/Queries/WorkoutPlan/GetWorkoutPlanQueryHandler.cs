@@ -15,10 +15,7 @@ namespace FitMate.Applcation.Queries.WorkoutPlan
             _workoutPlanService = workoutPlanService;
         }
 
-        public async Task<WorkoutPlanDto> Handle(GetWorkoutPlanQuery request, CancellationToken cancellationToken)
-        {
-            var result = await _workoutPlanService.GetWorkoutAsync(request.Id, cancellationToken);
-            return await Task.FromResult(result);
-        }
+        public async Task<WorkoutPlanDto> Handle(GetWorkoutPlanQuery request, CancellationToken cancellationToken) =>
+            await _workoutPlanService.GetWorkoutAsync(request.Id, cancellationToken);
     }
 }
