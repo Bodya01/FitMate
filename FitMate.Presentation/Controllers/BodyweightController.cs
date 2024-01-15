@@ -4,7 +4,6 @@ using FitMate.Application.Queries.BodyweightRecord;
 using FitMate.Application.Queries.BodyweightTarget;
 using FitMate.Business.Interfaces;
 using FitMate.Core.UnitOfWork;
-using FitMate.Presentation.Models.Bodyweight;
 using FitMate.Presentation.ViewModels.Bodyweight;
 using FitMate.UI.Web.Controllers.Base;
 using MediatR;
@@ -74,30 +73,29 @@ namespace FitMate.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> EditTarget(EditTargetDto input, CancellationToken cancellationToken)
+        public async Task<IActionResult> EditTarget([FromBody] EditBodyweightTargetCommand command, CancellationToken cancellationToken)
         {
-            if (input.TargetWeight <= 0 || input.TargetWeight >= 200 || input.TargetDate <= DateTime.Today) return BadRequest();
+            if (command.Weight <= 0 || command.Weight >= 200 || command.Date <= DateTime.Today) return BadRequest();
 
-            var currentUserId = await _userService.GetUserIdAsync(cancellationToken);
+            command.UserId = await _userService.GetUserIdAsync(cancellationToken);
 
-            var command = new EditBodyweightTargetCommand(input.TargetWeight, input.TargetDate, currentUserId);
             await _mediator.Send(command, cancellationToken);
 
             return RedirectToAction(nameof(Summary));
         }
 
         [HttpPost]
-        public async Task<IActionResult> EditRecords([FromForm] EditRecordsDto input, CancellationToken cancellationToken)
+        public async Task<IActionResult> EditRecords([FromForm] EditBodyweightRecordsCommand command, CancellationToken cancellationToken)
         {
-            if (input.Dates is null
-                || input.Weights is null
-                || input.Dates.Length != input.Weights.Length
-                || input.Weights.Any(x => x <= 0 || x >= 200))
+            if (command.Dates is null
+                || command.Weights is null
+                || command.Dates.Length != command.Weights.Length
+                || command.Weights.Any(x => x <= 0 || x >= 200))
             {
                 return BadRequest();
             }
 
-            var command = new EditBodyweightRecordsCommand(input.Dates, input.Weights, await _userService.GetUserIdAsync(cancellationToken));
+            command.UserId = await _userService.GetUserIdAsync(cancellationToken);
 
             await _mediator.Send(command, cancellationToken);
 
@@ -105,11 +103,11 @@ namespace FitMate.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> AddTodayWeight(AddTodayWeightDto input, CancellationToken cancellationToken)
+        public async Task<IActionResult> AddTodayWeight([FromBody] CreateTodayWeightCommand command, CancellationToken cancellationToken)
         {
-            if (input.Weight <= 0 || input.Weight >= 200) return BadRequest();
+            if (command.Weight <= 0 || command.Weight >= 200) return BadRequest();
 
-            var command = new CreateTodayWeightCommand(input.Weight, await _userService.GetUserIdAsync(cancellationToken));
+            command.UserId = await _userService.GetUserIdAsync(cancellationToken);
             await _mediator.Send(command, cancellationToken);
 
             return RedirectToAction(nameof(Summary));

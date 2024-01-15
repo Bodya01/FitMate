@@ -4,7 +4,11 @@ using Microsoft.EntityFrameworkCore;
 
 namespace FitMate.Application.Commands.BodyweightTarget
 {
-    public record EditBodyweightTargetCommand(float Weight, DateTime Date, string UserId) : IRequest;
+    public record EditBodyweightTargetCommand(float Weight, DateTime Date) : IRequest
+    {
+        public string UserId { get; set; }
+    }
+
     internal sealed class EditBodyweightTargetCommandHandler : IRequestHandler<EditBodyweightTargetCommand>
     {
         private readonly IUnitOfWork _unitOfWork;

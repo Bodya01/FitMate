@@ -5,7 +5,10 @@ using Microsoft.EntityFrameworkCore;
 
 namespace FitMate.Applcation.Commands.Bodyweight
 {
-    public record EditBodyweightRecordsCommand(DateTime[] RecordDates, float[] RecordWeights, string UserId) : IRequest;
+    public record EditBodyweightRecordsCommand(DateTime[] Dates, float[] Weights) : IRequest
+    {
+        public string UserId { get; set; }
+    }
 
     internal sealed class EditBodyweightRecordsCommandHandler : IRequestHandler<EditBodyweightRecordsCommand>
     {
@@ -21,7 +24,7 @@ namespace FitMate.Applcation.Commands.Bodyweight
             var recordsToRemove = await _unitOfWork.BodyweightRecordRepository.Value.Get(e => e.UserId == command.UserId, s => s)
                 .ToListAsync(cancellationToken);
 
-            var records = command.RecordDates.Zip(command.RecordWeights, (date, weight) => new BodyweightRecord
+            var records = command.Dates.Zip(command.Weights, (date, weight) => new BodyweightRecord
             {
                 UserId = command.UserId,
                 Date = date,
