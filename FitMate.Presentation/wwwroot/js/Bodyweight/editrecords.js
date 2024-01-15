@@ -10,8 +10,8 @@
 
 function updateInputNames() {
     $("table tbody tr").each(function (index, element) {
-        $(element).find("input[type=number]").attr("name", "rw[" + String(index) + "]");
-        $(element).find("input[type=date]").attr("name", "rd[" + String(index) + "]");
+        $(element).find("input[type=number]").attr("name", "weights[" + String(index) + "]");
+        $(element).find("input[type=date]").attr("name", "dates[" + String(index) + "]");
     });
 }
 
@@ -70,7 +70,6 @@ function validateAllDates() {
 
     return result;
 }
-
 
 ////////  Event Handlers  ////////
 function formSubmit_Clicked() {

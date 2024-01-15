@@ -4,6 +4,7 @@ using FitMate.Application.Queries.BodyweightRecord;
 using FitMate.Application.Queries.BodyweightTarget;
 using FitMate.Business.Interfaces;
 using FitMate.Core.UnitOfWork;
+using FitMate.Presentation.Models.Bodyweight;
 using FitMate.Presentation.ViewModels.Bodyweight;
 using FitMate.UI.Web.Controllers.Base;
 using MediatR;
@@ -61,51 +62,54 @@ namespace FitMate.Controllers
         {
             var currentUserId = await _userService.GetUserIdAsync(cancellationToken);
 
-            var records = await _mediator.Send(new GetBodyweightRecordsQuery(currentUserId), cancellationToken);
+            var query = new GetBodyweightRecordsQuery(currentUserId, DateTime.Today, DateTime.Today.AddDays(-previousDays), false);
+            var records = await _mediator.Send(query, cancellationToken);
 
-            records = records.OrderBy(x => x.Date).ToList();
-            var result = records.Select(record => new { Date = record.Date.ToString("d"), Weight = record.Weight }).ToList();
+            var result = records
+                .OrderBy(x => x.Date)
+                .Select(record => new { Date = record.Date.ToString("d"), Weight = record.Weight })
+                .ToList();
 
             return Json(result);
         }
 
         [HttpPost]
-        public async Task<IActionResult> EditTarget(float targetWeight, DateTime targetDate, CancellationToken cancellationToken)
+        public async Task<IActionResult> EditTarget(EditTargetDto input, CancellationToken cancellationToken)
         {
-            if (targetWeight <= 0 || targetWeight >= 200 || targetDate <= DateTime.Today) return BadRequest();
+            if (input.TargetWeight <= 0 || input.TargetWeight >= 200 || input.TargetDate <= DateTime.Today) return BadRequest();
 
             var currentUserId = await _userService.GetUserIdAsync(cancellationToken);
 
-            var command = new EditBodyweightTargetCommand(targetWeight, targetDate, currentUserId);
+            var command = new EditBodyweightTargetCommand(input.TargetWeight, input.TargetDate, currentUserId);
             await _mediator.Send(command, cancellationToken);
 
             return RedirectToAction(nameof(Summary));
         }
 
         [HttpPost]
-        public async Task<IActionResult> EditRecords([FromForm] DateTime[] rd, [FromForm] float[] rw, CancellationToken cancellationToken)
+        public async Task<IActionResult> EditRecords([FromForm] EditRecordsDto input, CancellationToken cancellationToken)
         {
-            var command = new EditBodyweightRecordsCommand(rd, rw, await _userService.GetUserIdAsync(cancellationToken));
-
-            if (command.RecordDates is null
-                || command.RecordWeights is null
-                || command.RecordDates.Length != command.RecordWeights.Length
-                || command.RecordWeights.Any(x => x <= 0 || x >= 200))
+            if (input.Dates is null
+                || input.Weights is null
+                || input.Dates.Length != input.Weights.Length
+                || input.Weights.Any(x => x <= 0 || x >= 200))
             {
                 return BadRequest();
             }
 
+            var command = new EditBodyweightRecordsCommand(input.Dates, input.Weights, await _userService.GetUserIdAsync(cancellationToken));
+
             await _mediator.Send(command, cancellationToken);
 
             return RedirectToAction(nameof(Summary));
         }
 
         [HttpPost]
-        public async Task<IActionResult> AddTodayWeight(CreateTodayWeightCommand command, CancellationToken cancellationToken)
+        public async Task<IActionResult> AddTodayWeight(AddTodayWeightDto input, CancellationToken cancellationToken)
         {
-            if (command.Weight <= 0 || command.Weight >= 200) return BadRequest();
+            if (input.Weight <= 0 || input.Weight >= 200) return BadRequest();
 
-            command.UserId = await _userService.GetUserIdAsync(cancellationToken);
+            var command = new CreateTodayWeightCommand(input.Weight, await _userService.GetUserIdAsync(cancellationToken));
             await _mediator.Send(command, cancellationToken);
 
             return RedirectToAction(nameof(Summary));

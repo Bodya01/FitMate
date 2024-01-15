@@ -4,10 +4,7 @@ using MediatR;
 
 namespace FitMate.Applcation.Commands.Bodyweight
 {
-    public record CreateTodayWeightCommand(float Weight) : IRequest
-    {
-        public string UserId { get; set; }
-    }
+    public record CreateTodayWeightCommand(float Weight, string UserId) : IRequest;
 
     internal sealed class CreateTodayWeightCommandHandler : IRequestHandler<CreateTodayWeightCommand>
     {
