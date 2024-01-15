@@ -1,4 +1,5 @@
 ﻿using FitMate.Application.Commands.Food;
+using FitMate.Application.Commands.FoodRecord;
 using FitMate.Application.Queries.Food;
 using FitMate.Application.Queries.FoodRecord;
 using FitMate.Application.Queries.NutritionTarget;
@@ -90,30 +91,13 @@ namespace FitMate.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> EditRecords(DateTime date, Guid[] foodIds, float[] quantities, CancellationToken cancellationToken)
+        public async Task<IActionResult> EditRecords(EditFoodRecordsCommand command, CancellationToken cancellationToken)
         {
-            if (foodIds.Length != quantities.Length || !foodIds.Any()) return BadRequest();
+            if (command.FoodIds.Count != command.Quantities.Count || !command.FoodIds.Any()) return BadRequest();
 
-            var currentUserId = await _userService.GetUserIdAsync(cancellationToken);
+            command.UserId = await _userService.GetUserIdAsync(cancellationToken);
 
-            var existingRecords = await _unitOfWork.FoodRecordRepository.Value
-                .Get(e => e.UserId == currentUserId && e.ConsumptionDate == date, s => s)
-                .ToListAsync(cancellationToken);
-            await _unitOfWork.FoodRecordRepository.Value.DeleteRangeAsync(existingRecords, cancellationToken);
-
-            var newRecords = new FoodRecord[foodIds.Length];
-            for (var i = 0; i < foodIds.Length; i++)
-            {
-                newRecords[i] = new FoodRecord()
-                {
-                    ConsumptionDate = date,
-                    UserId = currentUserId,
-                    FoodId = foodIds[i],
-                    Quantity = quantities[i]
-                };
-            }
-            await _unitOfWork.FoodRecordRepository.Value.CreateRangeAsync(newRecords, cancellationToken);
-            await _unitOfWork.SaveChangesAsync(cancellationToken);
+            await _mediator.Send(command, cancellationToken);
 
             return RedirectToAction(nameof(AddFood));
         }
