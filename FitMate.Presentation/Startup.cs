@@ -1,5 +1,6 @@
 using FitMate.Applcation.ServiceCollectionExtensions;
 using FitMate.Infrastructure;
+using FitMate.Presentation.Middlewares;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Localization;
@@ -25,7 +26,8 @@ namespace FitMate
             services.AddControllersWithViews();
             services.AddRazorPages();
 
-            services.RegisterIdentity()
+            services.RegisterCustomMiddlewares()
+                .RegisterIdentity()
                 .RegisterInfrastructure()
                 .RegisterContext(Configuration)
                 .MigrateDatabase()
@@ -57,6 +59,8 @@ namespace FitMate
 
             app.UseAuthentication();
             app.UseAuthorization();
+
+            app.UseExceptionMiddleware();
 
             var cultures = new[]
             {
