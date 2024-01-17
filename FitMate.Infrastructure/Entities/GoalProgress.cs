@@ -2,7 +2,7 @@
 
 namespace FitMate.Infrastructure.Entities;
 
-public class GoalProgress : IEntity
+public class GoalProgress : IEntity, IUserOwnedEntity
 {
     public Guid Id { get; set; }
 

@@ -4,7 +4,10 @@ using MediatR;
 
 namespace FitMate.Applcation.Queries.WorkoutPlan
 {
-    public record GetWorkoutPlanQuery(Guid Id) : IRequest<WorkoutPlanDto>;
+    public record GetWorkoutPlanQuery(Guid Id) : IRequest<WorkoutPlanDto>
+    {
+        public string UserId { get; set; }
+    }
 
     internal sealed class GetWorkoutPlanQueryHandler : IRequestHandler<GetWorkoutPlanQuery, WorkoutPlanDto>
     {
@@ -16,6 +19,6 @@ namespace FitMate.Applcation.Queries.WorkoutPlan
         }
 
         public async Task<WorkoutPlanDto> Handle(GetWorkoutPlanQuery request, CancellationToken cancellationToken) =>
-            await _workoutPlanService.GetWorkoutAsync(request.Id, cancellationToken);
+            await _workoutPlanService.GetWorkoutAsync(request.Id, request.UserId, cancellationToken);
     }
 }

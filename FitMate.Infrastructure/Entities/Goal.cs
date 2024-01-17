@@ -3,7 +3,7 @@
 namespace FitMate.Infrastructure.Entities;
 
 // TODO: Review use of TPH and Discriminator
-public class Goal : IEntity
+public class Goal : IEntity, IUserOwnedEntity
 {
     public Guid Id { get; set; }
 

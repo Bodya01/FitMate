@@ -2,7 +2,7 @@
 
 namespace FitMate.Infrastructure.Entities;
 
-public class BodyweightTarget : IEntity
+public class BodyweightTarget : IEntity, IUserOwnedEntity
 {
     public Guid Id { get; set; }
 

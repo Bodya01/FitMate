@@ -32,10 +32,5 @@ namespace FitMate.Business.Services
 
             return _mapper.Map<GoalDto>(entity);
         }
-
-        private static void CheckRestrictionsAccess(Goal entity, Guid id, string userId)
-        {
-            if (entity.UserId != userId) throw new ForbiddenException($"User with {userId} id is forbidden to update a Task with {id} id");
-        }
     }
 }

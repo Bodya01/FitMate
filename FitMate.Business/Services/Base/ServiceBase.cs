@@ -1,6 +1,8 @@
 ﻿using AutoMapper;
 using FitMate.Business.Interfaces.Base;
 using FitMate.Core.UnitOfWork;
+using FitMate.Infrastructure.Entities.Interfaces;
+using FitMate.Infrastructure.Exceptions;
 
 namespace FitMate.Business.Services.Base
 {
@@ -13,6 +15,11 @@ namespace FitMate.Business.Services.Base
         {
             _unitOfWork = unitOfWork;
             _mapper = mapper;
+        }
+
+        protected virtual void CheckRestrictionsAccess<T>(T entity, Guid id, string userId) where T : IUserOwnedEntity
+        {
+            if (entity.UserId != userId) throw new ForbiddenException($"User with {userId} id is forbidden to update a Task with {id} id");
         }
     }
 }

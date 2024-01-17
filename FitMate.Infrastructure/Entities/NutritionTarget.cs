@@ -2,7 +2,7 @@
 
 namespace FitMate.Infrastructure.Entities;
 
-public class NutritionTarget : IEntity
+public class NutritionTarget : IEntity, IUserOwnedEntity
 {
     public Guid Id { get; set; }
 

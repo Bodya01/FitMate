@@ -4,7 +4,7 @@ using System.Text.Json;
 
 namespace FitMate.Infrastructure.Entities;
 
-public class WorkoutPlan : IEntity, IAuditedEntity
+public class WorkoutPlan : IEntity, IAuditedEntity, IUserOwnedEntity
 {
     public Guid Id { get; set; }
 

@@ -7,8 +7,8 @@ namespace FitMate.Business.Interfaces
     {
         Task CreateWorkoutPlanAsync(CreateWorkoutPlanModel workoutPlanModel, CancellationToken cancellationToken = default);
         Task UpdateWorkoutPlanAsync(UpdateWorkoutPlanModel workoutPlanModel, CancellationToken cancellationToken = default);
-        Task DeleteWorkoutAsync(Guid id, CancellationToken cancellationToken = default);
-        Task<WorkoutPlanDto> GetWorkoutAsync(Guid id, CancellationToken cancellationToken = default);
+        Task DeleteWorkoutAsync(Guid id, string userId, CancellationToken cancellationToken = default);
+        Task<WorkoutPlanDto> GetWorkoutAsync(Guid id, string userId, CancellationToken cancellationToken = default);
         Task<List<WorkoutPlanDto>> GetWorkoutsAsync(string userId, int pageNumber, int pageSize, CancellationToken cancellationToken = default);
     }
 }
