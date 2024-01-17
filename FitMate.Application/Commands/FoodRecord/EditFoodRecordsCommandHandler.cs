@@ -27,9 +27,9 @@ namespace FitMate.Application.Commands.FoodRecord
             for (var i = 0; i < request.FoodIds.Count; i++)
                 records[i] = new CreateFoodRecordModel(request.Quantities[i], request.Date, request.FoodIds[i], request.UserId);
 
-            _logger.LogInformation($"Updating food records for user {request.UserId} and date {request.Date} begins");
+            _logger.LogInformation($"Updating food records for user {request.UserId} and date {request.Date.ToShortDateString()} begins");
             await _foodRecordService.UpdateFoodRecordRangeAsync(records, request.UserId, request.Date, cancellationToken);
-            _logger.LogInformation($"Food records for user {request.UserId} and date {request.Date} were successfully updated");
+            _logger.LogInformation($"Food records for user {request.UserId} and date {request.Date.ToShortDateString()} were successfully updated");
         }
     }
 }
