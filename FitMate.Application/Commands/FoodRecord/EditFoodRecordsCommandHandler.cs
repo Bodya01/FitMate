@@ -1,6 +1,7 @@
-﻿using FitMate.Core.UnitOfWork;
+﻿using FitMate.Business.Interfaces;
+using FitMate.Infrastructure.Models.FoodRecord;
 using MediatR;
-using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 
 namespace FitMate.Application.Commands.FoodRecord
 {
@@ -11,35 +12,24 @@ namespace FitMate.Application.Commands.FoodRecord
 
     internal sealed class EditFoodRecordsCommandHandler : IRequestHandler<EditFoodRecordsCommand>
     {
+        private readonly ILogger<EditFoodRecordsCommandHandler> _logger;
+        private readonly IFoodRecordService _foodRecordService;
 
-        private readonly IUnitOfWork _unitOfWork;
-
-        public EditFoodRecordsCommandHandler(IUnitOfWork unitOfWork)
+        public EditFoodRecordsCommandHandler(ILogger<EditFoodRecordsCommandHandler> logger, IFoodRecordService foodRecordService)
         {
-            _unitOfWork = unitOfWork;
+            _logger = logger;
+            _foodRecordService = foodRecordService;
         }
 
         public async Task Handle(EditFoodRecordsCommand request, CancellationToken cancellationToken)
         {
-            var existingRecords = await _unitOfWork.FoodRecordRepository.Value
-                .Get(e => e.UserId == request.UserId && e.ConsumptionDate == request.Date, s => s)
-                .ToListAsync(cancellationToken);
-
-            var newRecords = new Infrastructure.Entities.FoodRecord[request.FoodIds.Count];
+            var records = new CreateFoodRecordModel[request.FoodIds.Count];
             for (var i = 0; i < request.FoodIds.Count; i++)
-            {
-                newRecords[i] = new Infrastructure.Entities.FoodRecord()
-                {
-                    ConsumptionDate = request.Date,
-                    UserId = request.UserId,
-                    FoodId = request.FoodIds[i],
-                    Quantity = request.Quantities[i]
-                };
-            }
+                records[i] = new CreateFoodRecordModel(request.Quantities[i], request.Date, request.FoodIds[i], request.UserId);
 
-            await _unitOfWork.FoodRecordRepository.Value.DeleteRangeAsync(existingRecords, cancellationToken);
-            await _unitOfWork.FoodRecordRepository.Value.CreateRangeAsync(newRecords, cancellationToken);
-            await _unitOfWork.SaveChangesAsync(cancellationToken);
+            _logger.LogInformation($"Updating food records for user {request.UserId} and date {request.Date} begins");
+            await _foodRecordService.UpdateFoodRecordRangeAsync(records, request.UserId, request.Date, cancellationToken);
+            _logger.LogInformation($"Food records for user {request.UserId} and date {request.Date} were successfully updated");
         }
     }
 }
