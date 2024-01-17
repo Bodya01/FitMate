@@ -11,9 +11,7 @@ namespace FitMate.Business.Services
 {
     internal sealed class FoodRecordService : ServiceBase, IFoodRecordService
     {
-        public FoodRecordService(IUnitOfWork unitOfWork, IMapper mapper) : base(unitOfWork, mapper)
-        {
-        }
+        public FoodRecordService(IUnitOfWork unitOfWork, IMapper mapper) : base(unitOfWork, mapper) { }
 
         public async Task UpdateFoodRecordRangeAsync(IEnumerable<CreateFoodRecordModel> records, string userId, DateTime consumptionDate, CancellationToken cancellationToken = default)
         {
