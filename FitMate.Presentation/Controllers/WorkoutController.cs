@@ -1,5 +1,6 @@
 ﻿using FitMate.Applcation.Commands.WorkoutPlan;
 using FitMate.Applcation.Queries.WorkoutPlan;
+using FitMate.Application.Commands.WorkoutPlan;
 using FitMate.Business.Interfaces;
 using FitMate.Core.UnitOfWork;
 using FitMate.Infrastucture.Dtos;
@@ -38,15 +39,19 @@ namespace FitMate.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Edit([FromRoute] GetWorkoutPlanQuery query, CancellationToken cancellationToken) =>
-            View(await _mediator.Send(query, cancellationToken));
+        public async Task<IActionResult> Edit([FromRoute] GetWorkoutPlanQuery query, CancellationToken cancellationToken)
+        {
+            query.UserId = await _userService.GetUserIdAsync(cancellationToken);
+            return View(await _mediator.Send(query, cancellationToken));
+        }
 
         [HttpGet]
         public async Task<IActionResult> Session([FromRoute] GetWorkoutPlanQuery query, [FromRoute] int sessionId, CancellationToken cancellationToken)
         {
+            query.UserId = await _userService.GetUserIdAsync(cancellationToken);
             var plan = await _mediator.Send(query, cancellationToken);
 
-            if (plan is null || sessionId < 0 || sessionId >= plan.Sessions.Count) return BadRequest();
+            if (sessionId < 0 || sessionId >= plan.Sessions.Count) return BadRequest();
 
             var session = plan.Sessions.ToList()[sessionId];
             return View(session);
@@ -56,9 +61,16 @@ namespace FitMate.Controllers
         public async Task<IActionResult> Edit([FromForm] EditWorkoutPlanCommand command, CancellationToken cancellationToken)
         {
             command.UserId = await _userService.GetUserIdAsync(cancellationToken);
-
             await _mediator.Send(command, cancellationToken);
 
+            return RedirectToAction(nameof(Summary));
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Delete([FromForm] Guid id, CancellationToken cancellationToken)
+        {
+            var currentUserId = await _userService.GetUserIdAsync(cancellationToken);
+            await _mediator.Send(new DeleteWorkoutPlanCommand(id, currentUserId), cancellationToken);
             return RedirectToAction(nameof(Summary));
         }
     }
