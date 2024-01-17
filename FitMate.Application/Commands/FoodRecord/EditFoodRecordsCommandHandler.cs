@@ -1,7 +1,6 @@
 ﻿using FitMate.Core.UnitOfWork;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
-using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace FitMate.Application.Commands.FoodRecord
 {

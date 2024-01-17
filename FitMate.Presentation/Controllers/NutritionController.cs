@@ -81,17 +81,14 @@ namespace FitMate.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> AddNewFood(FoodDto food, CancellationToken cancellationToken)
+        public async Task<IActionResult> CreateNewFood([FromForm] CreateFoodCommand command, CancellationToken cancellationToken)
         {
-            var command = new CreateFoodCommand(food);
-
             await _mediator.Send(command, cancellationToken);
-
             return RedirectToAction(nameof(AddFood));
         }
 
         [HttpPost]
-        public async Task<IActionResult> EditRecords(EditFoodRecordsCommand command, CancellationToken cancellationToken)
+        public async Task<IActionResult> EditRecords([FromForm] EditFoodRecordsCommand command, CancellationToken cancellationToken)
         {
             if (command.FoodIds.Count != command.Quantities.Count || !command.FoodIds.Any()) return BadRequest();
 
@@ -102,10 +99,10 @@ namespace FitMate.Controllers
             return RedirectToAction(nameof(AddFood));
         }
 
-        [HttpDelete]
-        public async Task<IActionResult> DeleteFood(Guid id, CancellationToken cancellationToken)
+        [HttpPost]
+        public async Task<IActionResult> DeleteFood([FromForm] DeleteFoodCommand command, CancellationToken cancellationToken)
         {
-            await _mediator.Send(new DeleteFoodCommand(id), cancellationToken);
+            await _mediator.Send(command, cancellationToken);
             return RedirectToAction(nameof(AddFood));
         }
     }

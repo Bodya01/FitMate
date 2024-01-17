@@ -45,7 +45,7 @@
     }
 </div>
 
-<form id="NewFoodForm" asp-controller="@(UiNamingHelper.GetControllerName<NutritionController>())" asp-action="@nameof(NutritionController.AddNewFood)" method="post" class="mt-4">
+<form id="NewFoodForm" asp-controller="@(UiNamingHelper.GetControllerName<NutritionController>())" asp-action="@nameof(NutritionController.CreateNewFood)" method="post" class="mt-4">
     <div class="mb-2">
         <h2 class="d-inline mr-2 align-middle" id="NewFoodHeader">Add New Food</h2>
         <input type="submit" class="btn btn-primary" value="Save" />
@@ -99,7 +99,7 @@
 </form>
 
 
-<form asp-controller="@(UiNamingHelper.GetControllerName<NutritionController>())" asp-action="@nameof(NutritionController.EditRecords)" method="post">
+<form asp-controller="@(UiNamingHelper.GetControllerName<NutritionController>())" asp-action="@nameof(NutritionController.EditRecords)">
     <div class="mb-2">
         <h2 class="mt-3 mr-2 d-inline align-middle">Food Records</h2>
         <input type="submit" class="btn btn-primary d-inline" value="Save" />
@@ -140,7 +140,7 @@
 
                 <tr>
                     <td>
-                        <input type="hidden" class="recordID" value="@record.Id" name="FoodIDs[@i]" />
+                        <input type="hidden" class="recordID" value="@record.Food.Id" name="FoodIds[@i]" />
                         <input type="text" class="recordName" value="@record.Food.Name" disabled />
                     </td>
                     <td><input type="number" class="recordQuantity" min="0" step="0.1" value="@record.Quantity" name="Quantities[@i]" required /></td>
