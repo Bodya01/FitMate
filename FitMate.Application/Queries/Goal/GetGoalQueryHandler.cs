@@ -1,28 +1,24 @@
-﻿using AutoMapper;
-using FitMate.Core.UnitOfWork;
+﻿using FitMate.Business.Interfaces;
 using FitMate.Infrastucture.Dtos.Goals;
 using MediatR;
+using Microsoft.Extensions.Logging;
 
 namespace FitMate.Application.Queries.Goal
 {
-    public record GetGoalQuery(Guid Id) : IRequest<GoalDto>;
-    public record GetGoalQueryResult(GoalDto Goal, bool IsWeightliftingGoal, bool IsTimedGoal);
+    public record GetGoalQuery(Guid Id, string UserId) : IRequest<GoalDto>;
 
     internal sealed class GetGoalQueryHandler : IRequestHandler<GetGoalQuery, GoalDto>
     {
-        private readonly IUnitOfWork _unitOfWork;
-        private readonly IMapper _mapper;
+        private readonly ILogger<GetGoalQueryHandler> _logger;
+        private readonly IGoalService _goalService;
 
-        public GetGoalQueryHandler(IUnitOfWork unitOfWork, IMapper mapper)
+        public GetGoalQueryHandler(ILogger<GetGoalQueryHandler> logger, IGoalService goalService)
         {
-            _unitOfWork = unitOfWork;
-            _mapper = mapper;
+            _logger = logger;
+            _goalService = goalService;
         }
 
-        public async Task<GoalDto> Handle(GetGoalQuery request, CancellationToken cancellationToken)
-        {
-            var entity = await _unitOfWork.GoalRepository.Value.GetByIdAsync(request.Id, cancellationToken);
-            return _mapper.Map<GoalDto>(entity);
-        }
+        public async Task<GoalDto> Handle(GetGoalQuery request, CancellationToken cancellationToken) =>
+            await _goalService.GetGoalAsync(request.Id, request.UserId, cancellationToken);
     }
 }

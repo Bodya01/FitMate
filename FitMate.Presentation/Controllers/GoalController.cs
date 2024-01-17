@@ -47,8 +47,8 @@ namespace FitMate.Controllers
         [HttpGet]
         public async Task<IActionResult> EditGoal(Guid id, CancellationToken cancellationToken)
         {
-            var goal = await _mediator.Send(new GetGoalQuery(id), cancellationToken);
-            return goal is null ? BadRequest() : View(goal);
+            var currentUserId = await _userService.GetUserIdAsync(cancellationToken);
+            return View(await _mediator.Send(new GetGoalQuery(id, currentUserId), cancellationToken));
         }
 
         [HttpGet]
@@ -215,7 +215,8 @@ namespace FitMate.Controllers
         [HttpDelete]
         public async Task<IActionResult> DeleteGoal(Guid id, CancellationToken cancellationToken)
         {
-            await _mediator.Send(new DeleteGoalCommand(id), cancellationToken);
+            var currentUserId = await _userService.GetUserIdAsync(cancellationToken);
+            await _mediator.Send(new DeleteGoalCommand(id, currentUserId), cancellationToken);
             return RedirectToAction(nameof(Summary));
         }
     }

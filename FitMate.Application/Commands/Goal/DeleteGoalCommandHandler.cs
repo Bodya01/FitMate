@@ -1,31 +1,27 @@
-﻿using FitMate.Core.UnitOfWork;
-using FitMate.Infrastructure.Exceptions;
+﻿using FitMate.Business.Interfaces;
 using MediatR;
+using Microsoft.Extensions.Logging;
 
 namespace FitMate.Application.Commands.Goal
 {
-    public record DeleteGoalCommand(Guid Id) : IRequest;
+    public record DeleteGoalCommand(Guid Id, string UserId) : IRequest;
 
     internal sealed class DeleteGoalCommandHandler : IRequestHandler<DeleteGoalCommand>
     {
-        private readonly IUnitOfWork _unitOfWork;
-        //private readonly ILogger _logger;
+        private readonly IGoalService _goalService;
+        private readonly ILogger<DeleteGoalCommandHandler> _logger;
 
-        public DeleteGoalCommandHandler(IUnitOfWork unitOfWork/*, ILogger logger*/)
+        public DeleteGoalCommandHandler(IGoalService goalService, ILogger<DeleteGoalCommandHandler> logger)
         {
-            _unitOfWork = unitOfWork;
-            //_logger = logger;
+            _goalService = goalService;
+            _logger = logger;
         }
 
         public async Task Handle(DeleteGoalCommand request, CancellationToken cancellationToken)
         {
-            var entity = await _unitOfWork.GoalRepository.Value.GetByIdAsync(request.Id, cancellationToken);
-
-            if (entity is null) throw new EntityNotFoundException($"Goal with id {request.Id} was not found");
-
-            //_logger.LogInformation($"The deletion of goal with {request.Id} id begun");
-            await _unitOfWork.GoalRepository.Value.DeleteAsync(request.Id, cancellationToken);
-            await _unitOfWork.SaveChangesAsync(cancellationToken);
+            _logger.LogInformation($"The deletion of goal with {request.Id} id begun");
+            await _goalService.DeleteGoalAsync(request.Id, request.UserId, cancellationToken);
+            _logger.LogInformation($"Goal with {request.Id} id was successfully deleted");
         }
     }
 }
