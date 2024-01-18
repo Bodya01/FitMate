@@ -39,11 +39,11 @@ namespace FitMate.Core.Context
 
         public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken)
         {
-            SetCreatedAtForAuditedEntitiesAsync();
+            AuditEntities();
             return await base.SaveChangesAsync(cancellationToken);
         }
 
-        private void SetCreatedAtForAuditedEntitiesAsync()
+        private void AuditEntities()
         {
             var auditedEntities = ChangeTracker.Entries()
                 .Where(e => e.Entity is IAuditedEntity && e.State == EntityState.Added)
