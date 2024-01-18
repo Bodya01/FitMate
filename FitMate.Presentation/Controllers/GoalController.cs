@@ -32,7 +32,7 @@ namespace FitMate.Controllers
         {
             var currentUserId = await _userService.GetUserIdAsync(cancellationToken);
 
-            var result = await _mediator.Send(new GetGoalsQuery(currentUserId), cancellationToken);
+            var result = await _mediator.Send(new GoalSummaryQuery(currentUserId), cancellationToken);
 
             return View(result);
         }
