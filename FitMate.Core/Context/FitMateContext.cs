@@ -32,6 +32,8 @@ namespace FitMate.Core.Context
             builder.ApplyConfiguration(new FoodMap());
             builder.ApplyConfiguration(new FoodRecordMap());
             builder.ApplyConfiguration(new GoalMap());
+            builder.ApplyConfiguration(new TimedGoalMap());
+            builder.ApplyConfiguration(new WeightliftingGoalMap());
             builder.ApplyConfiguration(new GoalProgressMap());
             builder.ApplyConfiguration(new NutritionTargetMap());
             builder.ApplyConfiguration(new WorkoutPlanMap());
