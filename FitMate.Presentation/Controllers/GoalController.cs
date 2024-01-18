@@ -38,7 +38,7 @@ namespace FitMate.Controllers
         }
 
         [HttpGet]
-        public IActionResult AddGoal()
+        public IActionResult CreateGoal()
         {
             var model = new WeightliftingGoalDto(Guid.Empty, string.Empty, string.Empty, new List<GoalProgressDto>(), default, default);
             return View("EditGoal", model);
@@ -156,7 +156,7 @@ namespace FitMate.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> EditGoal(EditGoalInputModel goalInput, CancellationToken cancellationToken)
+        public async Task<IActionResult> UpdateGoal(EditGoalInputModel goalInput, CancellationToken cancellationToken)
         {
             if (!TryValidateModel(goalInput))
             {
