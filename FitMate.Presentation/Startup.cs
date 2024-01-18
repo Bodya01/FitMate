@@ -60,7 +60,7 @@ namespace FitMate
             app.UseAuthentication();
             app.UseAuthorization();
 
-            app.UseExceptionMiddleware();
+            //app.UseExceptionMiddleware();
 
             var cultures = new[]
             {
