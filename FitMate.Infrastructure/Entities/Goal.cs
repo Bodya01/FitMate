@@ -8,7 +8,6 @@ public class Goal : IEntity, IUserOwnedEntity
     public Guid Id { get; set; }
 
     public string Activity { get; set; }
-    public string Discriminator { get; set; }
 
     public string UserId { get; set; }
 

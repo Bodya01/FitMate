@@ -1,4 +1,5 @@
-﻿using FitMate.Core.Repositories.Interfaces;
+﻿using FitMate.Core.Repositories.Implementations;
+using FitMate.Core.Repositories.Interfaces;
 
 namespace FitMate.Core.UnitOfWork
 {
@@ -7,6 +8,8 @@ namespace FitMate.Core.UnitOfWork
         Lazy<IBodyweightRecordRepository> BodyweightRecordRepository { get; }
         Lazy<IBodyweightTargetRepository> BodyweightTargetRepository { get; }
         Lazy<IGoalRepository> GoalRepository { get; }
+        Lazy<ITimedGoalRepository> TimedGoalRepository { get; }
+        Lazy<IWeightliftingGoalRepository> WeightliftingGoalRepository { get; }
         Lazy<IGoalProgressRepository> GoalProgressRepository { get; }
         Lazy<IWorkoutPlanRepository> WorkoutPlanRepository { get; }
         Lazy<IFoodRepository> FoodRepository { get; }

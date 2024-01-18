@@ -32,6 +32,8 @@ namespace FitMate.Core.Context
             builder.ApplyConfiguration(new FoodMap());
             builder.ApplyConfiguration(new FoodRecordMap());
             builder.ApplyConfiguration(new GoalMap());
+            builder.ApplyConfiguration(new TimedGoalMap());
+            builder.ApplyConfiguration(new WeightliftingGoalMap());
             builder.ApplyConfiguration(new GoalProgressMap());
             builder.ApplyConfiguration(new NutritionTargetMap());
             builder.ApplyConfiguration(new WorkoutPlanMap());
@@ -39,11 +41,11 @@ namespace FitMate.Core.Context
 
         public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken)
         {
-            SetCreatedAtForAuditedEntitiesAsync();
+            AuditEntities();
             return await base.SaveChangesAsync(cancellationToken);
         }
 
-        private void SetCreatedAtForAuditedEntitiesAsync()
+        private void AuditEntities()
         {
             var auditedEntities = ChangeTracker.Entries()
                 .Where(e => e.Entity is IAuditedEntity && e.State == EntityState.Added)

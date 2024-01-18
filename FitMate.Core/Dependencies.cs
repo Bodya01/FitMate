@@ -18,6 +18,8 @@ namespace FitMate.Core
             services.AddScoped<IBodyweightRecordRepository, BodyweightRecordRepository>();
             services.AddScoped<IBodyweightTargetRepository, BodyweightTargetRepository>();
             services.AddScoped<IGoalRepository, GoalRepository>();
+            services.AddScoped<ITimedGoalRepository, TimedGoalRepository>();
+            services.AddScoped<IWeightliftingGoalRepository, WeightliftingGoalRepository>();
             services.AddScoped<IGoalProgressRepository, GoalProgressRepository>();
             services.AddScoped<IWorkoutPlanRepository, WorkoutPlanRepository>();
             services.AddScoped<IFoodRepository, FoodRepository>();

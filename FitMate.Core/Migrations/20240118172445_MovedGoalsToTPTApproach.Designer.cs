@@ -4,6 +4,7 @@ using FitMate.Core.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FitMate.Core.Migrations
 {
     [DbContext(typeof(FitMateContext))]
-    partial class FitMateContextModelSnapshot : ModelSnapshot
+    [Migration("20240118172445_MovedGoalsToTPTApproach")]
+    partial class MovedGoalsToTPTApproach
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -211,6 +214,9 @@ namespace FitMate.Core.Migrations
 
                     b.Property<string>("Activity")
                         .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Discriminator")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("UserId")
