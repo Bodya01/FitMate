@@ -31,28 +31,27 @@ namespace FitMate.Controllers
         public async Task<IActionResult> Summary(CancellationToken cancellationToken)
         {
             var currentUserId = await _userService.GetUserIdAsync(cancellationToken);
-
             var result = await _mediator.Send(new GoalSummaryQuery(currentUserId), cancellationToken);
 
             return View(result);
         }
 
         [HttpGet]
-        public IActionResult CreateGoal()
+        public IActionResult Add()
         {
             var model = new WeightliftingGoalDto(Guid.Empty, string.Empty, string.Empty, new List<GoalProgressDto>(), default, default);
             return View("EditGoal", model);
         }
 
         [HttpGet]
-        public async Task<IActionResult> EditGoal(Guid id, CancellationToken cancellationToken)
+        public async Task<IActionResult> Edit(Guid id, CancellationToken cancellationToken)
         {
             var currentUserId = await _userService.GetUserIdAsync(cancellationToken);
             return View(await _mediator.Send(new GetGoalQuery(id, currentUserId), cancellationToken));
         }
 
         [HttpGet]
-        public async Task<IActionResult> ViewGoal(Guid Id, CancellationToken cancellationToken)
+        public async Task<IActionResult> View(Guid Id, CancellationToken cancellationToken)
         {
             var currentUserId = await _userService.GetUserIdAsync(cancellationToken);
 
@@ -152,11 +151,17 @@ namespace FitMate.Controllers
             await _unitOfWork.GoalProgressRepository.Value.CreateAsync(newProgress, cancellationToken);
             await _unitOfWork.SaveChangesAsync(cancellationToken);
 
-            return RedirectToAction(nameof(ViewGoal), new { ID = progress.GoalId });
+            return RedirectToAction(nameof(View), new { ID = progress.GoalId });
         }
 
         [HttpPost]
-        public async Task<IActionResult> UpdateGoal(EditGoalInputModel goalInput, CancellationToken cancellationToken)
+        public IActionResult Create(CreateGoalInputModel model, CancellationToken cancellationToken)
+        {
+            return RedirectToAction(nameof(Summary));
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Update(EditGoalInputModel goalInput, CancellationToken cancellationToken)
         {
             if (!TryValidateModel(goalInput))
             {
@@ -213,7 +218,7 @@ namespace FitMate.Controllers
         }
 
         [HttpDelete]
-        public async Task<IActionResult> DeleteGoal(Guid id, CancellationToken cancellationToken)
+        public async Task<IActionResult> Delete(Guid id, CancellationToken cancellationToken)
         {
             var currentUserId = await _userService.GetUserIdAsync(cancellationToken);
             await _mediator.Send(new DeleteGoalCommand(id, currentUserId), cancellationToken);

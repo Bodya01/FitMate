@@ -30,7 +30,7 @@
                 <h4 class="d-inline">@Model.Goal.Activity</h4>
                 <button type="button" class="btn btn-danger dropdown-toggle float-right" data-toggle="dropdown">Options</button>
                 <div class="dropdown-menu">
-                    <a asp-controller="@(UiNamingHelper.GetControllerName<GoalController>())" asp-action="@nameof(GoalController.EditGoal)" asp-route-ID="@Model.Goal.Id" class="dropdown-item">Edit</a>
+                    <a asp-controller="@(UiNamingHelper.GetControllerName<GoalController>())" asp-action="@nameof(GoalController.Edit)" asp-route-ID="@Model.Goal.Id" class="dropdown-item">Edit</a>
                 </div>
             </div>
             <div class="card-body">

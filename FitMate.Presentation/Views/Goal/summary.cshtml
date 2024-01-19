@@ -9,7 +9,7 @@
 
 <div>
     <h2 class="d-inline">My Goals</h2>
-    <a asp-controller="@(UiNamingHelper.GetControllerName<GoalController>())" asp-action="@nameof(GoalController.CreateGoal)" class="font-weight-bold ml-1" style="vertical-align:text-bottom">+Add Goal</a>
+    <a asp-controller="@(UiNamingHelper.GetControllerName<GoalController>())" asp-action="@nameof(GoalController.Add)" class="font-weight-bold ml-1" style="vertical-align:text-bottom">+Add Goal</a>
 </div>
 
 <div class="row">
@@ -50,7 +50,7 @@
                     }
                 </div>
                 <div class="card-footer">
-                    <a asp-controller="@(UiNamingHelper.GetControllerName<GoalController>())" asp-action="@nameof(GoalController.ViewGoal)" asp-route-id="@goal.Id" class="btn btn-primary float-right">View</a>
+                    <a asp-controller="@(UiNamingHelper.GetControllerName<GoalController>())" asp-action="@nameof(GoalController.View)" asp-route-id="@goal.Id" class="btn btn-primary float-right">View</a>
                 </div>
             </div>
         </div>
