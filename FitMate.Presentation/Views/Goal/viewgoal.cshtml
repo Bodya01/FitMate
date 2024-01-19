@@ -1,4 +1,5 @@
 ﻿@using FitMate.Controllers;
+@using FitMate.Presentation.Controllers;
 @using FitMate.Presentation.Helpers;
 @model FitMate.Presentation.ViewModels.Goal.GoalViewModel
 
@@ -242,7 +243,7 @@
                     <span class="text-white" aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <form asp-controller="@(UiNamingHelper.GetControllerName<GoalController>())" asp-action="@nameof(GoalController.AddProgress)" method="post">
+            <form asp-controller="@(UiNamingHelper.GetControllerName<GoalProgressController>())" asp-action="@nameof(GoalProgressController.AddProgress)" method="post">
                 <div class="modal-body">
                     <input type="hidden" name="GoalID" value="@Model.Goal.Id" required />
                     @{
