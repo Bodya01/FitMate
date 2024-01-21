@@ -7,7 +7,7 @@
 function LoadWeightliftingGraph() {
     let id = $("#ProgressType").data("goalid");
 
-    let progressData = $.get("/GoalProgress/GetWeightliftingProgress", { GoalId: id }, function (result) {
+    let progressData = $.get("/GoalProgress/GetWeightliftingProgress", { id: id }, function (result) {
         let dates = result.map(function (record) { return record.date; });
         let weights = result.map(function (record) { return record.weight; });
         let goalWeight = Array(dates.length).fill($("#WeightliftingGoal").data("goal"));

@@ -7,7 +7,6 @@ public class TimedGoal : IGoal, IEntity
     public Guid Id { get; set; }
 
     public string Activity { get; set; }
-
     public TimeSpan Time { get; set; }
     public float Quantity { get; set; }
     public string QuantityUnit { get; set; }
