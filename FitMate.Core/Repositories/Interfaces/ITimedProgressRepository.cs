@@ -2,8 +2,7 @@
 
 namespace FitMate.Core.Repositories.Interfaces
 {
-    public interface IGoalProgressRepository : IRepositoryBase<GoalProgress>
+    public interface ITimedProgressRepository : IRepositoryBase<TimedProgress>
     {
-
     }
 }

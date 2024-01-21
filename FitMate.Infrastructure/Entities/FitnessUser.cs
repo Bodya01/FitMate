@@ -12,8 +12,10 @@ public class FitnessUser : IdentityUser, IEntity
 
     public ICollection<BodyweightRecord> BodyweightRecords { get; set; }
     public ICollection<BodyweightTarget> BodyweightTargets { get; set; }
-    public ICollection<Goal> Goals { get; set; }
-    public ICollection<GoalProgress> GoalProgressRecords { get; set; }
+    public ICollection<TimedGoal> TimedGoals { get; set; }
+    public ICollection<WeightliftingGoal> WeightliftingGoals { get; set; }
+    public ICollection<TimedProgress> TimedProgressRecords { get; set; }
+    public ICollection<WeightliftingProgress> WeightliftingProgressRecords { get; set; }
     public ICollection<NutritionTarget> NutritionTargets { get; set; }
     public ICollection<WorkoutPlan> WorkoutPlans { get; set; }
     public ICollection<FoodRecord> FoodRecords { get; set; }

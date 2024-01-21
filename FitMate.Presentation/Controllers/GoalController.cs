@@ -1,19 +1,17 @@
 ﻿using FitMate.Application.Commands.Goal;
+using FitMate.Application.Commands.Goal.Timed;
+using FitMate.Application.Commands.Goal.Weightlifting;
 using FitMate.Application.Queries.Goal;
+using FitMate.Application.Queries.Goal.Timed;
+using FitMate.Application.Queries.Goal.Weightlifting;
 using FitMate.Business.Interfaces;
 using FitMate.Core.UnitOfWork;
-using FitMate.Infrastructure.Entities;
-using FitMate.Infrastructure.Models.GoalProgress;
-using FitMate.Infrastucture.Dtos.GoalProgress;
 using FitMate.Infrastucture.Dtos.Goals;
 using FitMate.Presentation.ViewModels.Goal;
 using FitMate.UI.Web.Controllers.Base;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -31,115 +29,76 @@ namespace FitMate.Controllers
         public async Task<IActionResult> Summary(CancellationToken cancellationToken)
         {
             var currentUserId = await _userService.GetUserIdAsync(cancellationToken);
-            var result = await _mediator.Send(new GoalSummaryQuery(currentUserId), cancellationToken);
+            var (weightlifting, timed) = await _mediator.Send(new GoalSummaryQuery(currentUserId), cancellationToken);
 
-            return View(result);
+            return View(new GoalSummaryViewModel(weightlifting, timed));
         }
 
         [HttpGet]
-        public IActionResult Add()
+        public IActionResult Add() =>
+            View("Add", new WeightliftingGoalDto(Guid.Empty, string.Empty, string.Empty, null, default, default));
+
+        [HttpGet]
+        public async Task<IActionResult> EditTimed([FromRoute] GetTimedGoalQuery query, CancellationToken cancellationToken)
         {
-            var model = new WeightliftingGoalDto(Guid.Empty, string.Empty, string.Empty, new List<GoalProgressDto>(), default, default);
-            return View("EditGoal", model);
+            query.UserId = await _userService.GetUserIdAsync(cancellationToken);
+            return View(await _mediator.Send(query, cancellationToken));
         }
 
         [HttpGet]
-        public async Task<IActionResult> Edit(Guid id, CancellationToken cancellationToken)
+        public async Task<IActionResult> EditWeightlifting([FromRoute] GetWeightliftingGoalQuery query, CancellationToken cancellationToken)
         {
-            var currentUserId = await _userService.GetUserIdAsync(cancellationToken);
-            return View(await _mediator.Send(new GetGoalQuery(id, currentUserId), cancellationToken));
+            query.UserId = await _userService.GetUserIdAsync(cancellationToken);
+            return View(await _mediator.Send(query, cancellationToken));
         }
 
         [HttpGet]
-        public async Task<IActionResult> View(Guid Id, CancellationToken cancellationToken)
+        public async Task<IActionResult> ViewTimed([FromRoute] GetTimedGoalQuery query, CancellationToken cancellationToken)
         {
-            var currentUserId = await _userService.GetUserIdAsync(cancellationToken);
+            query.UserId = await _userService.GetUserIdAsync(cancellationToken);
+            return View(await _mediator.Send(query, cancellationToken));
+        }
 
-            var goal = await _unitOfWork.GoalRepository.Value.GetByIdAsync(Id, cancellationToken);
-
-            if (goal is null) return BadRequest();
-
-            var progress = await _unitOfWork.GoalProgressRepository.Value.Get(e => e.GoalId == Id && e.UserId == currentUserId, s => s).ToListAsync(cancellationToken);
-
-            if (progress is null) return BadRequest();
-
-            var viewModel = new GoalViewModel()
-            {
-                Goal = goal,
-                Progress = progress
-            };
-
-            return View(viewModel);
+        [HttpGet]
+        public async Task<IActionResult> ViewWeightlifting([FromRoute] GetWeightliftingGoalQuery query, CancellationToken cancellationToken)
+        {
+            query.UserId = await _userService.GetUserIdAsync(cancellationToken);
+            return View(await _mediator.Send(query, cancellationToken));
         }
 
         [HttpPost]
-        public IActionResult Create(CreateGoalInputModel model, CancellationToken cancellationToken)
+        public async Task<IActionResult> CreateTimed([FromForm] CreateTimedGoalCommand command, CancellationToken cancellationToken)
         {
+            command.UserId = await _userService.GetUserIdAsync(cancellationToken);
+            await _mediator.Send(command, cancellationToken);
+
             return RedirectToAction(nameof(Summary));
         }
 
         [HttpPost]
-        public async Task<IActionResult> Update(EditGoalInputModel goalInput, CancellationToken cancellationToken)
+        public async Task<IActionResult> CreateWeightlifting([FromForm] CreateWeightliftingGoalCommand command, CancellationToken cancellationToken)
         {
-            if (!TryValidateModel(goalInput))
-            {
-                var errors = ModelState.Select(x => x.Value.Errors).Where(c => c.Any()).ToList();
-                return BadRequest(errors);
-            }
-
-            Goal goal = null;
-
-            if (goalInput.Id != Guid.Empty)
-            {
-                goal = await _unitOfWork.GoalRepository.Value.GetByIdAsync(goalInput.Id, cancellationToken);
-            }
-            else
-            {
-                switch (goalInput.Type.ToLower())
-                {
-                    case "weightlifting":
-                        goal = new WeightliftingGoal();
-                        break;
-                    case "timed":
-                        goal = new TimedGoal();
-                        break;
-                }
-            }
-
-            switch (goal)
-            {
-                case WeightliftingGoal wGoal:
-                    wGoal.Reps = goalInput.Reps;
-                    wGoal.Weight = goalInput.Weight;
-                    break;
-                case TimedGoal tGoal:
-                    tGoal.Quantity = (int)goalInput.Quantity;
-                    tGoal.QuantityUnit = goalInput.QuantityUnit;
-                    tGoal.Time = new TimeSpan(goalInput.Hours, goalInput.Minutes, goalInput.Seconds);
-                    break;
-            }
-
-            goal.Activity = goalInput.Activity;
-            goal.UserId = await _userService.GetUserIdAsync(cancellationToken);
-
-            if (goal.Id == Guid.Empty)
-            {
-                await _unitOfWork.GoalRepository.Value.CreateAsync(goal, cancellationToken);
-            }
-            else
-            {
-                await _unitOfWork.GoalRepository.Value.UpdateAsync(goal, cancellationToken);
-            }
-            await _unitOfWork.SaveChangesAsync(cancellationToken);
+            command.UserId = await _userService.GetUserIdAsync(cancellationToken);
+            await _mediator.Send(command, cancellationToken);
 
             return RedirectToAction(nameof(Summary));
         }
 
-        [HttpDelete]
-        public async Task<IActionResult> Delete(Guid id, CancellationToken cancellationToken)
+        [HttpPost]
+        public async Task<IActionResult> UpdateTimed([FromForm] UpdateTimedGoalCommand command, CancellationToken cancellationToken)
         {
-            var currentUserId = await _userService.GetUserIdAsync(cancellationToken);
-            await _mediator.Send(new DeleteGoalCommand(id, currentUserId), cancellationToken);
+            command.UserId = await _userService.GetUserIdAsync(cancellationToken);
+            await _mediator.Send(command, cancellationToken);
+
+            return RedirectToAction(nameof(Summary));
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> UpdateWeightlifting([FromForm] UpdateWeightliftingGoalCommand command, CancellationToken cancellationToken)
+        {
+            command.UserId = await _userService.GetUserIdAsync(cancellationToken);
+            await _mediator.Send(command, cancellationToken);
+
             return RedirectToAction(nameof(Summary));
         }
     }

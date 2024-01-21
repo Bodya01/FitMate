@@ -9,10 +9,8 @@ namespace FitMate.Core.UnitOfWork
         private readonly FitMateContext _context;
         public Lazy<IBodyweightRecordRepository> BodyweightRecordRepository { get; private set; }
         public Lazy<IBodyweightTargetRepository> BodyweightTargetRepository { get; private set; }
-        public Lazy<IGoalRepository> GoalRepository { get; private set; }
         public Lazy<ITimedGoalRepository> TimedGoalRepository { get; private set; }
         public Lazy<IWeightliftingGoalRepository> WeightliftingGoalRepository { get; private set; }
-        public Lazy<IGoalProgressRepository> GoalProgressRepository { get; private set; }
         public Lazy<IWorkoutPlanRepository> WorkoutPlanRepository { get; private set; }
         public Lazy<IFoodRepository> FoodRepository { get; private set; }
         public Lazy<IFoodRecordRepository> FoodRecordRepository { get; private set; }
@@ -23,10 +21,8 @@ namespace FitMate.Core.UnitOfWork
             _context = context;
             BodyweightRecordRepository = new Lazy<IBodyweightRecordRepository>(new BodyweightRecordRepository(context));
             BodyweightTargetRepository = new Lazy<IBodyweightTargetRepository>(new BodyweightTargetRepository(context));
-            GoalRepository = new Lazy<IGoalRepository>(new GoalRepository(context));
             TimedGoalRepository = new Lazy<ITimedGoalRepository>(new TimedGoalRepository(context));
             WeightliftingGoalRepository = new Lazy<IWeightliftingGoalRepository>(new WeightliftingGoalRepository(context));
-            GoalProgressRepository = new Lazy<IGoalProgressRepository>(new GoalProgressRepository(context));
             WorkoutPlanRepository = new Lazy<IWorkoutPlanRepository>(new WorkoutPlanRepository(context));
             FoodRepository = new Lazy<IFoodRepository>(new FoodRepository(context));
             FoodRecordRepository = new Lazy<IFoodRecordRepository>(new FoodRecordRepository(context));

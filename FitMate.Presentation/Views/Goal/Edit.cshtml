@@ -3,10 +3,6 @@
 @using FitMate.Presentation.Helpers;
 @model GoalDto
 
-@{
-    ViewData["FormAction"] = nameof(GoalController.Update);
-}
-
 <h1 class="ml-1">Edit Goal</h1>
 
 <div class="container w-25 ml-2">
@@ -14,6 +10,23 @@
 </div>
 
 @section Scripts
-{
-    <script src="~/js/Goal/editgoal.js"></script>
+    {
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <script>
+        function typeRadio_Changed() {
+            if ($("#WeightliftingRadio:checked").length === 1) {
+                $("#WeightliftingGroup").removeClass("d-none");
+                $("#TimedGroup").addClass("d-none");
+                $("#goalForm").attr("action", "/@(UiNamingHelper.GetControllerName<GoalController>())/@(nameof(GoalController.UpdateWeightlifting))")
+            } else {
+                $("#WeightliftingGroup").addClass("d-none");
+                $("#TimedGroup").removeClass("d-none");
+                $("#goalForm").attr("action", "/@(UiNamingHelper.GetControllerName<GoalController>())/@(nameof(GoalController.UpdateTimed))")
+            }
+        }
+
+        $(document).ready(function () {
+            typeRadio_Changed();
+        });
+    </script>
 }

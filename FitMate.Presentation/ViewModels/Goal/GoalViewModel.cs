@@ -1,11 +1,9 @@
-﻿using FitMate.Infrastructure.Entities;
-using System.Collections.Generic;
+﻿using FitMate.Infrastucture.Dtos.Goals;
 
 namespace FitMate.Presentation.ViewModels.Goal
 {
-    internal sealed class GoalViewModel
+    public sealed class GoalViewModel
     {
-        public Infrastructure.Entities.Goal Goal { get; set; }
-        public List<GoalProgress> Progress { get; set; }
+        public GoalDto Goal { get; set; }
     }
 }

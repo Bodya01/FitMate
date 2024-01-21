@@ -5,9 +5,9 @@ using MediatR;
 
 namespace FitMate.Application.Queries.Goal
 {
-    public record GoalSummaryQuery(string UserId) : IRequest<IEnumerable<GoalDto>>;
+    public record GoalSummaryQuery(string UserId) : IRequest<(IEnumerable<WeightliftingGoalDto>, IEnumerable<TimedGoalDto>)>;
 
-    internal sealed class GoalSummaryQueryHandler : IRequestHandler<GoalSummaryQuery, IEnumerable<GoalDto>>
+    internal sealed class GoalSummaryQueryHandler : IRequestHandler<GoalSummaryQuery, (IEnumerable<WeightliftingGoalDto>, IEnumerable<TimedGoalDto>)>
     {
         private readonly IWeightliftingGoalService _weightliftingGoalService;
         private readonly ITimedGoalService _timedGoalService;
@@ -18,14 +18,12 @@ namespace FitMate.Application.Queries.Goal
             _timedGoalService = timedGoalService;
         }
 
-        async Task<IEnumerable<GoalDto>> IRequestHandler<GoalSummaryQuery, IEnumerable<GoalDto>>.Handle(GoalSummaryQuery request, CancellationToken cancellationToken)
+        async Task<(IEnumerable<WeightliftingGoalDto>, IEnumerable<TimedGoalDto>)> IRequestHandler<GoalSummaryQuery, (IEnumerable<WeightliftingGoalDto>, IEnumerable<TimedGoalDto>)>.Handle(GoalSummaryQuery request, CancellationToken cancellationToken)
         {
             var weightliftingGoals = await GetGoals(_weightliftingGoalService.GetWeightliftingGoalsForUser, request.UserId, cancellationToken);
             var timedGoals = await GetGoals(_timedGoalService.GetTimedGoalsForUser, request.UserId, cancellationToken);
 
-            var result = weightliftingGoals.Cast<GoalDto>().Concat(timedGoals).ToList(); // ToList to avoid concat iterator issue
-
-            return result;
+            return (weightliftingGoals, timedGoals);
         }
 
         private static async Task<IEnumerable<TGoalDto>> GetGoals<TGoalDto>(Func<string, CancellationToken, Task<IEnumerable<TGoalDto>>> getGoalsFunc, string userId, CancellationToken cancellationToken)

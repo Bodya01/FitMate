@@ -8,8 +8,7 @@ namespace FitMate.Infrastructure.Mappings
     {
         public GoalProgressProfile()
         {
-            CreateMap<GoalProgressDto, GoalProgress>().ReverseMap();
-            CreateMap<WeightliftingProgressDto, WeightliftingProgress>().ReverseMap();
+            CreateMap<WeightliftingProgress, WeightliftingProgressDto>().ReverseMap();
             CreateMap<TimedProgressDto, TimedProgress>().ReverseMap();
         }
     }

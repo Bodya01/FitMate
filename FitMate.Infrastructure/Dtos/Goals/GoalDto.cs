@@ -1,9 +1,5 @@
 ﻿using FitMate.Infrastucture.Dtos.Base;
-using FitMate.Infrastucture.Dtos.GoalProgress;
 
 namespace FitMate.Infrastucture.Dtos.Goals;
 
-public record GoalDto(Guid Id, string Activity, string UserId, ICollection<GoalProgressDto> GoalProgressRecords) : DtoBase
-{
-    public string Discriminator { get; set; }
-}
+public abstract record GoalDto(Guid Id, string Activity, string UserId) : DtoBase;
