@@ -21,7 +21,17 @@ namespace FitMate.Application.Queries.Goal.Timed
             _logger = logger;
         }
 
-        async Task<TimedGoalDto> IRequestHandler<GetTimedGoalQuery, TimedGoalDto>.Handle(GetTimedGoalQuery request, CancellationToken cancellationToken) =>
-            await _timedGoalService.GetTimedGoal(request.Id, request.UserId, cancellationToken);
+        async Task<TimedGoalDto> IRequestHandler<GetTimedGoalQuery, TimedGoalDto>.Handle(GetTimedGoalQuery request, CancellationToken cancellationToken)
+        {
+            try
+            {
+                await _timedGoalService.GetTimedGoal(request.Id, request.UserId, cancellationToken);
+            }
+            catch (Exception ex)
+            {
+                await Console.Out.WriteLineAsync();
+            }
+            return await _timedGoalService.GetTimedGoal(request.Id, request.UserId, cancellationToken);
+        }
     }
 }

@@ -1,5 +1,4 @@
-﻿using FitMate.Application.Commands.Goal;
-using FitMate.Application.Commands.Goal.Timed;
+﻿using FitMate.Application.Commands.Goal.Timed;
 using FitMate.Application.Commands.Goal.Weightlifting;
 using FitMate.Application.Queries.Goal;
 using FitMate.Application.Queries.Goal.Timed;

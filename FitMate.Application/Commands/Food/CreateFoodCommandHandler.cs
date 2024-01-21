@@ -1,6 +1,5 @@
 ﻿using AutoMapper;
 using FitMate.Core.UnitOfWork;
-using FitMate.Infrastructure.Entities;
 using FitMate.Infrastucture.Dtos;
 using FitMate.Infrastucture.Enums;
 using MediatR;

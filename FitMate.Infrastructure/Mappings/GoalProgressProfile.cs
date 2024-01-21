@@ -1,5 +1,7 @@
 ﻿using AutoMapper;
 using FitMate.Infrastructure.Entities;
+using FitMate.Infrastructure.Models.GoalProgress.Timed;
+using FitMate.Infrastructure.Models.GoalProgress.Weightlifting;
 using FitMate.Infrastucture.Dtos.GoalProgress;
 
 namespace FitMate.Infrastructure.Mappings
@@ -8,7 +10,9 @@ namespace FitMate.Infrastructure.Mappings
     {
         public GoalProgressProfile()
         {
-            CreateMap<WeightliftingProgress, WeightliftingProgressDto>().ReverseMap();
+            CreateMap<CreateWeightliftingProgressModel, WeightliftingProgress>();
+            CreateMap<WeightliftingProgressDto, WeightliftingProgress>().ReverseMap();
+            CreateMap<CreateTimedProgressModel, TimedProgress>();
             CreateMap<TimedProgressDto, TimedProgress>().ReverseMap();
         }
     }

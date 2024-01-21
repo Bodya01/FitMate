@@ -139,7 +139,7 @@
                     <span class="text-white" aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <form asp-controller="@(UiNamingHelper.GetControllerName<GoalProgressController>())" asp-action="@nameof(GoalProgressController.AddProgress)" method="post">
+            <form asp-controller="@(UiNamingHelper.GetControllerName<GoalProgressController>())" asp-action="@nameof(GoalProgressController.AddTimedProgress)" method="post">
                 <div class="modal-body">
                     <input type="hidden" name="GoalId" value="@Model.Id" required />
                     @*<input type="hidden" name="Type" value="@typeValue" required />*@

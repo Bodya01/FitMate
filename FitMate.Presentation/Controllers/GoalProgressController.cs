@@ -1,19 +1,15 @@
-﻿using FitMate.Business.Interfaces;
+﻿using FitMate.Application.Commands.GoalProgress;
+using FitMate.Business.Interfaces;
+using FitMate.Controllers;
 using FitMate.Core.UnitOfWork;
-using FitMate.Infrastructure.Entities;
+using FitMate.Presentation.Helpers;
 using FitMate.Presentation.ViewModels.Goal;
 using FitMate.UI.Web.Controllers.Base;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using System.Threading.Tasks;
-using System.Threading;
 using System;
-using System.Linq;
-using FitMate.Infrastructure.Models.GoalProgress;
-using Microsoft.EntityFrameworkCore;
-using FitMate.Controllers;
-using FitMate.Presentation.Helpers;
-using FitMate.Infrastructure.Entities.Interfaces;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace FitMate.Presentation.Controllers
 {
@@ -63,44 +59,19 @@ namespace FitMate.Presentation.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> AddProgress(AddGoalProgressInputModel progress, CancellationToken cancellationToken)
+        public async Task<IActionResult> AddTimedProgress([FromForm] CreateTimedProgressCommand command, CancellationToken cancellationToken)
         {
-            //var currentUserId = await _userService.GetUserIdAsync(cancellationToken);
+            command.UserId = await _userService.GetUserIdAsync(cancellationToken);
+            await _mediator.Send(command, cancellationToken);
+            return RedirectToAction(nameof(GoalController.ViewTimed), UiNamingHelper.GetControllerName<GoalController>(), new { Id = command.GoalId });
+        }
 
-            //var goal = await _unitOfWork.GoalRepository.Value.GetByIdAsync(progress.GoalId, cancellationToken);
-
-            //if (goal is null) return BadRequest();
-
-            //IGoalProgress newProgress;
-
-            //switch (progress.Type.ToLower())
-            //{
-            //    case "weightlifting":
-            //        newProgress = new WeightliftingProgress()
-            //        {
-            //            Weight = progress.Weight,
-            //            Reps = progress.Reps
-            //        };
-            //        break;
-            //    case "timed":
-            //        newProgress = new TimedProgress()
-            //        {
-            //            Time = new TimeSpan(progress.Hours, progress.Minutes, progress.Seconds),
-            //            Quantity = progress.Quantity
-            //        };
-            //        break;
-            //    default:
-            //        return BadRequest();
-            //}
-
-            ////newProgress.Goal = goal;
-            //newProgress.Date = progress.Date;
-            //newProgress.UserId = currentUserId;
-
-            //await _unitOfWork.GoalProgressRepository.Value.CreateAsync(newProgress, cancellationToken);
-            //await _unitOfWork.SaveChangesAsync(cancellationToken);
-
-            return RedirectToAction(nameof(GoalController.View), UiNamingHelper.GetControllerName<GoalController>(), new { Id = progress.GoalId });
+        [HttpPost]
+        public async Task<IActionResult> AddWeightliftingProgress([FromForm] CreateWeightliftingProgressCommand command, CancellationToken cancellationToken)
+        {
+            command.UserId = await _userService.GetUserIdAsync(cancellationToken);
+            await _mediator.Send(command, cancellationToken);
+            return RedirectToAction(nameof(GoalController.ViewWeightlifting), UiNamingHelper.GetControllerName<GoalController>(), new { Id = command.GoalId });
         }
     }
 }
