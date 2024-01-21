@@ -5,20 +5,20 @@ using MediatR;
 
 namespace FitMate.Applcation.Queries.WorkoutPlan
 {
-    public record GetWorkoutForUserQuery(string UserId) : IRequest<List<WorkoutPlanDto>>;
+    public record GetWorkoutsForUser(string UserId) : IRequest<List<WorkoutPlanDto>>;
 
-    internal sealed class GetWorkoutsForUserQueryHandler : IRequestHandler<GetWorkoutForUserQuery, List<WorkoutPlanDto>>
+    internal sealed class GetWorkoutsForUserHandler : IRequestHandler<GetWorkoutsForUser, List<WorkoutPlanDto>>
     {
         private readonly IWorkoutPlanService _workoutPlanService;
         private readonly IMapper _mapper;
 
-        public GetWorkoutsForUserQueryHandler(IWorkoutPlanService workoutPlanService, IMapper mapper)
+        public GetWorkoutsForUserHandler(IWorkoutPlanService workoutPlanService, IMapper mapper)
         {
             _workoutPlanService = workoutPlanService;
             _mapper = mapper;
         }
 
-        public async Task<List<WorkoutPlanDto>> Handle(GetWorkoutForUserQuery request, CancellationToken cancellationToken)
+        public async Task<List<WorkoutPlanDto>> Handle(GetWorkoutsForUser request, CancellationToken cancellationToken)
         {
             var plans = await _workoutPlanService.GetWorkoutsAsync(request.UserId, 1, 100, cancellationToken);
             return _mapper.Map<List<WorkoutPlanDto>>(plans);

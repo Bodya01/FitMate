@@ -5,23 +5,23 @@ using Microsoft.Extensions.Logging;
 
 namespace FitMate.Application.Commands.Goal.Timed
 {
-    public record CreateTimedGoalCommand(string Activity, int Hours, int Minutes, int Seconds, float Quantity, string QuantityUnit) : IRequest
+    public record CreateTimedGoal(string Activity, int Hours, int Minutes, int Seconds, float Quantity, string QuantityUnit) : IRequest
     {
         public string UserId { get; set; }
     }
 
-    internal sealed class CreateTimedGoalCommandHandler : IRequestHandler<CreateTimedGoalCommand>
+    internal sealed class CreateTimedGoalHandler : IRequestHandler<CreateTimedGoal>
     {
         private readonly ITimedGoalService _timedGoalService;
-        private readonly ILogger<CreateTimedGoalCommandHandler> _logger;
+        private readonly ILogger<CreateTimedGoalHandler> _logger;
 
-        public CreateTimedGoalCommandHandler(ITimedGoalService timedGoalService, ILogger<CreateTimedGoalCommandHandler> logger)
+        public CreateTimedGoalHandler(ITimedGoalService timedGoalService, ILogger<CreateTimedGoalHandler> logger)
         {
             _timedGoalService = timedGoalService;
             _logger = logger;
         }
 
-        public async Task Handle(CreateTimedGoalCommand request, CancellationToken cancellationToken)
+        public async Task Handle(CreateTimedGoal request, CancellationToken cancellationToken)
         {
             _logger.LogInformation($"Creation of timed goal for user {request.UserId} begins");
             await _timedGoalService.CreateTimedGoalAsync(

@@ -4,21 +4,21 @@ using Microsoft.EntityFrameworkCore;
 
 namespace FitMate.Application.Commands.BodyweightTarget
 {
-    public record EditBodyweightTargetCommand(float Weight, DateTime Date) : IRequest
+    public record EditBodyweightTarget(float Weight, DateTime Date) : IRequest
     {
         public string UserId { get; set; }
     }
 
-    internal sealed class EditBodyweightTargetCommandHandler : IRequestHandler<EditBodyweightTargetCommand>
+    internal sealed class EditBodyweightTargetHandler : IRequestHandler<EditBodyweightTarget>
     {
         private readonly IUnitOfWork _unitOfWork;
 
-        public EditBodyweightTargetCommandHandler(IUnitOfWork unitOfWork)
+        public EditBodyweightTargetHandler(IUnitOfWork unitOfWork)
         {
             _unitOfWork = unitOfWork;
         }
 
-        public async Task Handle(EditBodyweightTargetCommand request, CancellationToken cancellationToken)
+        public async Task Handle(EditBodyweightTarget request, CancellationToken cancellationToken)
         {
             var newTarget = await _unitOfWork.BodyweightTargetRepository.Value.Get(e => e.UserId == request.UserId, s => s)
                 .OrderByDescending(t => t.TargetDate)

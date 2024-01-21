@@ -5,23 +5,23 @@ using Microsoft.Extensions.Logging;
 
 namespace FitMate.Application.Queries.Goal.Timed
 {
-    public record GetTimedGoalQuery(Guid Id) : IRequest<TimedGoalDto>
+    public record GetTimedGoal(Guid Id) : IRequest<TimedGoalDto>
     {
         public string UserId { get; set; }
     }
 
-    internal sealed class GetTimedGoalQueryHandler : IRequestHandler<GetTimedGoalQuery, TimedGoalDto>
+    internal sealed class GetTimedGoalHandler : IRequestHandler<GetTimedGoal, TimedGoalDto>
     {
         private readonly ITimedGoalService _timedGoalService;
-        private readonly ILogger<GetTimedGoalQueryHandler> _logger;
+        private readonly ILogger<GetTimedGoalHandler> _logger;
 
-        public GetTimedGoalQueryHandler(ITimedGoalService timedGoalService, ILogger<GetTimedGoalQueryHandler> logger)
+        public GetTimedGoalHandler(ITimedGoalService timedGoalService, ILogger<GetTimedGoalHandler> logger)
         {
             _timedGoalService = timedGoalService;
             _logger = logger;
         }
 
-        async Task<TimedGoalDto> IRequestHandler<GetTimedGoalQuery, TimedGoalDto>.Handle(GetTimedGoalQuery request, CancellationToken cancellationToken)
+        async Task<TimedGoalDto> IRequestHandler<GetTimedGoal, TimedGoalDto>.Handle(GetTimedGoal request, CancellationToken cancellationToken)
         {
             try
             {

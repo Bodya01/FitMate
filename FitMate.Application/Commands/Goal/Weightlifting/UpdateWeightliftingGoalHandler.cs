@@ -5,23 +5,23 @@ using Microsoft.Extensions.Logging;
 
 namespace FitMate.Application.Commands.Goal.Weightlifting
 {
-    public record UpdateWeightliftingGoalCommand(Guid Id, string Activity, float Weight, int Reps) : IRequest
+    public record UpdateWeightliftingGoal(Guid Id, string Activity, float Weight, int Reps) : IRequest
     {
         public string UserId { get; set; }
     }
 
-    internal sealed class UpdateWeightliftingGoalCommandHandler : IRequestHandler<UpdateWeightliftingGoalCommand>
+    internal sealed class UpdateWeightliftingGoalHandler : IRequestHandler<UpdateWeightliftingGoal>
     {
-        private readonly ILogger<UpdateWeightliftingGoalCommandHandler> _logger;
+        private readonly ILogger<UpdateWeightliftingGoalHandler> _logger;
         private readonly IWeightliftingGoalService _weightliftingGoalService;
 
-        public UpdateWeightliftingGoalCommandHandler(ILogger<UpdateWeightliftingGoalCommandHandler> logger, IWeightliftingGoalService weightliftingGoalService)
+        public UpdateWeightliftingGoalHandler(ILogger<UpdateWeightliftingGoalHandler> logger, IWeightliftingGoalService weightliftingGoalService)
         {
             _logger = logger;
             _weightliftingGoalService = weightliftingGoalService;
         }
 
-        public async Task Handle(UpdateWeightliftingGoalCommand request, CancellationToken cancellationToken)
+        public async Task Handle(UpdateWeightliftingGoal request, CancellationToken cancellationToken)
         {
             _logger.LogInformation($"Update of a weightlifting goal with id {request.Id} begins");
             await _weightliftingGoalService.UpdateWeightliftingGoalAsync(

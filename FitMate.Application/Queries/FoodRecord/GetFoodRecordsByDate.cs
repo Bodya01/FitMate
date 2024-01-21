@@ -6,22 +6,23 @@ using Microsoft.EntityFrameworkCore;
 
 namespace FitMate.Application.Queries.FoodRecord
 {
-    public record GetFoodRecordsQuery(string UserId, uint PreviousDays) : IRequest<List<FoodRecordDto>>;
-    internal sealed class GetFoodRecordsQueryHanlder : IRequestHandler<GetFoodRecordsQuery, List<FoodRecordDto>>
+    public record GetFoodRecordsByDate(string UserId, DateTime ConsumptionDate) : IRequest<List<FoodRecordDto>>;
+
+    internal sealed class GetFoodRecordsByDateHanlder : IRequestHandler<GetFoodRecordsByDate, List<FoodRecordDto>>
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
 
-        public GetFoodRecordsQueryHanlder(IUnitOfWork unitOfWork, IMapper mapper)
+        public GetFoodRecordsByDateHanlder(IUnitOfWork unitOfWork, IMapper mapper)
         {
             _unitOfWork = unitOfWork;
             _mapper = mapper;
         }
 
-        public async Task<List<FoodRecordDto>> Handle(GetFoodRecordsQuery request, CancellationToken cancellationToken)
+        public async Task<List<FoodRecordDto>> Handle(GetFoodRecordsByDate request, CancellationToken cancellationToken)
         {
             var userRecords = await _unitOfWork.FoodRecordRepository.Value
-                .Get(e => e.UserId == request.UserId && e.ConsumptionDate >= DateTime.Today.AddDays(-request.PreviousDays), s => s)
+                .Get(e => e.UserId == request.UserId && e.ConsumptionDate.Date == request.ConsumptionDate.Date, s => s)
                 .ToListAsync(cancellationToken);
 
             foreach (var record in userRecords)

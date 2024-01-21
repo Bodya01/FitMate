@@ -4,23 +4,23 @@ using MediatR;
 
 namespace FitMate.Applcation.Commands.WorkoutPlan
 {
-    public record EditWorkoutPlanCommand(Guid Id, string Name, string SessionsJSON) : IRequest
+    public record EditWorkoutPlan(Guid Id, string Name, string SessionsJSON) : IRequest
     {
         public string UserId { get; set; }
     }
 
-    internal sealed class EditWorkoutPlanCommandHandler : IRequestHandler<EditWorkoutPlanCommand>
+    internal sealed class EditWorkoutPlanHandler : IRequestHandler<EditWorkoutPlan>
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
 
-        public EditWorkoutPlanCommandHandler(IUnitOfWork unitOfWork, IMapper mapper)
+        public EditWorkoutPlanHandler(IUnitOfWork unitOfWork, IMapper mapper)
         {
             _unitOfWork = unitOfWork;
             _mapper = mapper;
         }
 
-        public async Task Handle(EditWorkoutPlanCommand request, CancellationToken cancellationToken)
+        public async Task Handle(EditWorkoutPlan request, CancellationToken cancellationToken)
         {
             var entity = new Infrastructure.Entities.WorkoutPlan
             {

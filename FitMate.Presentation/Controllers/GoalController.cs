@@ -38,35 +38,35 @@ namespace FitMate.Controllers
             View("Add", new WeightliftingGoalDto(Guid.Empty, string.Empty, string.Empty, null, default, default));
 
         [HttpGet]
-        public async Task<IActionResult> EditTimed([FromRoute] GetTimedGoalQuery query, CancellationToken cancellationToken)
+        public async Task<IActionResult> EditTimed([FromRoute] GetTimedGoal query, CancellationToken cancellationToken)
         {
             query.UserId = await _userService.GetUserIdAsync(cancellationToken);
             return View(await _mediator.Send(query, cancellationToken));
         }
 
         [HttpGet]
-        public async Task<IActionResult> EditWeightlifting([FromRoute] GetWeightliftingGoalQuery query, CancellationToken cancellationToken)
+        public async Task<IActionResult> EditWeightlifting([FromRoute] GetWeightliftingGoal query, CancellationToken cancellationToken)
         {
             query.UserId = await _userService.GetUserIdAsync(cancellationToken);
             return View(await _mediator.Send(query, cancellationToken));
         }
 
         [HttpGet]
-        public async Task<IActionResult> ViewTimed([FromRoute] GetTimedGoalQuery query, CancellationToken cancellationToken)
+        public async Task<IActionResult> ViewTimed([FromRoute] GetTimedGoal query, CancellationToken cancellationToken)
         {
             query.UserId = await _userService.GetUserIdAsync(cancellationToken);
             return View(await _mediator.Send(query, cancellationToken));
         }
 
         [HttpGet]
-        public async Task<IActionResult> ViewWeightlifting([FromRoute] GetWeightliftingGoalQuery query, CancellationToken cancellationToken)
+        public async Task<IActionResult> ViewWeightlifting([FromRoute] GetWeightliftingGoal query, CancellationToken cancellationToken)
         {
             query.UserId = await _userService.GetUserIdAsync(cancellationToken);
             return View(await _mediator.Send(query, cancellationToken));
         }
 
         [HttpPost]
-        public async Task<IActionResult> CreateTimed([FromForm] CreateTimedGoalCommand command, CancellationToken cancellationToken)
+        public async Task<IActionResult> CreateTimed([FromForm] CreateTimedGoal command, CancellationToken cancellationToken)
         {
             command.UserId = await _userService.GetUserIdAsync(cancellationToken);
             await _mediator.Send(command, cancellationToken);
@@ -75,7 +75,7 @@ namespace FitMate.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> CreateWeightlifting([FromForm] CreateWeightliftingGoalCommand command, CancellationToken cancellationToken)
+        public async Task<IActionResult> CreateWeightlifting([FromForm] CreateWeightliftingGoal command, CancellationToken cancellationToken)
         {
             command.UserId = await _userService.GetUserIdAsync(cancellationToken);
             await _mediator.Send(command, cancellationToken);
@@ -84,7 +84,7 @@ namespace FitMate.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> UpdateTimed([FromForm] UpdateTimedGoalCommand command, CancellationToken cancellationToken)
+        public async Task<IActionResult> UpdateTimed([FromForm] UpdateTimedGoal command, CancellationToken cancellationToken)
         {
             command.UserId = await _userService.GetUserIdAsync(cancellationToken);
             await _mediator.Send(command, cancellationToken);
@@ -93,7 +93,7 @@ namespace FitMate.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> UpdateWeightlifting([FromForm] UpdateWeightliftingGoalCommand command, CancellationToken cancellationToken)
+        public async Task<IActionResult> UpdateWeightlifting([FromForm] UpdateWeightliftingGoal command, CancellationToken cancellationToken)
         {
             command.UserId = await _userService.GetUserIdAsync(cancellationToken);
             await _mediator.Send(command, cancellationToken);

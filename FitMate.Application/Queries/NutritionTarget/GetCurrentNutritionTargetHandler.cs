@@ -5,19 +5,20 @@ using MediatR;
 
 namespace FitMate.Application.Queries.NutritionTarget
 {
-    public record GetCurrentNutritionTargetQuery(string UserId) : IRequest<NutritionTargetDto>;
-    internal sealed class GetCurrentNutritionTargetQueryHandler : IRequestHandler<GetCurrentNutritionTargetQuery, NutritionTargetDto>
+    public record GetCurrentNutritionTarget(string UserId) : IRequest<NutritionTargetDto>;
+
+    internal sealed class GetCurrentNutritionTargetHandler : IRequestHandler<GetCurrentNutritionTarget, NutritionTargetDto>
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
 
-        public GetCurrentNutritionTargetQueryHandler(IUnitOfWork unitOfWork, IMapper mapper)
+        public GetCurrentNutritionTargetHandler(IUnitOfWork unitOfWork, IMapper mapper)
         {
             _unitOfWork = unitOfWork;
             _mapper = mapper;
         }
 
-        public async Task<NutritionTargetDto> Handle(GetCurrentNutritionTargetQuery request, CancellationToken cancellationToken)
+        public async Task<NutritionTargetDto> Handle(GetCurrentNutritionTarget request, CancellationToken cancellationToken)
         {
             var userTarget = await _unitOfWork.NutritionTargetRepository.Value.GetTargetForUserAsync(request.UserId, cancellationToken);
             userTarget ??= new();

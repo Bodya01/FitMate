@@ -29,8 +29,8 @@ namespace FitMate.Controllers
         {
             var currentUserId = await _userService.GetUserIdAsync(cancellationToken);
 
-            var recrods = await _mediator.Send(new GetFoodRecordsQuery(currentUserId, 28), cancellationToken);
-            var target = await _mediator.Send(new GetCurrentNutritionTargetQuery(currentUserId), cancellationToken);
+            var recrods = await _mediator.Send(new GetFoodRecords(currentUserId, 28), cancellationToken);
+            var target = await _mediator.Send(new GetCurrentNutritionTarget(currentUserId), cancellationToken);
 
             var summaryModel = NutritionSummaryViewModel.Create(recrods, target);
 
@@ -42,7 +42,7 @@ namespace FitMate.Controllers
         {
             var currentUserId = await _userService.GetUserIdAsync(cancellationToken);
 
-            var records = await _mediator.Send(new GetFoodRecordsQuery(currentUserId, previousDays), cancellationToken);
+            var records = await _mediator.Send(new GetFoodRecords(currentUserId, previousDays), cancellationToken);
 
             var result = records
                 .GroupBy(record => record.ConsumptionDate)
@@ -70,22 +70,22 @@ namespace FitMate.Controllers
 
             var model = new NewFoodViewModel()
             {
-                Foods = await _mediator.Send(new GetAllFoodsQuery(), cancellationToken),
-                FoodRecords = await _mediator.Send(new GetFoodRecordsByDateQuery(currentUserId, date), cancellationToken)
+                Foods = await _mediator.Send(new GetAllFoods(), cancellationToken),
+                FoodRecords = await _mediator.Send(new GetFoodRecordsByDate(currentUserId, date), cancellationToken)
             };
 
             return View(model);
         }
 
         [HttpPost]
-        public async Task<IActionResult> CreateNewFood([FromForm] CreateFoodCommand command, CancellationToken cancellationToken)
+        public async Task<IActionResult> CreateNewFood([FromForm] CreateFood command, CancellationToken cancellationToken)
         {
             await _mediator.Send(command, cancellationToken);
             return RedirectToAction(nameof(AddFood));
         }
 
         [HttpPost]
-        public async Task<IActionResult> EditRecords([FromForm] EditFoodRecordsCommand command, CancellationToken cancellationToken)
+        public async Task<IActionResult> EditRecords([FromForm] EditFoodRecords command, CancellationToken cancellationToken)
         {
             if (command.FoodIds.Count != command.Quantities.Count || !command.FoodIds.Any()) return BadRequest();
 
@@ -97,7 +97,7 @@ namespace FitMate.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> DeleteFood([FromForm] DeleteFoodCommand command, CancellationToken cancellationToken)
+        public async Task<IActionResult> DeleteFood([FromForm] DeleteFood command, CancellationToken cancellationToken)
         {
             await _mediator.Send(command, cancellationToken);
             return RedirectToAction(nameof(AddFood));

@@ -6,20 +6,20 @@ using Microsoft.EntityFrameworkCore;
 
 namespace FitMate.Application.Queries.BodyweightRecord
 {
-    public record GetBodyweightRecordsQuery(string UserId, DateTime From = default, DateTime To = default, bool IgnoreDates = true) : IRequest<List<BodyweightRecordDto>>;
+    public record GetBodyweightRecords(string UserId, DateTime From = default, DateTime To = default, bool IgnoreDates = true) : IRequest<List<BodyweightRecordDto>>;
 
-    internal sealed class GetBodyweightRecordsQueryHandler : IRequestHandler<GetBodyweightRecordsQuery, List<BodyweightRecordDto>>
+    internal sealed class GetBodyweightRecordsHandler : IRequestHandler<GetBodyweightRecords, List<BodyweightRecordDto>>
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
 
-        public GetBodyweightRecordsQueryHandler(IUnitOfWork unitOfWork, IMapper mapper)
+        public GetBodyweightRecordsHandler(IUnitOfWork unitOfWork, IMapper mapper)
         {
             _unitOfWork = unitOfWork;
             _mapper = mapper;
         }
 
-        public async Task<List<BodyweightRecordDto>> Handle(GetBodyweightRecordsQuery request, CancellationToken cancellationToken)
+        public async Task<List<BodyweightRecordDto>> Handle(GetBodyweightRecords request, CancellationToken cancellationToken)
         {
             var recordsQuery = _unitOfWork.BodyweightRecordRepository.Value
                 .Get(e => e.UserId == request.UserId, s => s);

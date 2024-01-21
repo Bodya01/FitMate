@@ -28,8 +28,8 @@ namespace FitMate.Controllers
         {
             var currentUserId = await _userService.GetUserIdAsync(cancellationToken);
 
-            var target = await _mediator.Send(new GetCurrentBodyweightTargetQuery(currentUserId), cancellationToken);
-            var records = await _mediator.Send(new GetBodyweightRecordsQuery(currentUserId), cancellationToken);
+            var target = await _mediator.Send(new GetCurrentBodyweightTarget(currentUserId), cancellationToken);
+            var records = await _mediator.Send(new GetBodyweightRecords(currentUserId), cancellationToken);
 
             var viewModel = BodyweightSummaryViewModel.Create(records, target);
 
@@ -41,7 +41,7 @@ namespace FitMate.Controllers
         {
             var currentUserId = await _userService.GetUserIdAsync(cancellationToken);
 
-            var target = await _mediator.Send(new GetCurrentBodyweightTargetQuery(currentUserId), cancellationToken);
+            var target = await _mediator.Send(new GetCurrentBodyweightTarget(currentUserId), cancellationToken);
 
             return View(target);
         }
@@ -51,7 +51,7 @@ namespace FitMate.Controllers
         {
             var currentUserId = await _userService.GetUserIdAsync(cancellationToken);
 
-            var records = await _mediator.Send(new GetBodyweightRecordsQuery(currentUserId), cancellationToken);
+            var records = await _mediator.Send(new GetBodyweightRecords(currentUserId), cancellationToken);
 
             return View(records);
         }
@@ -61,7 +61,7 @@ namespace FitMate.Controllers
         {
             var currentUserId = await _userService.GetUserIdAsync(cancellationToken);
 
-            var query = new GetBodyweightRecordsQuery(currentUserId, DateTime.Today, DateTime.Today.AddDays(-previousDays), false);
+            var query = new GetBodyweightRecords(currentUserId, DateTime.Today, DateTime.Today.AddDays(-previousDays), false);
             var records = await _mediator.Send(query, cancellationToken);
 
             var result = records
@@ -73,7 +73,7 @@ namespace FitMate.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> EditTarget([FromBody] EditBodyweightTargetCommand command, CancellationToken cancellationToken)
+        public async Task<IActionResult> EditTarget([FromBody] EditBodyweightTarget command, CancellationToken cancellationToken)
         {
             if (command.Weight <= 0 || command.Weight >= 200 || command.Date <= DateTime.Today) return BadRequest();
 
@@ -85,7 +85,7 @@ namespace FitMate.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> EditRecords([FromForm] EditBodyweightRecordsCommand command, CancellationToken cancellationToken)
+        public async Task<IActionResult> EditRecords([FromForm] EditBodyweightRecords command, CancellationToken cancellationToken)
         {
             if (command.Dates is null
                 || command.Weights is null
@@ -103,7 +103,7 @@ namespace FitMate.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> AddTodayWeight([FromBody] CreateTodayWeightCommand command, CancellationToken cancellationToken)
+        public async Task<IActionResult> AddTodayWeight([FromBody] CreateTodayWeight command, CancellationToken cancellationToken)
         {
             if (command.Weight <= 0 || command.Weight >= 200) return BadRequest();
 

@@ -5,23 +5,23 @@ using Microsoft.Extensions.Logging;
 
 namespace FitMate.Application.Commands.Goal.Timed
 {
-    public record UpdateTimedGoalCommand(Guid Id, string Activity, int Hours, int Minutes, int Seconds, float Quantity, string QuantityUnit) : IRequest
+    public record UpdateTimedGoal(Guid Id, string Activity, int Hours, int Minutes, int Seconds, float Quantity, string QuantityUnit) : IRequest
     {
         public string UserId { get; set; }
     }
 
-    internal sealed class UpdateTimedGoalCommandHandler : IRequestHandler<UpdateTimedGoalCommand>
+    internal sealed class UpdateTimedGoalHandler : IRequestHandler<UpdateTimedGoal>
     {
-        private readonly ILogger<UpdateTimedGoalCommandHandler> _logger;
+        private readonly ILogger<UpdateTimedGoalHandler> _logger;
         private readonly ITimedGoalService _timedGoalService;
 
-        public UpdateTimedGoalCommandHandler(ILogger<UpdateTimedGoalCommandHandler> logger, ITimedGoalService timedGoalService)
+        public UpdateTimedGoalHandler(ILogger<UpdateTimedGoalHandler> logger, ITimedGoalService timedGoalService)
         {
             _logger = logger;
             _timedGoalService = timedGoalService;
         }
 
-        public async Task Handle(UpdateTimedGoalCommand request, CancellationToken cancellationToken)
+        public async Task Handle(UpdateTimedGoal request, CancellationToken cancellationToken)
         {
             _logger.LogInformation($"Update of a timed goal with id {request.Id} begins");
             await _timedGoalService.UpdateTimedGoalAsync(

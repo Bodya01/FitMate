@@ -6,7 +6,7 @@ using MediatR;
 
 namespace FitMate.Application.Commands.Food
 {
-    public record CreateFoodCommand(FoodDto Food) : IRequest
+    public record CreateFood(FoodDto Food) : IRequest
     {
         public Guid Id { get; set; }
         public string Name { get; set; }
@@ -19,18 +19,18 @@ namespace FitMate.Application.Commands.Food
         public string UserId { get; set; }
     }
 
-    internal sealed class CreateFoodCommandHandler : IRequestHandler<CreateFoodCommand>
+    internal sealed class CreateFoodHandler : IRequestHandler<CreateFood>
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
 
-        public CreateFoodCommandHandler(IUnitOfWork unitOfWork, IMapper mapper)
+        public CreateFoodHandler(IUnitOfWork unitOfWork, IMapper mapper)
         {
             _unitOfWork = unitOfWork;
             _mapper = mapper;
         }
 
-        public async Task Handle(CreateFoodCommand request, CancellationToken cancellationToken)
+        public async Task Handle(CreateFood request, CancellationToken cancellationToken)
         {
             var entity = new Infrastructure.Entities.Food
             {

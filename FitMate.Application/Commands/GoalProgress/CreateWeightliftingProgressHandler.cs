@@ -5,24 +5,24 @@ using Microsoft.Extensions.Logging;
 
 namespace FitMate.Application.Commands.GoalProgress
 {
-    public record CreateWeightliftingProgressCommand(DateTime Date, float Weight, int Reps, Guid GoalId) : IRequest
+    public record CreateWeightliftingProgress(DateTime Date, float Weight, int Reps, Guid GoalId) : IRequest
     {
         public string UserId { get; set; }
     }
 
-    internal sealed class CreateWeightliftingProgressCommandHandler : IRequestHandler<CreateWeightliftingProgressCommand>
+    internal sealed class CreateWeightliftingProgressHandler : IRequestHandler<CreateWeightliftingProgress>
     {
-        private readonly ILogger<CreateWeightliftingProgressCommandHandler> _logger;
+        private readonly ILogger<CreateWeightliftingProgressHandler> _logger;
         private readonly IWeightliftingProgressService _weightliftingProgressService;
 
-        public CreateWeightliftingProgressCommandHandler(ILogger<CreateWeightliftingProgressCommandHandler> logger,
+        public CreateWeightliftingProgressHandler(ILogger<CreateWeightliftingProgressHandler> logger,
             IWeightliftingProgressService weightliftingProgressService)
         {
             _logger = logger;
             _weightliftingProgressService = weightliftingProgressService;
         }
 
-        public async Task Handle(CreateWeightliftingProgressCommand request, CancellationToken cancellationToken)
+        public async Task Handle(CreateWeightliftingProgress request, CancellationToken cancellationToken)
         {
             _logger.LogInformation($"Creation of weightlifting progress for goal {request.GoalId} and user {request.UserId}");
             await _weightliftingProgressService.CreateWeightliftingProgressAsync(

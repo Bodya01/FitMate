@@ -5,23 +5,23 @@ using Microsoft.Extensions.Logging;
 
 namespace FitMate.Application.Commands.FoodRecord
 {
-    public record EditFoodRecordsCommand(DateTime Date, List<Guid> FoodIds, List<float> Quantities) : IRequest
+    public record EditFoodRecords(DateTime Date, List<Guid> FoodIds, List<float> Quantities) : IRequest
     {
         public string UserId { get; set; }
     }
 
-    internal sealed class EditFoodRecordsCommandHandler : IRequestHandler<EditFoodRecordsCommand>
+    internal sealed class EditFoodRecordsHandler : IRequestHandler<EditFoodRecords>
     {
-        private readonly ILogger<EditFoodRecordsCommandHandler> _logger;
+        private readonly ILogger<EditFoodRecordsHandler> _logger;
         private readonly IFoodRecordService _foodRecordService;
 
-        public EditFoodRecordsCommandHandler(ILogger<EditFoodRecordsCommandHandler> logger, IFoodRecordService foodRecordService)
+        public EditFoodRecordsHandler(ILogger<EditFoodRecordsHandler> logger, IFoodRecordService foodRecordService)
         {
             _logger = logger;
             _foodRecordService = foodRecordService;
         }
 
-        public async Task Handle(EditFoodRecordsCommand request, CancellationToken cancellationToken)
+        public async Task Handle(EditFoodRecords request, CancellationToken cancellationToken)
         {
             var records = new CreateFoodRecordModel[request.FoodIds.Count];
             for (var i = 0; i < request.FoodIds.Count; i++)

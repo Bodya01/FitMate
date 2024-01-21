@@ -5,23 +5,23 @@ using Microsoft.Extensions.Logging;
 
 namespace FitMate.Application.Commands.GoalProgress
 {
-    public record CreateTimedProgressCommand(DateTime Date, float Quantity, int Hours, int Minutes, int Seconds, Guid GoalId) : IRequest
+    public record CreateTimedProgress(DateTime Date, float Quantity, int Hours, int Minutes, int Seconds, Guid GoalId) : IRequest
     {
         public string UserId { get; set; }
     }
 
-    internal sealed class CreateTimedProgressCommandHandler : IRequestHandler<CreateTimedProgressCommand>
+    internal sealed class CreateTimedProgressHandler : IRequestHandler<CreateTimedProgress>
     {
-        private readonly ILogger<CreateTimedProgressCommandHandler> _logger;
+        private readonly ILogger<CreateTimedProgressHandler> _logger;
         private readonly ITimedProgressService _timedProgressService;
 
-        public CreateTimedProgressCommandHandler(ILogger<CreateTimedProgressCommandHandler> logger, ITimedProgressService timedProgressService)
+        public CreateTimedProgressHandler(ILogger<CreateTimedProgressHandler> logger, ITimedProgressService timedProgressService)
         {
             _logger = logger;
             _timedProgressService = timedProgressService;
         }
 
-        public async Task Handle(CreateTimedProgressCommand request, CancellationToken cancellationToken)
+        public async Task Handle(CreateTimedProgress request, CancellationToken cancellationToken)
         {
             _logger.LogInformation($"Creation of timed progress for goal {request.GoalId} and user {request.UserId}");
             await _timedProgressService.CreateTimedProgressAsync(

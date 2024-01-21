@@ -17,7 +17,7 @@ namespace FitMate.Presentation.Controllers
         public GoalProgressController(IMediator mediator, IUnitOfWork unitOfWork, IUserService userService) : base(mediator, unitOfWork, userService) { }
 
         [HttpGet]
-        public async Task<IActionResult> GetTimedProgress([FromQuery] GetTimedProgressQuery query, CancellationToken cancellationToken)
+        public async Task<IActionResult> GetTimedProgress([FromQuery] GetTimedProgress query, CancellationToken cancellationToken)
         {
             query.UserId = await _userService.GetUserIdAsync(cancellationToken);
             var result = await _mediator.Send(query, cancellationToken);
@@ -26,7 +26,7 @@ namespace FitMate.Presentation.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetWeightliftingProgress([FromQuery] GetWeightliftingProgressQuery query, CancellationToken cancellationToken)
+        public async Task<IActionResult> GetWeightliftingProgress([FromQuery] GetWeightliftingProgress query, CancellationToken cancellationToken)
         {
             query.UserId = await _userService.GetUserIdAsync(cancellationToken);
             var result = await _mediator.Send(query, cancellationToken);
@@ -35,7 +35,7 @@ namespace FitMate.Presentation.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> AddTimedProgress([FromForm] CreateTimedProgressCommand command, CancellationToken cancellationToken)
+        public async Task<IActionResult> AddTimedProgress([FromForm] CreateTimedProgress command, CancellationToken cancellationToken)
         {
             command.UserId = await _userService.GetUserIdAsync(cancellationToken);
             await _mediator.Send(command, cancellationToken);
@@ -44,7 +44,7 @@ namespace FitMate.Presentation.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> AddWeightliftingProgress([FromForm] CreateWeightliftingProgressCommand command, CancellationToken cancellationToken)
+        public async Task<IActionResult> AddWeightliftingProgress([FromForm] CreateWeightliftingProgress command, CancellationToken cancellationToken)
         {
             command.UserId = await _userService.GetUserIdAsync(cancellationToken);
             await _mediator.Send(command, cancellationToken);
