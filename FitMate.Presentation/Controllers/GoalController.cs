@@ -18,8 +18,8 @@ namespace FitMate.Controllers
 {
     public sealed class GoalController : FitMateControllerBase
     {
-        public GoalController(IMediator mediator, IUnitOfWork unitOfWork, IUserService userService)
-            : base(mediator, unitOfWork, userService) { }
+        public GoalController(IMediator mediator, IUserService userService)
+            : base(mediator, userService) { }
 
         [HttpGet]
         public IActionResult Index() => RedirectToAction(nameof(Summary));

@@ -18,8 +18,8 @@ namespace FitMate.Controllers
 {
     public sealed class NutritionController : FitMateControllerBase
     {
-        public NutritionController(IMediator mediator, IUnitOfWork unitOfWork, IUserService userService)
-            : base(mediator, unitOfWork, userService) { }
+        public NutritionController(IMediator mediator, IUserService userService)
+            : base(mediator, userService) { }
 
         [HttpGet]
         public IActionResult Index() => RedirectToAction(nameof(Summary));

@@ -14,7 +14,7 @@ namespace FitMate.Presentation.Controllers
 {
     public class GoalProgressController : FitMateControllerBase
     {
-        public GoalProgressController(IMediator mediator, IUnitOfWork unitOfWork, IUserService userService) : base(mediator, unitOfWork, userService) { }
+        public GoalProgressController(IMediator mediator, IUserService userService) : base(mediator, userService) { }
 
         [HttpGet]
         public async Task<IActionResult> GetTimedProgress([FromHeader] GetTimedProgress query, CancellationToken cancellationToken)

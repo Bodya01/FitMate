@@ -17,8 +17,8 @@ namespace FitMate.Controllers
 {
     public sealed class BodyweightController : FitMateControllerBase
     {
-        public BodyweightController(IMediator mediator, IUnitOfWork unitOfWork, IUserService userService)
-            : base(mediator, unitOfWork, userService) { }
+        public BodyweightController(IMediator mediator, IUserService userService)
+            : base(mediator, userService) { }
 
         [HttpGet]
         public IActionResult Index() => RedirectToAction(nameof(Summary));
