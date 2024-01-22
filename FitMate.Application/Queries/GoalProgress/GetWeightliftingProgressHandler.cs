@@ -5,7 +5,7 @@ using Microsoft.Extensions.Logging;
 
 namespace FitMate.Application.Queries.GoalProgress
 {
-    public record GetWeightliftingProgress(Guid GoalId) : IRequest<IEnumerable<WeightliftingProgressDto>>
+    public record GetWeightliftingProgress(Guid Id) : IRequest<IEnumerable<WeightliftingProgressDto>>
     {
         public string UserId { get; set; }
     }
@@ -22,6 +22,6 @@ namespace FitMate.Application.Queries.GoalProgress
         }
 
         public Task<IEnumerable<WeightliftingProgressDto>> Handle(GetWeightliftingProgress request, CancellationToken cancellationToken) =>
-            _weightliftingProgressService.GetRecordsForGoalAsync(request.GoalId, request.UserId, cancellationToken);
+            _weightliftingProgressService.GetRecordsForGoalAsync(request.Id, request.UserId, cancellationToken);
     }
 }

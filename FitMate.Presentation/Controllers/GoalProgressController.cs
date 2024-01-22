@@ -17,21 +17,17 @@ namespace FitMate.Presentation.Controllers
         public GoalProgressController(IMediator mediator, IUnitOfWork unitOfWork, IUserService userService) : base(mediator, unitOfWork, userService) { }
 
         [HttpGet]
-        public async Task<IActionResult> GetTimedProgress([FromQuery] GetTimedProgress query, CancellationToken cancellationToken)
+        public async Task<IActionResult> GetTimedProgress([FromHeader] GetTimedProgress query, CancellationToken cancellationToken)
         {
             query.UserId = await _userService.GetUserIdAsync(cancellationToken);
-            var result = await _mediator.Send(query, cancellationToken);
-
-            return Json(null);
+            return Ok(await _mediator.Send(query, cancellationToken));
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetWeightliftingProgress([FromQuery] GetWeightliftingProgress query, CancellationToken cancellationToken)
+        public async Task<IActionResult> GetWeightliftingProgress([FromHeader] GetWeightliftingProgress query, CancellationToken cancellationToken)
         {
             query.UserId = await _userService.GetUserIdAsync(cancellationToken);
-            var result = await _mediator.Send(query, cancellationToken);
-
-            return Json(result);
+            return Ok(await _mediator.Send(query, cancellationToken));
         }
 
         [HttpPost]
