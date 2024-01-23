@@ -1,6 +1,9 @@
-﻿using FitMate.Core.UnitOfWork;
+﻿using FitMate.Business.Interfaces;
+using FitMate.Core.UnitOfWork;
+using FitMate.Infrastructure.Models.BodyweightTarget;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 
 namespace FitMate.Application.Commands.BodyweightTarget
 {
@@ -11,28 +14,20 @@ namespace FitMate.Application.Commands.BodyweightTarget
 
     internal sealed class EditBodyweightTargetHandler : IRequestHandler<EditBodyweightTarget>
     {
-        private readonly IUnitOfWork _unitOfWork;
+        private readonly ILogger<EditBodyweightTargetHandler> _logger;
+        private readonly IBodyweightTargetService _bodyweightTargetService;
 
-        public EditBodyweightTargetHandler(IUnitOfWork unitOfWork)
+        public EditBodyweightTargetHandler(ILogger<EditBodyweightTargetHandler> logger, IBodyweightTargetService bodyweightTargetService)
         {
-            _unitOfWork = unitOfWork;
+            _logger = logger;
+            _bodyweightTargetService = bodyweightTargetService;
         }
 
         public async Task Handle(EditBodyweightTarget request, CancellationToken cancellationToken)
         {
-            var newTarget = await _unitOfWork.BodyweightTargetRepository.Value.Get(e => e.UserId == request.UserId, s => s)
-                .OrderByDescending(t => t.TargetDate)
-                .FirstOrDefaultAsync(cancellationToken);
-
-            newTarget ??= new Infrastructure.Entities.BodyweightTarget() { UserId = request.UserId };
-
-            newTarget.TargetWeight = request.Weight;
-            newTarget.TargetDate = request.Date;
-
-            if (newTarget.Id == Guid.Empty) await _unitOfWork.BodyweightTargetRepository.Value.CreateAsync(newTarget, cancellationToken);
-            else await _unitOfWork.BodyweightTargetRepository.Value.UpdateAsync(newTarget, cancellationToken);
-
-            await _unitOfWork.SaveChangesAsync(cancellationToken);
+            _logger.LogInformation($"Setting a bodyweight target for user {request.UserId} begun");
+            await _bodyweightTargetService.UpdateTargetAsync(new UpdateBodyweightTargetModel(request.Weight, request.Date, request.UserId), cancellationToken);
+            _logger.LogInformation($"Bodyweight target for user {request.UserId} was successfully set");
         }
     }
 }
