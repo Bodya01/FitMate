@@ -10,6 +10,7 @@ namespace FitMate.Business
         {
             services.AddScoped<IBodyweightRecordService, BodyweightRecordService>();
             services.AddScoped<IBodyweightTargetService, BodyweightTargetService>();
+            services.AddScoped<IFoodService, FoodService>();
             services.AddScoped<IFoodRecordService, FoodRecordService>();
             services.AddScoped<ITimedGoalService, TimedGoalService>();
             services.AddScoped<IWeightliftingGoalService, WeightliftingGoalService>();
