@@ -19,7 +19,7 @@ namespace FitMate.Business.Services.Base
 
         protected virtual void CheckRestrictionsAccess<T>(T entity, Guid id, string userId) where T : IUserOwnedEntity
         {
-            if (entity.UserId != userId) throw new ForbiddenException($"User with {userId} id is forbidden to update a Task with {id} id");
+            if (entity.UserId != userId) throw new ForbiddenException($"User with {userId} id has no access to {entity.GetType().Name} with {id} id");
         }
     }
 }
