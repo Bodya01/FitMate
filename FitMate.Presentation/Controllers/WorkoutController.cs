@@ -34,7 +34,7 @@ namespace FitMate.Controllers
         public IActionResult Create()
         {
             var newPlan = new WorkoutPlanDto(Guid.Empty, "Workout Plan", null);
-            return View("/Views/Workout/Edit.cshtml", newPlan);
+            return View(newPlan);
         }
 
         [HttpGet]
@@ -57,7 +57,16 @@ namespace FitMate.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Edit([FromForm] EditWorkoutPlan command, CancellationToken cancellationToken)
+        public async Task<IActionResult> Create([FromForm] EditWorkoutPlan command, CancellationToken cancellationToken)
+        {
+            command.UserId = await _userService.GetUserIdAsync(cancellationToken);
+            await _mediator.Send(command, cancellationToken);
+
+            return RedirectToAction(nameof(Summary));
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Update([FromForm] EditWorkoutPlan command, CancellationToken cancellationToken)
         {
             command.UserId = await _userService.GetUserIdAsync(cancellationToken);
             await _mediator.Send(command, cancellationToken);
