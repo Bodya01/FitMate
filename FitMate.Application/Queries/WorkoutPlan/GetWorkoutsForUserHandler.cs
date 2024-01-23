@@ -20,7 +20,7 @@ namespace FitMate.Applcation.Queries.WorkoutPlan
 
         public async Task<List<WorkoutPlanDto>> Handle(GetWorkoutsForUser request, CancellationToken cancellationToken)
         {
-            var plans = await _workoutPlanService.GetWorkoutsAsync(request.UserId, 1, 100, cancellationToken);
+            var plans = await _workoutPlanService.GetWorkoutsAsync(request.UserId, cancellationToken);
             return _mapper.Map<List<WorkoutPlanDto>>(plans);
         }
     }

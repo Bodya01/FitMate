@@ -4,6 +4,7 @@ using FitMate.Business.Services.Base;
 using FitMate.Core.UnitOfWork;
 using FitMate.Infrastructure.Entities;
 using FitMate.Infrastructure.Exceptions;
+using FitMate.Infrastructure.Extensions;
 using FitMate.Infrastructure.Models.WorkoutPlan;
 using FitMate.Infrastucture.Dtos;
 using Microsoft.EntityFrameworkCore;
@@ -58,15 +59,13 @@ namespace FitMate.Business.Services
             await _unitOfWork.SaveChangesAsync(cancellationToken);
         }
 
-        public async Task<List<WorkoutPlanDto>> GetWorkoutsAsync(string userId, int pageNumber, int pageSize, CancellationToken cancellationToken = default)
+        public async Task<List<WorkoutPlanDto>> GetWorkoutsAsync(string userId, CancellationToken cancellationToken = default)
         {
-            var entities = await _unitOfWork.WorkoutPlanRepository.Value.Get(
-                w => w.UserId == userId,
-                s => s)
+            var entities = await _unitOfWork.WorkoutPlanRepository.Value.Get(w => w.UserId == userId, s => s)
                 .OrderByDescending(w => w.CreatedAt)
-                .Skip((pageNumber - 1) * pageSize)
-                .Take(pageSize)
                 .ToListAsync(cancellationToken);
+
+            if (entities.IsNullOrEmpty()) throw new EntityNotFoundException($"No workout plans found for user {userId}");
 
             return _mapper.Map<IEnumerable<WorkoutPlanDto>>(entities).ToList();
         }
