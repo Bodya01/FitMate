@@ -4,7 +4,6 @@ using FitMate.Application.Queries.Food;
 using FitMate.Application.Queries.FoodRecord;
 using FitMate.Application.Queries.NutritionTarget;
 using FitMate.Business.Interfaces;
-using FitMate.Core.UnitOfWork;
 using FitMate.Presentation.ViewModels.Nutrition;
 using FitMate.UI.Web.Controllers.Base;
 using MediatR;

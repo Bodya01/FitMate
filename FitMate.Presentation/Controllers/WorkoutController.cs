@@ -2,7 +2,6 @@
 using FitMate.Applcation.Queries.WorkoutPlan;
 using FitMate.Application.Commands.WorkoutPlan;
 using FitMate.Business.Interfaces;
-using FitMate.Core.UnitOfWork;
 using FitMate.Infrastucture.Dtos;
 using FitMate.UI.Web.Controllers.Base;
 using MediatR;

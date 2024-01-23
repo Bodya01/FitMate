@@ -2,7 +2,6 @@
 using FitMate.Application.Queries.GoalProgress;
 using FitMate.Business.Interfaces;
 using FitMate.Controllers;
-using FitMate.Core.UnitOfWork;
 using FitMate.Presentation.Helpers;
 using FitMate.UI.Web.Controllers.Base;
 using MediatR;

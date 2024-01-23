@@ -4,7 +4,6 @@ using FitMate.Application.Queries.Goal;
 using FitMate.Application.Queries.Goal.Timed;
 using FitMate.Application.Queries.Goal.Weightlifting;
 using FitMate.Business.Interfaces;
-using FitMate.Core.UnitOfWork;
 using FitMate.Infrastucture.Dtos.Goals;
 using FitMate.Presentation.ViewModels.Goal;
 using FitMate.UI.Web.Controllers.Base;
