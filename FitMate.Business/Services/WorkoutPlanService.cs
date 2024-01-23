@@ -65,7 +65,7 @@ namespace FitMate.Business.Services
                 .OrderByDescending(w => w.CreatedAt)
                 .ToListAsync(cancellationToken);
 
-            if (entities.IsNullOrEmpty()) throw new EntityNotFoundException($"No workout plans found for user {userId}");
+            entities ??= new();
 
             return _mapper.Map<IEnumerable<WorkoutPlanDto>>(entities).ToList();
         }
