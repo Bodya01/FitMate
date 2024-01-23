@@ -4,21 +4,21 @@ using MediatR;
 
 namespace FitMate.Applcation.Commands.Bodyweight
 {
-    public record CreateTodayWeight(float Weight) : IRequest
+    public record AddTodayWeight(float Weight) : IRequest
     {
         public string UserId { get; set; }
     }
 
-    internal sealed class CreateTodayWeightHandler : IRequestHandler<CreateTodayWeight>
+    internal sealed class AddTodayWeightHandler : IRequestHandler<AddTodayWeight>
     {
         private readonly IUnitOfWork _unitOfWork;
 
-        public CreateTodayWeightHandler(IUnitOfWork unitOfWork)
+        public AddTodayWeightHandler(IUnitOfWork unitOfWork)
         {
             _unitOfWork = unitOfWork;
         }
 
-        public async Task Handle(CreateTodayWeight request, CancellationToken cancellationToken)
+        public async Task Handle(AddTodayWeight request, CancellationToken cancellationToken)
         {
             var newRecord = new BodyweightRecord
             {
