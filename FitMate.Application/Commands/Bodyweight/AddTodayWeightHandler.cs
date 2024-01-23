@@ -1,6 +1,7 @@
-﻿using FitMate.Core.UnitOfWork;
-using FitMate.Infrastructure.Entities;
+﻿using FitMate.Business.Interfaces;
+using FitMate.Infrastructure.Models.BodyweightRecord;
 using MediatR;
+using Microsoft.Extensions.Logging;
 
 namespace FitMate.Applcation.Commands.Bodyweight
 {
@@ -11,24 +12,20 @@ namespace FitMate.Applcation.Commands.Bodyweight
 
     internal sealed class AddTodayWeightHandler : IRequestHandler<AddTodayWeight>
     {
-        private readonly IUnitOfWork _unitOfWork;
+        private readonly ILogger<AddTodayWeightHandler> _logger;
+        private readonly IBodyweightRecordService _bodyweightRecordService;
 
-        public AddTodayWeightHandler(IUnitOfWork unitOfWork)
+        public AddTodayWeightHandler(ILogger<AddTodayWeightHandler> logger, IBodyweightRecordService bodyweightRecordService)
         {
-            _unitOfWork = unitOfWork;
+            _bodyweightRecordService = bodyweightRecordService;
+            _logger = logger;
         }
 
         public async Task Handle(AddTodayWeight request, CancellationToken cancellationToken)
         {
-            var newRecord = new BodyweightRecord
-            {
-                UserId = request.UserId,
-                Date = DateTime.Today,
-                Weight = request.Weight
-            };
-
-            await _unitOfWork.BodyweightRecordRepository.Value.CreateAsync(newRecord, cancellationToken);
-            await _unitOfWork.SaveChangesAsync(cancellationToken);
+            _logger.LogInformation($"Creation of today weight for user {request.UserId} begins");
+            await _bodyweightRecordService.CreateTodayRecordAsync(new CreateTodayBodyweightRecordModel(request.Weight, request.UserId), cancellationToken);
+            _logger.LogInformation($"Today weight for user {request.UserId} was successfully created");
         }
     }
 }

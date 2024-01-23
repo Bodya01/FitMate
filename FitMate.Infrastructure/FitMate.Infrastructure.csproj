@@ -14,7 +14,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Models\BodyweightRecord\" />
     <Folder Include="Models\BodyweightTarget\" />
     <Folder Include="Models\Food\" />
   </ItemGroup>

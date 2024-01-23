@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using FitMate.Infrastructure.Entities;
+using FitMate.Infrastructure.Models.BodyweightRecord;
 using FitMate.Infrastucture.Dtos;
 
 namespace FitMate.Infrastructure.Mappings
@@ -9,6 +10,7 @@ namespace FitMate.Infrastructure.Mappings
         public BodyweightRecordProfile()
         {
             CreateMap<BodyweightRecord, BodyweightRecordDto>().ReverseMap();
+            CreateMap<CreateTodayBodyweightRecordModel, BodyweightRecord>();
         }
     }
 }
