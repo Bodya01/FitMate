@@ -1,53 +1,33 @@
 ﻿using AutoMapper;
+using FitMate.Business.Interfaces;
 using FitMate.Core.UnitOfWork;
-using FitMate.Infrastucture.Dtos;
+using FitMate.Infrastructure.Models.Food;
 using FitMate.Infrastucture.Enums;
 using MediatR;
+using Microsoft.Extensions.Logging;
 
 namespace FitMate.Application.Commands.Food
 {
-    public record CreateFood(FoodDto Food) : IRequest
-    {
-        public Guid Id { get; set; }
-        public string Name { get; set; }
-        public int Calories { get; set; }
-        public int Carbohydrates { get; set; }
-        public int Protein { get; set; }
-        public int Fat { get; set; }
-        public int ServingSize { get; set; }
-        public ServingUnit ServingUnit { get; set; }
-        public string UserId { get; set; }
-    }
+    public record CreateFood(string Name, int Calories, int Carbohydrates, int Protein, int Fat, int ServingSize, ServingUnit ServingUnit) : IRequest;
 
     internal sealed class CreateFoodHandler : IRequestHandler<CreateFood>
     {
-        private readonly IUnitOfWork _unitOfWork;
-        private readonly IMapper _mapper;
+        private readonly ILogger<CreateFoodHandler> _logger;
+        private readonly IFoodService _foodService;
 
-        public CreateFoodHandler(IUnitOfWork unitOfWork, IMapper mapper)
+        public CreateFoodHandler(ILogger<CreateFoodHandler> logger, IFoodService foodService)
         {
-            _unitOfWork = unitOfWork;
-            _mapper = mapper;
+            _logger = logger;
+            _foodService = foodService;
         }
 
         public async Task Handle(CreateFood request, CancellationToken cancellationToken)
         {
-            var entity = new Infrastructure.Entities.Food
-            {
-                Id = request.Id,
-                Name = request.Name,
-                Calories = request.Calories,
-                Carbohydrates = request.Carbohydrates,
-                Fat = request.Fat,
-                Protein = request.Protein,
-                ServingSize = request.ServingSize,
-                ServingUnit = request.ServingUnit,
-            };
-
-            if (entity.Id == Guid.Empty) await _unitOfWork.FoodRepository.Value.CreateAsync(entity, cancellationToken);
-            else await _unitOfWork.FoodRepository.Value.UpdateAsync(entity, cancellationToken);
-
-            await _unitOfWork.SaveChangesAsync(cancellationToken);
+            _logger.LogInformation($"Creation of food with name {request.Name} begins");
+            await _foodService.CreateFoodAsync(
+                new CreateFoodModel(request.Name, request.Calories, request.Carbohydrates, request.Protein, request.Fat, request.ServingSize, request.ServingUnit),
+                cancellationToken);
+            _logger.LogInformation($"Food with name {request.Name} was successfully created");
         }
     }
 }

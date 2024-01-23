@@ -84,6 +84,13 @@ namespace FitMate.Controllers
         }
 
         [HttpPost]
+        public async Task<IActionResult> UpdateFood([FromForm] UpdateFood command, CancellationToken cancellationToken)
+        {
+            await _mediator.Send(command, cancellationToken);
+            return RedirectToAction(nameof(AddFood));
+        }
+
+        [HttpPost]
         public async Task<IActionResult> EditRecords([FromForm] EditFoodRecords command, CancellationToken cancellationToken)
         {
             if (command.FoodIds.Count != command.Quantities.Count || !command.FoodIds.Any()) return BadRequest();

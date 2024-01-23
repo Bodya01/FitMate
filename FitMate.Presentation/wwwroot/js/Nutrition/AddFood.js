@@ -52,10 +52,12 @@ function newFoodIDChanged() {
     if ($("#existingFoodID").val() == 0) {
         $("#NewFoodHeader").text("Add New Food")
         $("#NewFoodCancel").addClass("d-none");
+        $("#NewFoodForm").attr("action", "/Nutrition/CreateNewFood")
     }
     else {
         $("#NewFoodHeader").text("Edit Food");
         $("#NewFoodCancel").removeClass("d-none");
+        $("#NewFoodForm").attr("action", "/Nutrition/UpdateFood")
     }
 }
 
