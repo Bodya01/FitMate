@@ -1,9 +1,3 @@
 ﻿namespace FitMate.Infrastructure.Models.WorkoutPlan;
 
-public class UpdateWorkoutPlanModel
-{
-    public Guid Id { get; set; }
-    public string Name { get; set; }
-    public string SessionsJson { get; set; }
-    public string UserId { get; set; }
-}
+public record UpdateWorkoutPlanModel(Guid Id, string Name, string SessionsJson, string UserId);

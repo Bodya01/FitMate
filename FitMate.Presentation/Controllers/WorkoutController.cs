@@ -57,7 +57,7 @@ namespace FitMate.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create([FromForm] EditWorkoutPlan command, CancellationToken cancellationToken)
+        public async Task<IActionResult> Create([FromForm] CreateWorkoutPlan command, CancellationToken cancellationToken)
         {
             command.UserId = await _userService.GetUserIdAsync(cancellationToken);
             await _mediator.Send(command, cancellationToken);
@@ -75,10 +75,10 @@ namespace FitMate.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Delete([FromForm] Guid id, CancellationToken cancellationToken)
+        public async Task<IActionResult> Delete([FromForm] DeleteWorkoutPlan query, CancellationToken cancellationToken)
         {
-            var currentUserId = await _userService.GetUserIdAsync(cancellationToken);
-            await _mediator.Send(new DeleteWorkoutPlan(id, currentUserId), cancellationToken);
+            query.UserId = await _userService.GetUserIdAsync(cancellationToken);
+            await _mediator.Send(query, cancellationToken);
             return RedirectToAction(nameof(Summary));
         }
     }

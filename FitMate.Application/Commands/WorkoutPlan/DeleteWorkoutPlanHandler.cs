@@ -4,7 +4,10 @@ using Microsoft.Extensions.Logging;
 
 namespace FitMate.Application.Commands.WorkoutPlan
 {
-    public record DeleteWorkoutPlan(Guid Id, string userId) : IRequest;
+    public record DeleteWorkoutPlan(Guid Id) : IRequest
+    {
+        public string UserId { get; set; }
+    }
 
     internal sealed class DeleteWorkoutPlanHandler : IRequestHandler<DeleteWorkoutPlan>
     {
@@ -20,7 +23,7 @@ namespace FitMate.Application.Commands.WorkoutPlan
         public async Task Handle(DeleteWorkoutPlan request, CancellationToken cancellationToken)
         {
             _logger.LogInformation($"Deletion of workout plan with id {request.Id} begins");
-            await _workoutPlanService.DeleteWorkoutAsync(request.Id, request.userId, cancellationToken);
+            await _workoutPlanService.DeleteWorkoutAsync(request.Id, request.UserId, cancellationToken);
             _logger.LogInformation($"Deletion of workout plan with id {request.Id} begins");
         }
     }

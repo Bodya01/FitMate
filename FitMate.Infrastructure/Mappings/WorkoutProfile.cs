@@ -21,6 +21,7 @@ namespace FitMate.Infrastructure.Mappings
                 .IgnoreAllSourcePropertiesWithAnInaccessibleSetter();
 
             CreateMap<CreateWorkoutPlanModel, WorkoutPlan>();
+            CreateMap<UpdateWorkoutPlanModel, WorkoutPlan>();
         }
     }
 }

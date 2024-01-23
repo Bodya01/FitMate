@@ -1,6 +1,9 @@
 ﻿using AutoMapper;
+using FitMate.Business.Interfaces;
 using FitMate.Core.UnitOfWork;
+using FitMate.Infrastructure.Models.WorkoutPlan;
 using MediatR;
+using Microsoft.Extensions.Logging;
 
 namespace FitMate.Applcation.Commands.WorkoutPlan
 {
@@ -11,28 +14,22 @@ namespace FitMate.Applcation.Commands.WorkoutPlan
 
     internal sealed class EditWorkoutPlanHandler : IRequestHandler<EditWorkoutPlan>
     {
-        private readonly IUnitOfWork _unitOfWork;
-        private readonly IMapper _mapper;
+        private readonly ILogger<EditWorkoutPlanHandler> _logger;
+        private readonly IWorkoutPlanService _workoutPlanService;
 
-        public EditWorkoutPlanHandler(IUnitOfWork unitOfWork, IMapper mapper)
+        public EditWorkoutPlanHandler(ILogger<EditWorkoutPlanHandler> logger, IWorkoutPlanService workoutPlanService)
         {
-            _unitOfWork = unitOfWork;
-            _mapper = mapper;
+            _logger = logger;
+            _workoutPlanService = workoutPlanService;
         }
 
         public async Task Handle(EditWorkoutPlan request, CancellationToken cancellationToken)
         {
-            var entity = new Infrastructure.Entities.WorkoutPlan
-            {
-                Id = request.Id,
-                Name = request.Name,
-                SessionsJSON = request.SessionsJSON,
-                UserId = request.UserId
-            };
-
-            if (request.Id == Guid.Empty) await _unitOfWork.WorkoutPlanRepository.Value.CreateAsync(entity, cancellationToken);
-            else await _unitOfWork.WorkoutPlanRepository.Value.UpdateAsync(entity, cancellationToken);
-            await _unitOfWork.SaveChangesAsync(cancellationToken);
+            _logger.LogInformation($"Update of workout plan with id {request.Id} begins");
+            await _workoutPlanService.UpdateWorkoutPlanAsync(
+                new UpdateWorkoutPlanModel(request.Id, request.Name, request.SessionsJSON, request.UserId),
+                cancellationToken);
+            _logger.LogInformation($"Workout plan with id {request.Id} was successfully updated");
         }
     }
 }
