@@ -1,8 +1,7 @@
-﻿using AutoMapper;
-using FitMate.Core.UnitOfWork;
+﻿using FitMate.Business.Interfaces;
 using FitMate.Infrastucture.Dtos;
 using MediatR;
-using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 
 namespace FitMate.Application.Queries.BodyweightRecord
 {
@@ -10,28 +9,22 @@ namespace FitMate.Application.Queries.BodyweightRecord
 
     internal sealed class GetBodyweightRecordsHandler : IRequestHandler<GetBodyweightRecords, List<BodyweightRecordDto>>
     {
-        private readonly IUnitOfWork _unitOfWork;
-        private readonly IMapper _mapper;
+        private readonly ILogger<GetBodyweightRecordsHandler> _logger;
+        private readonly IBodyweightRecordService _bodyweightRecordService;
 
-        public GetBodyweightRecordsHandler(IUnitOfWork unitOfWork, IMapper mapper)
+        public GetBodyweightRecordsHandler(ILogger<GetBodyweightRecordsHandler> logger, IBodyweightRecordService bodyweightRecordService)
         {
-            _unitOfWork = unitOfWork;
-            _mapper = mapper;
+            _logger = logger;
+            _bodyweightRecordService = bodyweightRecordService;
         }
 
         public async Task<List<BodyweightRecordDto>> Handle(GetBodyweightRecords request, CancellationToken cancellationToken)
         {
-            var recordsQuery = _unitOfWork.BodyweightRecordRepository.Value
-                .Get(e => e.UserId == request.UserId, s => s);
+            var records = request.IgnoreDates
+                ? await _bodyweightRecordService.GetAllRecordsAsync(request.UserId, cancellationToken)
+                : await _bodyweightRecordService.GetRecordsByDateAsync(request.From, request.To, request.UserId, cancellationToken);
 
-            if (!request.IgnoreDates)
-            {
-                recordsQuery.Where(x => x.Date >= request.From && x.Date <= request.To);
-            }
-
-            var records = await recordsQuery.ToListAsync(cancellationToken);
-
-            return _mapper.Map<List<BodyweightRecordDto>>(records);
+            return records.ToList();
         }
     }
 }
