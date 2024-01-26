@@ -21,7 +21,7 @@ namespace FitMate.Business.Services
             await _unitOfWork.SaveChangesAsync(cancellationToken);
         }
 
-        public async Task CreateTodayRecordAsync(CreateBodyweightRecordModel model, CancellationToken cancellationToken = default)
+        public async Task CreateBodyweightRecordAsync(CreateBodyweightRecordModel model, CancellationToken cancellationToken = default)
         {
             var entity = _mapper.Map<BodyweightRecord>(model);
 

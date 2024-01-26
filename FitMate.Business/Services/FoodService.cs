@@ -5,12 +5,31 @@ using FitMate.Core.UnitOfWork;
 using FitMate.Infrastructure.Entities;
 using FitMate.Infrastructure.Exceptions;
 using FitMate.Infrastructure.Models.Food;
+using FitMate.Infrastucture.Dtos;
+using Microsoft.EntityFrameworkCore;
 
 namespace FitMate.Business.Services
 {
     internal sealed class FoodService : ServiceBase, IFoodService
     {
         public FoodService(IUnitOfWork unitOfWork, IMapper mapper) : base(unitOfWork, mapper) { }
+
+        public async Task<IEnumerable<FoodDto>> GetAllFoodsAsync(CancellationToken cancellationToken)
+        {
+            var entities = await _unitOfWork.FoodRepository.Value.Get(e => true, s => s)
+                .ToListAsync(cancellationToken);
+
+            return _mapper.Map<IEnumerable<FoodDto>>(entities) ?? new List<FoodDto>();
+        }
+
+        public async Task<FoodDto> GetFoodByIdAsync(Guid id, CancellationToken cancellationToken)
+        {
+            var entity = await _unitOfWork.FoodRepository.Value.GetByIdAsync(id, cancellationToken);
+
+            if (entity is null) throw new EntityNotFoundException($"Food with id {id} was not found");
+
+            return _mapper.Map<FoodDto>(entity);
+        }
 
         public async Task CreateFoodAsync(CreateFoodModel model, CancellationToken cancellationToken = default)
         {

@@ -1,7 +1,7 @@
-﻿using AutoMapper;
-using FitMate.Core.UnitOfWork;
+﻿using FitMate.Business.Interfaces;
 using FitMate.Infrastucture.Dtos;
 using MediatR;
+using Microsoft.Extensions.Logging;
 
 namespace FitMate.Application.Queries.Food
 {
@@ -9,19 +9,16 @@ namespace FitMate.Application.Queries.Food
 
     internal sealed class GetFoodHandler : IRequestHandler<GetFood, FoodDto>
     {
-        private readonly IUnitOfWork _unitOfWork;
-        private readonly IMapper _mapper;
+        private readonly ILogger<GetFoodHandler> _logger;
+        private readonly IFoodService _foodService;
 
-        public GetFoodHandler(IUnitOfWork unitOfWork, IMapper mapper)
+        public GetFoodHandler(ILogger<GetFoodHandler> logger, IFoodService foodService)
         {
-            _unitOfWork = unitOfWork;
-            _mapper = mapper;
+            _logger = logger;
+            _foodService = foodService;
         }
 
-        public async Task<FoodDto> Handle(GetFood request, CancellationToken cancellationToken)
-        {
-            var food = await _unitOfWork.FoodRepository.Value.GetByIdAsync(request.FoodId, cancellationToken);
-            return _mapper.Map<FoodDto>(food);
-        }
+        public async Task<FoodDto> Handle(GetFood request, CancellationToken cancellationToken) =>
+            await _foodService.GetFoodByIdAsync(request.FoodId, cancellationToken);
     }
 }
