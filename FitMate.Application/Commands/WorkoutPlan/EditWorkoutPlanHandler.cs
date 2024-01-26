@@ -1,6 +1,4 @@
-﻿using AutoMapper;
-using FitMate.Business.Interfaces;
-using FitMate.Core.UnitOfWork;
+﻿using FitMate.Business.Interfaces;
 using FitMate.Infrastructure.Models.WorkoutPlan;
 using MediatR;
 using Microsoft.Extensions.Logging;

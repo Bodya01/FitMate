@@ -4,7 +4,6 @@ using FitMate.Business.Services.Base;
 using FitMate.Core.UnitOfWork;
 using FitMate.Infrastructure.Entities;
 using FitMate.Infrastructure.Exceptions;
-using FitMate.Infrastructure.Extensions;
 using FitMate.Infrastructure.Models.WorkoutPlan;
 using FitMate.Infrastucture.Dtos;
 using Microsoft.EntityFrameworkCore;

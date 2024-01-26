@@ -1,8 +1,6 @@
 ﻿using FitMate.Business.Interfaces;
-using FitMate.Core.UnitOfWork;
 using FitMate.Infrastructure.Models.BodyweightTarget;
 using MediatR;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 
 namespace FitMate.Application.Commands.BodyweightTarget

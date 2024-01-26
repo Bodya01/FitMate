@@ -22,7 +22,7 @@ namespace FitMate.Application.Commands.Food
         public async Task Handle(UpdateFood request, CancellationToken cancellationToken)
         {
             _logger.LogInformation($"Update of food with id {request.Id} begins");
-            await _foodService.UpdateFoodAsync( new UpdateFoodModel(
+            await _foodService.UpdateFoodAsync(new UpdateFoodModel(
                 request.Id, request.Name, request.Calories, request.Carbohydrates, request.Protein, request.Fat, request.ServingSize, request.ServingUnit),
                 cancellationToken);
             _logger.LogInformation($"Food with id {request.Id} was successfully updated");
