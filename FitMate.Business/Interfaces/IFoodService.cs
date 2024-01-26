@@ -9,5 +9,6 @@ namespace FitMate.Business.Interfaces
         Task<FoodDto> GetFoodByIdAsync(Guid id, CancellationToken cancellationToken);
         Task CreateFoodAsync(CreateFoodModel model, CancellationToken cancellationToken = default);
         Task UpdateFoodAsync(UpdateFoodModel model, CancellationToken cancellationToken = default);
+        Task DeleteFoodAsync(Guid id, CancellationToken cancellationToken = default);
     }
 }

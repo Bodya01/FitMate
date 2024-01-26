@@ -43,9 +43,19 @@ namespace FitMate.Business.Services
         {
             var entity = await _unitOfWork.FoodRepository.Value.GetByIdAsync(model.Id, cancellationToken);
 
-            if (entity == null) throw new EntityNotFoundException($"Food with id {model.Id} does not exist");
+            if (entity is null) throw new EntityNotFoundException($"Food with id {model.Id} does not exist");
 
             await _unitOfWork.FoodRepository.Value.UpdateAsync(entity, cancellationToken);
+            await _unitOfWork.SaveChangesAsync(cancellationToken);
+        }
+
+        public async Task DeleteFoodAsync(Guid id, CancellationToken cancellationToken = default)
+        {
+            var entity = await _unitOfWork.FoodRepository.Value.GetByIdAsync(id, cancellationToken);
+
+            if (entity is null) throw new EntityNotFoundException($"Food with id {id} does not exist");
+
+            await _unitOfWork.FoodRepository.Value.DeleteAsync(entity, cancellationToken);
             await _unitOfWork.SaveChangesAsync(cancellationToken);
         }
     }
