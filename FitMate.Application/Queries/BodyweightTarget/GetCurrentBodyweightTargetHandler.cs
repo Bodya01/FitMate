@@ -1,8 +1,7 @@
-﻿using AutoMapper;
-using FitMate.Core.UnitOfWork;
+﻿using FitMate.Business.Interfaces;
 using FitMate.Infrastucture.Dtos.Base;
 using MediatR;
-using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 
 namespace FitMate.Application.Queries.BodyweightTarget
 {
@@ -10,23 +9,16 @@ namespace FitMate.Application.Queries.BodyweightTarget
 
     internal sealed class GetCurrentBodyweightTargetHandler : IRequestHandler<GetCurrentBodyweightTarget, BodyweightTargetDto>
     {
-        private readonly IUnitOfWork _unitOfWork;
-        private readonly IMapper _mapper;
+        private readonly ILogger<GetCurrentBodyweightTargetHandler> _logger;
+        private readonly IBodyweightTargetService _bodyweightTargetService;
 
-        public GetCurrentBodyweightTargetHandler(IUnitOfWork unitOfWork, IMapper mapper)
+        public GetCurrentBodyweightTargetHandler(ILogger<GetCurrentBodyweightTargetHandler> logger, IBodyweightTargetService bodyweightTargetService)
         {
-            _unitOfWork = unitOfWork;
-            _mapper = mapper;
+            _logger = logger;
+            _bodyweightTargetService = bodyweightTargetService;
         }
 
-        public async Task<BodyweightTargetDto> Handle(GetCurrentBodyweightTarget request, CancellationToken cancellationToken)
-        {
-            var target = await _unitOfWork.BodyweightTargetRepository.Value
-                .Get(e => e.UserId == request.UserId, s => s)
-                .OrderByDescending(e => e.TargetDate)
-                .FirstOrDefaultAsync(cancellationToken);
-
-            return _mapper.Map<BodyweightTargetDto>(target);
-        }
+        public async Task<BodyweightTargetDto> Handle(GetCurrentBodyweightTarget request, CancellationToken cancellationToken) =>
+            await _bodyweightTargetService.GetCurrentTargetAsync(request.UserId, cancellationToken);
     }
 }
