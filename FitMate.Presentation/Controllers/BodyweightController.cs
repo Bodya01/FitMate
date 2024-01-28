@@ -14,6 +14,7 @@ using System.Threading.Tasks;
 
 namespace FitMate.Controllers
 {
+    // snitch
     public sealed class BodyweightController : FitMateControllerBase
     {
         public BodyweightController(IMediator mediator, IUserService userService)
