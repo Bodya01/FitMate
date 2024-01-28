@@ -4,6 +4,7 @@ using FitMate.Application.Queries.Food;
 using FitMate.Application.Queries.FoodRecord;
 using FitMate.Application.Queries.NutritionTarget;
 using FitMate.Business.Interfaces;
+using FitMate.Infrastructure.Extensions;
 using FitMate.Presentation.ViewModels.Nutrition;
 using FitMate.UI.Web.Controllers.Base;
 using MediatR;
@@ -93,7 +94,7 @@ namespace FitMate.Controllers
         [HttpPost]
         public async Task<IActionResult> EditRecords([FromForm] EditFoodRecords command, CancellationToken cancellationToken)
         {
-            if (command.FoodIds.Count != command.Quantities.Count || !command.FoodIds.Any()) return BadRequest();
+            if (!command.FoodIds.IsNullOrEmpty() && !command.Quantities.IsNullOrEmpty() &&command.FoodIds.Count != command.Quantities.Count) return BadRequest();
 
             command.UserId = await _userService.GetUserIdAsync(cancellationToken);
 
