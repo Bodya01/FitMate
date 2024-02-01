@@ -40,10 +40,10 @@
         </div>
     </div>
     @{
-        await Html.RenderPartialAsync("_StatsCard", Model.Today);
-        await Html.RenderPartialAsync("_StatsCard", Model.Yesterday);
-        await Html.RenderPartialAsync("_StatsCard", Model.WeekAverage);
-        await Html.RenderPartialAsync("_StatsCard", Model.MonthAverage);
+        await Html.RenderPartialAsync("Partial/_StatsCard", Model.Today);
+        await Html.RenderPartialAsync("Partial/_StatsCard", Model.Yesterday);
+        await Html.RenderPartialAsync("Partial/_StatsCard", Model.WeekAverage);
+        await Html.RenderPartialAsync("Partial/_StatsCard", Model.MonthAverage);
     }
 </div>
 
