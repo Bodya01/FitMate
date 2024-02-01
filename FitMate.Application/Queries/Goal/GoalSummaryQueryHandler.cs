@@ -20,13 +20,13 @@ namespace FitMate.Application.Queries.Goal
 
         async Task<(IEnumerable<WeightliftingGoalDto>, IEnumerable<TimedGoalDto>)> IRequestHandler<GoalSummaryQuery, (IEnumerable<WeightliftingGoalDto>, IEnumerable<TimedGoalDto>)>.Handle(GoalSummaryQuery request, CancellationToken cancellationToken)
         {
-            var weightliftingGoals = await GetGoals(_weightliftingGoalService.GetWeightliftingGoalsForUser, request.UserId, cancellationToken);
-            var timedGoals = await GetGoals(_timedGoalService.GetTimedGoalsForUser, request.UserId, cancellationToken);
+            var weightliftingGoals = await GetGoalsAsync(_weightliftingGoalService.GetWeightliftingGoalsForUser, request.UserId, cancellationToken);
+            var timedGoals = await GetGoalsAsync(_timedGoalService.GetTimedGoalsForUser, request.UserId, cancellationToken);
 
             return (weightliftingGoals, timedGoals);
         }
 
-        private static async Task<IEnumerable<TGoalDto>> GetGoals<TGoalDto>(Func<string, CancellationToken, Task<IEnumerable<TGoalDto>>> getGoalsFunc, string userId, CancellationToken cancellationToken)
+        private static async Task<IEnumerable<TGoalDto>> GetGoalsAsync<TGoalDto>(Func<string, CancellationToken, Task<IEnumerable<TGoalDto>>> getGoalsFunc, string userId, CancellationToken cancellationToken)
             where TGoalDto : GoalDto
         {
             try
