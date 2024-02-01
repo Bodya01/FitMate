@@ -27,7 +27,7 @@ namespace FitMate.Presentation.Middlewares
                 _logger.LogError($"An exception occurred: {ex.Message}");
 
                 var errorMessage = $"An exception has been thrown in a {context.Request.Method} operation. Details: {ex.Message}";
-                context.Response.Redirect($"/Error?errorMessage={Uri.EscapeDataString(errorMessage)}");
+                context.Response.Redirect($"/Error?message={Uri.EscapeDataString(errorMessage)}");
             }
         }
     }
