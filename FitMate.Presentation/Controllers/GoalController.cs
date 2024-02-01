@@ -40,14 +40,14 @@ namespace FitMate.Controllers
         public async Task<IActionResult> EditTimed([FromRoute] GetTimedGoal query, CancellationToken cancellationToken)
         {
             query.UserId = await _userService.GetUserIdAsync(cancellationToken);
-            return View(await _mediator.Send(query, cancellationToken));
+            return View("Edit", await _mediator.Send(query, cancellationToken));
         }
 
         [HttpGet]
         public async Task<IActionResult> EditWeightlifting([FromRoute] GetWeightliftingGoal query, CancellationToken cancellationToken)
         {
             query.UserId = await _userService.GetUserIdAsync(cancellationToken);
-            return View(await _mediator.Send(query, cancellationToken));
+            return View("Edit", await _mediator.Send(query, cancellationToken));
         }
 
         [HttpGet]
