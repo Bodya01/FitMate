@@ -1,9 +1,6 @@
-﻿using AutoMapper;
-using FitMate.Business.Interfaces;
-using FitMate.Core.UnitOfWork;
+﻿using FitMate.Business.Interfaces;
 using FitMate.Infrastucture.Dtos;
 using MediatR;
-using Microsoft.EntityFrameworkCore;
 
 namespace FitMate.Application.Queries.FoodRecord
 {

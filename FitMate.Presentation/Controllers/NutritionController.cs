@@ -94,7 +94,7 @@ namespace FitMate.Controllers
         [HttpPost]
         public async Task<IActionResult> EditRecords([FromForm] EditFoodRecords command, CancellationToken cancellationToken)
         {
-            if (!command.FoodIds.IsNullOrEmpty() && !command.Quantities.IsNullOrEmpty() &&command.FoodIds.Count != command.Quantities.Count) return BadRequest();
+            if (!command.FoodIds.IsNullOrEmpty() && !command.Quantities.IsNullOrEmpty() && command.FoodIds.Count != command.Quantities.Count) return BadRequest();
 
             command.UserId = await _userService.GetUserIdAsync(cancellationToken);
 

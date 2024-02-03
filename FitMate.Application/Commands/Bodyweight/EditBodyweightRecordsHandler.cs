@@ -1,9 +1,6 @@
 ﻿using FitMate.Business.Interfaces;
-using FitMate.Core.UnitOfWork;
-using FitMate.Infrastructure.Entities;
 using FitMate.Infrastructure.Models.BodyweightRecord;
 using MediatR;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 
 namespace FitMate.Applcation.Commands.Bodyweight
