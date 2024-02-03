@@ -13,26 +13,26 @@ namespace FitMate.Presentation.Controllers
 {
     public class GoalProgressController : FitMateControllerBase
     {
-        public GoalProgressController(IMediator mediator, IUserService userService) : base(mediator, userService) { }
+        public GoalProgressController(IMediator mediator) : base(mediator) { }
 
         [HttpGet]
         public async Task<IActionResult> GetTimedProgress([FromHeader] GetTimedProgress query, CancellationToken cancellationToken)
         {
-            query.UserId = await _userService.GetUserIdAsync(cancellationToken);
+            query.UserId = _currentUserId;
             return Ok(await _mediator.Send(query, cancellationToken));
         }
 
         [HttpGet]
         public async Task<IActionResult> GetWeightliftingProgress([FromHeader] GetWeightliftingProgress query, CancellationToken cancellationToken)
         {
-            query.UserId = await _userService.GetUserIdAsync(cancellationToken);
+            query.UserId = _currentUserId;
             return Ok(await _mediator.Send(query, cancellationToken));
         }
 
         [HttpPost]
         public async Task<IActionResult> AddTimedProgress([FromForm] CreateTimedProgress command, CancellationToken cancellationToken)
         {
-            command.UserId = await _userService.GetUserIdAsync(cancellationToken);
+            command.UserId = _currentUserId;
             await _mediator.Send(command, cancellationToken);
 
             return RedirectToAction(nameof(GoalController.ViewTimed), UiNamingHelper.GetControllerName<GoalController>(), new { Id = command.GoalId });
@@ -41,7 +41,7 @@ namespace FitMate.Presentation.Controllers
         [HttpPost]
         public async Task<IActionResult> AddWeightliftingProgress([FromForm] CreateWeightliftingProgress command, CancellationToken cancellationToken)
         {
-            command.UserId = await _userService.GetUserIdAsync(cancellationToken);
+            command.UserId = _currentUserId;
             await _mediator.Send(command, cancellationToken);
 
             return RedirectToAction(nameof(GoalController.ViewWeightlifting), UiNamingHelper.GetControllerName<GoalController>(), new { Id = command.GoalId });

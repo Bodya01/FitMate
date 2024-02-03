@@ -17,8 +17,7 @@ namespace FitMate.Controllers
     //TODO: Implement single handlers for each endpoint, move all logic to handlers, implement validators
     public sealed class BodyweightController : FitMateControllerBase
     {
-        public BodyweightController(IMediator mediator, IUserService userService)
-            : base(mediator, userService) { }
+        public BodyweightController(IMediator mediator) : base(mediator) { }
 
         [HttpGet]
         public IActionResult Index() => RedirectToAction(nameof(Summary));
@@ -26,10 +25,8 @@ namespace FitMate.Controllers
         [HttpGet]
         public async Task<IActionResult> Summary(CancellationToken cancellationToken)
         {
-            var currentUserId = await _userService.GetUserIdAsync(cancellationToken);
-
-            var target = await _mediator.Send(new GetCurrentBodyweightTarget(currentUserId), cancellationToken);
-            var records = await _mediator.Send(new GetBodyweightRecords(currentUserId), cancellationToken);
+            var target = await _mediator.Send(new GetCurrentBodyweightTarget(_currentUserId), cancellationToken);
+            var records = await _mediator.Send(new GetBodyweightRecords(_currentUserId), cancellationToken);
 
             var viewModel = BodyweightSummaryViewModel.Create(records, target);
 
@@ -39,29 +36,21 @@ namespace FitMate.Controllers
         [HttpGet]
         public async Task<IActionResult> EditTarget(CancellationToken cancellationToken)
         {
-            var currentUserId = await _userService.GetUserIdAsync(cancellationToken);
-
-            var target = await _mediator.Send(new GetCurrentBodyweightTarget(currentUserId), cancellationToken);
-
+            var target = await _mediator.Send(new GetCurrentBodyweightTarget(_currentUserId), cancellationToken);
             return View(target);
         }
 
         [HttpGet]
         public async Task<IActionResult> EditRecords(CancellationToken cancellationToken)
         {
-            var currentUserId = await _userService.GetUserIdAsync(cancellationToken);
-
-            var records = await _mediator.Send(new GetBodyweightRecords(currentUserId), cancellationToken);
-
+            var records = await _mediator.Send(new GetBodyweightRecords(_currentUserId), cancellationToken);
             return View(records);
         }
 
         [HttpGet]
         public async Task<IActionResult> GetBodyweightData(int previousDays, CancellationToken cancellationToken)
         {
-            var currentUserId = await _userService.GetUserIdAsync(cancellationToken);
-
-            var query = new GetBodyweightRecords(currentUserId, DateTime.Today, DateTime.Today.AddDays(-previousDays), false);
+            var query = new GetBodyweightRecords(_currentUserId, DateTime.Today, DateTime.Today.AddDays(-previousDays), false);
             var records = await _mediator.Send(query, cancellationToken);
 
             var result = records
@@ -77,8 +66,7 @@ namespace FitMate.Controllers
         {
             if (command.Weight <= 0 || command.Weight >= 200 || command.Date <= DateTime.Today) return BadRequest();
 
-            command.UserId = await _userService.GetUserIdAsync(cancellationToken);
-
+            command.UserId = _currentUserId;
             await _mediator.Send(command, cancellationToken);
 
             return RedirectToAction(nameof(Summary));
@@ -95,8 +83,7 @@ namespace FitMate.Controllers
                 return BadRequest();
             }
 
-            command.UserId = await _userService.GetUserIdAsync(cancellationToken);
-
+            command.UserId = _currentUserId;
             await _mediator.Send(command, cancellationToken);
 
             return RedirectToAction(nameof(Summary));
@@ -107,7 +94,7 @@ namespace FitMate.Controllers
         {
             if (command.Weight <= 0 || command.Weight >= 200) return BadRequest();
 
-            command.UserId = await _userService.GetUserIdAsync(cancellationToken);
+            command.UserId = _currentUserId;
             await _mediator.Send(command, cancellationToken);
 
             return RedirectToAction(nameof(Summary));

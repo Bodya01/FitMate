@@ -19,8 +19,7 @@ namespace FitMate.Controllers
     //TODO: Implement single handlers for each endpoint, move all logic to handlers, implement validators
     public sealed class NutritionController : FitMateControllerBase
     {
-        public NutritionController(IMediator mediator, IUserService userService)
-            : base(mediator, userService) { }
+        public NutritionController(IMediator mediator) : base(mediator) { }
 
         [HttpGet]
         public IActionResult Index() => RedirectToAction(nameof(Summary));
@@ -28,10 +27,8 @@ namespace FitMate.Controllers
         [HttpGet]
         public async Task<IActionResult> Summary(CancellationToken cancellationToken)
         {
-            var currentUserId = await _userService.GetUserIdAsync(cancellationToken);
-
-            var recrods = await _mediator.Send(new GetFoodRecords(currentUserId, 28), cancellationToken);
-            var target = await _mediator.Send(new GetCurrentNutritionTarget(currentUserId), cancellationToken);
+            var recrods = await _mediator.Send(new GetFoodRecords(_currentUserId, 28), cancellationToken);
+            var target = await _mediator.Send(new GetCurrentNutritionTarget(_currentUserId), cancellationToken);
 
             var summaryModel = NutritionSummaryViewModel.Create(recrods, target);
 
@@ -41,9 +38,7 @@ namespace FitMate.Controllers
         [HttpGet]
         public async Task<IActionResult> GetNutritionData(CancellationToken cancellationToken, uint previousDays = 7)
         {
-            var currentUserId = await _userService.GetUserIdAsync(cancellationToken);
-
-            var records = await _mediator.Send(new GetFoodRecords(currentUserId, previousDays), cancellationToken);
+            var records = await _mediator.Send(new GetFoodRecords(_currentUserId, previousDays), cancellationToken);
 
             var result = records
                 .GroupBy(record => record.ConsumptionDate)
@@ -67,12 +62,10 @@ namespace FitMate.Controllers
             if (date.Ticks == default) date = DateTime.Today;
             ViewData["selectedDate"] = date;
 
-            var currentUserId = await _userService.GetUserIdAsync(cancellationToken);
-
             var model = new NewFoodViewModel()
             {
                 Foods = await _mediator.Send(new GetAllFoods(), cancellationToken),
-                FoodRecords = await _mediator.Send(new GetFoodRecordsByDate(currentUserId, date), cancellationToken)
+                FoodRecords = await _mediator.Send(new GetFoodRecordsByDate(_currentUserId, date), cancellationToken)
             };
 
             return View(model);
@@ -97,8 +90,7 @@ namespace FitMate.Controllers
         {
             if (!command.FoodIds.IsNullOrEmpty() && !command.Quantities.IsNullOrEmpty() && command.FoodIds.Count != command.Quantities.Count) return BadRequest();
 
-            command.UserId = await _userService.GetUserIdAsync(cancellationToken);
-
+            command.UserId = _currentUserId;
             await _mediator.Send(command, cancellationToken);
 
             return RedirectToAction(nameof(AddFood));

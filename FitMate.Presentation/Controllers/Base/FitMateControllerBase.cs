@@ -2,6 +2,9 @@
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Filters;
+using System.Security.Claims;
+using System.Threading.Tasks;
 
 namespace FitMate.UI.Web.Controllers.Base
 {
@@ -9,13 +12,15 @@ namespace FitMate.UI.Web.Controllers.Base
     [Authorize]
     public abstract class FitMateControllerBase : Controller
     {
-        protected readonly IUserService _userService;
         protected readonly IMediator _mediator;
+        protected string _currentUserId;
 
-        public FitMateControllerBase(IMediator mediator, IUserService userService)
+        public FitMateControllerBase(IMediator mediator)
         {
             _mediator = mediator;
-            _userService = userService;
         }
+
+        public override void OnActionExecuting(ActionExecutingContext context) =>
+            _currentUserId = User.FindFirstValue(ClaimTypes.NameIdentifier);
     }
 }
