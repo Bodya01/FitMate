@@ -2,7 +2,7 @@
 using FitMate.Application.Commands.FoodRecord;
 using FitMate.Application.Queries.Food;
 using FitMate.Application.Queries.FoodRecord;
-using FitMate.Application.Queries.NutritionTarget;
+using FitMate.Application.Queries.Nutrition;
 using FitMate.Infrastructure.Extensions;
 using FitMate.Presentation.ViewModels.Nutrition;
 using FitMate.UI.Web.Controllers.Base;
@@ -26,12 +26,8 @@ namespace FitMate.Controllers
         [HttpGet]
         public async Task<IActionResult> Summary(CancellationToken cancellationToken)
         {
-            var recrods = await _mediator.Send(new GetFoodRecords(_currentUserId, 28), cancellationToken);
-            var target = await _mediator.Send(new GetCurrentNutritionTarget(_currentUserId), cancellationToken);
-
-            var summaryModel = NutritionSummaryViewModel.Create(recrods, target);
-
-            return View(summaryModel);
+            var response = await _mediator.Send(new GetNutritionSummary(_currentUserId), cancellationToken);
+            return View(NutritionSummaryViewModel.Create(response.Records, response.Target));
         }
 
         [HttpGet]

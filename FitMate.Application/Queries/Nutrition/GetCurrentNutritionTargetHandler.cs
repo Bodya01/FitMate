@@ -2,7 +2,7 @@
 using FitMate.Infrastucture.Dtos;
 using MediatR;
 
-namespace FitMate.Application.Queries.NutritionTarget
+namespace FitMate.Application.Queries.Nutrition
 {
     public record GetCurrentNutritionTarget(string UserId) : IRequest<NutritionTargetDto>;
 

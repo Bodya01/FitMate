@@ -20,6 +20,7 @@ namespace FitMate.Application.Queries.Goal
 
         async Task<(IEnumerable<WeightliftingGoalDto>, IEnumerable<TimedGoalDto>)> IRequestHandler<GoalSummaryQuery, (IEnumerable<WeightliftingGoalDto>, IEnumerable<TimedGoalDto>)>.Handle(GoalSummaryQuery request, CancellationToken cancellationToken)
         {
+            //Can't use Task.WhenAll due to UoW. Easy to bypass if performance boost needed
             var weightliftingGoals = await GetGoalsAsync(_weightliftingGoalService.GetWeightliftingGoalsForUser, request.UserId, cancellationToken);
             var timedGoals = await GetGoalsAsync(_timedGoalService.GetTimedGoalsForUser, request.UserId, cancellationToken);
 
