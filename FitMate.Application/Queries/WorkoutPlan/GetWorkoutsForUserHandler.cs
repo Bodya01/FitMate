@@ -1,5 +1,4 @@
-﻿using AutoMapper;
-using FitMate.Business.Interfaces;
+﻿using FitMate.Business.Interfaces;
 using FitMate.Infrastucture.Dtos;
 using MediatR;
 
@@ -10,18 +9,13 @@ namespace FitMate.Applcation.Queries.WorkoutPlan
     internal sealed class GetWorkoutsForUserHandler : IRequestHandler<GetWorkoutsForUser, List<WorkoutPlanDto>>
     {
         private readonly IWorkoutPlanService _workoutPlanService;
-        private readonly IMapper _mapper;
 
-        public GetWorkoutsForUserHandler(IWorkoutPlanService workoutPlanService, IMapper mapper)
+        public GetWorkoutsForUserHandler(IWorkoutPlanService workoutPlanService)
         {
             _workoutPlanService = workoutPlanService;
-            _mapper = mapper;
         }
 
-        public async Task<List<WorkoutPlanDto>> Handle(GetWorkoutsForUser request, CancellationToken cancellationToken)
-        {
-            var plans = await _workoutPlanService.GetWorkoutsAsync(request.UserId, cancellationToken);
-            return _mapper.Map<List<WorkoutPlanDto>>(plans);
-        }
+        public async Task<List<WorkoutPlanDto>> Handle(GetWorkoutsForUser request, CancellationToken cancellationToken) =>
+            await _workoutPlanService.GetWorkoutsAsync(request.UserId, cancellationToken);
     }
 }
