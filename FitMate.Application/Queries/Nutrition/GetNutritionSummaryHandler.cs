@@ -24,9 +24,6 @@ namespace FitMate.Application.Queries.Nutrition
             var target = await _targetService.GetTargetForUser(request.UserId, cancellationToken);
             var records = await _foodRecordService.GetRecordsForLastDays(28, request.UserId, cancellationToken);
 
-            //If target not set
-            target ??= new NutritionTargetDto(Guid.Empty, default, default, default, default, string.Empty);
-
             return new GetNutritionSummaryResponse(records.ToList(), target);
         }
     }

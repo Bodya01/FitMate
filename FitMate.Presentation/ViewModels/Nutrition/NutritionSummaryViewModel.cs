@@ -20,7 +20,8 @@ namespace FitMate.Presentation.ViewModels.Nutrition
 
         private NutritionSummaryViewModel(IEnumerable<FoodRecordDto> records, NutritionTargetDto target)
         {
-            ValidateInput(records, target);
+            if (records is null) throw new ArgumentNullException(nameof(records), "There are no any food records!");
+            target ??= new NutritionTargetDto(Guid.Empty, default, default, default, default, string.Empty);
 
             _records = records;
             Target = target;
@@ -29,12 +30,6 @@ namespace FitMate.Presentation.ViewModels.Nutrition
             Yesterday = CreateSummaryData(DateTime.Today.AddDays(-1), "Yesterday");
             WeekAverage = CreateAverageSummaryData(DateTime.Today.AddDays(-7), "Last 7 days");
             MonthAverage = CreateAverageSummaryData(DateTime.Today.AddDays(-28), "Last 28 days");
-        }
-
-        private static void ValidateInput(IEnumerable<FoodRecordDto> records, NutritionTargetDto target)
-        {
-            if (records is null) throw new ArgumentNullException(nameof(records), "There are no any food records!");
-            if (target is null) throw new ArgumentNullException(nameof(target), "There is no nutrition target!");
         }
 
         private SummaryDataViewModel CreateSummaryData(DateTime date, string period)
