@@ -2,7 +2,6 @@
 using FitMate.Application.Commands.BodyweightTarget;
 using FitMate.Application.Queries.Bodyweight;
 using FitMate.Application.Queries.BodyweightRecord;
-using FitMate.Application.Queries.BodyweightTarget;
 using FitMate.Presentation.ViewModels.Bodyweight;
 using FitMate.UI.Web.Controllers.Base;
 using MediatR;
@@ -14,7 +13,7 @@ using System.Threading.Tasks;
 
 namespace FitMate.Controllers
 {
-    //TODO: Implement single handlers for each endpoint, move all logic to handlers, implement validators
+    //TODO: Move all logic to handlers, implement validators
     public sealed class BodyweightController : FitMateControllerBase
     {
         public BodyweightController(IMediator mediator) : base(mediator) { }

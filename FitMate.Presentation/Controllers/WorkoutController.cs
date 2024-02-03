@@ -1,6 +1,7 @@
 ﻿using FitMate.Applcation.Commands.WorkoutPlan;
 using FitMate.Applcation.Queries.WorkoutPlan;
 using FitMate.Application.Commands.WorkoutPlan;
+using FitMate.Application.Queries.WorkoutPlan;
 using FitMate.Infrastucture.Dtos;
 using FitMate.UI.Web.Controllers.Base;
 using MediatR;
@@ -41,16 +42,11 @@ namespace FitMate.Controllers
             return View(await _mediator.Send(query, cancellationToken));
         }
 
-        [HttpGet]
-        public async Task<IActionResult> Session([FromRoute] GetWorkoutPlan query, [FromRoute] int sessionId, CancellationToken cancellationToken)
+        [HttpGet("Session/{id:guid}/{sessionId:int}")]
+        public async Task<IActionResult> Session([FromRoute] GetWorkoutSession query, CancellationToken cancellationToken)
         {
             query.UserId = _currentUserId;
-            var plan = await _mediator.Send(query, cancellationToken);
-
-            if (sessionId < 0 || sessionId >= plan.Sessions.Count) return BadRequest();
-
-            var session = plan.Sessions.ToList()[sessionId];
-            return View(session);
+            return View(await _mediator.Send(query, cancellationToken));
         }
 
         [HttpPost]
