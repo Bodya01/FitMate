@@ -1,4 +1,4 @@
-﻿using FitMate.Business;
+﻿using FitMate.Business.Interfaces;
 using FitMate.Infrastucture.Dtos;
 using MediatR;
 

@@ -1,6 +1,6 @@
 ﻿using FitMate.Infrastucture.Dtos;
 
-namespace FitMate.Business
+namespace FitMate.Business.Interfaces
 {
     public interface INutritionTargetService
     {

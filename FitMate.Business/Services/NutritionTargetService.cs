@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using FitMate.Business.Interfaces;
 using FitMate.Business.Services.Base;
 using FitMate.Core.UnitOfWork;
 using FitMate.Infrastucture.Dtos;

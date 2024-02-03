@@ -18,6 +18,7 @@ namespace FitMate.Business
             services.AddScoped<IWeightliftingProgressService, WeightliftingProgressService>();
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<IWorkoutPlanService, WorkoutPlanService>();
+            services.AddScoped<INutritionTargetService, NutritionTargetService>();
 
             return services;
         }
