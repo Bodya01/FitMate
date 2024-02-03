@@ -94,7 +94,7 @@
 <form asp-controller="@(UiNamingHelper.GetControllerName<NutritionController>())" asp-action="@nameof(NutritionController.AddFood)" method="get" id="DateSelectionForm">
     <div class="form-group form-inline mt-2">
         <label>Date</label>
-        <input type="date" name="Date" class="form-control" value="@(((DateTime)ViewData["selectedDate"]).ToString("yyyy-MM-dd"))" onchange='$("#DateSelectionForm").submit();' />
+        <input type="date" name="Date" class="form-control" value="@(Model.SelectedDate.ToString("yyyy-MM-dd"))" onchange='$("#DateSelectionForm").submit();' />
     </div>
 </form>
 
@@ -105,7 +105,7 @@
         <input type="submit" class="btn btn-primary d-inline" value="Save" />
     </div>
 
-    <input type="hidden" name="Date" value="@(((DateTime)ViewData["selectedDate"]).ToString("yyyy-MM-dd"))" />
+    <input type="hidden" name="Date" value="@(Model.SelectedDate.ToString("yyyy-MM-dd"))" />
 
 
     <table class="table">

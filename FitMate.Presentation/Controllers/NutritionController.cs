@@ -55,10 +55,10 @@ namespace FitMate.Controllers
         public async Task<IActionResult> AddFood(DateTime date, CancellationToken cancellationToken)
         {
             if (date.Ticks == default) date = DateTime.Today;
-            ViewData["selectedDate"] = date;
 
             var model = new NewFoodViewModel()
             {
+                SelectedDate = date,
                 Foods = await _mediator.Send(new GetAllFoods(), cancellationToken),
                 FoodRecords = await _mediator.Send(new GetFoodRecordsByDate(_currentUserId, date), cancellationToken)
             };
