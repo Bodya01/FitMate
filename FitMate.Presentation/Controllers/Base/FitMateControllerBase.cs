@@ -1,10 +1,8 @@
-﻿using FitMate.Business.Interfaces;
-using MediatR;
+﻿using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 using System.Security.Claims;
-using System.Threading.Tasks;
 
 namespace FitMate.UI.Web.Controllers.Base
 {

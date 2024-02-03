@@ -3,7 +3,6 @@ using FitMate.Application.Commands.FoodRecord;
 using FitMate.Application.Queries.Food;
 using FitMate.Application.Queries.FoodRecord;
 using FitMate.Application.Queries.NutritionTarget;
-using FitMate.Business.Interfaces;
 using FitMate.Infrastructure.Extensions;
 using FitMate.Presentation.ViewModels.Nutrition;
 using FitMate.UI.Web.Controllers.Base;

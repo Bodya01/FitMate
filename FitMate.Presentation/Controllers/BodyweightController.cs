@@ -2,7 +2,6 @@
 using FitMate.Application.Commands.BodyweightTarget;
 using FitMate.Application.Queries.BodyweightRecord;
 using FitMate.Application.Queries.BodyweightTarget;
-using FitMate.Business.Interfaces;
 using FitMate.Presentation.ViewModels.Bodyweight;
 using FitMate.UI.Web.Controllers.Base;
 using MediatR;

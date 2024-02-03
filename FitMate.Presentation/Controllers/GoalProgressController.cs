@@ -1,6 +1,5 @@
 ﻿using FitMate.Application.Commands.GoalProgress;
 using FitMate.Application.Queries.GoalProgress;
-using FitMate.Business.Interfaces;
 using FitMate.Controllers;
 using FitMate.Presentation.Helpers;
 using FitMate.UI.Web.Controllers.Base;

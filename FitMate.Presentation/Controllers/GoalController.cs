@@ -3,13 +3,11 @@ using FitMate.Application.Commands.Goal.Weightlifting;
 using FitMate.Application.Queries.Goal;
 using FitMate.Application.Queries.Goal.Timed;
 using FitMate.Application.Queries.Goal.Weightlifting;
-using FitMate.Business.Interfaces;
 using FitMate.Infrastucture.Dtos.Goals;
 using FitMate.Presentation.ViewModels.Goal;
 using FitMate.UI.Web.Controllers.Base;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using System;
 using System.Threading;
 using System.Threading.Tasks;
 
