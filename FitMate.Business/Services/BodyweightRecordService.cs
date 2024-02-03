@@ -58,5 +58,20 @@ namespace FitMate.Business.Services
             await _unitOfWork.BodyweightRecordRepository.Value.CreateAsync(entity, cancellationToken);
             await _unitOfWork.SaveChangesAsync(cancellationToken);
         }
+
+        public async Task UpdateRangeAsync(IEnumerable<UpdateBodyweightRecordModel> records, string userId, CancellationToken cancellationToken = default)
+        {
+            if (records is null) throw new ArgumentNullException(nameof(records));
+
+            var existingEntities = await _unitOfWork.BodyweightRecordRepository.Value
+                .Get(e => e.UserId == userId, s => s)
+                .ToListAsync(cancellationToken);
+
+            var entities = _mapper.Map<IEnumerable<BodyweightRecord>>(records);
+
+            await _unitOfWork.BodyweightRecordRepository.Value.DeleteRangeAsync(existingEntities, cancellationToken);
+            await _unitOfWork.BodyweightRecordRepository.Value.CreateRangeAsync(entities, cancellationToken);
+            await _unitOfWork.SaveChangesAsync(cancellationToken);
+        }
     }
 }

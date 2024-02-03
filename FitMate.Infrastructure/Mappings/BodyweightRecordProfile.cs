@@ -10,7 +10,9 @@ namespace FitMate.Infrastructure.Mappings
         public BodyweightRecordProfile()
         {
             CreateMap<BodyweightRecord, BodyweightRecordDto>().ReverseMap();
+
             CreateMap<CreateTodayBodyweightRecordModel, BodyweightRecord>();
+            CreateMap<UpdateBodyweightRecordModel, BodyweightRecord>();
         }
     }
 }
