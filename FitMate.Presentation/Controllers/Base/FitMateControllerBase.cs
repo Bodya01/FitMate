@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace FitMate.UI.Web.Controllers.Base
 {
+    //TODO: override on executing action to get user id
     [Authorize]
     public abstract class FitMateControllerBase : Controller
     {

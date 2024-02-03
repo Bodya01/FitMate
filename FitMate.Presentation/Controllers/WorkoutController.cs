@@ -13,6 +13,7 @@ using System.Threading.Tasks;
 
 namespace FitMate.Controllers
 {
+    //TODO: Move all logic to handlers, implement validators
     public sealed class WorkoutController : FitMateControllerBase
     {
         public WorkoutController(IMediator mediator, IUserService userService)

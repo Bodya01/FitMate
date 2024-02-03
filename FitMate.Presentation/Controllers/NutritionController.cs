@@ -16,6 +16,7 @@ using System.Threading.Tasks;
 
 namespace FitMate.Controllers
 {
+    //TODO: Implement single handlers for each endpoint, move all logic to handlers, implement validators
     public sealed class NutritionController : FitMateControllerBase
     {
         public NutritionController(IMediator mediator, IUserService userService)
