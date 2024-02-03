@@ -28,7 +28,7 @@ namespace FitMate.Applcation.Commands.Bodyweight
                 .ToList();
 
             _logger.LogInformation($"Update of bodyweight records for user {command.UserId} begins");
-            await _bodyweightRecordService.UpdateRangeAsync(records, cancellationToken);
+            await _bodyweightRecordService.UpdateRangeAsync(records, command.UserId, cancellationToken);
             _logger.LogInformation($"Bodyweight records for user {command.UserId} were successfully updated");
         }
     }
