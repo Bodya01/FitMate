@@ -4,7 +4,7 @@ using FitMate.Infrastucture.Dtos.Base;
 using MediatR;
 using Microsoft.Extensions.Logging;
 
-namespace FitMate.Application.Queries.BodyweightTarget
+namespace FitMate.Application.Queries.Bodyweight
 {
     public record GetCurrentBodyweightTarget(string UserId) : IRequest<BodyweightTargetDto?>;
 

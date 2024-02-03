@@ -1,5 +1,6 @@
 ﻿using FitMate.Applcation.Commands.Bodyweight;
 using FitMate.Application.Commands.BodyweightTarget;
+using FitMate.Application.Queries.Bodyweight;
 using FitMate.Application.Queries.BodyweightRecord;
 using FitMate.Application.Queries.BodyweightTarget;
 using FitMate.Presentation.ViewModels.Bodyweight;
@@ -24,27 +25,17 @@ namespace FitMate.Controllers
         [HttpGet]
         public async Task<IActionResult> Summary(CancellationToken cancellationToken)
         {
-            var target = await _mediator.Send(new GetCurrentBodyweightTarget(_currentUserId), cancellationToken);
-            var records = await _mediator.Send(new GetBodyweightRecords(_currentUserId), cancellationToken);
-
-            var viewModel = BodyweightSummaryViewModel.Create(records, target);
-
-            return View(viewModel);
+            var (target, records) = await _mediator.Send(new GetBodyweightSummary(_currentUserId), cancellationToken);
+            return View(BodyweightSummaryViewModel.Create(records, target));
         }
 
         [HttpGet]
-        public async Task<IActionResult> EditTarget(CancellationToken cancellationToken)
-        {
-            var target = await _mediator.Send(new GetCurrentBodyweightTarget(_currentUserId), cancellationToken);
-            return View(target);
-        }
+        public async Task<IActionResult> EditTarget(CancellationToken cancellationToken) =>
+            View(await _mediator.Send(new GetCurrentBodyweightTarget(_currentUserId), cancellationToken));
 
         [HttpGet]
-        public async Task<IActionResult> EditRecords(CancellationToken cancellationToken)
-        {
-            var records = await _mediator.Send(new GetBodyweightRecords(_currentUserId), cancellationToken);
-            return View(records);
-        }
+        public async Task<IActionResult> EditRecords(CancellationToken cancellationToken) =>
+            View(await _mediator.Send(new GetBodyweightRecords(_currentUserId), cancellationToken));
 
         [HttpGet]
         public async Task<IActionResult> GetBodyweightData(int previousDays, CancellationToken cancellationToken)
