@@ -79,7 +79,7 @@ namespace FitMate.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> AddTodayWeight([FromBody] AddTodayWeight command, CancellationToken cancellationToken)
+        public async Task<IActionResult> AddTodayWeight([FromForm] AddTodayWeight command, CancellationToken cancellationToken)
         {
             if (command.Weight <= 0 || command.Weight >= 200) return BadRequest();
 
