@@ -24,7 +24,7 @@ namespace FitMate.Applcation.Commands.Bodyweight
         public async Task Handle(EditBodyweightRecords command, CancellationToken cancellationToken)
         {
             var records = command.Dates
-                .Zip(command.Weights, (date, weight) => new UpdateBodyweightRecordModel(date, weight))
+                .Zip(command.Weights, (date, weight) => new UpdateBodyweightRecordModel(date, weight, command.UserId))
                 .ToList();
 
             _logger.LogInformation($"Update of bodyweight records for user {command.UserId} begins");
