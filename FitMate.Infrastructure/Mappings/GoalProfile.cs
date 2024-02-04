@@ -11,8 +11,10 @@ namespace FitMate.Infrastructure.Mappings
         public GoalProfile()
         {
             CreateMap<CreateWeightliftingGoalModel, WeightliftingGoal>();
+            CreateMap<UpdateWeightliftingGoalModel, WeightliftingGoal>();
             CreateMap<WeightliftingGoalDto, WeightliftingGoal>().ReverseMap();
             CreateMap<CreateTimedGoalModel, TimedGoal>();
+            CreateMap<UpdateTimedGoalModel, TimedGoal>();
             CreateMap<TimedGoalDto, TimedGoal>().ReverseMap();
         }
     }
