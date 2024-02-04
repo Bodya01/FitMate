@@ -7,7 +7,7 @@ using System.Linq;
 
 namespace FitMate.Presentation.ViewModels.Bodyweight
 {
-    internal sealed class BodyweightSummaryViewModel
+    public sealed class BodyweightSummaryViewModel
     {
         public BodyweightRecordDto MostRecentRecord { get; private set; }
         public BodyweightTargetDto Target { get; private set; }

@@ -1,6 +1,6 @@
 ﻿namespace FitMate.Presentation.ViewModels.Bodyweight
 {
-    internal sealed class TargetProgressViewModel
+    public sealed class TargetProgressViewModel
     {
         public float Distance { get; set; }
         public float RequiredDailyProgress { get; set; }
