@@ -5,7 +5,7 @@
 @{
     ViewData["Title"] = "Add Food";
 
-    var recordForCurrentDate = Model.FoodRecords.Where(record => record.ConsumptionDate == (DateTime)ViewData["selectedDate"]).ToList();
+    var recordForCurrentDate = Model.FoodRecords.Where(record => record.ConsumptionDate == Model.SelectedDate).ToList();
 }
 
 @section Scripts
