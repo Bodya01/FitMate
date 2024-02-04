@@ -1,6 +1,7 @@
 using FitMate.Applcation.ServiceCollectionExtensions;
 using FitMate.Infrastructure;
 using FitMate.Presentation.Middlewares;
+using FitMate.Presentation.Validators;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Localization;
@@ -33,7 +34,8 @@ namespace FitMate
                 .MigrateDatabase()
                 .RegisterRepositories()
                 .RegisterServices()
-                .RegisterMediatRAndHandlers();
+                .RegisterMediatRAndHandlers()
+                .RegisterFluentValidation();
 
             services.AddHttpContextAccessor();
         }
