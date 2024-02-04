@@ -5,8 +5,10 @@ using Microsoft.Extensions.Logging;
 
 namespace FitMate.Applcation.Commands.Bodyweight
 {
-    public record EditBodyweightRecords(DateTime[] Dates, float[] Weights) : IRequest
+    public record EditBodyweightRecords() : IRequest
     {
+        public DateTime[] Dates { get; set; }
+        public float[] Weights { get; set; }
         public string UserId { get; set; }
     }
 
@@ -23,6 +25,9 @@ namespace FitMate.Applcation.Commands.Bodyweight
 
         public async Task Handle(EditBodyweightRecords command, CancellationToken cancellationToken)
         {
+            command.Dates ??= Enumerable.Empty<DateTime>().ToArray();
+            command.Weights ??= Enumerable.Empty<float>().ToArray();
+
             var records = command.Dates
                 .Zip(command.Weights, (date, weight) => new UpdateBodyweightRecordModel(date, weight, command.UserId))
                 .ToList();

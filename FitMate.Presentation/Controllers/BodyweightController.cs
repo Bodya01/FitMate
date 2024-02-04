@@ -64,12 +64,13 @@ namespace FitMate.Controllers
         [HttpPost]
         public async Task<IActionResult> EditRecords([FromForm] EditBodyweightRecords command, CancellationToken cancellationToken)
         {
-            if (command.Dates is null
-                || command.Weights is null
-                || command.Dates.Length != command.Weights.Length
-                || command.Weights.Any(x => x <= 0 || x >= 200))
+            if (command.Dates is not null && command.Weights is not null)
             {
-                return BadRequest();
+                if (command.Dates.Length != command.Weights.Length
+                || command.Weights.Any(x => x <= 0 || x >= 200))
+                {
+                    return BadRequest();
+                }
             }
 
             command.UserId = _currentUserId;

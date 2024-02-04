@@ -1,7 +1,9 @@
 ﻿using FitMate.Business.Interfaces;
+using FitMate.Infrastructure.Exceptions;
 using FitMate.Infrastucture.Dtos;
 using MediatR;
 using Microsoft.Extensions.Logging;
+using System.Collections.Generic;
 
 namespace FitMate.Application.Queries.BodyweightRecord
 {
@@ -20,9 +22,18 @@ namespace FitMate.Application.Queries.BodyweightRecord
 
         public async Task<List<BodyweightRecordDto>> Handle(GetBodyweightRecords request, CancellationToken cancellationToken)
         {
-            var records = request.IgnoreDates
+            IEnumerable<BodyweightRecordDto> records;
+
+            try
+            {
+                records = request.IgnoreDates
                 ? await _bodyweightRecordService.GetAllRecordsAsync(request.UserId, cancellationToken)
                 : await _bodyweightRecordService.GetRecordsByDateAsync(request.From, request.To, request.UserId, cancellationToken);
+            }
+            catch (EntityNotFoundException)
+            {
+                records = Enumerable.Empty<BodyweightRecordDto>();
+            }
 
             return records.ToList();
         }

@@ -61,8 +61,6 @@ namespace FitMate.Business.Services
 
         public async Task UpdateRangeAsync(IEnumerable<UpdateBodyweightRecordModel> records, string userId, CancellationToken cancellationToken = default)
         {
-            if (records is null) throw new ArgumentNullException(nameof(records));
-
             var existingEntities = await _unitOfWork.BodyweightRecordRepository.Value
                 .Get(e => e.UserId == userId, s => s)
                 .ToListAsync(cancellationToken);
