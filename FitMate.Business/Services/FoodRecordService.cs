@@ -44,8 +44,6 @@ namespace FitMate.Business.Services
 
         public async Task UpdateFoodRecordRangeAsync(IEnumerable<CreateFoodRecordModel> records, string userId, DateTime consumptionDate, CancellationToken cancellationToken = default)
         {
-            if (records.IsNullOrEmpty()) throw new ArgumentNullException(nameof(records));
-
             var newRecords = _mapper.Map<IEnumerable<FoodRecord>>(records);
             var existingRecords = await _unitOfWork.FoodRecordRepository.Value
                 .Get(e => e.UserId == userId && e.ConsumptionDate == consumptionDate, s => s)

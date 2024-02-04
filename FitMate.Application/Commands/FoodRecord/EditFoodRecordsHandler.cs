@@ -5,7 +5,7 @@ using Microsoft.Extensions.Logging;
 
 namespace FitMate.Application.Commands.FoodRecord
 {
-    public record EditFoodRecords(DateTime Date, List<Guid> FoodIds, List<float> Quantities) : IRequest
+    public record EditFoodRecords(DateTime Date, List<Guid>? FoodIds, List<float>? Quantities) : IRequest
     {
         public string UserId { get; set; }
     }
@@ -23,9 +23,17 @@ namespace FitMate.Application.Commands.FoodRecord
 
         public async Task Handle(EditFoodRecords request, CancellationToken cancellationToken)
         {
-            var records = new CreateFoodRecordModel[request.FoodIds.Count];
-            for (var i = 0; i < request.FoodIds.Count; i++)
-                records[i] = new CreateFoodRecordModel(request.Quantities[i], request.Date, request.FoodIds[i], request.UserId);
+            var foodIds = request.FoodIds ?? new List<Guid>();
+            var quantities = request.Quantities ?? new List<float>();
+
+            var records = new CreateFoodRecordModel[foodIds.Count];
+            for (var i = 0; i < records.Length; i++)
+            {
+                var foodId = i < foodIds.Count ? foodIds[i] : Guid.Empty;
+                var quantity = i < quantities.Count ? quantities[i] : 0;
+
+                records[i] = new CreateFoodRecordModel(quantity, request.Date, foodId, request.UserId);
+            }
 
             _logger.LogInformation($"Updating food records for user {request.UserId} and date {request.Date.ToShortDateString()} begins");
             await _foodRecordService.UpdateFoodRecordRangeAsync(records, request.UserId, request.Date, cancellationToken);
