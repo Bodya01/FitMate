@@ -7,7 +7,6 @@ using FitMate.UI.Web.Controllers.Base;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using System;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 

@@ -3,7 +3,6 @@ using FitMate.Business.Interfaces;
 using FitMate.Business.Services.Base;
 using FitMate.Core.UnitOfWork;
 using FitMate.Infrastructure.Entities;
-using FitMate.Infrastructure.Extensions;
 using FitMate.Infrastructure.Models.FoodRecord;
 using FitMate.Infrastucture.Dtos;
 using Microsoft.EntityFrameworkCore;
