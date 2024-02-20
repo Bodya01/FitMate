@@ -6,7 +6,7 @@ using FitMate.Infrastructure.Exceptions;
 
 namespace FitMate.Business.Services.Base
 {
-    public class ServiceBase : IServiceBase
+    public abstract class ServiceBase : IServiceBase
     {
         protected readonly IUnitOfWork _unitOfWork;
         protected readonly IMapper _mapper;

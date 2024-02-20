@@ -3,7 +3,7 @@ using FluentValidation;
 
 namespace FitMate.Presentation.Validators.Bodyweight
 {
-    public class EditFoodRecordsValidator : AbstractValidator<EditFoodRecords>
+    public sealed class EditFoodRecordsValidator : AbstractValidator<EditFoodRecords>
     {
         public EditFoodRecordsValidator()
         {

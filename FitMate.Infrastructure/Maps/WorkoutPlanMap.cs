@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace FitMate.Infrastructure.Maps
 {
-    public class WorkoutPlanMap : IEntityTypeConfiguration<WorkoutPlan>
+    internal sealed class WorkoutPlanMap : IEntityTypeConfiguration<WorkoutPlan>
     {
         public void Configure(EntityTypeBuilder<WorkoutPlan> builder)
         {

@@ -28,8 +28,7 @@ namespace FitMate.Controllers
         }
 
         [HttpGet]
-        public IActionResult Add() =>
-            View("Add", WeightliftingGoalDto.CreateDefault());
+        public IActionResult Add() => View("Add", WeightliftingGoalDto.CreateDefault());
 
         [HttpGet]
         public async Task<IActionResult> EditTimed([FromRoute] GetTimedGoal query, CancellationToken cancellationToken)

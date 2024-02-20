@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace FitMate.Infrastructure.Maps
 {
-    public class WeightliftingGoalMap : IEntityTypeConfiguration<WeightliftingGoal>
+    internal sealed class WeightliftingGoalMap : IEntityTypeConfiguration<WeightliftingGoal>
     {
         public void Configure(EntityTypeBuilder<WeightliftingGoal> builder)
         {
