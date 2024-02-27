@@ -14,14 +14,16 @@ namespace FitMate.Core
     {
         public static IServiceCollection RegisterRepositories(this IServiceCollection services)
         {
-
             services.AddScoped<IBodyweightRecordRepository, BodyweightRecordRepository>();
             services.AddScoped<IBodyweightTargetRepository, BodyweightTargetRepository>();
-            services.AddScoped<ITimedGoalRepository, TimedGoalRepository>();
-            services.AddScoped<IWeightliftingGoalRepository, WeightliftingGoalRepository>();
-            services.AddScoped<IWorkoutPlanRepository, WorkoutPlanRepository>();
-            services.AddScoped<IFoodRepository, FoodRepository>();
             services.AddScoped<IFoodRecordRepository, FoodRecordRepository>();
+            services.AddScoped<IFoodRepository, FoodRepository>();
+            services.AddScoped<INutritionTargetRepository, NutritionTargetRepository>();
+            services.AddScoped<ITimedGoalRepository, TimedGoalRepository>();
+            services.AddScoped<ITimedProgressRepository, TimedProgressRepository>();
+            services.AddScoped<IWeightliftingGoalRepository, WeightliftingGoalRepository>();
+            services.AddScoped<IWeightliftingProgressRepository, WeightliftingProgressRepository>();
+            services.AddScoped<IWorkoutPlanRepository, WorkoutPlanRepository>();
             services.AddScoped<IUnitOfWork, UnitOfWork.UnitOfWork>();
 
             return services;
