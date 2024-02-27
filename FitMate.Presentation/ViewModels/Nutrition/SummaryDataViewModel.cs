@@ -5,7 +5,7 @@ using System.Linq;
 
 namespace FitMate.Presentation.ViewModels.Nutrition
 {
-    internal sealed class SummaryDataViewModel
+    public sealed class SummaryDataViewModel
     {
         public string Period { get; set; }
         public int Calories { get; set; }

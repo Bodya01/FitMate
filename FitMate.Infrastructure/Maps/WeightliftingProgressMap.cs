@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace FitMate.Infrastructure.Maps
 {
-    internal sealed class WeightliftingProgressMap : IEntityTypeConfiguration<WeightliftingProgress>
+    public sealed class WeightliftingProgressMap : IEntityTypeConfiguration<WeightliftingProgress>
     {
         public void Configure(EntityTypeBuilder<WeightliftingProgress> builder)
         {

@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace FitMate.Infrastructure.Maps
 {
-    internal sealed class BodyweightRecordMap : IEntityTypeConfiguration<BodyweightRecord>
+    public sealed class BodyweightRecordMap : IEntityTypeConfiguration<BodyweightRecord>
     {
         public void Configure(EntityTypeBuilder<BodyweightRecord> builder)
         {

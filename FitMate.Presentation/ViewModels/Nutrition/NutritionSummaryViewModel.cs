@@ -5,7 +5,7 @@ using System.Linq;
 
 namespace FitMate.Presentation.ViewModels.Nutrition
 {
-    internal sealed class NutritionSummaryViewModel
+    public sealed class NutritionSummaryViewModel
     {
         private readonly IEnumerable<FoodRecordDto> _records;
 

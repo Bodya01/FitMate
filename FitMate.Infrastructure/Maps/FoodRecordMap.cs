@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace FitMate.Infrastructure.Maps
 {
-    internal sealed class FoodRecordMap : IEntityTypeConfiguration<FoodRecord>
+    public sealed class FoodRecordMap : IEntityTypeConfiguration<FoodRecord>
     {
         public void Configure(EntityTypeBuilder<FoodRecord> builder)
         {

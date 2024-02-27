@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace FitMate.Infrastructure.Maps
 {
-    internal sealed class TimedProgressMap : IEntityTypeConfiguration<TimedProgress>
+    public sealed class TimedProgressMap : IEntityTypeConfiguration<TimedProgress>
     {
         public void Configure(EntityTypeBuilder<TimedProgress> builder)
         {

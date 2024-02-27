@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace FitMate.Infrastructure.Maps
 {
-    internal sealed class TimedGoalMap : IEntityTypeConfiguration<TimedGoal>
+    public sealed class TimedGoalMap : IEntityTypeConfiguration<TimedGoal>
     {
         public void Configure(EntityTypeBuilder<TimedGoal> builder)
         {
