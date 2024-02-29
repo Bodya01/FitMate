@@ -25,6 +25,7 @@ namespace FitMate.Core.Context
         {
             base.OnModelCreating(builder);
 
+            builder.ApplyConfiguration(new FitnessUserMap());
             builder.ApplyConfiguration(new BodyweightRecordMap());
             builder.ApplyConfiguration(new BodyweightTargetMap());
             builder.ApplyConfiguration(new FoodMap());

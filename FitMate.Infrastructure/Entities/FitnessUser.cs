@@ -1,4 +1,5 @@
 ﻿using FitMate.Infrastructure.Entities.Interfaces;
+using FitMate.Infrastructure.Enums;
 using Microsoft.AspNetCore.Identity;
 
 namespace FitMate.Infrastructure.Entities;
@@ -8,7 +9,7 @@ public class FitnessUser : IdentityUser, IEntity
     public string FirstName { get; set; }
     public string LastName { get; set; }
     public DateTime DateOfBirth { get; set; }
-    public string Gender { get; set; } // TODO: Add enum for male/female only
+    public Genders Gender { get; set; }
 
     public ICollection<BodyweightRecord> BodyweightRecords { get; set; }
     public ICollection<BodyweightTarget> BodyweightTargets { get; set; }

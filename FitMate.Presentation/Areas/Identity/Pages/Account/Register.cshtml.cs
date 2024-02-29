@@ -1,4 +1,5 @@
 ﻿using FitMate.Infrastructure.Entities;
+using FitMate.Infrastructure.Enums;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
@@ -74,9 +75,8 @@ namespace FitMate.Areas.Identity.Pages.Account
             [Display(Name = "Date of Birth")]
             public DateTime DateOfBirth { get; set; }
 
-            [StringLength(10)]
             [Display(Name = "Gender")]
-            public string Gender { get; set; }
+            public Genders Gender { get; set; }
         }
 
         public async Task OnGetAsync(string returnUrl = null)
