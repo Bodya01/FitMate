@@ -34,7 +34,7 @@ namespace FitMate.Presentation.ViewModels.Nutrition
 
         private SummaryDataViewModel CreateSummaryData(DateTime date, string period)
         {
-            var records = _records.Where(record => record.ConsumptionDate == DateTime.Today);
+            var records = _records.Where(record => record.ConsumptionDate == date);
             return SummaryDataViewModel.CreateConcreteSummary(records, period);
         }
 
