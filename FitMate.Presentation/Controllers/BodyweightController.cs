@@ -39,7 +39,7 @@ namespace FitMate.Controllers
         [HttpGet]
         public async Task<IActionResult> GetBodyweightData(int previousDays, CancellationToken cancellationToken)
         {
-            var query = new GetBodyweightRecords(_currentUserId, DateTime.Today, DateTime.Today.AddDays(-previousDays), false);
+            var query = new GetBodyweightRecords(_currentUserId, DateTime.Today.AddDays(-previousDays), DateTime.Today, false);
             var records = await _mediator.Send(query, cancellationToken);
 
             var result = records
