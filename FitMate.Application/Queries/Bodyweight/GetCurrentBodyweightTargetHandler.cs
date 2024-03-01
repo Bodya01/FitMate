@@ -10,12 +10,10 @@ namespace FitMate.Application.Queries.Bodyweight
 
     internal sealed class GetCurrentBodyweightTargetHandler : IRequestHandler<GetCurrentBodyweightTarget, BodyweightTargetDto?>
     {
-        private readonly ILogger<GetCurrentBodyweightTargetHandler> _logger;
         private readonly IBodyweightTargetService _bodyweightTargetService;
 
-        public GetCurrentBodyweightTargetHandler(ILogger<GetCurrentBodyweightTargetHandler> logger, IBodyweightTargetService bodyweightTargetService)
+        public GetCurrentBodyweightTargetHandler(IBodyweightTargetService bodyweightTargetService)
         {
-            _logger = logger;
             _bodyweightTargetService = bodyweightTargetService;
         }
 

@@ -10,12 +10,10 @@ namespace FitMate.Application.Queries.BodyweightRecord
 
     internal sealed class GetBodyweightRecordsHandler : IRequestHandler<GetBodyweightRecords, List<BodyweightRecordDto>>
     {
-        private readonly ILogger<GetBodyweightRecordsHandler> _logger;
         private readonly IBodyweightRecordService _bodyweightRecordService;
 
-        public GetBodyweightRecordsHandler(ILogger<GetBodyweightRecordsHandler> logger, IBodyweightRecordService bodyweightRecordService)
+        public GetBodyweightRecordsHandler(IBodyweightRecordService bodyweightRecordService)
         {
-            _logger = logger;
             _bodyweightRecordService = bodyweightRecordService;
         }
 

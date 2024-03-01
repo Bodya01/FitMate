@@ -9,12 +9,10 @@ namespace FitMate.Application.Queries.Food
 
     internal sealed class GetAllFoodsHandler : IRequestHandler<GetAllFoods, IEnumerable<FoodDto>>
     {
-        private readonly ILogger<GetAllFoodsHandler> _logger;
         private readonly IFoodService _foodService;
 
-        public GetAllFoodsHandler(ILogger<GetAllFoodsHandler> logger, IFoodService foodService)
+        public GetAllFoodsHandler(IFoodService foodService)
         {
-            _logger = logger;
             _foodService = foodService;
         }
 

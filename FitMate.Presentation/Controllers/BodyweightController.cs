@@ -47,7 +47,7 @@ namespace FitMate.Controllers
                 .Select(record => new { Date = record.Date.ToString("d"), Weight = record.Weight })
                 .ToList();
 
-            return Json(result);
+            return Ok(result);
         }
 
         [HttpPost]

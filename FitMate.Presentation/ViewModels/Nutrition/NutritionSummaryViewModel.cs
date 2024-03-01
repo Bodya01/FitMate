@@ -16,7 +16,7 @@ namespace FitMate.Presentation.ViewModels.Nutrition
         public SummaryDataViewModel MonthAverage { get; set; }
 
         public static NutritionSummaryViewModel Create(IEnumerable<FoodRecordDto> records, NutritionTargetDto target) =>
-            new NutritionSummaryViewModel(records, target);
+            new(records, target);
 
         private NutritionSummaryViewModel(IEnumerable<FoodRecordDto> records, NutritionTargetDto target)
         {

@@ -12,12 +12,10 @@ namespace FitMate.Application.Queries.GoalProgress
 
     internal sealed class GetTimedProgressHandler : IRequestHandler<GetTimedProgress, IEnumerable<TimedProgressDto>>
     {
-        private readonly ILogger<GetTimedProgressHandler> _logger;
         private readonly ITimedProgressService _timedProgressService;
 
-        public GetTimedProgressHandler(ILogger<GetTimedProgressHandler> logger, ITimedProgressService timedProgressService)
+        public GetTimedProgressHandler(ITimedProgressService timedProgressService)
         {
-            _logger = logger;
             _timedProgressService = timedProgressService;
         }
 

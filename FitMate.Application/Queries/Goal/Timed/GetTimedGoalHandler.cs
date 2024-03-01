@@ -13,12 +13,10 @@ namespace FitMate.Application.Queries.Goal.Timed
     internal sealed class GetTimedGoalHandler : IRequestHandler<GetTimedGoal, TimedGoalDto>
     {
         private readonly ITimedGoalService _timedGoalService;
-        private readonly ILogger<GetTimedGoalHandler> _logger;
 
-        public GetTimedGoalHandler(ITimedGoalService timedGoalService, ILogger<GetTimedGoalHandler> logger)
+        public GetTimedGoalHandler(ITimedGoalService timedGoalService)
         {
             _timedGoalService = timedGoalService;
-            _logger = logger;
         }
 
         async Task<TimedGoalDto> IRequestHandler<GetTimedGoal, TimedGoalDto>.Handle(GetTimedGoal request, CancellationToken cancellationToken) =>
