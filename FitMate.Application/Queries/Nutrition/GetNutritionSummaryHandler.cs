@@ -21,7 +21,7 @@ namespace FitMate.Application.Queries.Nutrition
 
         async Task<GetNutritionSummaryResponse> IRequestHandler<GetNutritionSummary, GetNutritionSummaryResponse>.Handle(GetNutritionSummary request, CancellationToken cancellationToken)
         {
-            var target = await _targetService.GetTargetForUser(request.UserId, cancellationToken);
+            var target = await _targetService.GetUserTargetAsync(request.UserId, cancellationToken);
             var records = await _foodRecordService.GetRecordsForLastDays(28, request.UserId, cancellationToken);
 
             return new GetNutritionSummaryResponse(records.ToList(), target);

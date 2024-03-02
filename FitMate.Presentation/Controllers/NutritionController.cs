@@ -48,7 +48,7 @@ namespace FitMate.Controllers
                 })
                 .ToList();
 
-            return Json(result);
+            return Ok(result);
         }
 
         [HttpGet]

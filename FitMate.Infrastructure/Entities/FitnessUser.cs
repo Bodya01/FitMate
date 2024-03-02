@@ -10,6 +10,7 @@ public class FitnessUser : IdentityUser, IEntity
     public string LastName { get; set; }
     public DateTime DateOfBirth { get; set; }
     public Genders Gender { get; set; }
+    public float? Height { get; set; }
 
     public ICollection<BodyweightRecord> BodyweightRecords { get; set; }
     public ICollection<BodyweightTarget> BodyweightTargets { get; set; }

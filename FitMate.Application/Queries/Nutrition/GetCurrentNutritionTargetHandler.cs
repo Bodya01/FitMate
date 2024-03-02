@@ -16,6 +16,6 @@ namespace FitMate.Application.Queries.Nutrition
         }
 
         public async Task<NutritionTargetDto> Handle(GetCurrentNutritionTarget request, CancellationToken cancellationToken) =>
-            await _nutritionTargetService.GetTargetForUser(request.UserId, cancellationToken);
+            await _nutritionTargetService.GetUserTargetAsync(request.UserId, cancellationToken);
     }
 }

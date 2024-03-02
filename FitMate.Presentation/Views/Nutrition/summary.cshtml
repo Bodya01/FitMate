@@ -16,7 +16,7 @@
 <div class="row">
     <div class="col">
         <div class="card">
-            <div class="card-header"><h3>Target</h3></div>
+            <div class="card-header"><h3>Target <span class="float-right"><i class="far fa-edit" style="cursor:pointer" data-toggle="modal" data-target="#TargetModal"></i></span></h3></div>
             <div class="card-body">
                 <div class="text-center mb-2">
                     <h4>Calories</h4>
@@ -70,6 +70,10 @@
         </canvas>
     </div>
 </div>
+
+@{
+    await Html.RenderPartialAsync("Partial/_CalculateNutritionTargetModal");
+}
 
 @section Scripts
 {

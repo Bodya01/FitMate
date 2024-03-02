@@ -65,10 +65,7 @@
                         @(Model.MostRecentRecord is null ? "0" : Model.MostRecentRecord.Weight.ToString("F2"))kg
                     </h4>
                     <div class="card-text text-center">
-                        @if (Model.MostRecentRecord is not null)
-                            @(Model.MostRecentRecord.Date.ToString("d"))
-
-
+                        @if (Model.MostRecentRecord is not null) @(Model.MostRecentRecord.Date.ToString("d"))
                     </div>
                 </div>
             </div>

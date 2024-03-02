@@ -9,6 +9,8 @@ namespace FitMate.Infrastructure.Maps
     {
         public void Configure(EntityTypeBuilder<FitnessUser> builder)
         {
+            builder.Property(u => u.Height).IsRequired(false);
+
             builder.Property(u => u.Gender)
                 .IsRequired()
                 .HasConversion(

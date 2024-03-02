@@ -1,0 +1,43 @@
+﻿@using FitMate.Infrastructure.Enums
+@using FitMate.Presentation.Controllers
+@using FitMate.Presentation.Extensions
+@using FitMate.Presentation.Helpers
+
+<div class="modal fade" id="TargetModal" tabindex="-1" aria-labelledby="TargetModal" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Nutrition calculator</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form asp-controller="@(UiNamingHelper.GetControllerName<NutritionTargetController>())" asp-action="@nameof(NutritionTargetController.CalculateTarget)" method="post">
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label>Age</label>
+                        <input class="form-control" name="Age" type="number" min="1" max="200" disabled required/>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Height</label>
+                        <input class="form-control" name="Height" type="number" min="100" max="300" placeholder="cm" required/>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Weight</label>
+                        <input class="form-control" name="Weight" type="number" min="10" max="300" placeholder="kg" required/>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Activity level</label>
+                        <select name="ActivityLevel" class="form-control" asp-items="Html.GetEnumSelectListWithDescriptions<ActivityLevels>()" required></select>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <input type="submit" class="btn btn-primary" value="Calculate">
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
