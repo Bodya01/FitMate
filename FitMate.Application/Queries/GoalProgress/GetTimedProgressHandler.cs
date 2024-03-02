@@ -1,7 +1,6 @@
 ﻿using FitMate.Business.Interfaces;
 using FitMate.Infrastucture.Dtos.GoalProgress;
 using MediatR;
-using Microsoft.Extensions.Logging;
 
 namespace FitMate.Application.Queries.GoalProgress
 {
