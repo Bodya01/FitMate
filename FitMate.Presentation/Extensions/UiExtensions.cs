@@ -2,6 +2,7 @@
 using System;
 using System.ComponentModel;
 using System.Linq;
+using System.Web;
 
 namespace FitMate.Presentation.Extensions
 {
@@ -18,6 +19,20 @@ namespace FitMate.Presentation.Extensions
                 }).ToList();
 
             return new SelectList(values, "Value", "Text");
+        }
+
+        public static string Attr(this IHtmlHelper helper, string name, string value, Func<bool> condition = null)
+        {
+            if (string.IsNullOrEmpty(name) || string.IsNullOrEmpty(value))
+            {
+                return string.Empty;
+            }
+
+            var render = condition != null && condition();
+
+            return render ?
+                new string(string.Format("{0}=\"{1}\"", name, HttpUtility.HtmlAttributeEncode(value)))
+                : string.Empty;
         }
 
 

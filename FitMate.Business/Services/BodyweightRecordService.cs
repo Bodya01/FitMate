@@ -41,6 +41,17 @@ namespace FitMate.Business.Services
             return _mapper.Map<IEnumerable<BodyweightRecordDto>>(entities);
         }
 
+        public async Task<BodyweightRecordDto?> GetLastRecordAsync(string userId, CancellationToken cancellationToken = default)
+        {
+            var entity = await _unitOfWork.BodyweightRecordRepository.Value.Get(e => e.UserId == userId, s => s)
+                .OrderByDescending(e => e.Date)
+                .FirstOrDefaultAsync(cancellationToken);
+
+            if (entity is null) return null;
+
+            return _mapper.Map<BodyweightRecordDto>(entity);
+        }
+
         public async Task CreateTodayRecordAsync(CreateTodayBodyweightRecordModel model, CancellationToken cancellationToken = default)
         {
             var entity = _mapper.Map<BodyweightRecord>(model);

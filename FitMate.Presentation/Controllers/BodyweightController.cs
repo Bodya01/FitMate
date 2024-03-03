@@ -37,7 +37,7 @@ namespace FitMate.Controllers
             View(await _mediator.Send(new GetBodyweightRecords(_currentUserId), cancellationToken));
 
         [HttpGet]
-        public async Task<IActionResult> GetBodyweightData(int previousDays, CancellationToken cancellationToken)
+        public async Task<IActionResult> GetBodyweightData([FromQuery] int previousDays, CancellationToken cancellationToken)
         {
             var query = new GetBodyweightRecords(_currentUserId, DateTime.Today.AddDays(-previousDays), DateTime.Today, false);
             var records = await _mediator.Send(query, cancellationToken);

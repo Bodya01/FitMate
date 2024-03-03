@@ -72,7 +72,7 @@
 </div>
 
 @{
-    await Html.RenderPartialAsync("Partial/_CalculateNutritionTargetModal");
+    await Html.RenderPartialAsync("Partial/_CalculateNutritionTargetModal", Model.CalculatorViewModel);
 }
 
 @section Scripts

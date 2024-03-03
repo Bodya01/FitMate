@@ -14,6 +14,7 @@ namespace FitMate.Core.UnitOfWork
         Lazy<IFoodRepository> FoodRepository { get; }
         Lazy<IFoodRecordRepository> FoodRecordRepository { get; }
         Lazy<INutritionTargetRepository> NutritionTargetRepository { get; }
+        Lazy<IUserRepository> UserRepository { get; }
 
         Task SaveChangesAsync(CancellationToken cancellationToken = default);
     }

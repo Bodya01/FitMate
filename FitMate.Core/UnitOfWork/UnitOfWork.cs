@@ -17,6 +17,7 @@ namespace FitMate.Core.UnitOfWork
         public Lazy<IFoodRepository> FoodRepository { get; private set; }
         public Lazy<IFoodRecordRepository> FoodRecordRepository { get; private set; }
         public Lazy<INutritionTargetRepository> NutritionTargetRepository { get; private set; }
+        public Lazy<IUserRepository> UserRepository { get; private set; }
 
         public UnitOfWork(FitMateContext context)
         {
@@ -31,6 +32,7 @@ namespace FitMate.Core.UnitOfWork
             FoodRepository = new Lazy<IFoodRepository>(new FoodRepository(context));
             FoodRecordRepository = new Lazy<IFoodRecordRepository>(new FoodRecordRepository(context));
             NutritionTargetRepository = new Lazy<INutritionTargetRepository>(new NutritionTargetRepository(context));
+            UserRepository = new Lazy<IUserRepository>(new UserRepository(context));
         }
 
         public async Task SaveChangesAsync(CancellationToken cancellationToken = default) =>

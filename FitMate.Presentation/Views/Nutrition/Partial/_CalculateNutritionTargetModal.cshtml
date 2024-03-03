@@ -2,6 +2,8 @@
 @using FitMate.Presentation.Controllers
 @using FitMate.Presentation.Extensions
 @using FitMate.Presentation.Helpers
+@using FitMate.Presentation.ViewModels.Nutrition
+@model NutritionCalculatorViewModel;
 
 <div class="modal fade" id="TargetModal" tabindex="-1" aria-labelledby="TargetModal" aria-hidden="true">
     <div class="modal-dialog">
@@ -16,17 +18,17 @@
                 <div class="modal-body">
                     <div class="form-group">
                         <label>Age</label>
-                        <input class="form-control" name="Age" type="number" min="1" max="200" disabled required/>
+                        <input class="form-control" name="Age" type="number" min="1" max="200" value="@Model.Age" disabled required/>
                     </div>
 
                     <div class="form-group">
                         <label>Height</label>
-                        <input class="form-control" name="Height" type="number" min="100" max="300" placeholder="cm" required/>
+                        <input class="form-control" name="Height" type="number" min="100" max="300" placeholder="cm" @Html.Raw(Html.Attr("value", $"{Model.Height}", ()=> Model.Height is not null)) required/>
                     </div>
 
                     <div class="form-group">
                         <label>Weight</label>
-                        <input class="form-control" name="Weight" type="number" min="10" max="300" placeholder="kg" required/>
+                        <input class="form-control" name="Weight" type="number" min="10" max="300" placeholder="kg" @Html.Raw(Html.Attr("value", $"{Model.Weight}", () => Model.Weight is not null)) required />
                     </div>
 
                     <div class="form-group">

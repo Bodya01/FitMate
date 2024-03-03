@@ -9,16 +9,17 @@ namespace FitMate.Presentation.ViewModels.Nutrition
     {
         private readonly IEnumerable<FoodRecordDto> _records;
 
-        public NutritionTargetDto Target { get; set; }
-        public SummaryDataViewModel Today { get; set; }
-        public SummaryDataViewModel Yesterday { get; set; }
-        public SummaryDataViewModel WeekAverage { get; set; }
-        public SummaryDataViewModel MonthAverage { get; set; }
+        public NutritionTargetDto Target { get; init; }
+        public SummaryDataViewModel Today { get; init; }
+        public SummaryDataViewModel Yesterday { get; init; }
+        public SummaryDataViewModel WeekAverage { get; init; }
+        public SummaryDataViewModel MonthAverage { get; init; }
+        public NutritionCalculatorViewModel CalculatorViewModel { get; init; }
 
-        public static NutritionSummaryViewModel Create(IEnumerable<FoodRecordDto> records, NutritionTargetDto target) =>
-            new(records, target);
+        public static NutritionSummaryViewModel Create(IEnumerable<FoodRecordDto> records, NutritionTargetDto target, int age, float? height, float? weight) =>
+            new(records, target, age, height, weight);
 
-        private NutritionSummaryViewModel(IEnumerable<FoodRecordDto> records, NutritionTargetDto target)
+        private NutritionSummaryViewModel(IEnumerable<FoodRecordDto> records, NutritionTargetDto target, int age, float? height, float? weight)
         {
             if (records is null) throw new ArgumentNullException(nameof(records), "There are no any food records!");
             target ??= new NutritionTargetDto(Guid.Empty, default, default, default, default, string.Empty);
@@ -30,6 +31,7 @@ namespace FitMate.Presentation.ViewModels.Nutrition
             Yesterday = CreateSummaryData(DateTime.Today.AddDays(-1), "Yesterday");
             WeekAverage = CreateAverageSummaryData(DateTime.Today.AddDays(-7), "Last 7 days");
             MonthAverage = CreateAverageSummaryData(DateTime.Today.AddDays(-28), "Last 28 days");
+            CalculatorViewModel = new NutritionCalculatorViewModel(age, height, weight);
         }
 
         private SummaryDataViewModel CreateSummaryData(DateTime date, string period)
@@ -44,4 +46,6 @@ namespace FitMate.Presentation.ViewModels.Nutrition
             return SummaryDataViewModel.CreateAverageSummary(records, period);
         }
     }
+
+    public sealed record NutritionCalculatorViewModel(int Age, float? Height, float? Weight);
 }

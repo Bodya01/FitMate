@@ -27,7 +27,7 @@ namespace FitMate.Controllers
         public async Task<IActionResult> Summary(CancellationToken cancellationToken)
         {
             var response = await _mediator.Send(new GetNutritionSummary(_currentUserId), cancellationToken);
-            return View(NutritionSummaryViewModel.Create(response.Records, response.Target));
+            return View(NutritionSummaryViewModel.Create(response.Records, response.Target, response.Age, response.Height, response.Weight));
         }
 
         [HttpGet]
