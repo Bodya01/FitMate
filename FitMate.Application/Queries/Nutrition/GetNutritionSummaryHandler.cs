@@ -7,7 +7,7 @@ namespace FitMate.Application.Queries.Nutrition
 {
     public record GetNutritionSummary(string UserId) : IRequest<GetNutritionSummaryResponse>;
 
-    public record GetNutritionSummaryResponse(List<FoodRecordDto> Records, NutritionTargetDto Target, int Age, float Height, float? Weight);
+    public record GetNutritionSummaryResponse(List<FoodRecordDto> Records, NutritionTargetDto Target, int Age, float? Height, float? Weight);
 
     internal sealed class GetNutritionSummaryHandler : IRequestHandler<GetNutritionSummary, GetNutritionSummaryResponse>
     {
