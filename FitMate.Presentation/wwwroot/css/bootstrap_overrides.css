@@ -1,0 +1,18 @@
+﻿:root {
+    --card-bg-primary: #D9D9D9;
+}
+
+/* Card overrides */
+.card {
+    border-radius: 0 !important;
+    border: none !important;
+    background-color: var(--card-bg-primary);
+}
+
+.card-header:first-child {
+    border-radius: 0 !important;
+}
+
+.card-footer:last-child {
+    border-radius: 0 !important
+}

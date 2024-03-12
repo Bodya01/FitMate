@@ -14,15 +14,18 @@
 </div>
 
 <div class="row">
-    <div class="col-12">
-        <h5 class="d-block">Weightlifting:</h5>
-        <div class="d-flex flex-wrap">
+    <div class="col-md-5">
+        <h5 class="d-block mt-5 ml-3">Weightlifting:</h5>
+        <div class="d-block">
             @foreach (var weightliftingGoal in Model.WeightLiftingGoals)
             {
-                <div class="col-3 mt-3">
+                <div class="col-9 mt-3">
                     <div class="card">
-                        <div class="card-header">
+                        <div class="card-header d-flex justify-content-between">
                             <h4>@weightliftingGoal.Activity</h4>
+                            <span class="float-right">
+                                <a asp-controller="@(UiNamingHelper.GetControllerName<GoalController>())" asp-action="@nameof(GoalController.ViewWeightlifting)" asp-route-id="@weightliftingGoal.Id" class="btn btn-primary float-right">View</a>
+                            </span>
                         </div>
                         <div class="card-body text-center" style="font-size:1.1rem">
                             <div class="row text-center">
@@ -36,24 +39,24 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="card-footer">
-                            <a asp-controller="@(UiNamingHelper.GetControllerName<GoalController>())" asp-action="@nameof(GoalController.ViewWeightlifting)" asp-route-id="@weightliftingGoal.Id" class="btn btn-primary float-right">View</a>
-                        </div>
                     </div>
                 </div>
             }
         </div>
     </div>
 
-    <div class="col-12 mt-3">
-        <h5 class="d-block">Timed exercises:</h5>
-        <div class="d-flex flex-wrap">
+    <div class="col-md-5">
+        <h5 class="d-block mt-5 ml-3">Timed exercises:</h5>
+        <div class="d-block">
             @foreach (var timedGoal in Model.TimedGoals)
             {
-                <div class="col-3 mt-3">
+                <div class="col-9 mt-3">
                     <div class="card">
-                        <div class="card-header">
+                        <div class="card-header d-flex justify-content-between">
                             <h4>@timedGoal.Activity</h4>
+                            <span class="float-right">
+                                <a asp-controller="@(UiNamingHelper.GetControllerName<GoalController>())" asp-action="@nameof(GoalController.ViewTimed)" asp-route-id="@timedGoal.Id" class="btn btn-primary float-right">View</a>
+                            </span>
                         </div>
                         <div class="card-body text-center" style="font-size:1.1rem">
                             <div class="row text-center">
@@ -66,9 +69,6 @@
                                     <small>Time</small>
                                 </div>
                             </div>
-                        </div>
-                        <div class="card-footer">
-                            <a asp-controller="@(UiNamingHelper.GetControllerName<GoalController>())" asp-action="@nameof(GoalController.ViewTimed)" asp-route-id="@timedGoal.Id" class="btn btn-primary float-right">View</a>
                         </div>
                     </div>
                 </div>

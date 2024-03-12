@@ -2,7 +2,11 @@
 for details on configuring this project to bundle and minify static web assets. */
 
 :root {
-    --primary: #0089DC;
+    --primary: #393646;
+    --secondary: #4F4557;
+    --btn-primary: #EDE7D9;
+    --font-primary: #393646;
+    --font-secondary: #fff;
 }
 
 .navbar-brand {
@@ -26,7 +30,7 @@ a {
 }
 
 .btn-primary {
-    color: #fff;
+    color: var(--font-primary);
     background-color: #1b6ec2;
     border-color: #1861ac;
 }
@@ -43,6 +47,15 @@ html {
 }
 
 body {
+    background-color: var(--primary);
+}
+
+h2 {
+    color: var(--font-secondary);
+}
+
+h5 {
+    color: var(--font-secondary);
 }
 
 @media (min-width: 768px) {
@@ -76,10 +89,6 @@ html {
     min-height: 100%;
 }
 
-body {
-    background-color: #F8F8F8;
-}
-
 .footer {
     position: absolute;
     bottom: 0;
@@ -93,7 +102,7 @@ body {
 #sidebar {
     background-color: white;
     box-shadow: 0.25rem 0 0.75rem 0px rgba(0, 0, 0, .05);
-    min-height:100%;
+    min-height: 100%;
     height: auto;
     z-index: 1;
 }
@@ -125,15 +134,15 @@ body {
 }
 
 .bg-primary {
-    background-color: var(--primary) !important;
+    background-color: var(--secondary) !important;
 }
 
 .btn-primary {
-    background-color: var(--primary) !important;
+    background-color: var(--btn-primary) !important;
 }
 
     .btn-primary:hover {
-        background-color: #1b6ec2!important;
+        background-color: #1b6ec2 !important;
     }
 
 .card {
@@ -141,11 +150,11 @@ body {
 }
 
 .card-header {
-    background-color: var(--primary) !important;
-    color:white!important;
-    font-weight:normal;
+    background-color: var(--secondary) !important;
+    color: white !important;
+    font-weight: normal;
 }
 
 .card-footer {
-    background-color: rgb(226, 226, 226);
+    background-color: var(--secondary);
 }
