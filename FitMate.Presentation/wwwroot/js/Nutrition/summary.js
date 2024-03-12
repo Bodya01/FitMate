@@ -87,6 +87,13 @@ function setupMonthGraph() {
                     borderWidth: 2,
                     lineTension: 0
                 }]
+            },
+            options: {
+                plugins: {
+                    customCanvasBackgroundColor: {
+                        backgroundColor: '#fff',
+                    }
+                }
             }
         });
 

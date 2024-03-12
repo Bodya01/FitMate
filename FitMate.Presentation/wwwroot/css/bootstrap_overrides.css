@@ -1,6 +1,4 @@
-﻿:root {
-    --card-bg-primary: #D9D9D9;
-}
+﻿@import 'colors.css';
 
 /* Card overrides */
 .card {
@@ -15,4 +13,17 @@
 
 .card-footer:last-child {
     border-radius: 0 !important
+}
+
+.card-body .list-group .list-group-item {
+    background-color: var(--secondary);
+    padding: 0.75rem 0.75rem;
+}
+
+.card-body .list-group .list-group-item:hover {
+    background-color: var(--primary) !important;
+}
+
+.card-body .list-group .list-group-item a {
+    color: var(--font-secondary);
 }

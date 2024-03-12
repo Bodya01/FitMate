@@ -1,13 +1,4 @@
-﻿/* Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification
-for details on configuring this project to bundle and minify static web assets. */
-
-:root {
-    --primary: #393646;
-    --secondary: #4F4557;
-    --btn-primary: #EDE7D9;
-    --font-primary: #393646;
-    --font-secondary: #fff;
-}
+﻿@import 'colors.css';
 
 .navbar-brand {
     white-space: normal;
@@ -155,6 +146,18 @@ html {
     font-weight: normal;
 }
 
+.card-header-text{
+    font-size: 22px !important;
+    text-align: center;
+    color: var(--btn-primary);
+}
+
 .card-footer {
     background-color: var(--secondary);
+}
+
+.chart-canvas {
+    background-color: #fff;
+    border-radius: 10px;
+    max-width: 100%
 }
