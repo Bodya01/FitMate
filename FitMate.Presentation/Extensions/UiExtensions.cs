@@ -21,7 +21,7 @@ namespace FitMate.Presentation.Extensions
             return new SelectList(values, "Value", "Text");
         }
 
-        public static string Attr(this IHtmlHelper helper, string name, string value, Func<bool> condition = null)
+        internal static string Attr(this IHtmlHelper helper, string name, string value, Func<bool> condition = null)
         {
             if (string.IsNullOrEmpty(name) || string.IsNullOrEmpty(value))
             {
