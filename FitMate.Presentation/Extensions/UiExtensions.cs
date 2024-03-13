@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using System;
 using System.ComponentModel;
 using System.Linq;
@@ -35,6 +36,8 @@ namespace FitMate.Presentation.Extensions
                 : string.Empty;
         }
 
+        public static string GetActiveClass(this IHtmlHelper htmlHelper) =>
+            ((string)htmlHelper.ViewContext.RouteData.Values["controller"]).ToLower();
 
         private static string GetEnumDescription(Enum value)
         {

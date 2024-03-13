@@ -115,7 +115,7 @@ html {
 
                 #sidebar ul li a:hover {
                     text-decoration: none;
-                    background-color: #0073c3;
+                    background-color: var(--primary);
                     cursor: pointer;
                     transition: background-color linear 0.2s;
                 }
@@ -160,4 +160,10 @@ html {
     background-color: #fff;
     border-radius: 10px;
     max-width: 100%
+}
+
+/* Navbar styles */
+
+.bodyweight #bodyweightLink, .goal #goalLink, .nutrition #nutritionLink, .workout #workoutLink {
+    background-color: var(--primary);
 }
