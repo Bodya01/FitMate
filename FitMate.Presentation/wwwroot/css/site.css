@@ -133,7 +133,8 @@ html {
 }
 
     .btn-primary:hover {
-        background-color: #1b6ec2 !important;
+        background-color: var(--card-bg-primary) !important;
+        color: var(--font-primary)
     }
 
 .card {
