@@ -37,7 +37,7 @@ namespace FitMate.Presentation.Extensions
         }
 
         public static string GetActiveClass(this IHtmlHelper htmlHelper) =>
-            ((string)htmlHelper.ViewContext.RouteData.Values["controller"]).ToLower();
+            ((string)htmlHelper.ViewContext.RouteData.Values["controller"])?.ToLower() ?? string.Empty;
 
         private static string GetEnumDescription(Enum value)
         {
