@@ -47,7 +47,7 @@ namespace FitMate.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> EditTarget(EditBodyweightTarget command, CancellationToken cancellationToken)
+        public async Task<IActionResult> EditTarget([FromForm] EditBodyweightTarget command, CancellationToken cancellationToken)
         {
             if (command.Weight <= 0 || command.Weight >= 200 || command.Date <= DateTime.Today) return BadRequest();
 
