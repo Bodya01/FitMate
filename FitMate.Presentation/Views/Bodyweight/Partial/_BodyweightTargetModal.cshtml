@@ -1,4 +1,7 @@
-﻿<div class="modal fade" id="TargetModal" tabindex="-1" aria-labelledby="TargetModal" aria-hidden="true">
+﻿@using FitMate.Controllers
+@using FitMate.Presentation.Helpers
+
+<div class="modal fade" id="TargetModal" tabindex="-1" aria-labelledby="TargetModal" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
@@ -7,16 +10,16 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <form asp-controller="Bodyweight" asp-action="EditTarget" method="post">
+            <form asp-controller="@(UiNamingHelper.GetControllerName<BodyweightController>())" asp-action="@nameof(BodyweightController.EditTarget)" method="post">
                 <div class="modal-body">
                     <div class="form-group">
                         <label>Weight</label>
-                        <input class="form-control" name="TargetWeight" type="number" min="1" max="300" value="@(Model.Target == null ? "0" : Model.Target.TargetWeight)" required />
+                        <input class="form-control" name="Weight" type="number" min="1" max="300" value="@(Model.Target == null ? "0" : Model.Target.TargetWeight)" required />
                     </div>
 
                     <div class="form-group">
                         <label>Target Date</label>
-                        <input class="form-control" name="TargetDate" type="date" value="@(Model.Target == null ? "0" : Model.Target.TargetDate.ToString("yyyy-MM-dd"))" />
+                        <input class="form-control" name="Date" type="date" value="@(Model.Target == null ? "0" : Model.Target.TargetDate.ToString("yyyy-MM-dd"))" />
                     </div>
                 </div>
                 <div class="modal-footer">

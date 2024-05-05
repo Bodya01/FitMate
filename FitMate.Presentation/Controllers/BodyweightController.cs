@@ -29,10 +29,6 @@ namespace FitMate.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> EditTarget(CancellationToken cancellationToken) =>
-            View(await _mediator.Send(new GetCurrentBodyweightTarget(_currentUserId), cancellationToken));
-
-        [HttpGet]
         public async Task<IActionResult> EditRecords(CancellationToken cancellationToken) =>
             View(await _mediator.Send(new GetBodyweightRecords(_currentUserId), cancellationToken));
 
@@ -51,7 +47,7 @@ namespace FitMate.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> EditTarget([FromBody] EditBodyweightTarget command, CancellationToken cancellationToken)
+        public async Task<IActionResult> EditTarget(EditBodyweightTarget command, CancellationToken cancellationToken)
         {
             if (command.Weight <= 0 || command.Weight >= 200 || command.Date <= DateTime.Today) return BadRequest();
 
