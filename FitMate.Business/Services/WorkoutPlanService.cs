@@ -25,6 +25,17 @@ namespace FitMate.Business.Services
             return _mapper.Map<WorkoutPlanDto>(entity);
         }
 
+        public async Task<IEnumerable<WorkoutPlanDto>> GetWorkoutsAsync(string userId, CancellationToken cancellationToken = default)
+        {
+            var entities = await _unitOfWork.WorkoutPlanRepository.Value.Get(w => w.UserId == userId, s => s)
+                .OrderByDescending(w => w.CreatedAt)
+                .ToListAsync(cancellationToken);
+
+            entities ??= new();
+
+            return _mapper.Map<IEnumerable<WorkoutPlanDto>>(entities);
+        }
+
         public async Task CreateWorkoutPlanAsync(CreateWorkoutPlanModel model, CancellationToken cancellationToken = default)
         {
             var entity = _mapper.Map<WorkoutPlan>(model);
@@ -56,17 +67,6 @@ namespace FitMate.Business.Services
 
             await _unitOfWork.WorkoutPlanRepository.Value.DeleteAsync(id, cancellationToken);
             await _unitOfWork.SaveChangesAsync(cancellationToken);
-        }
-
-        public async Task<List<WorkoutPlanDto>> GetWorkoutsAsync(string userId, CancellationToken cancellationToken = default)
-        {
-            var entities = await _unitOfWork.WorkoutPlanRepository.Value.Get(w => w.UserId == userId, s => s)
-                .OrderByDescending(w => w.CreatedAt)
-                .ToListAsync(cancellationToken);
-
-            entities ??= new();
-
-            return _mapper.Map<IEnumerable<WorkoutPlanDto>>(entities).ToList();
         }
     }
 }

@@ -56,7 +56,7 @@ namespace FitMate.Controllers
         {
             if (date.Ticks == default) date = DateTime.Today;
 
-            var model = new NewFoodViewModel()
+            var model = new NewFoodViewModel
             {
                 SelectedDate = date,
                 Foods = await _mediator.Send(new GetAllFoods(), cancellationToken),

@@ -44,8 +44,10 @@ namespace FitMate.Business.Services
         private async Task<bool> CreateTargetIfNotExists(BodyweightTarget entity, CancellationToken cancellationToken)
         {
             if (entity.Id != Guid.Empty) return false;
+
             await _unitOfWork.BodyweightTargetRepository.Value.CreateAsync(entity, cancellationToken);
             await _unitOfWork.SaveChangesAsync(cancellationToken);
+
             return true;
         }
     }
