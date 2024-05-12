@@ -6,7 +6,7 @@
     ViewData["Title"] = "Nutrition";
 }
 
-<div class="mb-3">
+<div class="mb-2">
     <h2 class="d-inline">Nutrition Summary</h2>
     <a asp-controller="@(UiNamingHelper.GetControllerName<NutritionController>())" asp-action="@nameof(NutritionController.AddFood)" class="font-weight-bold mb-3 btn btn-primary">+Add Food</a>
 </div>
@@ -28,7 +28,7 @@
                 <div class="card-body p-1">
                     <div class="text-center mb-2">
                         <h6>Calories</h6>
-                        @Model.Target.DailyCalories cal
+                        <span>@Model.Target.DailyCalories cal</span>
                     </div>
                     <div class="d-flex text-center">
                         <div class="flex-grow-1">

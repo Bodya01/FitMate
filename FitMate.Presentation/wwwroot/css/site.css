@@ -157,8 +157,8 @@ html {
     font-weight: normal;
 }
 
-.card-header-text{
-    font-size: 22px !important;
+.card-header-text {
+    font-size: 18px !important;
     text-align: center;
     color: var(--btn-primary);
 }
@@ -182,25 +182,64 @@ html {
 
 /* BW page */
 
-.alert.alert-info{
+.alert.alert-info {
     background-color: var(--secondary);
     border: none;
 }
-.alert-info{
+
+.alert-info {
     color: var(--font-secondary);
 }
 
 
 /* Goal page */
-.goal h5{
+.goal h5 {
     color: var(--font-secondary);
 }
 
 /* Goal form */
-.goal h1{
+.goal h1 {
     color: var(--font-secondary);
 }
 
-.goal label{
+.goal label {
     color: var(--font-secondary);
+}
+
+/* Nutrition page */
+
+/* cards */
+.nutrition .card h6{
+    margin-bottom: 0px !important;
+    font-size: 0.85rem;
+}
+
+.nutrition .card span {
+    margin-bottom: 0px !important;
+    font-size: 0.85rem;
+}
+
+.nutrition .card .flex-grow-1 div {
+    margin-bottom: 0px !important;
+    font-size: 0.85rem;
+}
+
+.nutrition .card .card-header {
+    padding: 0.25rem 1rem 0.25rem !important;
+}
+
+.nutrition h3 {
+    color: var(--font-secondary);
+}
+
+.nutrition th {
+    color: var(--font-secondary);
+}
+
+.nutrition label {
+    color: var(--font-secondary);
+}
+
+#DateSelectionForm label{
+    margin-right: 15px;
 }
