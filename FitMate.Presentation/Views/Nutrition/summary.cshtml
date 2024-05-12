@@ -8,7 +8,9 @@
 
 <div class="mb-2">
     <h2 class="d-inline">Nutrition Summary</h2>
-    <a asp-controller="@(UiNamingHelper.GetControllerName<NutritionController>())" asp-action="@nameof(NutritionController.AddFood)" class="font-weight-bold mb-3 btn btn-primary">+Add Food</a>
+    <a asp-controller="@(UiNamingHelper.GetControllerName<NutritionController>())" asp-action="@nameof(NutritionController.AddFood)" class="font-weight-bold mb-3 btn btn-primary">
+        <i class="fa-solid fa-circle-plus"></i> Add Food
+    </a>
 </div>
 
 <div id="MonthGraphData" class="d-none"></div>

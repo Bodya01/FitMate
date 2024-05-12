@@ -243,3 +243,10 @@ html {
 #DateSelectionForm label{
     margin-right: 15px;
 }
+
+/* Workout page */
+
+/* edit */
+ul li{
+    color: var(--font-secondary);
+}

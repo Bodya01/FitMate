@@ -10,7 +10,9 @@
 
 <div>
     <h2 class="d-inline">My Goals</h2>
-    <a asp-controller="@(UiNamingHelper.GetControllerName<GoalController>())" asp-action="@nameof(GoalController.Add)" class="font-weight-bold ml-1 btn btn-primary" style="vertical-align:text-bottom">+Add Goal</a>
+    <a asp-controller="@(UiNamingHelper.GetControllerName<GoalController>())" asp-action="@nameof(GoalController.Add)" class="font-weight-bold ml-1 btn btn-primary" style="vertical-align:text-bottom">
+        <i class="fa-solid fa-circle-plus"></i> Add Goal
+        </a>
 </div>
 
 <div class="row">

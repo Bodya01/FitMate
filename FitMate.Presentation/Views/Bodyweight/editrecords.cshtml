@@ -52,13 +52,13 @@
                                 <tr>
                                     <td><input type="number" min="0" max="300" step="0.1" class="form-control" value="@record.Weight" required /></td>
                                     <td><input type="date" class="form-control" value="@record.Date.ToString("yyyy-MM-dd")" required /></td>
-                                    <td><a href="#" class="btn btn-danger" onclick="removeRow(this);"><i class="fa-solid fa-trash"></i> Remove</a></td>
+                                    <td><a href="#" class="btn btn-danger" onclick="removeRow(this);"><i class="fa-solid fa-trash"></i></a></td>
                                 </tr>
                             }
                             <tr class="d-none" id="NewRowTemplate">
                                 <td><input type="number" min="0" max="300" step="0.1" class="form-control" required /></td>
                                 <td><input type="date" class="form-control" required /></td>
-                                <td><a href="#" class="btn btn-danger" onclick="removeRow(this);"><i class="fa-solid fa-trash"></i> Remove</a></td>
+                                <td><a href="#" class="btn btn-danger" onclick="removeRow(this);"><i class="fa-solid fa-trash"></i></a></td>
                             </tr>
                         </tbody>
                     </table>

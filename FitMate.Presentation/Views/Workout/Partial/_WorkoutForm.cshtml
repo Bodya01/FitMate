@@ -22,7 +22,9 @@
                     </div>
 
 
-                    <a href="#" class="font-weight-bold" onclick="addNewSession();">+Add Session</a>
+                    <a href="#" class="font-weight-bold btn btn-primary mb-1" onclick="addNewSession();">
+                        <i class="fa-solid fa-circle-plus"></i> Add Session
+                    </a>
 
                     <ul id="SessionList" class="list-group">
                         @foreach (var session in Model.Sessions)
@@ -83,7 +85,9 @@
                             </tbody>
                         </table>
                     }
-                    <a id="AddActivityButton" href="#" class="font-weight-bold d-none float-right" onclick="addActivity_Clicked();">+Add Activity</a>
+                    <a id="AddActivityButton" href="#" class="font-weight-bold d-none float-right btn btn-primary" onclick="addActivity_Clicked();">
+                        <i class="fa-solid fa-circle-plus"></i> Add Activity
+                    </a>
                 </div>
             </div>
         </div>

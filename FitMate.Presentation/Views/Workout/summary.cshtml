@@ -10,7 +10,9 @@
 <div>
     <div class="mb-3">
         <h2 class="d-inline">Workout Plans</h2>
-        <a asp-controller="@(UiNamingHelper.GetControllerName<WorkoutController>())" asp-action="@nameof(WorkoutController.Create)" class="font-weight-bold ml-1 btn btn-primary" style="vertical-align:text-bottom">+New Workout</a>
+        <a asp-controller="@(UiNamingHelper.GetControllerName<WorkoutController>())" asp-action="@nameof(WorkoutController.Create)" class="font-weight-bold ml-1 btn btn-primary" style="vertical-align:text-bottom">
+            <i class="fa-solid fa-circle-plus"></i> New Workout
+        </a>
     </div>
 
     <div class="row">
@@ -50,9 +52,11 @@
         font-weight: bold;
         transition: background-color linear 0.5s;
     }
-    .sessionList li:hover a {
-        color: white;
-    }
+
+        .sessionList li:hover a {
+            color: white;
+        }
+
     .sessionList li a {
         text-decoration: none;
     }

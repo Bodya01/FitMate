@@ -130,7 +130,7 @@
                 <td><input type="number" class="recordProtein" disabled /></td>
                 <td><input type="number" class="recordFat" disabled /></td>
                 <td><input type="number" class="recordCalories" disabled /></td>
-                <td><a href="#" onclick="removeRow(this)">Remove</a></td>
+                <td><a href="#" onclick="removeRow(this) class="btn btn-danger">Remove</a></td>
             </tr>
         </thead>
         <tbody id="RecordBody">
@@ -148,7 +148,7 @@
                     <td><input type="number" class="recordProtein" value="@record.Food.Protein" disabled /></td>
                     <td><input type="number" class="recordFat" value="@record.Food.Fat" disabled /></td>
                     <td><input type="number" class="recordCalories" value="@record.Food.Calories" disabled /></td>
-                    <td><a href="#" onclick="removeRow(this)">Remove</a></td>
+                    <td><a href="#" onclick="removeRow(this)" class="btn btn-danger">Remove</a></td>
                 </tr>
             }
         </tbody>
