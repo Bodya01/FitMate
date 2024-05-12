@@ -1,5 +1,9 @@
 ﻿@import 'colors.css';
 
+.row {
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+}
 /* Card overrides */
 .card {
     border-radius: 0 !important;
@@ -20,10 +24,10 @@
     padding: 0.75rem 0.75rem;
 }
 
-.card-body .list-group .list-group-item:hover {
-    background-color: var(--primary) !important;
-}
+    .card-body .list-group .list-group-item:hover {
+        background-color: var(--primary) !important;
+    }
 
-.card-body .list-group .list-group-item a {
-    color: var(--font-secondary);
-}
+    .card-body .list-group .list-group-item a {
+        color: var(--font-secondary);
+    }
