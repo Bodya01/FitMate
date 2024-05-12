@@ -195,3 +195,12 @@ html {
 .goal h5{
     color: var(--font-secondary);
 }
+
+/* Goal form */
+.goal h1{
+    color: var(--font-secondary);
+}
+
+.goal label{
+    color: var(--font-secondary);
+}
