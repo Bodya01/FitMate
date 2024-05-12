@@ -59,10 +59,6 @@ h2 {
     border-top: 1px solid var(--font-secondary);
 }
 
-h5 {
-    color: var(--font-primary);
-}
-
 @media (min-width: 768px) {
     html {
         font-size: 16px;
@@ -181,4 +177,21 @@ html {
 
 .bodyweight #bodyweightLink, .goal #goalLink, .nutrition #nutritionLink, .workout #workoutLink {
     background-color: var(--primary);
+}
+
+
+/* BW page */
+
+.alert.alert-info{
+    background-color: var(--secondary);
+    border: none;
+}
+.alert-info{
+    color: var(--font-secondary);
+}
+
+
+/* Goal page */
+.goal h5{
+    color: var(--font-secondary);
 }
