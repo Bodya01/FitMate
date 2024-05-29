@@ -1,0 +1,65 @@
+﻿@using YourFitnessTracker.Controllers;
+@using YourFitnessTracker.Infrastucture.Dtos;
+@using YourFitnessTracker.Presentation.Helpers;
+@model WorkoutPlanDto
+
+@{
+    ViewData["Title"] = "Edit Workout";
+    ViewData["FormAction"] = nameof(WorkoutController.Update);
+}
+
+@section Scripts
+    {
+    <script src="~/js/Workout/edit.js"></script>
+}
+
+@{
+    await Html.RenderPartialAsync("Partial/_WorkoutForm", Model);
+}
+
+<table id="SessionTemplate" class="d-none sessionForm table table-borderless">
+    <tbody>
+        <tr>
+            <td><label>Name</label></td>
+            <td><input type="text" value="New Session" class="sessionNameInput form-control" oninput="sessionName_Input(this)" /></td>
+        </tr>
+        <tr>
+            <td><label>Day Number</label></td>
+            <td><input type="number" step="1" min="1" max="28" value="1" class="sessionDayInput form-control" /></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td><a href="#" class="text-danger font-weight-bold float-right" onclick="deleteSession_Clicked(this);">Delete</a></td>
+        </tr>
+    </tbody>
+</table>
+
+<table id="ActivityTemplate" class="table d-none activityForm">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Quantity</th>
+            <th>Sets</th>
+            <th>Rest</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+    </tbody>
+</table>
+
+<table class="d-none">
+    <tbody>
+        <tr id="ActivityRowTemplate">
+            <td><input type="text" class="form-control" required /></td>
+            <td><input type="text" class="form-control" required /></td>
+            <td><input type="number" min="1" step="1" class="form-control" required /></td>
+            <td><input type="number" min="0" max="120" step="1" class="form-control" /></td>
+            <td><a href="#" class="text-danger font-weight-bold" onclick="deleteActivity_Clicked(this)">Remove</a></td>
+        </tr>
+    </tbody>
+</table>
+
+<ul id="SessionListTemplate" class="d-none">
+    <li class="list-group-item" style="cursor:pointer;" onclick="sessionListItem_Clicked(this);"></li>
+</ul>
