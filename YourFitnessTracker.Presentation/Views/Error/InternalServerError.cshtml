@@ -1,9 +1,19 @@
-﻿@using YourFitnessTracker.Presentation.ViewModels.Error
+﻿@using YourFitnessTracker.Controllers
+@using YourFitnessTracker.Presentation.Helpers
+@using YourFitnessTracker.Presentation.ViewModels.Error
 @model ErrorViewModel
 
 <div class="w-100 text-xl-center text-light" style="margin-bottom: 250px">
     <i class="fa-solid fa-xmark" style="font-size: 100px"></i>
     <h1>An error occured.</h1>
+    <p>
+        <small>
+            <a asp-controller="@(UiNamingHelper.GetControllerName<BodyweightController>())"
+               asp-action="@nameof(BodyweightController.Summary)">
+                Return to main page
+            </a>
+        </small>
+    </p>
 </div>
 
 <div id="account" class="text-light my-auto">

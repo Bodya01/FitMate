@@ -1,10 +1,20 @@
 ﻿@page
+@using YourFitnessTracker.Controllers
+@using YourFitnessTracker.Presentation.Helpers
 @model AccessDeniedModel
 @{
-    ViewData["Title"] = "Access denied";
+    Layout = "~/Views/Shared/_EmptyLayout.cshtml";
 }
 
-<header>
-    <h1 class="text-danger">@ViewData["Title"]</h1>
-    <p class="text-danger">You do not have access to this resource.</p>
-</header>
+<div class="w-100 text-xl-center text-light">
+    <i class="fa-solid fa-ban" style="font-size: 100px"></i>
+    <h4 class="mt-2">You are not allowed to access the resource.</h4>
+    <p>
+        <small>
+            <a asp-controller="@(UiNamingHelper.GetControllerName<BodyweightController>())"
+               asp-action="@nameof(BodyweightController.Summary)">
+                Return to main page
+            </a>
+        </small>
+    </p>
+</div>

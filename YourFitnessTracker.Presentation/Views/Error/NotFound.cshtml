@@ -1,5 +1,14 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-@{
-}
+﻿@using YourFitnessTracker.Controllers
+@using YourFitnessTracker.Presentation.Helpers
+<div class="w-100 text-xl-center text-light">
+    <i class="fa-solid fa-notdef mb-2" style="font-size: 100px; transform: rotate(90deg)"></i>
+    <h4>The page you were looking for could not be found.</h4>
+    <p>
+        <small>
+            <a asp-controller="@(UiNamingHelper.GetControllerName<BodyweightController>())"
+                asp-action="@nameof(BodyweightController.Summary)">
+                Return to main page
+            </a>
+        </small>
+    </p>
+</div>

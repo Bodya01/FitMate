@@ -30,10 +30,6 @@ namespace YourFitnessTracker.Presentation.Middlewares
                 {
                     context.Response.Redirect($"/{UiNamingHelper.GetControllerName<ErrorController>()}/{nameof(ErrorController.NotFound)}");
                 }
-                if (context.Response.StatusCode == StatusCodes.Status403Forbidden)
-                {
-                    context.Response.Redirect($"/{UiNamingHelper.GetControllerName<ErrorController>()}/{nameof(ErrorController.Forbidden)}");
-                }
             }
             catch (Exception ex)
             {
