@@ -5,6 +5,7 @@ using YourFitnessTracker.Business.Services.Base;
 using YourFitnessTracker.Core.UnitOfWork;
 using YourFitnessTracker.Infrastructure.Entities;
 using YourFitnessTracker.Infrastructure.Exceptions;
+using YourFitnessTracker.Infrastructure.Exceptions.Bodyweight;
 using YourFitnessTracker.Infrastructure.Extensions;
 using YourFitnessTracker.Infrastructure.Models.BodyweightRecord;
 using YourFitnessTracker.Infrastucture.Dtos;
@@ -20,7 +21,7 @@ namespace YourFitnessTracker.Business.Services
             var entities = await _unitOfWork.BodyweightRecordRepository.Value.Get(e => e.UserId == userId, s => s)
                 .ToListAsync(cancellationToken);
 
-            if (entities.IsNullOrEmpty()) throw new EntityNotFoundException($"User with id {userId} does not have any bodyweight records");
+            if (entities.IsNullOrEmpty()) throw new BodyweightRecordNotFoundException($"User with id {userId} does not have any bodyweight records");
 
             return _mapper.Map<IEnumerable<BodyweightRecordDto>>(entities);
         }
@@ -35,8 +36,7 @@ namespace YourFitnessTracker.Business.Services
                 .OrderByDescending(e => e.Date)
                 .ToListAsync(cancellationToken);
 
-            if (entities.IsNullOrEmpty())
-                throw new EntityNotFoundException($"User with id {userId} does not have any bodyweight records between dates from {from} to {to}");
+            if (entities.IsNullOrEmpty()) throw new BodyweightRecordNotFoundException($"User with id {userId} does not have any bodyweight records between dates from {from} to {to}");
 
             return _mapper.Map<IEnumerable<BodyweightRecordDto>>(entities);
         }
@@ -47,7 +47,7 @@ namespace YourFitnessTracker.Business.Services
                 .OrderByDescending(e => e.Date)
                 .FirstOrDefaultAsync(cancellationToken);
 
-            if (entity is null) return null;
+            if (entity is null) return null; // TODO: Replace with an exception
 
             return _mapper.Map<BodyweightRecordDto>(entity);
         }

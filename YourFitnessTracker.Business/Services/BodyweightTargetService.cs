@@ -5,6 +5,7 @@ using YourFitnessTracker.Business.Services.Base;
 using YourFitnessTracker.Core.UnitOfWork;
 using YourFitnessTracker.Infrastructure.Entities;
 using YourFitnessTracker.Infrastructure.Exceptions;
+using YourFitnessTracker.Infrastructure.Exceptions.Bodyweight;
 using YourFitnessTracker.Infrastructure.Models.BodyweightTarget;
 using YourFitnessTracker.Infrastucture.Dtos.Base;
 
@@ -20,7 +21,7 @@ namespace YourFitnessTracker.Business.Services
                 .OrderByDescending(e => e.TargetDate)
                 .FirstOrDefaultAsync(cancellationToken);
 
-            if (entity is null) throw new EntityNotFoundException($"User with id {userId} does not have any bodyweight targets");
+            if (entity is null) throw new BodyweightTargetNotFoundException($"User with id {userId} does not have any bodyweight targets");
 
             return _mapper.Map<BodyweightTargetDto>(entity);
         }

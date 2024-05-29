@@ -5,6 +5,7 @@ using YourFitnessTracker.Business.Services.Base;
 using YourFitnessTracker.Core.UnitOfWork;
 using YourFitnessTracker.Infrastructure.Entities;
 using YourFitnessTracker.Infrastructure.Exceptions;
+using YourFitnessTracker.Infrastructure.Exceptions.GoalProgress;
 using YourFitnessTracker.Infrastructure.Models.GoalProgress.Weightlifting;
 using YourFitnessTracker.Infrastucture.Dtos.GoalProgress;
 
@@ -18,7 +19,7 @@ namespace YourFitnessTracker.Business.Services
         {
             var goal = await _unitOfWork.WeightliftingGoalRepository.Value.GetByIdAsync(model.GoalId, cancellationToken);
 
-            if (goal is null) throw new EntityNotFoundException($"Goal with id {model.GoalId} does not exist");
+            if (goal is null) throw new WeightliftingGoalProgressNotFoundException($"Goal with id {model.GoalId} does not exist");
 
             CheckRestrictionsAccess(goal, model.GoalId, model.UserId);
 
@@ -31,7 +32,7 @@ namespace YourFitnessTracker.Business.Services
         {
             var entity = await _unitOfWork.WeightliftingGoalRepository.Value.GetByIdAsync(id, cancellationToken);
 
-            if (entity is null) throw new EntityNotFoundException($"Goal with id {id} does not exist");
+            if (entity is null) throw new WeightliftingGoalProgressNotFoundException($"Goal with id {id} does not exist");
 
             CheckRestrictionsAccess(entity, id, userId);
 

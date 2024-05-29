@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Identity;
 using YourFitnessTracker.Business.Interfaces;
 using YourFitnessTracker.Core.UnitOfWork;
 using YourFitnessTracker.Infrastructure.Entities;
-using YourFitnessTracker.Infrastructure.Exceptions;
+using YourFitnessTracker.Infrastructure.Exceptions.User;
 using YourFitnessTracker.Infrastucture.Dtos;
 
 namespace YourFitnessTracker.Business.Services
@@ -25,7 +25,7 @@ namespace YourFitnessTracker.Business.Services
         {
             var user = await _userManager.FindByIdAsync(userId);
 
-            if (user is null) throw new EntityNotFoundException($"User with id {userId} does not exist");
+            if (user is null) throw new UserNotFoundException($"User with id {userId} does not exist");
 
             return _mapper.Map<UserDto>(user);
         }
@@ -34,7 +34,7 @@ namespace YourFitnessTracker.Business.Services
         {
             var user = await _userManager.FindByIdAsync(userId);
 
-            if (user is null) throw new EntityNotFoundException($"User with id {userId} does not exist");
+            if (user is null) throw new UserNotFoundException($"User with id {userId} does not exist");
 
             user.Height = height;
 

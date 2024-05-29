@@ -5,6 +5,7 @@ using YourFitnessTracker.Business.Services.Base;
 using YourFitnessTracker.Core.UnitOfWork;
 using YourFitnessTracker.Infrastructure.Entities;
 using YourFitnessTracker.Infrastructure.Exceptions;
+using YourFitnessTracker.Infrastructure.Exceptions.Workout;
 using YourFitnessTracker.Infrastructure.Models.WorkoutPlan;
 using YourFitnessTracker.Infrastucture.Dtos;
 
@@ -18,7 +19,7 @@ namespace YourFitnessTracker.Business.Services
         {
             var entity = await _unitOfWork.WorkoutPlanRepository.Value.GetByIdAsync(id, cancellationToken);
 
-            if (entity is null) throw new EntityNotFoundException($"Workout plan with {id} id was not found");
+            if (entity is null) throw new WorkoutPlanNotFoundException($"Workout plan with {id} id was not found");
 
             CheckRestrictionsAccess(entity, id, userId);
 
@@ -48,7 +49,7 @@ namespace YourFitnessTracker.Business.Services
         {
             var entity = await _unitOfWork.WorkoutPlanRepository.Value.GetByIdAsync(model.Id, cancellationToken);
 
-            if (entity is null) throw new EntityNotFoundException($"Workout plan with {model.Id} id does not exist");
+            if (entity is null) throw new WorkoutPlanNotFoundException($"Workout plan with {model.Id} id does not exist");
 
             CheckRestrictionsAccess(entity, model.Id, model.UserId ?? entity.UserId);
 
@@ -61,7 +62,7 @@ namespace YourFitnessTracker.Business.Services
         {
             var entity = await _unitOfWork.WorkoutPlanRepository.Value.GetByIdAsync(id, cancellationToken);
 
-            if (entity is null) throw new EntityNotFoundException($"Workout plan with {id} id was not found");
+            if (entity is null) throw new WorkoutPlanNotFoundException($"Workout plan with {id} id was not found");
 
             CheckRestrictionsAccess(entity, id, userId);
 

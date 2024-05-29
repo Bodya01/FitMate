@@ -5,6 +5,7 @@ using YourFitnessTracker.Business.Services.Base;
 using YourFitnessTracker.Core.UnitOfWork;
 using YourFitnessTracker.Infrastructure.Entities;
 using YourFitnessTracker.Infrastructure.Exceptions;
+using YourFitnessTracker.Infrastructure.Exceptions.Goal;
 using YourFitnessTracker.Infrastructure.Extensions;
 using YourFitnessTracker.Infrastructure.Models.Goal.Weightlifting;
 using YourFitnessTracker.Infrastucture.Dtos.Goals;
@@ -19,7 +20,7 @@ namespace YourFitnessTracker.Business.Services
         {
             var entity = await _unitOfWork.WeightliftingGoalRepository.Value.GetByIdAsync(id, cancellationToken);
 
-            if (entity is null) throw new EntityNotFoundException($"Weightlifting goal with id {id} does not exist");
+            if (entity is null) throw new WeightliftingGoalNotFoundException($"Weightlifting goal with id {id} does not exist");
 
             CheckRestrictionsAccess(entity, id, userId);
 
@@ -33,7 +34,7 @@ namespace YourFitnessTracker.Business.Services
             var entities = await _unitOfWork.WeightliftingGoalRepository.Value.Get(e => e.UserId == userId, s => s)
                 .ToListAsync(cancellationToken);
 
-            if (entities.IsNullOrEmpty()) throw new EntityNotFoundException($"No weightlifting goals found for user {userId}");
+            if (entities.IsNullOrEmpty()) throw new WeightliftingGoalNotFoundException($"No weightlifting goals found for user {userId}");
 
             return _mapper.Map<IEnumerable<WeightliftingGoalDto>>(entities);
         }
@@ -50,7 +51,7 @@ namespace YourFitnessTracker.Business.Services
         {
             var entity = await _unitOfWork.WeightliftingGoalRepository.Value.GetByIdAsync(model.Id, cancellationToken);
 
-            if (entity is null) throw new EntityNotFoundException($"Weightlifting goal with id {model.Id} does not exist");
+            if (entity is null) throw new WeightliftingGoalNotFoundException($"Weightlifting goal with id {model.Id} does not exist");
 
             CheckRestrictionsAccess(entity, model.Id, model.UserId ?? entity.UserId);
 
