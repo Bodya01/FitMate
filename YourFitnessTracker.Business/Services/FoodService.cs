@@ -45,6 +45,8 @@ namespace YourFitnessTracker.Business.Services
 
             if (entity is null) throw new EntityNotFoundException($"Food with id {model.Id} does not exist");
 
+            _mapper.Map(model, entity);
+
             await _unitOfWork.FoodRepository.Value.UpdateAsync(entity, cancellationToken);
             await _unitOfWork.SaveChangesAsync(cancellationToken);
         }
