@@ -4,7 +4,6 @@ using YourFitnessTracker.Business.Interfaces;
 using YourFitnessTracker.Business.Services.Base;
 using YourFitnessTracker.Core.UnitOfWork;
 using YourFitnessTracker.Infrastructure.Entities;
-using YourFitnessTracker.Infrastructure.Exceptions;
 using YourFitnessTracker.Infrastructure.Exceptions.Goal;
 using YourFitnessTracker.Infrastructure.Extensions;
 using YourFitnessTracker.Infrastructure.Models.Goal.Timed;

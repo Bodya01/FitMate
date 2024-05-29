@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
@@ -32,7 +31,7 @@ namespace YourFitnessTracker.Presentation.Middlewares
                     context.Response.Redirect($"/{UiNamingHelper.GetControllerName<ErrorController>()}/{nameof(ErrorController.NotFound)}");
                 }
             }
-            catch(ForbiddenException ex)
+            catch (ForbiddenException ex)
             {
                 context.Response.Redirect("/Identity/Account/AccessDenied");
             }
