@@ -8,6 +8,7 @@ using YourFitnessTracker.Applcation.Commands.Bodyweight;
 using YourFitnessTracker.Application.Commands.BodyweightTarget;
 using YourFitnessTracker.Application.Queries.Bodyweight;
 using YourFitnessTracker.Application.Queries.BodyweightRecord;
+using YourFitnessTracker.Infrastructure.Exceptions;
 using YourFitnessTracker.Presentation.ViewModels.Bodyweight;
 using YourFitnessTracker.UI.Web.Controllers.Base;
 
@@ -24,6 +25,7 @@ namespace YourFitnessTracker.Controllers
         [HttpGet]
         public async Task<IActionResult> Summary(CancellationToken cancellationToken)
         {
+            throw new EntityNotFoundException("asd");
             var (target, records) = await _mediator.Send(new GetBodyweightSummary(_currentUserId), cancellationToken);
             return View(BodyweightSummaryViewModel.Create(records, target));
         }

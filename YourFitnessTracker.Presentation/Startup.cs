@@ -62,7 +62,7 @@ namespace YourFitnessTracker
             app.UseAuthentication();
             app.UseAuthorization();
 
-            //app.UseExceptionMiddleware();
+            app.UseErrorRedirectMiddleware();
 
             var cultures = new[]
             {
