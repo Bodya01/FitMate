@@ -6,6 +6,7 @@ using Microsoft.Extensions.Logging;
 using System;
 using System.Diagnostics;
 using System.Threading.Tasks;
+using YourFitnessTracker.Infrastructure.Exceptions;
 using YourFitnessTracker.Presentation.Controllers;
 using YourFitnessTracker.Presentation.Helpers;
 
@@ -30,6 +31,10 @@ namespace YourFitnessTracker.Presentation.Middlewares
                 {
                     context.Response.Redirect($"/{UiNamingHelper.GetControllerName<ErrorController>()}/{nameof(ErrorController.NotFound)}");
                 }
+            }
+            catch(ForbiddenException ex)
+            {
+                context.Response.Redirect("/Identity/Account/AccessDenied");
             }
             catch (Exception ex)
             {
