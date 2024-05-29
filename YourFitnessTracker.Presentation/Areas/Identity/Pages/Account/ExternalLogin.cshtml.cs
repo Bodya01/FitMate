@@ -1,5 +1,4 @@
-﻿using YourFitnessTracker.Infrastructure.Entities;
-using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
@@ -11,6 +10,7 @@ using System.Security.Claims;
 using System.Text;
 using System.Text.Encodings.Web;
 using System.Threading.Tasks;
+using YourFitnessTracker.Infrastructure.Entities;
 
 namespace YourFitnessTracker.Areas.Identity.Pages.Account
 {

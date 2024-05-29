@@ -1,7 +1,7 @@
-﻿using YourFitnessTracker.Business.Interfaces;
-using YourFitnessTracker.Infrastructure.Models.Goal.Weightlifting;
-using MediatR;
+﻿using MediatR;
 using Microsoft.Extensions.Logging;
+using YourFitnessTracker.Business.Interfaces;
+using YourFitnessTracker.Infrastructure.Models.Goal.Weightlifting;
 
 namespace YourFitnessTracker.Application.Commands.Goal.Weightlifting
 {

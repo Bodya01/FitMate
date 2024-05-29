@@ -1,7 +1,7 @@
-﻿using YourFitnessTracker.Business.Interfaces;
-using YourFitnessTracker.Infrastructure.Models.GoalProgress.Timed;
-using MediatR;
+﻿using MediatR;
 using Microsoft.Extensions.Logging;
+using YourFitnessTracker.Business.Interfaces;
+using YourFitnessTracker.Infrastructure.Models.GoalProgress.Timed;
 
 namespace YourFitnessTracker.Application.Commands.GoalProgress
 {

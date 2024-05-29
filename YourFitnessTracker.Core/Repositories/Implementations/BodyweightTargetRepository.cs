@@ -1,8 +1,8 @@
-﻿using YourFitnessTracker.Core.Context;
+﻿using Microsoft.EntityFrameworkCore;
+using System.Linq.Expressions;
+using YourFitnessTracker.Core.Context;
 using YourFitnessTracker.Core.Repositories.Interfaces;
 using YourFitnessTracker.Infrastructure.Entities;
-using Microsoft.EntityFrameworkCore;
-using System.Linq.Expressions;
 
 namespace YourFitnessTracker.Core.Repositories.Implementations
 {

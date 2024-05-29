@@ -1,6 +1,6 @@
-﻿using YourFitnessTracker.Infrastucture.Dtos;
-using System;
+﻿using System;
 using System.Collections.Generic;
+using YourFitnessTracker.Infrastucture.Dtos;
 
 namespace YourFitnessTracker.Presentation.ViewModels.Nutrition
 {

@@ -1,7 +1,7 @@
-﻿using YourFitnessTracker.Business.Interfaces;
-using YourFitnessTracker.Infrastructure.Models.BodyweightTarget;
-using MediatR;
+﻿using MediatR;
 using Microsoft.Extensions.Logging;
+using YourFitnessTracker.Business.Interfaces;
+using YourFitnessTracker.Infrastructure.Models.BodyweightTarget;
 
 namespace YourFitnessTracker.Application.Commands.BodyweightTarget
 {

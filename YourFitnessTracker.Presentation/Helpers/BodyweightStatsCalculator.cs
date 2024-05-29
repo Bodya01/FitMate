@@ -1,9 +1,9 @@
-﻿using YourFitnessTracker.Infrastucture.Dtos;
-using YourFitnessTracker.Infrastucture.Dtos.Base;
-using YourFitnessTracker.Presentation.ViewModels.Bodyweight;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using YourFitnessTracker.Infrastucture.Dtos;
+using YourFitnessTracker.Infrastucture.Dtos.Base;
+using YourFitnessTracker.Presentation.ViewModels.Bodyweight;
 
 namespace YourFitnessTracker.Presentation.Helpers
 {

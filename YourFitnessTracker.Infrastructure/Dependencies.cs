@@ -6,7 +6,7 @@ namespace YourFitnessTracker.Infrastructure;
 
 public static class Dependencies
 {
-    // Might be a bit over complicated
+    // Might be a bit overcomplicated
     private static class Core
     {
         public const string Path = "YourFitnessTracker.Core";

@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.EntityFrameworkCore;
 using YourFitnessTracker.Business.Interfaces;
 using YourFitnessTracker.Business.Services.Base;
 using YourFitnessTracker.Core.UnitOfWork;
@@ -6,7 +7,6 @@ using YourFitnessTracker.Infrastructure.Entities;
 using YourFitnessTracker.Infrastructure.Exceptions;
 using YourFitnessTracker.Infrastructure.Models.GoalProgress.Weightlifting;
 using YourFitnessTracker.Infrastucture.Dtos.GoalProgress;
-using Microsoft.EntityFrameworkCore;
 
 namespace YourFitnessTracker.Business.Services
 {

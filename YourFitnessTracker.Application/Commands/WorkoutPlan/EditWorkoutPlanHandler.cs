@@ -1,7 +1,7 @@
-﻿using YourFitnessTracker.Business.Interfaces;
-using YourFitnessTracker.Infrastructure.Models.WorkoutPlan;
-using MediatR;
+﻿using MediatR;
 using Microsoft.Extensions.Logging;
+using YourFitnessTracker.Business.Interfaces;
+using YourFitnessTracker.Infrastructure.Models.WorkoutPlan;
 
 namespace YourFitnessTracker.Applcation.Commands.WorkoutPlan
 {

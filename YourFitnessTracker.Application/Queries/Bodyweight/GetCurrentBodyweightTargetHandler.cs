@@ -1,7 +1,7 @@
-﻿using YourFitnessTracker.Business.Interfaces;
+﻿using MediatR;
+using YourFitnessTracker.Business.Interfaces;
 using YourFitnessTracker.Infrastructure.Exceptions;
 using YourFitnessTracker.Infrastucture.Dtos.Base;
-using MediatR;
 
 namespace YourFitnessTracker.Application.Queries.Bodyweight
 {

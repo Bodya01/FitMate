@@ -1,8 +1,8 @@
-﻿using YourFitnessTracker.Business.Interfaces;
+﻿using MediatR;
+using Microsoft.Extensions.Logging;
+using YourFitnessTracker.Business.Interfaces;
 using YourFitnessTracker.Infrastructure.Models.Food;
 using YourFitnessTracker.Infrastucture.Enums;
-using MediatR;
-using Microsoft.Extensions.Logging;
 
 namespace YourFitnessTracker.Application.Commands.Food
 {

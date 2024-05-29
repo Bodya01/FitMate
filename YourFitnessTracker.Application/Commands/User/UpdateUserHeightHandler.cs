@@ -1,6 +1,6 @@
-﻿using YourFitnessTracker.Business.Interfaces;
-using MediatR;
+﻿using MediatR;
 using Microsoft.Extensions.Logging;
+using YourFitnessTracker.Business.Interfaces;
 
 namespace YourFitnessTracker.Application.Commands.User
 {

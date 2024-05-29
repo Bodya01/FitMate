@@ -1,15 +1,15 @@
-﻿using YourFitnessTracker.Applcation.Commands.Bodyweight;
-using YourFitnessTracker.Application.Commands.BodyweightTarget;
-using YourFitnessTracker.Application.Queries.Bodyweight;
-using YourFitnessTracker.Application.Queries.BodyweightRecord;
-using YourFitnessTracker.Presentation.ViewModels.Bodyweight;
-using YourFitnessTracker.UI.Web.Controllers.Base;
-using MediatR;
+﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using YourFitnessTracker.Applcation.Commands.Bodyweight;
+using YourFitnessTracker.Application.Commands.BodyweightTarget;
+using YourFitnessTracker.Application.Queries.Bodyweight;
+using YourFitnessTracker.Application.Queries.BodyweightRecord;
+using YourFitnessTracker.Presentation.ViewModels.Bodyweight;
+using YourFitnessTracker.UI.Web.Controllers.Base;
 
 namespace YourFitnessTracker.Controllers
 {

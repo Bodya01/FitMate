@@ -1,5 +1,5 @@
-﻿using YourFitnessTracker.Infrastructure.Entities.Interfaces;
-using System.ComponentModel.DataAnnotations.Schema;
+﻿using System.ComponentModel.DataAnnotations.Schema;
+using YourFitnessTracker.Infrastructure.Entities.Interfaces;
 
 namespace YourFitnessTracker.Infrastructure.Entities;
 

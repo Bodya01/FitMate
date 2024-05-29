@@ -1,6 +1,6 @@
-﻿using YourFitnessTracker.Infrastructure.Entities;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using YourFitnessTracker.Infrastructure.Entities;
 
 namespace YourFitnessTracker.Infrastructure.Maps
 {

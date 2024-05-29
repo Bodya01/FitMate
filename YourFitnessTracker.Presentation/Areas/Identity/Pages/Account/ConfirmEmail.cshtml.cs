@@ -1,11 +1,11 @@
-﻿using YourFitnessTracker.Infrastructure.Entities;
-using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.WebUtilities;
 using System.Text;
 using System.Threading.Tasks;
+using YourFitnessTracker.Infrastructure.Entities;
 
 namespace YourFitnessTracker.Areas.Identity.Pages.Account
 {

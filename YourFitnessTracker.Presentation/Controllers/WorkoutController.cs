@@ -1,14 +1,14 @@
-﻿using YourFitnessTracker.Applcation.Commands.WorkoutPlan;
+﻿using MediatR;
+using Microsoft.AspNetCore.Mvc;
+using System;
+using System.Threading;
+using System.Threading.Tasks;
+using YourFitnessTracker.Applcation.Commands.WorkoutPlan;
 using YourFitnessTracker.Applcation.Queries.WorkoutPlan;
 using YourFitnessTracker.Application.Commands.WorkoutPlan;
 using YourFitnessTracker.Application.Queries.WorkoutPlan;
 using YourFitnessTracker.Infrastucture.Dtos;
 using YourFitnessTracker.UI.Web.Controllers.Base;
-using MediatR;
-using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Threading;
-using System.Threading.Tasks;
 
 namespace YourFitnessTracker.Controllers
 {

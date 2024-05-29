@@ -1,5 +1,5 @@
-﻿using YourFitnessTracker.Infrastucture.Dtos.Goals;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using YourFitnessTracker.Infrastucture.Dtos.Goals;
 
 namespace YourFitnessTracker.Presentation.ViewModels.Goal;
 

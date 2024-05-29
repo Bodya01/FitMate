@@ -1,4 +1,10 @@
-﻿using YourFitnessTracker.Application.Commands.Food;
+﻿using MediatR;
+using Microsoft.AspNetCore.Mvc;
+using System;
+using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
+using YourFitnessTracker.Application.Commands.Food;
 using YourFitnessTracker.Application.Commands.FoodRecord;
 using YourFitnessTracker.Application.Queries.Food;
 using YourFitnessTracker.Application.Queries.FoodRecord;
@@ -6,12 +12,6 @@ using YourFitnessTracker.Application.Queries.Nutrition;
 using YourFitnessTracker.Infrastructure.Extensions;
 using YourFitnessTracker.Presentation.ViewModels.Nutrition;
 using YourFitnessTracker.UI.Web.Controllers.Base;
-using MediatR;
-using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Linq;
-using System.Threading;
-using System.Threading.Tasks;
 
 namespace YourFitnessTracker.Controllers
 {

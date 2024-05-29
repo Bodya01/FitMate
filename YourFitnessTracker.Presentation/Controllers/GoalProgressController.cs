@@ -1,12 +1,12 @@
-﻿using YourFitnessTracker.Application.Commands.GoalProgress;
+﻿using MediatR;
+using Microsoft.AspNetCore.Mvc;
+using System.Threading;
+using System.Threading.Tasks;
+using YourFitnessTracker.Application.Commands.GoalProgress;
 using YourFitnessTracker.Application.Queries.GoalProgress;
 using YourFitnessTracker.Controllers;
 using YourFitnessTracker.Presentation.Helpers;
 using YourFitnessTracker.UI.Web.Controllers.Base;
-using MediatR;
-using Microsoft.AspNetCore.Mvc;
-using System.Threading;
-using System.Threading.Tasks;
 
 namespace YourFitnessTracker.Presentation.Controllers
 {

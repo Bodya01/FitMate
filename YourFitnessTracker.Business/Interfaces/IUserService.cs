@@ -1,5 +1,4 @@
-﻿using YourFitnessTracker.Infrastructure.Entities;
-using YourFitnessTracker.Infrastucture.Dtos;
+﻿using YourFitnessTracker.Infrastucture.Dtos;
 
 namespace YourFitnessTracker.Business.Interfaces
 {

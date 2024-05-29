@@ -1,7 +1,7 @@
-﻿using YourFitnessTracker.Presentation.Validators.Bodyweight;
-using FluentValidation;
+﻿using FluentValidation;
 using FluentValidation.AspNetCore;
 using Microsoft.Extensions.DependencyInjection;
+using YourFitnessTracker.Presentation.Validators.Bodyweight;
 
 namespace YourFitnessTracker.Presentation.Validators
 {

@@ -1,11 +1,11 @@
-﻿using YourFitnessTracker.Business.Interfaces;
+﻿using MediatR;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.Extensions.Logging;
+using YourFitnessTracker.Business.Interfaces;
 using YourFitnessTracker.Infrastructure.Entities;
 using YourFitnessTracker.Infrastructure.Enums;
 using YourFitnessTracker.Infrastructure.Extensions;
 using YourFitnessTracker.Infrastructure.Models.NutritionTarget;
-using MediatR;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.Extensions.Logging;
 
 namespace YourFitnessTracker.Application.Commands.NutritionTarget
 {

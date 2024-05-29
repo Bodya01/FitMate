@@ -1,11 +1,11 @@
-﻿using YourFitnessTracker.Application.Commands.NutritionTarget;
-using YourFitnessTracker.Controllers;
-using YourFitnessTracker.Presentation.Helpers;
-using YourFitnessTracker.UI.Web.Controllers.Base;
-using MediatR;
+﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading;
 using System.Threading.Tasks;
+using YourFitnessTracker.Application.Commands.NutritionTarget;
+using YourFitnessTracker.Controllers;
+using YourFitnessTracker.Presentation.Helpers;
+using YourFitnessTracker.UI.Web.Controllers.Base;
 
 namespace YourFitnessTracker.Presentation.Controllers
 {

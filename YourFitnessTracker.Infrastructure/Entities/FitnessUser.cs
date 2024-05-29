@@ -1,6 +1,6 @@
-﻿using YourFitnessTracker.Infrastructure.Entities.Interfaces;
+﻿using Microsoft.AspNetCore.Identity;
+using YourFitnessTracker.Infrastructure.Entities.Interfaces;
 using YourFitnessTracker.Infrastructure.Enums;
-using Microsoft.AspNetCore.Identity;
 
 namespace YourFitnessTracker.Infrastructure.Entities;
 

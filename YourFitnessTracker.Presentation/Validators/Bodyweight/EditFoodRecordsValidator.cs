@@ -1,5 +1,5 @@
-﻿using YourFitnessTracker.Application.Commands.FoodRecord;
-using FluentValidation;
+﻿using FluentValidation;
+using YourFitnessTracker.Application.Commands.FoodRecord;
 
 namespace YourFitnessTracker.Presentation.Validators.Bodyweight
 {

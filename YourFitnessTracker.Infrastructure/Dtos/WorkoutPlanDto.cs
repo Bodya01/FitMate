@@ -1,5 +1,5 @@
-﻿using YourFitnessTracker.Infrastucture.Dtos.Base;
-using System.Text.Json;
+﻿using System.Text.Json;
+using YourFitnessTracker.Infrastucture.Dtos.Base;
 
 namespace YourFitnessTracker.Infrastucture.Dtos;
 

@@ -1,6 +1,6 @@
-﻿using YourFitnessTracker.Business.Interfaces;
+﻿using Microsoft.Extensions.DependencyInjection;
+using YourFitnessTracker.Business.Interfaces;
 using YourFitnessTracker.Business.Services;
-using Microsoft.Extensions.DependencyInjection;
 
 namespace YourFitnessTracker.Business
 {

@@ -1,4 +1,8 @@
-﻿using YourFitnessTracker.Application.Commands.Goal.Timed;
+﻿using MediatR;
+using Microsoft.AspNetCore.Mvc;
+using System.Threading;
+using System.Threading.Tasks;
+using YourFitnessTracker.Application.Commands.Goal.Timed;
 using YourFitnessTracker.Application.Commands.Goal.Weightlifting;
 using YourFitnessTracker.Application.Queries.Goal;
 using YourFitnessTracker.Application.Queries.Goal.Timed;
@@ -6,10 +10,6 @@ using YourFitnessTracker.Application.Queries.Goal.Weightlifting;
 using YourFitnessTracker.Infrastucture.Dtos.Goals;
 using YourFitnessTracker.Presentation.ViewModels.Goal;
 using YourFitnessTracker.UI.Web.Controllers.Base;
-using MediatR;
-using Microsoft.AspNetCore.Mvc;
-using System.Threading;
-using System.Threading.Tasks;
 
 namespace YourFitnessTracker.Controllers
 {

@@ -1,11 +1,10 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Identity;
 using YourFitnessTracker.Business.Interfaces;
 using YourFitnessTracker.Core.UnitOfWork;
 using YourFitnessTracker.Infrastructure.Entities;
 using YourFitnessTracker.Infrastructure.Exceptions;
 using YourFitnessTracker.Infrastucture.Dtos;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Identity;
 
 namespace YourFitnessTracker.Business.Services
 {

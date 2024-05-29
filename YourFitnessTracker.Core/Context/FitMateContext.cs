@@ -1,8 +1,8 @@
-﻿using YourFitnessTracker.Infrastructure.Entities;
+﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
+using YourFitnessTracker.Infrastructure.Entities;
 using YourFitnessTracker.Infrastructure.Entities.Interfaces;
 using YourFitnessTracker.Infrastructure.Maps;
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore;
 
 namespace YourFitnessTracker.Core.Context
 {

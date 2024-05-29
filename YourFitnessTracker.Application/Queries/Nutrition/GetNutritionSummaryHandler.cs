@@ -1,7 +1,7 @@
-﻿using YourFitnessTracker.Business.Interfaces;
+﻿using MediatR;
+using YourFitnessTracker.Business.Interfaces;
 using YourFitnessTracker.Infrastructure.Extensions;
 using YourFitnessTracker.Infrastucture.Dtos;
-using MediatR;
 
 namespace YourFitnessTracker.Application.Queries.Nutrition
 {

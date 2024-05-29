@@ -1,12 +1,12 @@
-﻿using YourFitnessTracker.Core.Context;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
+using YourFitnessTracker.Core.Context;
 using YourFitnessTracker.Core.Repositories.Implementations;
 using YourFitnessTracker.Core.Repositories.Interfaces;
 using YourFitnessTracker.Core.UnitOfWork;
 using YourFitnessTracker.Infrastructure.Entities;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
 
 namespace YourFitnessTracker.Core
 {
