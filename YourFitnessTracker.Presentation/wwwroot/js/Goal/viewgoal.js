@@ -8,7 +8,13 @@ function LoadWeightliftingGraph() {
     let id = $("#ProgressType").data("goalid");
 
     let progressData = $.get("/GoalProgress/GetWeightliftingProgress", { id: id }, function (result) {
-        let dates = result.map(function (record) { return record.date; });
+        let dates = result.map(function (record) {
+            let date = new Date(record.date);
+            let day = date.getDate();
+            let monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+            let month = monthNames[date.getMonth()];
+            return `${day} ${month}`;
+        });
         let weights = result.map(function (record) { return record.weight; });
         let goalWeight = Array(dates.length).fill($("#WeightliftingGoal").data("goal"));
 

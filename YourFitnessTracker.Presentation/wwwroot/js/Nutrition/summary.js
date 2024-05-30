@@ -6,7 +6,14 @@
 
 function setupWeekGraph() {
     $.get("/Nutrition/GetNutritionData", { PreviousDays: 7 }, function (data) {
-        let dates = data.map(x => x.date);
+        let dates = data.map(function (record) {
+            let date = new Date(record.date);
+            let day = date.getDate();
+            let monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+            let month = monthNames[date.getMonth()];
+            return `${day} ${month}`;
+        });
+
         let calories = data.map(x => x.calories);
         let carbs = data.map(x => x.carbs);
         let protein = data.map(x => x.protein);
@@ -67,7 +74,13 @@ function setupWeekGraph() {
 
 function setupMonthGraph() {
     $.get("/Nutrition/GetNutritionData", { PreviousDays: 28 }, function (data) {
-        let dates = data.map(x => x.date);
+        let dates = data.map(function (record) {
+            let date = new Date(record.date);
+            let day = date.getDate();
+            let monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+            let month = monthNames[date.getMonth()];
+            return `${day} ${month}`;
+        });
         let calories = data.map(x => x.calories);
         let carbs = data.map(x => x.carbs);
         let protein = data.map(x => x.protein);
