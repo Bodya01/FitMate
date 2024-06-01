@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using YourFitnessTracker.Infrastructure.Extensions;
 using YourFitnessTracker.Infrastucture.Dtos;
 using YourFitnessTracker.Infrastucture.Dtos.Base;
 using YourFitnessTracker.Presentation.Helpers;
@@ -35,12 +36,13 @@ namespace YourFitnessTracker.Presentation.ViewModels.Bodyweight
         public static BodyweightSummaryViewModel Create(IEnumerable<BodyweightRecordDto> allRecords, BodyweightTargetDto target)
         {
             var mostRecentRecord = allRecords.OrderByDescending(x => x.Date).FirstOrDefault();
+            var firstRecord = allRecords.OrderBy(x => x.Date).FirstOrDefault();
             var currentMonthRecords = allRecords.Where(record => record.Date >= DateTime.Today.AddDays(-28));
             var currentWeekRecords = currentMonthRecords.Where(record => record.Date >= DateTime.Today.AddDays(-7));
 
             var currentMonth = BodyweightStatsCalculator.CalculateTimeProgress(currentMonthRecords, 28);
             var currentWeek = BodyweightStatsCalculator.CalculateTimeProgress(currentWeekRecords, 7);
-            var allTime = BodyweightStatsCalculator.CalculateTimeProgress(allRecords, 0);
+            var allTime = BodyweightStatsCalculator.CalculateTimeProgress(allRecords, (mostRecentRecord.Date - firstRecord.Date).TotalDays.ToInt());
             var targetProgress = BodyweightStatsCalculator.CalculateTargetProgress(target, mostRecentRecord);
 
             return new BodyweightSummaryViewModel(mostRecentRecord, target, currentWeek, currentMonth, allTime, targetProgress);

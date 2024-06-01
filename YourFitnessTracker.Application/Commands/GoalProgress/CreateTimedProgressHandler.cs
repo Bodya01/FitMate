@@ -5,8 +5,11 @@ using YourFitnessTracker.Infrastructure.Models.GoalProgress.Timed;
 
 namespace YourFitnessTracker.Application.Commands.GoalProgress
 {
-    public record CreateTimedProgress(DateTime Date, float Quantity, int Hours, int Minutes, int Seconds, Guid GoalId) : IRequest
+    public record CreateTimedProgress(DateTime Date, float Quantity, Guid GoalId) : IRequest
     {
+        public int Hours { get; set; } = default;
+        public int Minutes { get; set; } = default;
+        public int Seconds { get; set; } = default;
         public string UserId { get; set; }
     }
 

@@ -17,7 +17,7 @@ namespace YourFitnessTracker.Presentation.Helpers
 
             if (records.Any())
             {
-                result.Progress = records.First().Weight - records.Last().Weight;
+                result.Progress = records.Last().Weight - records.First().Weight;
                 result.Average = days > 0 ? result.Progress / days : 0;
             }
 

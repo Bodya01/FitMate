@@ -15,13 +15,15 @@ namespace YourFitnessTracker.Application.Queries.Nutrition
         private readonly IFoodRecordService _foodRecordService;
         private readonly IUserService _userService;
         private readonly IBodyweightRecordService _bodyweightRecordService;
+        private readonly IBodyweightTargetService _bodyweightTargetService;
 
-        public GetNutritionSummaryHandler(INutritionTargetService targetService, IFoodRecordService foodRecordService, IUserService userService, IBodyweightRecordService bodyweightRecordService)
+        public GetNutritionSummaryHandler(INutritionTargetService targetService, IFoodRecordService foodRecordService, IUserService userService, IBodyweightRecordService bodyweightRecordService, IBodyweightTargetService bodyweightTargetService)
         {
             _targetService = targetService;
             _foodRecordService = foodRecordService;
             _userService = userService;
             _bodyweightRecordService = bodyweightRecordService;
+            _bodyweightTargetService = bodyweightTargetService;
         }
 
         async Task<GetNutritionSummaryResponse> IRequestHandler<GetNutritionSummary, GetNutritionSummaryResponse>.Handle(GetNutritionSummary request, CancellationToken cancellationToken)
@@ -30,8 +32,9 @@ namespace YourFitnessTracker.Application.Queries.Nutrition
             var target = await _targetService.GetUserTargetAsync(request.UserId, cancellationToken);
             var records = await _foodRecordService.GetRecordsForLastDays(28, request.UserId, cancellationToken);
             var lastBodyweightRecord = await _bodyweightRecordService.GetLastRecordAsync(request.UserId, cancellationToken);
+            var bodyweightTarget = await _bodyweightTargetService.GetCurrentTargetAsync(request.UserId, cancellationToken);
 
-            return new GetNutritionSummaryResponse(records.ToList(), target, user.DateOfBirth.GetAge(), user.Height, lastBodyweightRecord?.Weight);
+            return new GetNutritionSummaryResponse(records.ToList(), target, user.DateOfBirth.GetAge(), user.Height, bodyweightTarget.TargetWeight != default ? bodyweightTarget.TargetWeight : lastBodyweightRecord?.Weight);
         }
     }
 }

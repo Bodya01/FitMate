@@ -63,6 +63,7 @@ namespace YourFitnessTracker.Areas.Identity.Pages.Account
             [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
             public string ConfirmPassword { get; set; }
 
+            [Required]
             [StringLength(20, MinimumLength = 1, ErrorMessage = "First Name must be between 1 and 20 characters long")]
             [Display(Name = "First Name")]
             public string FirstName { get; set; }

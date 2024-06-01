@@ -5,8 +5,11 @@ using YourFitnessTracker.Infrastructure.Models.Goal.Timed;
 
 namespace YourFitnessTracker.Application.Commands.Goal.Timed
 {
-    public record UpdateTimedGoal(Guid Id, string Activity, int Hours, int Minutes, int Seconds, float Quantity, string QuantityUnit) : IRequest
+    public record UpdateTimedGoal(Guid Id, string Activity, float Quantity, string QuantityUnit) : IRequest
     {
+        public int Hours { get; set; } = default;
+        public int Minutes { get; set; } = default;
+        public int Seconds { get; set; } = default;
         public string UserId { get; set; }
     }
 
