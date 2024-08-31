@@ -42,8 +42,26 @@ namespace YourFitnessTracker.Presentation.ViewModels.Bodyweight
 
             var currentMonth = BodyweightStatsCalculator.CalculateTimeProgress(currentMonthRecords, 28);
             var currentWeek = BodyweightStatsCalculator.CalculateTimeProgress(currentWeekRecords, 7);
-            var allTime = BodyweightStatsCalculator.CalculateTimeProgress(allRecords, (mostRecentRecord.Date - firstRecord.Date).TotalDays.ToInt());
-            var targetProgress = BodyweightStatsCalculator.CalculateTargetProgress(target, mostRecentRecord);
+
+            TimeProgressViewModel allTime;
+            if (mostRecentRecord is not null)
+            {
+                allTime = BodyweightStatsCalculator.CalculateTimeProgress(allRecords, (mostRecentRecord.Date - firstRecord.Date).TotalDays.ToInt());
+            }
+            else
+            {
+                allTime = default;
+            }
+
+            TargetProgressViewModel targetProgress;
+            if (target is not null)
+            {
+                targetProgress = BodyweightStatsCalculator.CalculateTargetProgress(target, mostRecentRecord);
+            }
+            else
+            {
+                targetProgress = default;
+            }
 
             return new BodyweightSummaryViewModel(mostRecentRecord, target, currentWeek, currentMonth, allTime, targetProgress);
         }
