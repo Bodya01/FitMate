@@ -40,7 +40,7 @@ namespace YourFitnessTracker.Presentation.Middlewares
                 _logger.LogError($"An exception occurred: {ex.GetType().Name}\n{ex.Message}");
 
                 var errorMessage = $"An exception has been thrown in a {context.Request.Method} operation. Details: {ex.Message}";
-                context.Response.Redirect($"/{UiNamingHelper.GetControllerName<ErrorController>()}/{nameof(ErrorController.InternalServerError)}?ExceptionName={ex.GetType().Name}&ExceptionMessage={ex.Message}&RequestId={Activity.Current?.Id ?? context.TraceIdentifier}");
+                context.Response.Redirect($"/{UiNamingHelper.GetControllerName<ErrorController>()}/{nameof(ErrorController.InternalServerError)}?ExceptionName={ex.GetType().Name}&ExceptionMessage={ex.Message + ex.StackTrace}&RequestId={Activity.Current?.Id ?? context.TraceIdentifier}");
             }
         }
     }
