@@ -51,6 +51,18 @@ h2 {
     color: var(--font-secondary);
 }
 
+#account h5 {
+    color: var(--font-secondary);
+}
+
+#account p {
+    color: var(--font-secondary);
+}
+
+#account #enable-authenticator {
+    color: var(--font-secondary);
+}
+
 #account label {
     color: var(--font-secondary);
 }

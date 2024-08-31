@@ -114,7 +114,7 @@
                             <div class="flex-grow-1"></div>
                             <a class="font-weight-bold float-right btn btn-primary" href="#" data-toggle="modal" data-target="#AddProgressModal">
                                 <i class="fa-solid fa-circle-plus"></i> Add Progress
-                                </a>
+                            </a>
                         </div>
                     </div>
                 </div>
@@ -141,19 +141,19 @@
                     @*<input type="hidden" name="Type" value="@typeValue" required />*@
 
                     <div class="form-group">
-                        <label>Date</label>
+                        <label class="text-dark">Date</label>
                         <input type="date" name="Date" class="form-control" value="@DateTime.Today.ToString("yyyy-MM-dd")" required />
                     </div>
                     <div class="form-group">
-                        <label>Quantity</label>
+                        <label class="text-dark">Quantity</label>
                         <input type="number" min="0" name="Quantity" placeholder="@Model.QuantityUnit" class="form-control" required />
                     </div>
                     <div class="form-group">
-                        <label>Time</label>
+                        <label class="text-dark">Time</label>
                         <div class="form-inline">
-                            <input type="number" min="0" max="24" step="1" name="Hours" placeholder="Hours" class="form-control" required />
-                            <input type="number" min="0" max="60" step="1" name="Minutes" placeholder="Minutes" class="form-control" required />
-                            <input type="number" min="0" max="60" step="1" name="Seconds" placeholder="Seconds" class="form-control" required />
+                            <input type="number" min="0" max="24" step="1" name="Hours" placeholder="Hours" class="form-control" />
+                            <input type="number" min="0" max="60" step="1" name="Minutes" placeholder="Minutes" class="form-control" />
+                            <input type="number" min="0" max="60" step="1" name="Seconds" placeholder="Seconds" class="form-control" />
                         </div>
                     </div>
                 </div>
