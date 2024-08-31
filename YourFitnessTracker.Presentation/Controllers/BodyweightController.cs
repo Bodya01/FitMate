@@ -24,6 +24,7 @@ namespace YourFitnessTracker.Controllers
         [HttpGet]
         public async Task<IActionResult> Summary(CancellationToken cancellationToken)
         {
+            throw new Exception("test ex");
             var (target, records) = await _mediator.Send(new GetBodyweightSummary(_currentUserId), cancellationToken);
             return View(BodyweightSummaryViewModel.Create(records, target));
         }

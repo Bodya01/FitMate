@@ -5,6 +5,7 @@ using Microsoft.Extensions.Logging;
 using System;
 using System.Diagnostics;
 using System.Threading.Tasks;
+using System.Web;
 using YourFitnessTracker.Infrastructure.Exceptions;
 using YourFitnessTracker.Presentation.Controllers;
 using YourFitnessTracker.Presentation.Helpers;
@@ -40,7 +41,9 @@ namespace YourFitnessTracker.Presentation.Middlewares
                 _logger.LogError($"An exception occurred: {ex.GetType().Name}\n{ex.Message}");
 
                 var errorMessage = $"An exception has been thrown in a {context.Request.Method} operation. Details: {ex.Message}";
-                context.Response.Redirect($"/{UiNamingHelper.GetControllerName<ErrorController>()}/{nameof(ErrorController.InternalServerError)}?ExceptionName={ex.GetType().Name}&ExceptionMessage={ex.Message + ex.StackTrace}&RequestId={Activity.Current?.Id ?? context.TraceIdentifier}");
+                var encodedStackTrace = HttpUtility.UrlEncode(ex.StackTrace);
+                context.Response.Redirect($"/{UiNamingHelper.GetControllerName<ErrorController>()}/{nameof(ErrorController.InternalServerError)}?ExceptionName={ex.GetType().Name}&ExceptionMessage={Uri.EscapeDataString(ex.Message)}&StackTrace={encodedStackTrace}&RequestId={Activity.Current?.Id ?? context.TraceIdentifier}");
+
             }
         }
     }
