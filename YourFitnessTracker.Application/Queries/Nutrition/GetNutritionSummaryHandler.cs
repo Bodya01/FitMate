@@ -1,7 +1,9 @@
 ﻿using MediatR;
 using YourFitnessTracker.Business.Interfaces;
+using YourFitnessTracker.Infrastructure.Exceptions.Bodyweight;
 using YourFitnessTracker.Infrastructure.Extensions;
 using YourFitnessTracker.Infrastucture.Dtos;
+using YourFitnessTracker.Infrastucture.Dtos.Base;
 
 namespace YourFitnessTracker.Application.Queries.Nutrition
 {
@@ -32,7 +34,15 @@ namespace YourFitnessTracker.Application.Queries.Nutrition
             var target = await _targetService.GetUserTargetAsync(request.UserId, cancellationToken);
             var records = await _foodRecordService.GetRecordsForLastDays(28, request.UserId, cancellationToken);
             var lastBodyweightRecord = await _bodyweightRecordService.GetLastRecordAsync(request.UserId, cancellationToken);
-            var bodyweightTarget = await _bodyweightTargetService.GetCurrentTargetAsync(request.UserId, cancellationToken);
+            BodyweightTargetDto bodyweightTarget;
+            try
+            {
+                bodyweightTarget = await _bodyweightTargetService.GetCurrentTargetAsync(request.UserId, cancellationToken);
+            }
+            catch (BodyweightTargetNotFoundException ex)
+            {
+                bodyweightTarget = new(default, default, default, default);
+            }
 
             return new GetNutritionSummaryResponse(records.ToList(), target, user.DateOfBirth.GetAge(), user.Height, bodyweightTarget.TargetWeight != default ? bodyweightTarget.TargetWeight : lastBodyweightRecord?.Weight);
         }
