@@ -7,7 +7,7 @@ env:
 
 on:
   push:
-    branches: [ "master" ]
+    branches: [ "migration_to_new_UI" ]
   workflow_dispatch:
 
 permissions:
