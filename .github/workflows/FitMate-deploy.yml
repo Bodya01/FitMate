@@ -33,11 +33,14 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-nuget-
 
-      - name: Build with dotnet
-        run: dotnet build --configuration Release
+      - name: Restore projects
+        run: dotnet restore ./YourFitnessTracker.Presentation/YourFitnessTracker.Presentation.csproj
 
-      - name: dotnet publish
-        run: dotnet publish -c Release -o ${{ env.AZURE_WEBAPP_PACKAGE_PATH }}
+      - name: Build projects
+        run: dotnet build --configuration Release --no-restore
+
+      - name: Build projects
+        run: dotnet publish --configuration Release --no-build -o ${{ env.AZURE_WEBAPP_PACKAGE_PATH }}
 
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v3
@@ -51,7 +54,7 @@ jobs:
     runs-on: ubuntu-latest
     needs: build
     environment:
-      name: 'Development'
+      name: 'Production'
       url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
 
     steps:
