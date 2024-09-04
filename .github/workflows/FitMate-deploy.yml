@@ -39,7 +39,7 @@ jobs:
       - name: Build projects
         run: dotnet build --configuration Release --no-restore
 
-      - name: Build projects
+      - name: Publish projects
         run: dotnet publish --configuration Release --no-build -o ${{ env.AZURE_WEBAPP_PACKAGE_PATH }}
 
       - name: Upload artifact for deployment job
