@@ -42,8 +42,8 @@ jobs:
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v3
         with:
-          name: FitMate
-          path: ${{ env.AZURE_WEBAPP_PACKAGE_PATH }}
+          name: fitmate-app
+          path: ${{env.DOTNET_ROOT}}/myapp
 
   deploy:
     permissions:
@@ -58,8 +58,7 @@ jobs:
       - name: Download artifact from build job
         uses: actions/download-artifact@v3
         with:
-          name: FitMate
-          path: ${{ env.AZURE_WEBAPP_PACKAGE_PATH }}
+          name: fitmate-app
 
       - name: Deploy to Azure Web App
         id: deploy-to-webapp
