@@ -17,7 +17,7 @@ namespace YourFitnessTracker.Business.Services
         public async Task<BodyweightTargetDto> GetCurrentTargetAsync(string userId, CancellationToken cancellationToken)
         {
             var entity = await _unitOfWork.BodyweightTargetRepository.Value.Get(e => e.UserId == userId, s => s)
-                .OrderByDescending(e => e.TargetDate)
+                .OrderByDescending(e => e.CreatedAt)
                 .FirstOrDefaultAsync(cancellationToken);
 
             if (entity is null) throw new BodyweightTargetNotFoundException($"User with id {userId} does not have any bodyweight targets");
