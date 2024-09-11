@@ -1,0 +1,27 @@
+FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS base
+WORKDIR /app
+EXPOSE 80
+EXPOSE 443
+
+FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
+WORKDIR /src
+
+COPY ["YourFitnessTracker.Presentation/YourFitnessTracker.Presentation.csproj", "YourFitnessTracker.Presentation/"]
+RUN dotnet restore "YourFitnessTracker.Presentation/YourFitnessTracker.Presentation.csproj"
+
+COPY . .
+WORKDIR "/src/YourFitnessTracker.Presentation"
+RUN dotnet build "YourFitnessTracker.Presentation.csproj" -c Release -o /app/build
+
+FROM build AS publish
+RUN dotnet publish "YourFitnessTracker.Presentation.csproj" -c Release -o /app/publish --no-build
+
+FROM base AS final
+WORKDIR /app
+
+ADD https://raw.githubusercontent.com/vishnubob/wait-for-it/master/wait-for-it.sh /usr/local/bin/wait-for-it.sh
+RUN chmod +x /usr/local/bin/wait-for-it.sh
+
+COPY --from=publish /app/publish .
+
+ENTRYPOINT ["wait-for-it.sh", "sqlserver:1433", "--", "dotnet", "YourFitnessTracker.Presentation.dll"]
