@@ -35,7 +35,7 @@ namespace YourFitnessTracker.Core.UnitOfWork
             UserRepository = new Lazy<IUserRepository>(new UserRepository(context));
         }
 
-        public async Task SaveChangesAsync(CancellationToken cancellationToken = default) =>
+        public async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default) =>
             await _context.SaveChangesAsync(cancellationToken);
     }
 }

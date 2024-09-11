@@ -16,6 +16,6 @@ namespace YourFitnessTracker.Core.UnitOfWork
         Lazy<INutritionTargetRepository> NutritionTargetRepository { get; }
         Lazy<IUserRepository> UserRepository { get; }
 
-        Task SaveChangesAsync(CancellationToken cancellationToken = default);
+        Task<int> SaveChangesAsync(CancellationToken cancellationToken = default);
     }
 }
