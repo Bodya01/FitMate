@@ -50,7 +50,7 @@ namespace YourFitnessTracker.Business.Services
 
             if (entity is null) throw new WorkoutPlanNotFoundException($"Workout plan with {model.Id} id does not exist");
 
-            CheckRestrictionsAccess(entity, model.Id, model.UserId ?? entity.UserId);
+            CheckRestrictionsAccess(entity, model.Id, model.UserId);
 
             _mapper.Map(model, entity);
             await _unitOfWork.WorkoutPlanRepository.Value.UpdateAsync(entity, cancellationToken);

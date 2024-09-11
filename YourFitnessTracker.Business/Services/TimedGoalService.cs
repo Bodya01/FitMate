@@ -54,7 +54,7 @@ namespace YourFitnessTracker.Business.Services
 
             if (entity is null) throw new TimedGoalNotFoundException($"Timed goal with id {model.Id} does not exist");
 
-            CheckRestrictionsAccess(entity, model.Id, model.UserId ?? entity.UserId);
+            CheckRestrictionsAccess(entity, model.Id, model.UserId);
 
             _mapper.Map(model, entity);
             entity.Time = new TimeSpan(model.Hours, model.Minutes, model.Seconds);
