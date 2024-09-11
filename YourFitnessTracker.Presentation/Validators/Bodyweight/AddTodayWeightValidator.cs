@@ -1,5 +1,4 @@
-﻿using System.Numerics;
-using YourFitnessTracker.Applcation.Commands.Bodyweight;
+﻿using YourFitnessTracker.Applcation.Commands.Bodyweight;
 using YourFitnessTracker.Presentation.Validators.Bodyweight.Base;
 
 namespace YourFitnessTracker.Presentation.Validators.Bodyweight

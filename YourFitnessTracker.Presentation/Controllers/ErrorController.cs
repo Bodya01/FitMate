@@ -1,6 +1,5 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using System;
 using YourFitnessTracker.Presentation.ViewModels.Error;
 
 namespace YourFitnessTracker.Presentation.Controllers
