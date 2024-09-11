@@ -1,4 +1,5 @@
 ﻿using MediatR;
+using YourFitnessTracker.Application.Abstractions;
 using YourFitnessTracker.Business.Interfaces;
 using YourFitnessTracker.Infrastructure.Exceptions;
 using YourFitnessTracker.Infrastucture.Dtos;
@@ -10,7 +11,7 @@ namespace YourFitnessTracker.Application.Queries.WorkoutPlan
         public string UserId { get; set; }
     }
 
-    internal sealed class GetWorkoutSessionHandler : IRequestHandler<GetWorkoutSession, WorkoutSessionDto>
+    internal sealed class GetWorkoutSessionHandler : FitMateRequestHandler<GetWorkoutSession, WorkoutSessionDto>
     {
         private readonly IWorkoutPlanService _workoutPlanService;
 
@@ -19,7 +20,7 @@ namespace YourFitnessTracker.Application.Queries.WorkoutPlan
             _workoutPlanService = workoutPlanService;
         }
 
-        public async Task<WorkoutSessionDto> Handle(GetWorkoutSession request, CancellationToken cancellationToken)
+        public override async Task<WorkoutSessionDto> Handle(GetWorkoutSession request, CancellationToken cancellationToken)
         {
             var workout = await _workoutPlanService.GetWorkoutAsync(request.Id, request.UserId, cancellationToken);
 

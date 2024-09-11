@@ -2,7 +2,7 @@
 using YourFitnessTracker.Business.Interfaces;
 using YourFitnessTracker.Infrastucture.Dtos;
 
-namespace YourFitnessTracker.Applcation.Queries.WorkoutPlan
+namespace YourFitnessTracker.Application.Queries.WorkoutPlan
 {
     public record GetWorkoutsForUser(string UserId) : IRequest<List<WorkoutPlanDto>>;
 

@@ -1,4 +1,5 @@
 ﻿using MediatR;
+using YourFitnessTracker.Application.Abstractions;
 using YourFitnessTracker.Business.Interfaces;
 using YourFitnessTracker.Infrastucture.Dtos.Goals;
 
@@ -9,7 +10,7 @@ namespace YourFitnessTracker.Application.Queries.Goal.Weightlifting
         public string UserId { get; set; }
     }
 
-    internal sealed class GetWeightliftingGoalHandler : IRequestHandler<GetWeightliftingGoal, WeightliftingGoalDto>
+    internal sealed class GetWeightliftingGoalHandler : FitMateRequestHandler<GetWeightliftingGoal, WeightliftingGoalDto>
     {
         private readonly IWeightliftingGoalService _weightliftingGoalService;
 
@@ -18,7 +19,7 @@ namespace YourFitnessTracker.Application.Queries.Goal.Weightlifting
             _weightliftingGoalService = weightliftingGoalService;
         }
 
-        public Task<WeightliftingGoalDto> Handle(GetWeightliftingGoal request, CancellationToken cancellationToken) =>
-            _weightliftingGoalService.GetWeightliftingGoalAsync(request.Id, request.UserId, cancellationToken);
+        public override async Task<WeightliftingGoalDto> Handle(GetWeightliftingGoal request, CancellationToken cancellationToken) =>
+            await _weightliftingGoalService.GetWeightliftingGoalAsync(request.Id, request.UserId, cancellationToken);
     }
 }

@@ -1,4 +1,5 @@
 ﻿using MediatR;
+using YourFitnessTracker.Application.Abstractions;
 using YourFitnessTracker.Business.Interfaces;
 using YourFitnessTracker.Infrastucture.Dtos;
 
@@ -6,7 +7,7 @@ namespace YourFitnessTracker.Application.Queries.FoodRecord
 {
     public record GetFoodRecords(string UserId, uint PreviousDays) : IRequest<List<FoodRecordDto>>;
 
-    internal sealed class GetFoodRecordsHanlder : IRequestHandler<GetFoodRecords, List<FoodRecordDto>>
+    internal sealed class GetFoodRecordsHanlder : FitMateRequestHandler<GetFoodRecords, List<FoodRecordDto>>
     {
         private readonly IFoodRecordService _foodRecordService;
 
@@ -15,7 +16,7 @@ namespace YourFitnessTracker.Application.Queries.FoodRecord
             _foodRecordService = foodRecordService;
         }
 
-        public async Task<List<FoodRecordDto>> Handle(GetFoodRecords request, CancellationToken cancellationToken) =>
+        public override async Task<List<FoodRecordDto>> Handle(GetFoodRecords request, CancellationToken cancellationToken) =>
             (await _foodRecordService.GetRecordsForLastDays(request.PreviousDays, request.UserId, cancellationToken)).ToList();
     }
 }

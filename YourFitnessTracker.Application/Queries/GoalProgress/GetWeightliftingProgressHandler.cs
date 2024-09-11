@@ -1,5 +1,6 @@
 ﻿using MediatR;
 using Microsoft.Extensions.Logging;
+using YourFitnessTracker.Application.Abstractions;
 using YourFitnessTracker.Business.Interfaces;
 using YourFitnessTracker.Infrastucture.Dtos.GoalProgress;
 
@@ -10,7 +11,7 @@ namespace YourFitnessTracker.Application.Queries.GoalProgress
         public string UserId { get; set; }
     }
 
-    internal sealed class GetWeightliftingProgressHandler : IRequestHandler<GetWeightliftingProgress, IEnumerable<WeightliftingProgressDto>>
+    internal sealed class GetWeightliftingProgressHandler : FitMateRequestHandler<GetWeightliftingProgress, IEnumerable<WeightliftingProgressDto>>
     {
         private readonly ILogger<GetWeightliftingProgressHandler> _logger;
         private readonly IWeightliftingProgressService _weightliftingProgressService;
@@ -21,7 +22,7 @@ namespace YourFitnessTracker.Application.Queries.GoalProgress
             _weightliftingProgressService = weightliftingProgressService;
         }
 
-        public Task<IEnumerable<WeightliftingProgressDto>> Handle(GetWeightliftingProgress request, CancellationToken cancellationToken) =>
-            _weightliftingProgressService.GetRecordsForGoalAsync(request.Id, request.UserId, cancellationToken);
+        public override async Task<IEnumerable<WeightliftingProgressDto>> Handle(GetWeightliftingProgress request, CancellationToken cancellationToken) =>
+            await _weightliftingProgressService.GetRecordsForGoalAsync(request.Id, request.UserId, cancellationToken);
     }
 }

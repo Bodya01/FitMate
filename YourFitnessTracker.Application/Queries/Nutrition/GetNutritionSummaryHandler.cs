@@ -1,4 +1,5 @@
 ﻿using MediatR;
+using YourFitnessTracker.Application.Abstractions;
 using YourFitnessTracker.Business.Interfaces;
 using YourFitnessTracker.Infrastructure.Exceptions.Bodyweight;
 using YourFitnessTracker.Infrastructure.Extensions;
@@ -11,7 +12,7 @@ namespace YourFitnessTracker.Application.Queries.Nutrition
 
     public record GetNutritionSummaryResponse(List<FoodRecordDto> Records, NutritionTargetDto Target, int Age, float? Height, float? Weight);
 
-    internal sealed class GetNutritionSummaryHandler : IRequestHandler<GetNutritionSummary, GetNutritionSummaryResponse>
+    internal sealed class GetNutritionSummaryHandler : FitMateRequestHandler<GetNutritionSummary, GetNutritionSummaryResponse>
     {
         private readonly INutritionTargetService _targetService;
         private readonly IFoodRecordService _foodRecordService;
@@ -28,23 +29,15 @@ namespace YourFitnessTracker.Application.Queries.Nutrition
             _bodyweightTargetService = bodyweightTargetService;
         }
 
-        async Task<GetNutritionSummaryResponse> IRequestHandler<GetNutritionSummary, GetNutritionSummaryResponse>.Handle(GetNutritionSummary request, CancellationToken cancellationToken)
+        public override async Task<GetNutritionSummaryResponse> Handle(GetNutritionSummary request, CancellationToken cancellationToken)
         {
             var user = await _userService.GetByIdAsync(request.UserId, cancellationToken);
             var target = await _targetService.GetUserTargetAsync(request.UserId, cancellationToken);
             var records = await _foodRecordService.GetRecordsForLastDays(28, request.UserId, cancellationToken);
             var lastBodyweightRecord = await _bodyweightRecordService.GetLastRecordAsync(request.UserId, cancellationToken);
-            BodyweightTargetDto bodyweightTarget;
-            try
-            {
-                bodyweightTarget = await _bodyweightTargetService.GetCurrentTargetAsync(request.UserId, cancellationToken);
-            }
-            catch (BodyweightTargetNotFoundException ex)
-            {
-                bodyweightTarget = new(default, default, default, default);
-            }
+            var bodyweightTarget = await TryGetModelAsync(_bodyweightTargetService.GetCurrentTargetAsync(request.UserId, cancellationToken));
 
-            return new GetNutritionSummaryResponse(records.ToList(), target, user.DateOfBirth.GetAge(), user.Height, bodyweightTarget.TargetWeight != default ? bodyweightTarget.TargetWeight : lastBodyweightRecord?.Weight);
+            return new GetNutritionSummaryResponse(records.ToList(), target, user.DateOfBirth.GetAge(), user.Height, bodyweightTarget?.TargetWeight != default ? bodyweightTarget.TargetWeight : lastBodyweightRecord?.Weight);
         }
     }
 }

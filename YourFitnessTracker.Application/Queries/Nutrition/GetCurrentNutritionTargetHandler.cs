@@ -1,4 +1,5 @@
 ﻿using MediatR;
+using YourFitnessTracker.Application.Abstractions;
 using YourFitnessTracker.Business.Interfaces;
 using YourFitnessTracker.Infrastucture.Dtos;
 
@@ -6,7 +7,7 @@ namespace YourFitnessTracker.Application.Queries.Nutrition
 {
     public record GetCurrentNutritionTarget(string UserId) : IRequest<NutritionTargetDto>;
 
-    internal sealed class GetCurrentNutritionTargetHandler : IRequestHandler<GetCurrentNutritionTarget, NutritionTargetDto>
+    internal sealed class GetCurrentNutritionTargetHandler : FitMateRequestHandler<GetCurrentNutritionTarget, NutritionTargetDto>
     {
         private readonly INutritionTargetService _nutritionTargetService;
 
@@ -15,7 +16,7 @@ namespace YourFitnessTracker.Application.Queries.Nutrition
             _nutritionTargetService = nutritionTargetService;
         }
 
-        public async Task<NutritionTargetDto> Handle(GetCurrentNutritionTarget request, CancellationToken cancellationToken) =>
+        public override async Task<NutritionTargetDto> Handle(GetCurrentNutritionTarget request, CancellationToken cancellationToken) =>
             await _nutritionTargetService.GetUserTargetAsync(request.UserId, cancellationToken);
     }
 }

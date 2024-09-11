@@ -1,13 +1,13 @@
 ﻿using MediatR;
+using YourFitnessTracker.Application.Abstractions;
 using YourFitnessTracker.Business.Interfaces;
-using YourFitnessTracker.Infrastructure.Exceptions;
 using YourFitnessTracker.Infrastucture.Dtos.Base;
 
 namespace YourFitnessTracker.Application.Queries.Bodyweight
 {
     public record GetCurrentBodyweightTarget(string UserId) : IRequest<BodyweightTargetDto?>;
 
-    internal sealed class GetCurrentBodyweightTargetHandler : IRequestHandler<GetCurrentBodyweightTarget, BodyweightTargetDto?>
+    internal sealed class GetCurrentBodyweightTargetHandler : FitMateRequestHandler<GetCurrentBodyweightTarget, BodyweightTargetDto?>
     {
         private readonly IBodyweightTargetService _bodyweightTargetService;
 
@@ -16,16 +16,7 @@ namespace YourFitnessTracker.Application.Queries.Bodyweight
             _bodyweightTargetService = bodyweightTargetService;
         }
 
-        public async Task<BodyweightTargetDto?> Handle(GetCurrentBodyweightTarget request, CancellationToken cancellationToken)
-        {
-            try
-            {
-                return await _bodyweightTargetService.GetCurrentTargetAsync(request.UserId, cancellationToken);
-            }
-            catch (EntityNotFoundException)
-            {
-                return null;
-            }
-        }
+        public override async Task<BodyweightTargetDto?> Handle(GetCurrentBodyweightTarget request, CancellationToken cancellationToken) =>
+            await TryGetModelAsync(_bodyweightTargetService.GetCurrentTargetAsync(request.UserId, cancellationToken));
     }
 }

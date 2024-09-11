@@ -1,4 +1,5 @@
 ﻿using MediatR;
+using YourFitnessTracker.Application.Abstractions;
 using YourFitnessTracker.Business.Interfaces;
 using YourFitnessTracker.Infrastucture.Dtos.GoalProgress;
 
@@ -9,7 +10,7 @@ namespace YourFitnessTracker.Application.Queries.GoalProgress
         public string UserId { get; set; }
     }
 
-    internal sealed class GetTimedProgressHandler : IRequestHandler<GetTimedProgress, IEnumerable<TimedProgressDto>>
+    internal sealed class GetTimedProgressHandler : FitMateRequestHandler<GetTimedProgress, IEnumerable<TimedProgressDto>>
     {
         private readonly ITimedProgressService _timedProgressService;
 
@@ -18,7 +19,7 @@ namespace YourFitnessTracker.Application.Queries.GoalProgress
             _timedProgressService = timedProgressService;
         }
 
-        public async Task<IEnumerable<TimedProgressDto>> Handle(GetTimedProgress request, CancellationToken cancellationToken) =>
+        public override async Task<IEnumerable<TimedProgressDto>> Handle(GetTimedProgress request, CancellationToken cancellationToken) =>
             await _timedProgressService.GetRecordsForGoalAsync(request.Id, request.UserId, cancellationToken);
     }
 }
