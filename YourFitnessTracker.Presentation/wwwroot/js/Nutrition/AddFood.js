@@ -1,5 +1,4 @@
 ﻿function addFoodRecord(addButton) {
-    debugger
     let selectedCard = $(addButton).parents(".card");
 
     let id = $(selectedCard).data("id");
@@ -75,7 +74,6 @@ function updateInputNames() {
 }
 
 function removeRow(row) {
-    debugger
     $(row).parents("tr").remove();
     updateInputNames();
 }
