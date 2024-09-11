@@ -34,7 +34,7 @@ namespace YourFitnessTracker.Presentation.Middlewares
             }
             catch (ForbiddenException ex)
             {
-                context.Response.Redirect("/Identity/Account/AccessDenied");
+                context.Response.Redirect($"/Error/Forbidden?message={ex.Message}");
             }
             catch (Exception ex)
             {
