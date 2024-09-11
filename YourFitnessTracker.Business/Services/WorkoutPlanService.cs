@@ -5,6 +5,7 @@ using YourFitnessTracker.Business.Services.Base;
 using YourFitnessTracker.Core.UnitOfWork;
 using YourFitnessTracker.Infrastructure.Entities;
 using YourFitnessTracker.Infrastructure.Exceptions.Workout;
+using YourFitnessTracker.Infrastructure.Extensions;
 using YourFitnessTracker.Infrastructure.Models.WorkoutPlan;
 using YourFitnessTracker.Infrastucture.Dtos;
 
@@ -31,7 +32,7 @@ namespace YourFitnessTracker.Business.Services
                 .OrderByDescending(w => w.CreatedAt)
                 .ToListAsync(cancellationToken);
 
-            entities ??= new();
+            if (entities.IsNullOrEmpty()) throw new WorkoutPlanNotFoundException($"Workout plans for user {userId} were not found");
 
             return _mapper.Map<IEnumerable<WorkoutPlanDto>>(entities);
         }
