@@ -13,7 +13,6 @@ using YourFitnessTracker.UI.Web.Controllers.Base;
 
 namespace YourFitnessTracker.Controllers
 {
-    //TODO: Move all logic to handlers, implement validators
     public sealed class BodyweightController : YourFitnessTrackerControllerBase
     {
         public BodyweightController(IMediator mediator) : base(mediator) { }
@@ -49,8 +48,6 @@ namespace YourFitnessTracker.Controllers
         [HttpPost]
         public async Task<IActionResult> EditTarget([FromForm] EditBodyweightTarget command, CancellationToken cancellationToken)
         {
-            if (command.Weight <= 0 || command.Weight >= 200 || command.Date <= DateTime.Today) return BadRequest();
-
             command.UserId = _currentUserId;
             await _mediator.Send(command, cancellationToken);
 
@@ -60,15 +57,6 @@ namespace YourFitnessTracker.Controllers
         [HttpPost]
         public async Task<IActionResult> EditRecords([FromForm] EditBodyweightRecords command, CancellationToken cancellationToken)
         {
-            if (command.Dates is not null && command.Weights is not null)
-            {
-                if (command.Dates.Length != command.Weights.Length
-                || command.Weights.Any(x => x <= 0 || x >= 200))
-                {
-                    return BadRequest();
-                }
-            }
-
             command.UserId = _currentUserId;
             await _mediator.Send(command, cancellationToken);
 
@@ -78,8 +66,6 @@ namespace YourFitnessTracker.Controllers
         [HttpPost]
         public async Task<IActionResult> AddTodayWeight([FromForm] AddTodayWeight command, CancellationToken cancellationToken)
         {
-            if (command.Weight <= 0 || command.Weight >= 200) return BadRequest();
-
             command.UserId = _currentUserId;
             await _mediator.Send(command, cancellationToken);
 

@@ -12,7 +12,6 @@ using YourFitnessTracker.UI.Web.Controllers.Base;
 
 namespace YourFitnessTracker.Controllers
 {
-    //TODO: Move all logic to handlers, implement validators
     public sealed class WorkoutController : YourFitnessTrackerControllerBase
     {
         public WorkoutController(IMediator mediator) : base(mediator) { }
@@ -28,11 +27,7 @@ namespace YourFitnessTracker.Controllers
         }
 
         [HttpGet]
-        public IActionResult Create()
-        {
-            var newPlan = new WorkoutPlanDto(Guid.Empty, "Workout Plan", null);
-            return View(newPlan);
-        }
+        public IActionResult Create() => View(WorkoutPlanDto.CreateDefault());
 
         [HttpGet]
         public async Task<IActionResult> Edit([FromRoute] GetWorkoutPlan query, CancellationToken cancellationToken)
@@ -71,6 +66,7 @@ namespace YourFitnessTracker.Controllers
         {
             query.UserId = _currentUserId;
             await _mediator.Send(query, cancellationToken);
+
             return RedirectToAction(nameof(Summary));
         }
     }
