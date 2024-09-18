@@ -1,7 +1,7 @@
 ﻿using MediatR;
 using YourFitnessTracker.Application.Abstractions;
 using YourFitnessTracker.Business.Interfaces;
-using YourFitnessTracker.Infrastucture.Dtos;
+using YourFitnessTracker.Infrastructure.Dtos;
 
 namespace YourFitnessTracker.Applcation.Queries.WorkoutPlan
 {

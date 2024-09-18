@@ -5,10 +5,8 @@ using Microsoft.Extensions.Logging;
 using System;
 using System.Diagnostics;
 using System.Threading.Tasks;
-using System.Web;
 using YourFitnessTracker.Infrastructure.Exceptions;
-using YourFitnessTracker.Presentation.Controllers;
-using YourFitnessTracker.Presentation.Helpers;
+using YourFitnessTracker.Presentation.Extensions;
 
 namespace YourFitnessTracker.Presentation.Middlewares
 {
@@ -26,24 +24,18 @@ namespace YourFitnessTracker.Presentation.Middlewares
             try
             {
                 await next(context);
-
-                if (context.Response.StatusCode == StatusCodes.Status404NotFound)
-                {
-                    context.Response.Redirect($"/{UiNamingHelper.GetControllerName<ErrorController>()}/{nameof(ErrorController.NotFound)}");
-                }
+            }
+            catch (EntityNotFoundException ex)
+            {
+                context.Response.RedirectToNotFound(ex.Message);
             }
             catch (ForbiddenException ex)
             {
-                context.Response.Redirect($"/Error/Forbidden?message={ex.Message}");
+                context.Response.RedirectToForbid(ex.Message);
             }
             catch (Exception ex)
             {
-                _logger.LogError($"An exception occurred: {ex.GetType().Name}\n{ex.Message}");
-
-                var errorMessage = $"An exception has been thrown in a {context.Request.Method} operation. Details: {ex.Message}";
-                var encodedStackTrace = HttpUtility.UrlEncode(ex.StackTrace);
-                context.Response.Redirect($"/{UiNamingHelper.GetControllerName<ErrorController>()}/{nameof(ErrorController.InternalServerError)}?ExceptionName={ex.GetType().Name}&ExceptionMessage={Uri.EscapeDataString(ex.Message)}&StackTrace={encodedStackTrace}&RequestId={Activity.Current?.Id ?? context.TraceIdentifier}");
-
+                context.Response.RedirectToInternalServerError(ex.GetType().Name, ex.Message, ex.StackTrace, Activity.Current?.Id ?? context.TraceIdentifier);
             }
         }
     }

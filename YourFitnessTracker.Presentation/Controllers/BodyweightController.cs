@@ -11,7 +11,7 @@ using YourFitnessTracker.Application.Queries.BodyweightRecord;
 using YourFitnessTracker.Presentation.ViewModels.Bodyweight;
 using YourFitnessTracker.UI.Web.Controllers.Base;
 
-namespace YourFitnessTracker.Controllers
+namespace YourFitnessTracker.Presentation.Controllers
 {
     public sealed class BodyweightController : YourFitnessTrackerControllerBase
     {

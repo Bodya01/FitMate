@@ -12,7 +12,7 @@ using YourFitnessTracker.Application.Queries.Nutrition;
 using YourFitnessTracker.Presentation.ViewModels.Nutrition;
 using YourFitnessTracker.UI.Web.Controllers.Base;
 
-namespace YourFitnessTracker.Controllers
+namespace YourFitnessTracker.Presentation.Controllers
 {
     //TODO: Implement single handlers for each endpoint, move all logic to handlers, implement validators
     public sealed class NutritionController : YourFitnessTrackerControllerBase
@@ -53,16 +53,16 @@ namespace YourFitnessTracker.Controllers
         [HttpGet]
         public async Task<IActionResult> AddFood(DateTime date, CancellationToken cancellationToken)
         {
-            if (date.Ticks == default) date = DateTime.Today;
+            date = date.Ticks == default ? DateTime.Today : date;
 
-            var model = new NewFoodViewModel
+            var request = new GetAddFood(date)
             {
-                SelectedDate = date,
-                Foods = await _mediator.Send(new GetAllFoods(), cancellationToken),
-                FoodRecords = await _mediator.Send(new GetFoodRecordsByDate(_currentUserId, date), cancellationToken)
+                UserId = _currentUserId
             };
 
-            return View(model);
+            var response = await _mediator.Send(request, cancellationToken);
+
+            return View(new NewFoodViewModel(date, response.Foods, response.FoodRecords));
         }
 
         [HttpPost]

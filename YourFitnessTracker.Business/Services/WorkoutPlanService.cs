@@ -3,11 +3,11 @@ using Microsoft.EntityFrameworkCore;
 using YourFitnessTracker.Business.Interfaces;
 using YourFitnessTracker.Business.Services.Base;
 using YourFitnessTracker.Core.UnitOfWork;
+using YourFitnessTracker.Infrastructure.Dtos;
 using YourFitnessTracker.Infrastructure.Entities;
 using YourFitnessTracker.Infrastructure.Exceptions.Workout;
 using YourFitnessTracker.Infrastructure.Extensions;
 using YourFitnessTracker.Infrastructure.Models.WorkoutPlan;
-using YourFitnessTracker.Infrastucture.Dtos;
 
 namespace YourFitnessTracker.Business.Services
 {

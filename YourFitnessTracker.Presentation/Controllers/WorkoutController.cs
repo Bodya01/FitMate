@@ -6,10 +6,10 @@ using YourFitnessTracker.Applcation.Commands.WorkoutPlan;
 using YourFitnessTracker.Applcation.Queries.WorkoutPlan;
 using YourFitnessTracker.Application.Commands.WorkoutPlan;
 using YourFitnessTracker.Application.Queries.WorkoutPlan;
-using YourFitnessTracker.Infrastucture.Dtos;
+using YourFitnessTracker.Infrastructure.Dtos;
 using YourFitnessTracker.UI.Web.Controllers.Base;
 
-namespace YourFitnessTracker.Controllers
+namespace YourFitnessTracker.Presentation.Controllers
 {
     public sealed class WorkoutController : YourFitnessTrackerControllerBase
     {
@@ -26,7 +26,7 @@ namespace YourFitnessTracker.Controllers
         }
 
         [HttpGet]
-        public IActionResult Create() => View(WorkoutPlanDto.CreateDefault());
+        public IActionResult Create() => View(WorkoutPlanDto.CreateEmpty());
 
         [HttpGet]
         public async Task<IActionResult> Edit([FromRoute] GetWorkoutPlan query, CancellationToken cancellationToken)

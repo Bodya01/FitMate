@@ -1,5 +1,5 @@
-﻿using YourFitnessTracker.Infrastructure.Models.WorkoutPlan;
-using YourFitnessTracker.Infrastucture.Dtos;
+﻿using YourFitnessTracker.Infrastructure.Dtos;
+using YourFitnessTracker.Infrastructure.Models.WorkoutPlan;
 
 namespace YourFitnessTracker.Business.Interfaces
 {

@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using YourFitnessTracker.Infrastructure.Dtos;
 using YourFitnessTracker.Infrastructure.Entities;
 using YourFitnessTracker.Infrastructure.Models.WorkoutPlan;
 using YourFitnessTracker.Infrastucture.Dtos;

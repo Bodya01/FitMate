@@ -11,7 +11,7 @@ using YourFitnessTracker.Infrastucture.Dtos.Goals;
 using YourFitnessTracker.Presentation.ViewModels.Goal;
 using YourFitnessTracker.UI.Web.Controllers.Base;
 
-namespace YourFitnessTracker.Controllers
+namespace YourFitnessTracker.Presentation.Controllers
 {
     public sealed class GoalController : YourFitnessTrackerControllerBase
     {

@@ -1,13 +1,13 @@
 ﻿using MediatR;
 using YourFitnessTracker.Application.Abstractions;
 using YourFitnessTracker.Business.Interfaces;
-using YourFitnessTracker.Infrastucture.Dtos;
+using YourFitnessTracker.Infrastructure.Dtos;
 
 namespace YourFitnessTracker.Application.Queries.WorkoutPlan
 {
-    public record GetWorkoutsForUser(string UserId) : IRequest<List<WorkoutPlanDto>>;
+    public record GetWorkoutsForUser(string UserId) : IRequest<IEnumerable<WorkoutPlanDto>>;
 
-    internal sealed class GetWorkoutsForUserHandler : FitMateRequestHandler<GetWorkoutsForUser, List<WorkoutPlanDto>>
+    internal sealed class GetWorkoutsForUserHandler : FitMateRequestHandler<GetWorkoutsForUser, IEnumerable<WorkoutPlanDto>>
     {
         private readonly IWorkoutPlanService _workoutPlanService;
 
@@ -16,7 +16,7 @@ namespace YourFitnessTracker.Application.Queries.WorkoutPlan
             _workoutPlanService = workoutPlanService;
         }
 
-        public override async Task<List<WorkoutPlanDto>> Handle(GetWorkoutsForUser request, CancellationToken cancellationToken) =>
-            (await TryGetCollectionAsync(_workoutPlanService.GetWorkoutsAsync(request.UserId, cancellationToken))).ToList();
+        public override async Task<IEnumerable<WorkoutPlanDto>> Handle(GetWorkoutsForUser request, CancellationToken cancellationToken) =>
+            await TryGetCollectionAsync(_workoutPlanService.GetWorkoutsAsync(request.UserId, cancellationToken));
     }
 }

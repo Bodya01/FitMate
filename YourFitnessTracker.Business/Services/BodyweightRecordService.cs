@@ -40,13 +40,13 @@ namespace YourFitnessTracker.Business.Services
             return _mapper.Map<IEnumerable<BodyweightRecordDto>>(entities);
         }
 
-        public async Task<BodyweightRecordDto?> GetLastRecordAsync(string userId, CancellationToken cancellationToken = default)
+        public async Task<BodyweightRecordDto> GetLastRecordAsync(string userId, CancellationToken cancellationToken = default)
         {
             var entity = await _unitOfWork.BodyweightRecordRepository.Value.Get(e => e.UserId == userId, s => s)
                 .OrderByDescending(e => e.Date)
                 .FirstOrDefaultAsync(cancellationToken);
 
-            if (entity is null) return null; // TODO: Replace with an exception
+            if (entity is null) throw new BodyweightRecordNotFoundException($"Latest bodyweight record was not found for user {userId}");
 
             return _mapper.Map<BodyweightRecordDto>(entity);
         }

@@ -34,7 +34,7 @@ namespace YourFitnessTracker.Application.Queries.Nutrition
             var user = await _userService.GetByIdAsync(request.UserId, cancellationToken);
             var target = await _targetService.GetUserTargetAsync(request.UserId, cancellationToken);
             var records = await _foodRecordService.GetRecordsForLastDays(28, request.UserId, cancellationToken);
-            var lastBodyweightRecord = await _bodyweightRecordService.GetLastRecordAsync(request.UserId, cancellationToken);
+            var lastBodyweightRecord = await TryGetModelAsync(_bodyweightRecordService.GetLastRecordAsync(request.UserId, cancellationToken));
             var bodyweightTarget = await TryGetModelAsync(_bodyweightTargetService.GetCurrentTargetAsync(request.UserId, cancellationToken));
 
             return new GetNutritionSummaryResponse(records.ToList(), target, user.DateOfBirth.GetAge(), user.Height, bodyweightTarget?.TargetWeight != default ? bodyweightTarget.TargetWeight : lastBodyweightRecord?.Weight);
