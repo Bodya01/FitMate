@@ -7,7 +7,7 @@ using YourFitnessTracker.Applcation.Queries.WorkoutPlan;
 using YourFitnessTracker.Application.Commands.WorkoutPlan;
 using YourFitnessTracker.Application.Queries.WorkoutPlan;
 using YourFitnessTracker.Infrastructure.Dtos;
-using YourFitnessTracker.UI.Web.Controllers.Base;
+using YourFitnessTracker.Presentation.Controllers.Base;
 
 namespace YourFitnessTracker.Presentation.Controllers
 {

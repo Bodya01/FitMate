@@ -8,8 +8,8 @@ using YourFitnessTracker.Applcation.Commands.Bodyweight;
 using YourFitnessTracker.Application.Commands.BodyweightTarget;
 using YourFitnessTracker.Application.Queries.Bodyweight;
 using YourFitnessTracker.Application.Queries.BodyweightRecord;
+using YourFitnessTracker.Presentation.Controllers.Base;
 using YourFitnessTracker.Presentation.ViewModels.Bodyweight;
-using YourFitnessTracker.UI.Web.Controllers.Base;
 
 namespace YourFitnessTracker.Presentation.Controllers
 {

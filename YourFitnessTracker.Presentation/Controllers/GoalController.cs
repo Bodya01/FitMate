@@ -8,8 +8,8 @@ using YourFitnessTracker.Application.Queries.Goal;
 using YourFitnessTracker.Application.Queries.Goal.Timed;
 using YourFitnessTracker.Application.Queries.Goal.Weightlifting;
 using YourFitnessTracker.Infrastucture.Dtos.Goals;
+using YourFitnessTracker.Presentation.Controllers.Base;
 using YourFitnessTracker.Presentation.ViewModels.Goal;
-using YourFitnessTracker.UI.Web.Controllers.Base;
 
 namespace YourFitnessTracker.Presentation.Controllers
 {

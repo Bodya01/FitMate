@@ -4,12 +4,12 @@ using System.Threading;
 using System.Threading.Tasks;
 using YourFitnessTracker.Application.Commands.GoalProgress;
 using YourFitnessTracker.Application.Queries.GoalProgress;
+using YourFitnessTracker.Presentation.Controllers.Base;
 using YourFitnessTracker.Presentation.Helpers;
-using YourFitnessTracker.UI.Web.Controllers.Base;
 
 namespace YourFitnessTracker.Presentation.Controllers
 {
-    public class GoalProgressController : YourFitnessTrackerControllerBase
+    public sealed class GoalProgressController : YourFitnessTrackerControllerBase
     {
         public GoalProgressController(IMediator mediator) : base(mediator) { }
 

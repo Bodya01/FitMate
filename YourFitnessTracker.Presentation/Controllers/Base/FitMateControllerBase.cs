@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 using System.Security.Claims;
 
-namespace YourFitnessTracker.UI.Web.Controllers.Base
+namespace YourFitnessTracker.Presentation.Controllers.Base
 {
     [Authorize]
     public abstract class YourFitnessTrackerControllerBase : Controller

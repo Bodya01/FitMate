@@ -3,8 +3,8 @@ using Microsoft.AspNetCore.Mvc;
 using System.Threading;
 using System.Threading.Tasks;
 using YourFitnessTracker.Application.Commands.NutritionTarget;
+using YourFitnessTracker.Presentation.Controllers.Base;
 using YourFitnessTracker.Presentation.Helpers;
-using YourFitnessTracker.UI.Web.Controllers.Base;
 
 namespace YourFitnessTracker.Presentation.Controllers
 {

@@ -9,8 +9,8 @@ using YourFitnessTracker.Application.Commands.FoodRecord;
 using YourFitnessTracker.Application.Queries.Food;
 using YourFitnessTracker.Application.Queries.FoodRecord;
 using YourFitnessTracker.Application.Queries.Nutrition;
+using YourFitnessTracker.Presentation.Controllers.Base;
 using YourFitnessTracker.Presentation.ViewModels.Nutrition;
-using YourFitnessTracker.UI.Web.Controllers.Base;
 
 namespace YourFitnessTracker.Presentation.Controllers
 {

@@ -23,7 +23,7 @@ namespace YourFitnessTracker.Application.Commands.FoodRecord
 
         public async Task Handle(EditFoodRecords request, CancellationToken cancellationToken)
         {
-            var foodIds = request.FoodIds ?? new List<Guid>();
+            var foodIds = request.FoodIds ?? [];
             var quantities = request.Quantities ?? new List<float>();
 
             var records = new CreateFoodRecordModel[foodIds.Count];
